@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+        <meta name="description" content="c&#x27;est mon premier post alors faites vous plair les enfants">
+        <meta name="author" content="Thomas Belin">
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:title" content="Javascript et l&#x27;héritage">
+        <meta name="twitter:description" content="c&#x27;est mon premier post alors faites vous plair les enfants">
+        <meta name="twitter:site" content="@ThomasBelin4">
+        <meta name="twitter:creator" content="@ThomasBelin4">
+        <meta name="twitter:image" content="http://thomasbelin.fr/images/avatar_o.jpeg">
+
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Javascript et l&#x27;héritage">
+        <meta property="og:description" content="c&#x27;est mon premier post alors faites vous plair les enfants">
+        <meta property="og:image" content="http://thomasbelin.fr/images/avatar_o.jpeg">
+        <meta property="article:author" content="Thomas Belin">
+
+        <title>Javascript et l&#x27;héritage</title>
+        <link href="/css/application.css" type="text/css" rel="stylesheet">
+    </head>
+    <body>
+        
+<article>
+    <h1>Javascript et l&#x27;héritage</h1>
+    <time datetime="Wed Jan 29 2014 20:37:00 GMT+0100 (CET)" pubdate itemprop="datePublished" content="Wed Jan 29 2014 20:37:00 GMT+0100 (CET)">
+        2 months ago
+    </time>
+    <p>La plupart des langages orientés objet dispose d&#39;un mécanisme simple pour définir les propriétés et méthodes d&#39;un objet : les classes. Seulement JavaScript ne propose pas cette solution pour faire de l&#39;objet mais propose à la place les prototypes.</p>
+<p>Avec JavaScript, il va falloir oublier la syntaxe à laquelle on est habitué avec des langages qui proposent des classes (PHP, C++, Java, Ruby ...) et qui groupent toute la définition d&#39;une classe dans un seul bloc de code :</p>
+<pre><code class="language-javascript">    <span class="function"><span class="keyword">function</span> <span class="title">MyClass</span><span class="params">(_prop)</span> {</span>
+        <span class="keyword">this</span>.prop = _prop;
+
+        <span class="keyword">this</span>.method1 = <span class="function"><span class="keyword">function</span> <span class="title">method1</span><span class="params">(params)</span> {</span>
+            <span class="comment">/*...*/</span>
+        }
+
+        <span class="keyword">this</span>.method2 = <span class="function"><span class="keyword">function</span> <span class="title">method2</span><span class="params">(params)</span> {</span>
+            <span class="comment">/*...*/</span>
+        }
+
+        <span class="comment">/* ... */</span>
+    }</code></pre>
+<p>A la place il va falloir s&#39;orienter vers une syntaxe où l&#39;on définit un constructeur (une <code>Function</code>) d&#39;une part et un prototype (un <code>Object</code>) d&#39;autre part.</p>
+<pre><code class="language-javascript">    <span class="comment">//constructor</span>
+    <span class="function"><span class="keyword">function</span> <span class="title">MyClass</span><span class="params">(_prop)</span> {</span>
+        <span class="keyword">this</span>.prop = _prop;
+    }
+
+    <span class="comment">//prototype</span>
+    MyClass.prototype = {
+        method1: <span class="function"><span class="keyword">function</span> <span class="title">method1</span><span class="params">()</span> {</span>
+            console.log(<span class="keyword">this</span>.prop);
+        },
+
+        method2: <span class="function"><span class="keyword">function</span> <span class="title">method2</span><span class="params">()</span> {</span>}
+    };</code></pre>
+<p>Maintenant que vous savez déclarer une classe en JavaScript, laissez moi vous expliquer pourquoi la première solution n&#39;est pas bonne. </p>
+<p>Le piège réside dans le fait que la première solution est parfaitement fonctionnelle. Le bout de code suivant fonctionnera sans aucun problème :</p>
+<pre><code class="language-javascript">    <span class="keyword">var</span> t = <span class="keyword">new</span> MyClass();
+    t.method1();
+    t.method2();</code></pre>
+<p><strong>Difficile donc de se rendre compte de son erreur</strong>.</p>
+<p>Seulement voila avec la première solution, à <strong>chaque fois que vous ferez un <code>new MyClass()</code>, le moteur JavaScript va jouer entièrement votre fonction <code>MyClass</code></strong>. Si votre classe <code>MyClass</code> grossit un peu et que vous en créez beaucoup d&#39;instances, vous risquez d&#39;encombrer quelque peu la mémoire allouée par votre application. </p>
+<p>Par exemple si vous créez <code>n</code> instances de <code>MyClass</code> vous aurez également créé <code>n</code> fonctions <code>method1</code> et <code>n</code> fonctions <code>method2</code>. Pas vraiment optimal sachant que <strong>seul le bout de code &#39;<code>this.prop = params;</code>&#39; est spécifique aux instances de votre &quot;classe&quot;</strong>. </p>
+<p>Le <code>prototype</code> est justement là pour vous fournir un espace commun à toutes les instances de votre <code>Function</code>. <strong>l&#39;objet <code>prototype</code> ne sera créé qu&#39;une et une seule fois pas le moteur JavaScript</strong>. Chaque instance de votre <code>Function</code> aura une référence vers cet objet.</p>
+<p>Prudence tout de même car étant une référence vers un objet, si vous changez cet objet dans la suite du code, toutes les instances seront impactées par ce changement.</p>
+<p>Par exemple :</p>
+<pre><code class="language-javascript">    <span class="comment">//constructor</span>
+    <span class="function"><span class="keyword">function</span> <span class="title">Class</span><span class="params">()</span> {</span>}
+
+    <span class="comment">//prototype</span>
+    Class.prototype = {
+        print: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+            console.log(<span class="string">'ok'</span>);
+        }
+    }
+
+    <span class="keyword">var</span> first = <span class="keyword">new</span> Class();
+    <span class="keyword">var</span> second = <span class="keyword">new</span> Class();
+
+    first.print(); <span class="comment">// 'ok'</span>
+    second.print(); <span class="comment">// 'ok'</span>
+
+    Class.prototype.print = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        console.log(<span class="string">'ko'</span>);
+    };
+
+    first.print(); <span class="comment">// 'ko'</span>
+    second.print(); <span class="comment">// 'ko'</span></code></pre>
+<p>Pour bien comprendre comment fonctionnent les prototypes et comment il est possible de faire de l&#39;héritage avec cette propriété, je vous suggère vivement de lire l&#39;article <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Inheritance_and_the_prototype_chain">Inheritance and the prototype chain</a> du <a href="https://developer.mozilla.org/en-US/">Mozilla Developer Network</a> ou encore leur introduction sur JavaScript et la programmation objet : <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript">Introduction to Object-Oriented JavaScript</a>.</p>
+
+    <adresse>Thomas Belin</adresse>
+</article>
+
+    </body>
+</html>
