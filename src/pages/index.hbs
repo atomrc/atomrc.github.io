@@ -1,0 +1,17 @@
+---
+title: Why So Curious ?
+layout: posts.hbs
+description: Et si on parlait un peu Javascript, AngularJS et code en général !
+---
+<ul>
+    {{#withSort pages "data.pubdate"}}
+        {{#compare ../title "!==" data.title}}
+            <li>
+                <a href="/p/{{basename}}">{{data.title}}</a>
+                <time datetime="{{data.pubdate}}" pubdate itemprop="datePublished" content="{{data.pubdate}}">
+                    {{formatDate data.pubdate "%d/%m/%Y"}}
+                </time>
+            </li >
+        {{/compare}}
+    {{/withSort}}
+</ul>
