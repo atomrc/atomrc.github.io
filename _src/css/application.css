@@ -1,0 +1,344 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600);
+pre {
+  word-wrap: break-word;
+  margin: 0px;
+  padding: 0px;
+  padding: 10px;
+  color: #666;
+  margin-bottom: 20px; }
+
+pre .comment {
+  color: #444; }
+pre .function .title {
+  font-weight: bold; }
+pre .number {
+  color: red; }
+pre .literal {
+  color: #990055; }
+pre .keyword,
+pre .selector {
+  color: #0086b3; }
+pre .regexp,
+pre .string {
+  color: #859900;
+  /* green */ }
+
+pre .constant {
+  color: #839496;
+  /* base0 */ }
+
+pre .constant.language {
+  color: #268bd2;
+  /* blue */ }
+
+pre .constant.regexp {
+  color: #2aa198;
+  /* cyan */ }
+
+pre .storage {
+  color: #268bd2;
+  /* blue */ }
+
+pre .comment.docstring {
+  color: #2aa198;
+  /* cyan */ }
+
+pre .support.tag.script, pre .support.tag.style {
+  color: #2aa198;
+  /* cyan */ }
+
+pre .string.regexp.open, pre .string.regexp.close {
+  color: #2aa198;
+  /* cyan */ }
+
+pre .inherited-class {
+  font-style: italic; }
+
+pre .entity {
+  color: #b58900;
+  /* yellow */ }
+
+pre .support, *[data-language="c"] .function.call {
+  color: #859900;
+  /* green */ }
+
+pre .support.method {
+  color: #839496;
+  /* base0 */ }
+
+pre .support.property {
+  color: #839496;
+  /* base0 */ }
+
+pre .variable.global, pre .variable.class, pre .variable.instance {
+  color: #839496;
+  /* base0 */ }
+
+@font-face {
+  font-family: "tomfont";
+  src: url("/font/Tomfont-Regular.ttf"); }
+@font-face {
+  font-family: 'FontAwesome';
+  src: url("/font/fontawesome-webfont.eot?v=3.2.1");
+  src: url("/font/fontawesome-webfont.eot?#iefix&v=3.2.1") format("embedded-opentype"), url("/font/fontawesome-webfont.woff?v=3.2.1") format("woff"), url("/font/fontawesome-webfont.ttf?v=3.2.1") format("truetype"), url("/font/fontawesome-webfont.svg#fontawesomeregular?v=3.2.1") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+html, body {
+  height: 100%; }
+
+body {
+  padding: 0;
+  margin: 0;
+  color: #666;
+  font-family: Open Sans, Arial;
+  font-size: 13pt;
+  background: url(/images/noise.png) #eeeeee; }
+
+h1,
+h2,
+strong,
+#not-found .code,
+.pubdate .month,
+.section-title,
+#header .title,
+.related-posts .title {
+  color: #ff0066;
+  font-weight: normal;
+  text-shadow: 1px 1px 0 white; }
+
+a {
+  text-decoration: none;
+  color: #0084b4; }
+
+ul {
+  list-style: none;
+  padding: 0; }
+
+h1 a, h2 a {
+  color: inherit; }
+
+hr {
+  border: none;
+  border-top: 1px solid #BBB;
+  border-bottom: 1px solid white; }
+
+.icon {
+  font-family: FontAwesome; }
+
+.sticky {
+  position: fixed !important;
+  top: 0 !important; }
+
+.soft-box {
+  border: solid 1px #DDD;
+  border-radius: 3px;
+  background-color: #FFF; }
+
+.github:before {
+  content: "\f113"; }
+
+.twitter:before {
+  content: "\f099"; }
+
+/*.doyoubuzz { color: rgba(255, 136, 0, 1);}*/
+.google-plus:before {
+  content: "\f0d5"; }
+
+.facebook:before {
+  content: "\f09a"; }
+
+.provider {
+  border-radius: 5px;
+  padding: 5px 0;
+  margin: 5px 0;
+  text-shadow: 0.1em 0.1em 2px #888;
+  width: 100%;
+  color: white;
+  display: block; }
+  .provider.twitter {
+    background-color: #139de9; }
+  .provider.google-plus {
+    background-color: #d40b0d; }
+  .provider.facebook {
+    background-color: #244786; }
+
+#top-wrapper {
+  min-height: 100%;
+  margin: 0px 0px -235px 0px; }
+
+#filler {
+  height: 235px; }
+
+#header {
+  padding: 1em 0 1em 0;
+  text-align: center; }
+  #header .title {
+    font-size: 2em;
+    color: inherit;
+    font-weight: bold; }
+
+#footer {
+  margin-top: 100px;
+  background-color: #666;
+  color: #EEE; }
+  #footer .container {
+    padding: 0 0 20px 0;
+    position: relative;
+    margin: auto;
+    width: 90%; }
+  #footer #avatar {
+    position: absolute;
+    top: -50px;
+    border: 3px solid #EEE;
+    border-radius: 50px; }
+  #footer .catch {
+    width: 500px;
+    margin-left: 100px;
+    padding: 20px; }
+  #footer .social {
+    font-size: 30pt;
+    position: absolute;
+    top: -0.5em;
+    right: 0;
+    text-align: right; }
+    #footer .social a {
+      color: #EEE;
+      padding: 10px;
+      border-radius: 1em;
+      border: 3px solid #EEE;
+      background-color: #666; }
+
+#full-article, #disqus_thread, .related-posts {
+  width: 800px;
+  margin: auto;
+  padding: 2em; }
+
+.related-posts {
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  background-color: #dddddd;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  margin: 10px auto; }
+  .related-posts .title {
+    font-size: 16pt; }
+
+#full-article {
+  position: relative;
+  text-align: center; }
+  #full-article h1 {
+    font-size: 2em; }
+  #full-article .readable-content {
+    margin: auto;
+    text-align: justify; }
+
+article pre {
+  text-shadow: 1px 1px 0 white;
+  font-size: 11pt;
+  padding: 1em;
+  background-color: #F6F6F6;
+  border-radius: 3px;
+  border: solid 1px #DDD; }
+
+#aside-post-container {
+  position: absolute;
+  top: 0;
+  left: 100%; }
+  #aside-post-container #aside-post .content, #aside-post-container #aside-post .header {
+    padding: 5px; }
+  #aside-post-container #aside-post .header {
+    text-align: center;
+    background: #72a6fc;
+    color: white; }
+
+/**
+ * Flexible Google-style progress indicator
+ */
+@keyframes progress {
+  50% {
+    border-width: .5em 0; }
+
+  to {
+    border-width: .5em 0 0 0; } }
+@keyframes rotate {
+  to {
+    transform: rotate(-270deg); } }
+.progress {
+  display: inline-block;
+  font-size: 18pt;
+  /* Size of the progress indicator */
+  width: 1em;
+  height: 1em;
+  border: solid #EEE;
+  border-top-color: #72a6fc;
+  border-width: 0 0 .5em 0;
+  border-radius: 50%;
+  background-image: linear-gradient(#eeeeee 50%, #72a6fc 50%);
+  background-origin: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: .1em .2em;
+  transform: rotate(90deg);
+  animation: rotate 1.4s steps(4) infinite, progress 0.35s linear infinite alternate;
+  text-indent: 99em;
+  overflow: hidden; }
+  .progress.small {
+    font-size: inherit; }
+  .progress.medium {
+    font-size: 20pt; }
+  .progress.big {
+    font-size: 50pt; }
+
+#content {
+  margin: 0 3%;
+  /*&.ng-leave {
+      position: relative;
+      left: 100%;
+      @include transition(left, 1s);
+      &.ng-leave-active {
+          left: 0;
+      }
+  }*/ }
+
+#posts-container {
+  text-align: center; }
+
+.section-title {
+  padding-top: 20px;
+  font-size: 25pt; }
+
+.card {
+  text-align: left;
+  background: white;
+  display: inline-block;
+  vertical-align: top;
+  height: 300px;
+  width: 300px;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 3px;
+  border: solid 1px #DDD;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s; }
+  .card article h1 {
+    font-size: 14pt;
+    margin-top: 0; }
+  .card:hover {
+    box-shadow: 2px 2px 5px #CCC;
+    -webkit-transform: translate(-2px, -2px);
+    -moz-transform: translate(-2px, -2px);
+    -o-transform: translate(-2px, -2px);
+    transform: translate(-2px, -2px); }
+  .card .progress {
+    border-color: #FFF;
+    border-top-color: #72a6fc;
+    background-image: linear-gradient(white 50%, #72a6fc 50%); }
+
+.tag {
+  background: #72a6fc;
+  color: white;
+  padding: 1px 5px;
+  font-size: 11pt; }

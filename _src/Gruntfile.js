@@ -7,46 +7,36 @@ module.exports = function (grunt) {
 
         assemble: {
             options: {
-                assets: 'src/assets',
                 layout: ['post.hbs'],
-                layoutdir: 'src/layout',
+                layoutdir: 'layout',
                 flatten: true,
                 marked: {
                     breaks: false,
                     gfm: true
-                },
-                collections: [
-                    {
-                        // the name of the collection 
-                        title: 'pages',
-                        // the order in which to sort 
-                        sortorder: 'asc',
-                        sortby: 'pubdate'
-                    }
-                ]
+                }
             },
             pages: {
                 files: {
-                    './thomasbelin4.github.io/p/': ['src/pages/posts/*.hbs'],
-                    './thomasbelin4.github.io/': ['src/pages/index.hbs']
+                    '../p/': ['pages/posts/*.hbs'],
+                    '../': ['pages/index.hbs']
                 }
             }
         },
 
         sass: {
             compile: {
-                files: { 'thomasbelin4.github.io/css/application.css': 'src/assets/sass/application.scss' }
+                files: { '../css/application.css': 'assets/sass/application.scss' }
             }
         },
 
         watch: {
             templates: {
-                files: "src/**/*.hbs",
+                files: "**/*.hbs",
                 tasks: ["assemble"]
             },
 
             css: {
-                files: "src/**/*.scss",
+                files: "**/*.scss",
                 tasks: ["sass"]
             }
         }
