@@ -9,16 +9,18 @@ Javascript avait initialement été prévu pour être très facile d'accès. Seu
 
 ##"use strict";
 
-Si vous avez déjà lu le code de certaines librairies Javascript vous avez surement rencontré le "use strict";. C'est le premier réflexe à avoir quand vous commencez un nouveau projet Javascript puisqu'il va dire au navigateur de ne pas laisser passer certaines aberrations normalement possibles avec Javascript.
+Si vous avez déjà lu le code de certaines librairies Javascript vous avez surement rencontré le `"use strict"`;. C'est le premier réflexe à avoir quand vous commencez un nouveau projet Javascript puisqu'il va dire au navigateur de ne pas laisser passer certaines aberrations normalement possibles avec Javascript.
 
 ###Activer le mode strict
 
 Pour l'activer, rien de plus simple, il vous suffit de mettre le code suivant dans vos fichier js :
 
-    "use strict";
+```javascript
+"use strict";
+```
 
-Prudence car le "use strict" s'applique à tout le code qui est de même niveau d'imbrication ou inférieur. Ça veut dire que si vous le mettez directement à la racine d'un fichier js, il s'appliquera à tous les autres fichiers qui seront inclus pas la suite (librairies, autres fichiers à vous ...). Or ces fichiers ne respectent pas toujours le mode strict et engendreront des erreurs sur votre application.
-Il est donc préférable de placer le "use strict" ; à l'intérieur des fonctions que vous écrivez.
+Prudence car le `"use strict"` s'applique à tout le code qui est de même niveau d'imbrication ou inférieur. Ça veut dire que si vous le mettez directement à la racine d'un fichier js, il s'appliquera à tous les autres fichiers qui seront inclus pas la suite (librairies, autres fichiers à vous ...). Or ces fichiers ne respectent pas toujours le mode strict et engendreront des erreurs sur votre application.
+Il est donc préférable de placer le `"use strict"` ; à l'intérieur des fonctions que vous écrivez.
 
 
 ```javascript
@@ -41,7 +43,7 @@ Le `"use strict"`; va vous permettre de ne pas faire d'erreurs classiques et nor
 - la déclaration d'un objet avec plusieurs fois la même propriété définie.
 
 
-Pour vraiment tout savoir sur le `'use strict'`, je vous suggère de lire absolument l'article "[strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode)" du Mozilla Developer Network sur le sujet !
+Pour vraiment tout savoir sur le `"use strict"`, je vous suggère de lire absolument l'article "[strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode)" du Mozilla Developer Network sur le sujet !
 
 ##Le point-virgule !
 
@@ -180,7 +182,7 @@ De façon générale, je vous suggère d'aller systématiquement faire un tour s
 
 En bref les quelques bonne habitudes à prendre quand vous développez en Javascript :
 
-- utiliser le mode strict ('use strict') ;
+- utiliser le mode strict (`'use strict'`) ;
 - ajouter des points-virgules à la fin de chaque instruction ;
 - ne mettre que l’essentiel dans l'objet window ;
 - injecter sois même les objets dont le code a besoin ;
