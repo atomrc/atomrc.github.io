@@ -1,0 +1,12 @@
+{
+  "name": "thomasbelin.github.io",
+  "version": "0.0.1",
+  "description": "Blog",
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-sass": "~0.7.3"
+  },
+  "author": "Thomas Belin",
+  "license": "BSD-2-Clause"
+}

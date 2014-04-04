@@ -1,30 +1,34 @@
+<!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{{ page.title }}</title>
 
-        <meta name="description" content="{{description}}">
+        <meta name="description" content="{{page.description}}">
         <meta name="author" content="Thomas Belin">
 
         <meta name="twitter:card" content="summary">
-        <meta name="twitter:title" content="{{title}}">
-        <meta name="twitter:description" content="{{description}}">
+        <meta name="twitter:title" content="{{page.title}}">
+        <meta name="twitter:description" content="{{page.description}}">
         <meta name="twitter:site" content="@ThomasBelin4">
         <meta name="twitter:creator" content="@ThomasBelin4">
         <meta name="twitter:image" content="http://thomasbelin.fr/images/avatar_o.jpeg">
 
         <meta property="og:type" content="article">
-        <meta property="og:title" content="{{title}}">
-        <meta property="og:description" content="{{description}}">
+        <meta property="og:title" content="{{page.title}}">
+        <meta property="og:description" content="{{page.description}}">
         <meta property="og:image" content="http://thomasbelin.fr/images/avatar_o.jpeg">
         <meta property="article:author" content="Thomas Belin">
+        <meta name="viewport" content="width=device-width">
 
-        <title>{{title}}</title>
         <link href="/css/application.css" type="text/css" rel="stylesheet">
     </head>
     <body>
-        <header>
-            <a href="/">Thomas Belin</a>
-        </header>
-        {{>body}}
+      <div id="header">
+        <a class="title" href="/">{ {{ site.name }} }</a>
+      </div>
+      {{ content }}
     </body>
 </html>

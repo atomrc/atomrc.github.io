@@ -1,0 +1,5 @@
+name: J'y suis JS
+markdown: redcarpet
+permalink: /p/:title
+highlighter: pygments
+exclude: [node_modules, package.json, Gruntfile.js]

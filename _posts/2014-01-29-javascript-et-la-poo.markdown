@@ -1,8 +1,10 @@
 ---
+layout: post
 title: L'héritage bien fait en Javascript
-description: c'est mon premier post alors faites vous plair les enfants
-pubdate: 2014-01-29T19:37:00.196Z
+categories: jekyll update
+description: JavaScript est un langage orienté objet mais ne dispose pas de classes. Comment donc faire de l'objet sans classes ?
 ---
+
 La plupart des langages orientés objet dispose d'un mécanisme simple pour définir les propriétés et méthodes d'un objet : les classes. Seulement JavaScript ne propose pas cette solution pour faire de l'objet mais propose à la place les prototypes.
 
 Avec JavaScript, il va falloir oublier la syntaxe à laquelle on est habitué avec des langages qui proposent des classes (PHP, C++, Java, Ruby ...) et qui groupent toute la définition d'une classe dans un seul bloc de code :

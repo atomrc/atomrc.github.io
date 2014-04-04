@@ -1,56 +1,27 @@
-<html>
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+---
+layout: default
+title: J'y suis JS
+---
 
-        <meta name="description" content="Et si on parlait un peu Javascript, AngularJS et code en général !">
-        <meta name="author" content="Thomas Belin">
-
-        <meta name="twitter:card" content="summary">
-        <meta name="twitter:title" content="Why So Curious ?">
-        <meta name="twitter:description" content="Et si on parlait un peu Javascript, AngularJS et code en général !">
-        <meta name="twitter:site" content="@ThomasBelin4">
-        <meta name="twitter:creator" content="@ThomasBelin4">
-        <meta name="twitter:image" content="http://thomasbelin.fr/images/avatar_o.jpeg">
-
-        <meta property="og:type" content="article">
-        <meta property="og:title" content="Why So Curious ?">
-        <meta property="og:description" content="Et si on parlait un peu Javascript, AngularJS et code en général !">
-        <meta property="og:image" content="http://thomasbelin.fr/images/avatar_o.jpeg">
-        <meta property="article:author" content="Thomas Belin">
-
-        <title>Why So Curious ?</title>
-        <link href="/css/application.css" type="text/css" rel="stylesheet">
-    </head>
-    <body>
-        <header>
-            <a href="/">Thomas Belin</a>
-        </header>
-        
-
-<ul>
-    
-        
-            <li>
-                <a href="/p/faire-la-part-belle-au-code">Faire la part belle au code</a>
-                <time datetime="Tue Oct 08 2013 22:16:47 GMT+0200 (CEST)" pubdate itemprop="datePublished" content="Tue Oct 08 2013 22:16:47 GMT+0200 (CEST)">
-                    08/10/2013
-                </time>
-            </li >
-        
-    
-        
-            <li>
-                <a href="/p/javascript-et-l-heritage">L&#x27;héritage bien fait en Javascript</a>
-                <time datetime="Wed Jan 29 2014 20:37:00 GMT+0100 (CET)" pubdate itemprop="datePublished" content="Wed Jan 29 2014 20:37:00 GMT+0100 (CET)">
-                    29/01/2014
-                </time>
-            </li >
-        
-    
-        
-    
+<ul id="posts-container">
+    {% for post in site.posts %}
+        <li class="card soft-box">
+            <div>
+                <a href="{{post.url}}"><strong>{{post.title}}</strong></a>
+            </div>
+            <time
+                datetime="{{post.date}}"
+                pubdate
+                itemprop="datePublished"
+                content="{{post.date}}">
+                {{ post.date | date_to_string }}
+            </time>
+            <aside>
+                {% for tag in post.categories %}
+                <span class="tag">{{ tag }}</span>&nbsp;
+                {% endfor %}
+            </aside>
+            <p class="description">{{post.description}}</p>
+        </li >
+    {% endfor %}
 </ul>
-
-
-    </body>
-</html>
