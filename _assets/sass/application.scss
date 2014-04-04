@@ -41,6 +41,10 @@ strong,
     text-shadow: 1px 1px 0 white;
 }
 
+h1 { font-size: 2em; }
+h2 { padding-left: 1em; }
+h3 { padding-left: 3em; }
+
 a { text-decoration:none; color: rgb(0, 132, 180); }
 ul { list-style: none; padding:0; }
 
@@ -182,12 +186,13 @@ time {
 #full-article {
     position: relative;
     text-align: center;
-    h1 {
-        font-size: 2em;
-    }
     article {
         margin: auto;
         text-align: justify;
+        ul {
+            list-style-type: disc;
+            padding: 0.5em 2em;
+        }
     }
 }
 

@@ -272,6 +272,15 @@ strong,
   font-weight: normal;
   text-shadow: 1px 1px 0 white; }
 
+h1 {
+  font-size: 2em; }
+
+h2 {
+  padding-left: 1em; }
+
+h3 {
+  padding-left: 3em; }
+
 a {
   text-decoration: none;
   color: #0084b4; }
@@ -392,11 +401,12 @@ time {
 #full-article {
   position: relative;
   text-align: center; }
-  #full-article h1 {
-    font-size: 2em; }
   #full-article article {
     margin: auto;
     text-align: justify; }
+    #full-article article ul {
+      list-style-type: disc;
+      padding: 0.5em 2em; }
 
 article pre {
   text-shadow: 1px 1px 0 white;
