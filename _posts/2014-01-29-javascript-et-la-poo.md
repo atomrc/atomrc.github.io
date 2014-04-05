@@ -1,6 +1,6 @@
 ---
 layout: post
-title: L'héritage bien fait en Javascript
+title: La notion de classe en Javascript
 categories: javascript
 description: JavaScript est un langage orienté objet mais ne dispose pas de classes. Comment donc faire de l'objet sans classes ?
 ---
