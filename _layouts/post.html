@@ -3,16 +3,27 @@ layout: default
 ---
 <div id="full-article" class="soft-box">
     <article>
-        <h1>{{page.title}}</h1>
-        <time datetime="{{page.date}}" pubdate itemprop="datePublished" content="{{page.date}}">
-            {{ page.date | date_to_string }}
-        </time>
-        <aside>
-            {% for tag in page.categories %}
-            <span class="tag">{{ tag }}</span>&nbsp;
-            {% endfor %}
-        </aside>
+        <header>
+            <h1>{{page.title}}</h1>
+            <time datetime="{{page.date}}" pubdate itemprop="datePublished" content="{{page.date}}">
+                {{ page.date | date_to_string }}
+            </time>
+            <aside>
+                {% for tag in page.categories %}
+                <span class="tag">{{ tag }}</span>&nbsp;
+                {% endfor %}
+            </aside>
+        </header>
         {{ content }}
-        <adresse>Thomas Belin</adresse>
+        <footer>
+            <img id="avatar" src="/images/avatar_s.jpeg">
+            <span rel="author">Thomas Belin</span>
+            <adresse>
+                Front End développeur chez <a href="http://www.doyoubuzz.com">DoYouBuzz. </a>Je <a href="/p/faire-la-part-belle-au-code">fais la part belle au code</a>. Je crois en la richesse du web. Je m'éclate avec Javascript.
+                <a href="https://twitter.com/ThomasBelin4">@ThomasBelin4</a>
+                <a href="https://plus.google.com/118010420630912086698?rel=author">+ThomaBelin</a>
+                <a href="https://github.com/thomasbelin4">Github</a>
+            </adresse>
+        </footer>
     </article>
 </div>

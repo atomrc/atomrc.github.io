@@ -297,13 +297,29 @@ time {
   font-size: 11pt;
   font-weight: bold; }
 
-.icon {
-  font-family: FontAwesome; }
+pre, code {
+  text-shadow: 1px 1px 0 white;
+  font-size: 11pt;
+  background-color: #F6F6F6;
+  border-radius: 3px;
+  border: solid 1px #DDD;
+  padding: 0.3em; }
 
-.sticky {
-  position: fixed !important;
-  top: 0 !important; }
+pre {
+  padding: 1.5em; }
 
+pre code {
+  background-color: transparent;
+  border: none;
+  padding: 0; }
+
+#avatar {
+  border: 3px solid #EEE;
+  border-radius: 50px; }
+
+/********************************
+********** Components ************
+*********************************/
 .soft-box {
   border: solid 1px #DDD;
   border-radius: 3px;
@@ -361,11 +377,6 @@ time {
     position: relative;
     margin: auto;
     width: 90%; }
-  #footer #avatar {
-    position: absolute;
-    top: -50px;
-    border: 3px solid #EEE;
-    border-radius: 50px; }
   #footer .catch {
     width: 500px;
     margin-left: 100px;
@@ -404,17 +415,11 @@ time {
   #full-article article {
     margin: auto;
     text-align: justify; }
+    #full-article article h1 {
+      text-align: left; }
     #full-article article ul {
       list-style-type: disc;
       padding: 0.5em 2em; }
-
-article pre {
-  text-shadow: 1px 1px 0 white;
-  font-size: 11pt;
-  padding: 1em;
-  background-color: #F6F6F6;
-  border-radius: 3px;
-  border: solid 1px #DDD; }
 
 /**
  * Flexible Google-style progress indicator

@@ -2,7 +2,7 @@
 layout: post
 title: Faire la part belle au code
 description: Quelque soit le language dans lequel vous codez, votre code est une part de vous ... faites lui donc la part belle.
-categories: jekyll update
+categories: [réflexion, code]
 ---
 Mon expérience de développeur est relativement jeune (cela fait maintenant 1 an que j'ai commencé mon premier job chez [DoYouBuzz](http://doyoubuzz.com)), mais s'il y a bien quelque chose que j'ai compris sur le code c'est qu'il est, avant tout, personnel.
 Grammaires de langage, conventions, algorithmes, snippets de code et linters sont autant d'outils qui cadrent l'écriture de code, et pourtant il reste une **infinité de liberté**.

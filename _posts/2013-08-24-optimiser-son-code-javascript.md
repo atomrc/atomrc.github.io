@@ -2,7 +2,7 @@
 layout: post
 title: Optimiser son code Javascript
 categories: [JavaScript, Code, Bonnes Pratiques]
-description: Javascript a été prévu pour être un langage très simple d'accès au détriment de ses performances. C'est donc a vous de faire quelques efforts pour avoir un code optimisé
+description: "Javascript a été prévu pour être un langage très simple d'accès au détriment de ses performances. C'est donc a vous de faire quelques efforts pour avoir un code optimisé"
 ---
 
 Javascript avait initialement été prévu pour être très facile d'accès. Seulement sa permissivité entraine également une réduction des performances globales et surtout la possibilité de faire du code très difficile à maintenir. Voila donc quelques conseils simples pour augmenter la lisibilité et la fiabilité de votre code et gagner un peu en performances.
