@@ -2,8 +2,6 @@
 layout: default
 title: J'y suis, JS
 description: Les pérégrinations d'un développeur front-end
-sitemap:
-    exclude: true
 ---
 
 <section class="list">
@@ -36,7 +34,7 @@ sitemap:
     <div class="section-header">Talks</div>
     <ul>
         {% for page in site.pages %}
-            {% unless page.sitemap.exclude %}
+            {% if page.sitemap.include %}
             <li class="card soft-box">
                 <div>
                     <a href="{{page.url | remove: 'index.html'}}"><strong>{{page.title}}</strong></a>
@@ -50,7 +48,7 @@ sitemap:
                 </time>
                 <p class="description">{{page.description}}</p>
             </li >
-            {% endunless %}
+            {% endif %}
         {% endfor %}
     </ul>
 </section>

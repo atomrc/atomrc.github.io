@@ -4,3 +4,5 @@ url: "http://blog.thomasbelin.fr"
 permalink: /p/:title
 highlighter: pygments
 exclude: [node_modules, package.json, Gruntfile.js]
+gems:
+  - jekyll-redirect-from
