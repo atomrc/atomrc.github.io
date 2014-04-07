@@ -1,7 +1,7 @@
 ---
 layout: post
 title: La notion de classe en Javascript
-categories: javascript
+categories: [javascript, internals]
 description: JavaScript est un langage orienté objet mais ne dispose pas de classes. Comment donc faire de l'objet sans classes ?
 ---
 

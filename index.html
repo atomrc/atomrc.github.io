@@ -5,25 +5,51 @@ sitemap:
     exclude: true
 ---
 
-<ul id="posts-container">
-    {% for post in site.posts %}
-        <li class="card soft-box">
-            <div>
-                <a href="{{post.url}}"><strong>{{post.title}}</strong></a>
-            </div>
-            <time
-                datetime="{{post.date}}"
-                pubdate
-                itemprop="datePublished"
-                content="{{post.date}}">
-                {{ post.date | date_to_string }}
-            </time>
-            <aside>
-                {% for tag in post.categories %}
-                <span class="tag">{{ tag }}</span>&nbsp;
-                {% endfor %}
-            </aside>
-            <p class="description">{{post.description}}</p>
-        </li >
-    {% endfor %}
-</ul>
+<section class="list">
+    <div class="section-header">Articles</div>
+    <ul>
+        {% for post in site.posts %}
+            <li class="card soft-box">
+                <div>
+                    <a href="{{post.url}}"><strong>{{post.title}}</strong></a>
+                </div>
+                <time
+                    datetime="{{post.date | date_to_xmlschema}}"
+                    pubdate
+                    itemprop="datePublished"
+                    content="{{post.date | date_to_xmlschema}}">
+                    {{ post.date | date_to_string }}
+                </time>
+                <aside>
+                    {% for tag in post.categories %}
+                    <span class="tag">{{ tag }}</span>&nbsp;
+                    {% endfor %}
+                </aside>
+                <p class="description">{{post.description}}</p>
+            </li >
+        {% endfor %}
+    </ul>
+</section>
+
+<section class="list">
+    <div class="section-header">Talks</div>
+    <ul>
+        {% for page in site.pages %}
+            {% unless page.sitemap.exclude %}
+            <li class="card soft-box">
+                <div>
+                    <a href="{{page.url | remove: 'index.html'}}"><strong>{{page.title}}</strong></a>
+                </div>
+                <time
+                    datetime="{{page.date | date_to_xmlschema}}"
+                    pubdate
+                    itemprop="datePublished"
+                    content="{{page.date | date_to_xmlschema}}">
+                    {{ page.date | date_to_string }}
+                </time>
+                <p class="description">{{page.description}}</p>
+            </li >
+            {% endunless %}
+        {% endfor %}
+    </ul>
+</section>

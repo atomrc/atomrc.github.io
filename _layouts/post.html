@@ -14,6 +14,13 @@ layout: default
                 {% endfor %}
             </aside>
         </header>
+        {% if page.notices %}
+            {% for notice in page.notices %}
+            <div class="notice">
+                {{ notice | markdownify }}
+            </div>
+            {% endfor %}
+        {% endif %}
         {{ content }}
         <footer>
             <img id="avatar" src="/images/avatar_s.jpeg">
@@ -24,7 +31,7 @@ layout: default
                 Je crois en la richesse du web. <br>
                 Je m'éclate avec Javascript.<br>
                 <a href="https://twitter.com/ThomasBelin4">@ThomasBelin4</a>
-                <a href="https://plus.google.com/118010420630912086698?rel=author">+ThomaBelin</a>
+                <a href="https://plus.google.com/+ThomasBelin?rel=author">+ThomaBelin</a>
                 <a href="https://github.com/thomasbelin4">Github</a>
             </adresse>
         </footer>

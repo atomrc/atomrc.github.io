@@ -73,12 +73,6 @@ pre code {
     padding: 0;
 }
 
-#avatar {
-    border: 3px solid #EEE;
-    border-radius: 50px;
-    float: left;
-}
-
 /********************************
 ********** Components ************
 *********************************/
@@ -105,6 +99,10 @@ pre code {
 //.facebook { color: rgba(36, 71, 134, 1);}
 .facebook:before { content: "\f09a"; }
 
+/*****************************
+*********** Common ***********
+*****************************/
+
 .provider {
     border-radius: 5px;
     padding: 5px 0;
@@ -124,14 +122,6 @@ pre code {
     }
 }
 
-#top-wrapper {
-    min-height: 100%;
-    margin: 0px 0px -235px 0px;
-}
-#filler {
-    height: 235px;
-}
-
 #header {
     //text-align: center;
     //background-color: white;
@@ -145,129 +135,23 @@ pre code {
     }
 }
 
-#footer {
-    margin-top: 100px;
-    background-color: #666;
-    color: #EEE;
-    .container {
-        padding: 0 0 20px 0;
-        position: relative;
-        margin: auto;
-        width: 90%;
-    }
-    .catch {
-        width: 500px;
-        margin-left: 100px;
-        padding: 20px;
-    }
-    .social {
-        font-size: 30pt;
-        position: absolute;
-        top: -0.5em;
-        right: 0;
-        text-align: right;
-        a {
-            color: #EEE;
-            padding: 10px;
-            border-radius: 1em;
-            border: 3px solid #EEE;
-            background-color: #666;
-        }
-    }
+.tag {
+    background: $coolblue;
+    color: white;
+    padding: 1px 5px;
+    font-size: 11pt;
 }
 
-#full-article, #disqus_thread, .related-posts {
-    width: 800px;
-    margin: auto;
-    padding: 2em;
-}
-
-.related-posts {
-    border: 1px solid rgb(204, 204, 204);
-    border-radius: 5px;
-    background-color: rgb(221, 221, 221);
-    padding-top: 1em;
-    padding-bottom: 1em;
-    margin: 10px auto;
-    .title {
-        font-size: 16pt;
-    }
-}
-
-#full-article {
-    position: relative;
+/*****************************
+*********** Home *************
+*****************************/
+section {
     text-align: center;
-    article {
-        margin: auto;
-        text-align: justify;
-        h1 {
-            text-align: left;
-        }
-        ul {
-            list-style-type: disc;
-            padding: 0.5em 2em;
-        }
+    .section-header {
+        font-weight: bold;
+        text-shadow: 1px 1px 0 white;
+        font-size: 17pt;
     }
-}
-
-/**
- * Flexible Google-style progress indicator
- */
-
-@keyframes progress {
-    50% { border-width: .5em 0; }
-    to { border-width: .5em 0 0 0; }
-}
-
-@keyframes rotate {
-    to { transform: rotate(-270deg); }
-}
-
-.progress {
-    display: inline-block;
-    font-size: 18pt; /* Size of the progress indicator */
-    &.small { font-size: inherit; }
-    &.medium { font-size: 20pt; }
-    &.big { font-size: 50pt; }
-    width: 1em; height: 1em;
-    border: solid #EEE;
-    border-top-color: $coolblue;
-    border-width: 0 0 .5em 0;
-    border-radius: 50%;
-    background-image: linear-gradient(#EEE 50%,$coolblue 50%);
-    background-origin: border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    margin: .1em .2em;
-    transform: rotate(90deg);
-    animation: rotate 1.4s steps(4) infinite,
-               progress .35s linear infinite alternate;
-    text-indent: 99em;
-    overflow: hidden;
-}
-
-
-#content {
-    margin: 0 3%;
-    /*&.ng-leave {
-        position: relative;
-        left: 100%;
-        @include transition(left, 1s);
-        &.ng-leave-active {
-            left: 0;
-        }
-    }*/
-}
-
-#posts-container {
-    text-align: center;
-}
-
-.section-title {
-    padding-top: 20px;
-    //color: #999;
-    font-size: 25pt;
 }
 
 .card {
@@ -283,15 +167,49 @@ pre code {
         box-shadow: 2px 2px 5px #CCC;
         @include transform(translate(-2px, -2px));
     }
-
     .description {
         font-size: 11pt;
     }
 }
-
-.tag {
-    background: $coolblue;
-    color: white;
-    padding: 1px 5px;
-    font-size: 11pt;
+/*****************************
+Articles
+*****************************/
+#full-article, #disqus_thread {
+    width: 800px;
+    margin: auto;
+    padding: 2em;
 }
+
+#full-article {
+    position: relative;
+    text-align: center;
+    article {
+        margin: auto;
+        text-align: justify;
+        .notice {
+            background-color: rgb(242, 191, 134);
+            border-radius: 5px;
+            padding: 5px;
+            margin: 5px;
+            border: solid 1px rgba(102, 72, 21, 1);
+            color: rgba(102, 72, 21, 1);
+            p {
+                margin: 0;
+            }
+        }
+        h1 {
+            text-align: left;
+        }
+        ul {
+            list-style-type: disc;
+            padding: 0.5em 2em;
+        }
+    }
+}
+
+#avatar {
+    border: 3px solid #EEE;
+    border-radius: 50px;
+    float: left;
+}
+

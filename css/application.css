@@ -313,11 +313,6 @@ pre code {
   border: none;
   padding: 0; }
 
-#avatar {
-  border: 3px solid #EEE;
-  border-radius: 50px;
-  float: left; }
-
 /********************************
 ********** Components ************
 *********************************/
@@ -339,6 +334,9 @@ pre code {
 .facebook:before {
   content: "\f09a"; }
 
+/*****************************
+*********** Common ***********
+*****************************/
 .provider {
   border-radius: 5px;
   padding: 5px 0;
@@ -354,13 +352,6 @@ pre code {
   .provider.facebook {
     background-color: #244786; }
 
-#top-wrapper {
-  min-height: 100%;
-  margin: 0px 0px -235px 0px; }
-
-#filler {
-  height: 235px; }
-
 #header {
   padding: 1em 0 1em 0;
   text-align: center; }
@@ -369,115 +360,21 @@ pre code {
     color: inherit;
     font-weight: bold; }
 
-#footer {
-  margin-top: 100px;
-  background-color: #666;
-  color: #EEE; }
-  #footer .container {
-    padding: 0 0 20px 0;
-    position: relative;
-    margin: auto;
-    width: 90%; }
-  #footer .catch {
-    width: 500px;
-    margin-left: 100px;
-    padding: 20px; }
-  #footer .social {
-    font-size: 30pt;
-    position: absolute;
-    top: -0.5em;
-    right: 0;
-    text-align: right; }
-    #footer .social a {
-      color: #EEE;
-      padding: 10px;
-      border-radius: 1em;
-      border: 3px solid #EEE;
-      background-color: #666; }
+.tag {
+  background: #72a6fc;
+  color: white;
+  padding: 1px 5px;
+  font-size: 11pt; }
 
-#full-article, #disqus_thread, .related-posts {
-  width: 800px;
-  margin: auto;
-  padding: 2em; }
-
-.related-posts {
-  border: 1px solid #cccccc;
-  border-radius: 5px;
-  background-color: #dddddd;
-  padding-top: 1em;
-  padding-bottom: 1em;
-  margin: 10px auto; }
-  .related-posts .title {
-    font-size: 16pt; }
-
-#full-article {
-  position: relative;
+/*****************************
+*********** Home *************
+*****************************/
+section {
   text-align: center; }
-  #full-article article {
-    margin: auto;
-    text-align: justify; }
-    #full-article article h1 {
-      text-align: left; }
-    #full-article article ul {
-      list-style-type: disc;
-      padding: 0.5em 2em; }
-
-/**
- * Flexible Google-style progress indicator
- */
-@keyframes progress {
-  50% {
-    border-width: .5em 0; }
-
-  to {
-    border-width: .5em 0 0 0; } }
-@keyframes rotate {
-  to {
-    transform: rotate(-270deg); } }
-.progress {
-  display: inline-block;
-  font-size: 18pt;
-  /* Size of the progress indicator */
-  width: 1em;
-  height: 1em;
-  border: solid #EEE;
-  border-top-color: #72a6fc;
-  border-width: 0 0 .5em 0;
-  border-radius: 50%;
-  background-image: linear-gradient(#eeeeee 50%, #72a6fc 50%);
-  background-origin: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  margin: .1em .2em;
-  transform: rotate(90deg);
-  animation: rotate 1.4s steps(4) infinite, progress 0.35s linear infinite alternate;
-  text-indent: 99em;
-  overflow: hidden; }
-  .progress.small {
-    font-size: inherit; }
-  .progress.medium {
-    font-size: 20pt; }
-  .progress.big {
-    font-size: 50pt; }
-
-#content {
-  margin: 0 3%;
-  /*&.ng-leave {
-      position: relative;
-      left: 100%;
-      @include transition(left, 1s);
-      &.ng-leave-active {
-          left: 0;
-      }
-  }*/ }
-
-#posts-container {
-  text-align: center; }
-
-.section-title {
-  padding-top: 20px;
-  font-size: 25pt; }
+  section .section-header {
+    font-weight: bold;
+    text-shadow: 1px 1px 0 white;
+    font-size: 17pt; }
 
 .card {
   text-align: left;
@@ -500,8 +397,36 @@ pre code {
   .card .description {
     font-size: 11pt; }
 
-.tag {
-  background: #72a6fc;
-  color: white;
-  padding: 1px 5px;
-  font-size: 11pt; }
+/*****************************
+Articles
+*****************************/
+#full-article, #disqus_thread {
+  width: 800px;
+  margin: auto;
+  padding: 2em; }
+
+#full-article {
+  position: relative;
+  text-align: center; }
+  #full-article article {
+    margin: auto;
+    text-align: justify; }
+    #full-article article .notice {
+      background-color: #f2bf86;
+      border-radius: 5px;
+      padding: 5px;
+      margin: 5px;
+      border: solid 1px #664815;
+      color: #664815; }
+      #full-article article .notice p {
+        margin: 0; }
+    #full-article article h1 {
+      text-align: left; }
+    #full-article article ul {
+      list-style-type: disc;
+      padding: 0.5em 2em; }
+
+#avatar {
+  border: 3px solid #EEE;
+  border-radius: 50px;
+  float: left; }

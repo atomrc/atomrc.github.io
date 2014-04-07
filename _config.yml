@@ -1,6 +1,6 @@
 name: J'y suis, JS
 markdown: redcarpet
-url: "http://thomasbelin.fr"
+url: "http://blog.thomasbelin.fr"
 permalink: /p/:title
 highlighter: pygments
 exclude: [node_modules, package.json, Gruntfile.js]
