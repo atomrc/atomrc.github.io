@@ -175,13 +175,10 @@ section {
 /*****************************
 Articles
 *****************************/
-#full-article, #disqus_thread {
+#full-article {
     max-width: 800px;
     margin: auto;
     padding: 1.5em;
-}
-
-#full-article {
     position: relative;
     text-align: center;
     article {

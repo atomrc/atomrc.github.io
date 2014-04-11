@@ -401,12 +401,10 @@ section {
 /*****************************
 Articles
 *****************************/
-#full-article, #disqus_thread {
+#full-article {
   max-width: 800px;
   margin: auto;
-  padding: 1.5em; }
-
-#full-article {
+  padding: 1.5em;
   position: relative;
   text-align: center; }
   #full-article article {
