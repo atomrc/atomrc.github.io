@@ -205,6 +205,12 @@ Articles
             list-style-type: disc;
             padding: 0.5em 2em;
         }
+        img {
+            box-shadow: 0 0 10px black;
+            display: block;
+            max-width: 90%;
+            margin: auto;
+        }
     }
 }
 

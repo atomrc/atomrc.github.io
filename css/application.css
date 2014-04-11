@@ -426,6 +426,11 @@ Articles
     #full-article article ul {
       list-style-type: disc;
       padding: 0.5em 2em; }
+    #full-article article img {
+      box-shadow: 0 0 10px black;
+      display: block;
+      max-width: 90%;
+      margin: auto; }
 
 #avatar {
   border: 3px solid #EEE;
