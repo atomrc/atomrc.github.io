@@ -104,5 +104,5 @@ Retour sur l'interface de Bamboo, on va pouvoir créer une nouvelle image. Rien 
 
 Arrivé ici, on a réussi à configurer une image système sur Amazon qui va nous permettre de jouer les builds de notre projet automatiquement. Je vous propose donc de passer à la suite : 
 
-- jouer et interpréter des tests Atoum dans Bamboo (en cours d'écriture) ;
+- [Bamboo et les tests Atoum](/p/lancer-des-tests-atoum-dans-bamboo) ;
 - jouer et interpréter des tests Karma dans Bamboo (en cours d'écriture).

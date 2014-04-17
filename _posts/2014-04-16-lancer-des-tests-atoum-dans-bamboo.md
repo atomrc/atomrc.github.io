@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Lancement de tests Atoum dans Bamboo
+title: Bamboo et les tests Atoum
 categories: [php, atoum, bamboo, integration continue]
 description: Configurer votre serveur Bamboo pour jouer et interpréter vos tests Atoum
 ---
