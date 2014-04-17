@@ -14,6 +14,7 @@ layout: default
                 {% endfor %}
             </aside>
         </header>
+        <div class="article-body">
         {% if page.notices %}
             {% for notice in page.notices %}
             <div class="notice">
@@ -22,17 +23,19 @@ layout: default
             {% endfor %}
         {% endif %}
         {{ content }}
+        </div>
         <footer>
             <img id="avatar" src="/images/avatar_s.jpeg">
-            <div rel="author">Thomas Belin</div>
+            <div><b>{ <span rel="author">Thomas Belin</span> }</b></div><br>
             <adresse>
-                Front End développeur chez <a href="http://www.doyoubuzz.com">DoYouBuzz. </a><br>
-                Je <a href="/p/faire-la-part-belle-au-code">fais la part belle au code</a>.<br>
-                Je crois en la richesse du web. <br>
+                Front End développeur chez <a href="http://www.doyoubuzz.com" target="_blank">DoYouBuzz</a> |
+                Je <a href="/p/faire-la-part-belle-au-code">fais la part belle au code</a> |
+                Je crois en la richesse du web |
                 Je m'éclate avec Javascript.<br>
-                <a href="https://twitter.com/ThomasBelin4">@ThomasBelin4</a>
-                <a href="https://plus.google.com/+ThomasBelin?rel=author">+ThomaBelin</a>
-                <a href="https://github.com/thomasbelin4">Github</a>
+                Retrouvez moi :
+                <a href="https://twitter.com/ThomasBelin4" target="_blank">@ThomasBelin4</a>
+                <a href="https://plus.google.com/+ThomasBelin?rel=author" target="_blank">+ThomaBelin</a>
+                <a href="https://github.com/thomasbelin4" target="_blank">Github</a>
             </adresse>
         </footer>
         <br>

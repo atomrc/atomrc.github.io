@@ -404,33 +404,31 @@ Articles
 #full-article {
   max-width: 800px;
   margin: auto;
-  padding: 1.5em;
-  position: relative;
-  text-align: center; }
-  #full-article article {
-    margin: auto;
+  padding: 1.5em; }
+  #full-article .article-body {
     text-align: justify; }
-    #full-article article .notice {
+    #full-article .article-body .notice {
       background-color: #f2bf86;
       border-radius: 5px;
       padding: 5px;
       margin: 5px;
       border: solid 1px #664815;
       color: #664815; }
-      #full-article article .notice p {
-        margin: 0; }
-    #full-article article h1 {
-      text-align: left; }
-    #full-article article ul {
+    #full-article .article-body ul {
       list-style-type: disc;
       padding: 0.5em 2em; }
-    #full-article article img {
+    #full-article .article-body img {
       box-shadow: 0 0 10px black;
       display: block;
       max-width: 90%;
       margin: auto; }
+  #full-article footer {
+    border-top: solid 1px #CCC;
+    padding-top: 1em;
+    margin: 2em 1em; }
 
 #avatar {
+  margin: 1em;
   border: 3px solid #EEE;
   border-radius: 50px;
   float: left; }
