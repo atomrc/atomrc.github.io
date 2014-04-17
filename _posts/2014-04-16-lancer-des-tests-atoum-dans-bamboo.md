@@ -1,6 +1,5 @@
 ---
 layout: post
-published: false
 title: Lancement de tests Atoum dans Bamboo
 categories: [php, atoum, bamboo, integration continue]
 description: Configurer votre serveur Bamboo pour jouer et interpréter vos tests Atoum
@@ -19,7 +18,7 @@ Le script à exécuter pour lancer les tests Atoum dans Bamboo :
 php  bin/atoum -c path/to/config.php -d path/to/tests/units 2> /dev/null; exit 0;
 ```
 
-La config d'Atoum pour générer un rapport au format XUnit :
+La config d'Atoum pour générer un rapport au format xUnit :
 
 ```php
 <?php
@@ -64,7 +63,7 @@ En réalité, quand vous ajouter un script comme "Task" de Bamboo, Bamboo s'atte
 
 Bamboo vous permet d'ajouter un ou plusieurs rapports de tests qui seront interprétés pendant un "Job".
 
-Pour générer un rapport avec Atoum, il vous suffit d'ajouter ces lignes dans votre fichier de configuration (code issu de la [documentation Atoum](http://docs.atoum.org/fr/chapitre4.html#Etape-1-Ajout-d-un-rapport-xUnit-a-la-configuration-atoum))
+Pour générer un rapport au format xUnit avec Atoum, il vous suffit d'ajouter ces lignes dans votre fichier de configuration (code issu de la [documentation Atoum](http://docs.atoum.org/fr/chapitre4.html#Etape-1-Ajout-d-un-rapport-xUnit-a-la-configuration-atoum))
 
 ```php
 <?php
@@ -88,10 +87,10 @@ Ensuite, dans Bamboo, on va rajouter un parser pour le rapport qui sera génér�
 
 ![JUnit parser Bamboo](http://i.imgur.com/IdR8Ieq.png)
 
-Le plus simple est de faire un répertoire dans lequel on va mettre tous les rapports de tests de tous nos différents frameworks de test pour que Bamboo les interpretes tous d'un coup. On va donc mettre, dans le champ "Specify custom results directories" `/chemin/vers/le/rapport/*.xunit.xml`
+Le plus simple est de faire un répertoire dans lequel on va mettre tous les rapports de tests de tous nos différents frameworks de test pour que Bamboo les interprètes tous d'un coup. On va donc mettre, dans le champ "Specify custom results directories" `/chemin/vers/le/rapport/*.xunit.xml`
 
 Ainsi tous les rapports de tests avec l'extension `.xunit.xml` qui seront ajoutés au répertoire `/chemin/vers/le/rapport` seront interprétés par Bamboo.
 
 ##Pour aller plus loin
 
-Vous pouvez demander à Atoum de générer un rapport de couverture de code à la fin de vos tests. Bamboo est tout à fait capable d'interpreter ce rapport. malheureusement, je n'ai pas vraiment pu explorer cette piste à fond puisque une fois l'extension php xdebug installée sur notre serveur, les tests utilisent trop de mémoire sur notre micro instance Amazon qui bloque le build en cours côté Bamboo.
+Vous pouvez demander à Atoum de générer un rapport de couverture de code à la fin de vos tests. Bamboo est tout à fait capable d'interpréter ce rapport. malheureusement, je n'ai pas vraiment pu explorer cette piste à fond puisque une fois l'extension php `xdebug` installée sur notre serveur, les tests utilisent trop de mémoire sur notre instance micro Amazon qui bloque le build en cours côté Bamboo.
