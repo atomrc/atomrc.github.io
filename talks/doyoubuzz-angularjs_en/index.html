@@ -2,7 +2,7 @@
 title: "doyoubuzz + angularjs [en]"
 date: 2014/04/13
 sitemap:
-    include: false
+    include: true
 ---
 <!doctype html>
 <html lang="fr">
@@ -69,9 +69,9 @@ sitemap:
                 <ul>
                     <li class="substep s1">5000 lines of JS code</li>
                     <li class="substep s2">completly based on jQuery</li>
-                    <li class="substep s3">no organisation of the code</li>
+                    <li class="substep s3">no structure of the code</li>
                     <li class="substep s4">highly dependant on the DOM structure</li>
-                    <li class="substep s5">the DOM is highly dependant on the serveur routes</li>
+                    <li class="substep s5">the DOM is highly dependant on the server's routes</li>
                 </ul>
             <br>
             <pre class="substep x3" style="font-size: 15pt; line-height: 1.5em"><code data-language="javascript">$('a.widget.edit').click(function () {
@@ -177,7 +177,7 @@ sitemap:
                 <li class="substep s1">not just a library but a complete framework</li>
                 <li class="substep s2">dependancies injection</li>
                 <li class="substep s3">ready for testing</li>
-                <li class="substep s4">une communauté hyper-active (supported by <img style="width: 100px; margin-bottom: -10px;" src="./images/google.jpg">).</li>
+                <li class="substep s4">an hyperactive community (supported by <img style="width: 100px; margin-bottom: -10px;" src="./images/google.jpg">).</li>
             </ul>
 
             <pre class="substep x1"><code data-language="javascript">angular
@@ -197,19 +197,19 @@ sitemap:
 ];</code></pre>
 
             <br>
-            <img class="substep x4" src="./images/angular.github.contributors.png">
+            <img class="substep x4" src="./images/angular.github.contributors.jpeg">
             <img class="substep x4" src="./images/angular.github.activity.png">
         </div>
 
         <div class="step slide" data-scale="0.3">
             <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"></h2>
-            <q>Mais encore :</q>
+            <q>And more :</q>
             <ul style="font-size: 40pt">
                 <li>pure vanillaJS</li>
                 <li>MDV (model driven view)</li>
                 <li>library agnostic</li>
-                <li>extension d'HTML</li>
-                <li>interface déclarative</li>
+                <li>built as an extention of HTML</li>
+                <li>declarative interface</li>
             </ul>
             <br>
         </div>
@@ -221,14 +221,14 @@ sitemap:
                     <td>
                         <h3>Directives</h3>
                         <ul>
-                            <li>tout ce qui concerne le DOM</li>
+                            <li>Everything about the DOM</li>
                         </ul>
                     </td>
                     <td>
                         <h3>Services</h3>
                         <ul>
-                            <li>tout le code métier</li>
-                            <li>la mémoire partagée de l'application</li>
+                            <li>All the logic of the application</li>
+                            <li>also the shared memory of the application</li>
                         </ul>
                     </td>
                 </tr>
@@ -236,14 +236,14 @@ sitemap:
                     <td>
                         <h3>Controllers</h3>
                         <ul>
-                            <li>Le lien entre le DOM et les données</li>
-                            <li>responsable de la création des scopes</li>
+                            <li>The link between the DOM and the datas</li>
+                            <li>responsible for the publication of the scope</li>
                         </ul>
                     </td>
                     <td>
-                        <h3>Bonus</h3>
+                        <h3>Misc</h3>
                         <ul>
-                            <li>API globale</li>
+                            <li>global API</li>
                             <li>resources</li>
                             <li>animations</li>
                             <li>...</li>
@@ -254,7 +254,7 @@ sitemap:
         </div>
 
         <div class="step slide" data-scale="0.3" data-steps=4>
-            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : les scopes</h2>
+            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : the scopes</h2>
             <div style="position: relative;">
                 <img src="./images/dyb.v2.png" style="width: 100%;">
                 <div class="controller resume-controller-wrapper substep s1">&nbsp;</div>
@@ -288,7 +288,7 @@ sitemap:
         </div>
 
         <div class="step slide" data-scale="0.3">
-            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : les scopes</h2>
+            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : the scopes</h2>
             <div style="position: relative;">
                 <img src="./images/dyb.v2.widget-hover.png" style="width: 100%;">
                 <div class="controller resume-controller-wrapper" style="border-width: 1px">&nbsp;</div>
@@ -305,10 +305,10 @@ sitemap:
         </div>
 
         <div class="step slide" data-scale="0.3" data-steps=2>
-            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : les scopes</h2>
-            <p>Héritage de prototype</p>
+            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : the scopes</h2>
+            <p>prototype inheritance</p>
             <pre class="substep x1"><code data-language="javascript">{
-    //le prototype du widgetController
+    //widgetController's prototype
     type: String,
     elements: Array,
     create: function () {},
@@ -318,14 +318,14 @@ sitemap:
 }
 </code></pre>
             <pre class="substep x2"><code data-language="javascript">{
-    //le prototype du widgetController
+    //widgetController's prototype
     type: String,
     elements: Array,
     create: function () {},
     //[...]
     remove: function (element) {},
     sort: function () {},
-    //héritage du prototype du resumeController
+    //inherited resumeController's prototype
     __proto__: {
         resume: Object
         createElement: function (type) {}
@@ -338,7 +338,7 @@ sitemap:
         </div>
 
         <div class="step slide" data-scale="0.3">
-            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : les services</h2>
+            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : the services</h2>
             <br><br><br>
             <br>
             <pre><code data-language="javascript">
@@ -351,7 +351,7 @@ sitemap:
         </div>
 
         <div class="step slide" data-scale="0.3">
-            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : les services</h2>
+            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : the services</h2>
             <pre style="line-height: 1.5em; font-size: 17pt;"><code data-language="javascript">
 /* service : widgetsManager */
     create: function (type) {
@@ -373,8 +373,27 @@ sitemap:
         </div>
 
         <div class="step slide" data-scale="0.3">
-            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : les services</h2>
-            <q>Le widgetsManager</q>
+            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : the services</h2>
+            <q>the unit test</q>
+            <pre><code style="font-size: 14pt;" data-language="javascript">
+it('should not create if user exceeded limitation', inject(function (widgetsManager, offerManager) {
+    offerManager.offer.nbSkills = 2;
+
+    widgetsManager.create('skills');
+    expect(widgetsManager.widgets.skills.length).toBe(1);
+
+    widgetsManager.create('skills');
+    expect(widgetsManager.widgets.skills.length).toBe(2);
+
+    widgetsManager.create('skills');
+    expect(widgetsManager.widgets.skills.length).toBe(2);
+}));
+            </code></pre>
+        </div>
+
+        <div class="step slide" data-scale="0.3">
+            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : the services</h2>
+            <q>the widgetsManager</q>
             <pre><code data-language="javascript">
 {
     widgets: { skills: [], portfolios: [] },
@@ -388,7 +407,7 @@ sitemap:
         </div>
 
         <div class="step slide" data-scale="0.3">
-            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : les services</h2>
+            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : the services</h2>
             <div id="services-demo-app">
                 <div style="text-align: center;">
 <pre style="text-align: left; font-size: 13pt; line-height: 1.5em; margin: 10px;"><code data-language="javascript">/* dataManager */
@@ -396,7 +415,7 @@ return {
     datas: [],
     add: function (element) {
         if (this.datas.length >= 3) {
-            return window.alert('dataManager dit : STOP je n\'ajouterai rien de plus');
+            return window.alert('dataManager says : STOP I wont add anything more');
         }
         this.datas.push(element);
     }
@@ -412,7 +431,7 @@ scope.addElement = function (element) {
     dataManager.add(element);
 };
 </code></pre>
-                            <div data-ng-repeat="element in elements" style="color: {{ element.color }}">☺</div>
+                            <div data-ng-repeat="element in elements" data-ng-style="{color: element.color}">☺</div>
                             <button data-ng-click="addElement({ color: 'green' });">addElement('green')</button>
                         </td>
                         <td data-ng-controller="secondController" style="width: 50%; border: solid 1px red; padding: 10px;">
@@ -422,16 +441,43 @@ scope.addThing = function (thing) {
     dataManager.add(thing);
 };
 </code></pre>
-                            <div data-ng-repeat="thing in things" style="color: {{ thing.color }}">☺</div>
+                            <div data-ng-repeat="thing in things" data-ng-style="{color: thing.color};">☺</div>
                             <button data-ng-click="addThing({ color: 'red' });">addThing('red')</button>
                         </td>
                     </tr>
                 </table>
             </div>
         </div>
+
         <div class="step slide" data-scale="0.3">
-            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : les ressources</h2>
-            <Q>Le seul lien client &lt;-&gt; serveur</Q>
+            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : the services</h2>
+            <q>the unit test</q>
+            <pre><code style="font-size: 14pt; line-height: 1.25em;" data-language="javascript">
+it('should not create if user exceeded limitation', inject(function ($window, dataManager) {
+
+    spyOn($window, "alert").and.callFake(function() {
+      return true;
+    });
+
+    datasManager.add({color: 'green'});
+    expect(datasManager.datas.length).toBe(1);
+
+    datasManager.add({color: 'red'});
+    expect(datasManager.datas.length).toBe(2);
+
+    datasManager.add({color: 'purple'});
+    expect(datasManager.datas.length).toBe(3);
+
+    datasManager.add({color: 'grey'});
+    expect(datasManager.datas.length).toBe(3);
+    expect($window.alert).toHaveBeenCalled();
+}));
+            </code></pre>
+        </div>
+
+        <div class="step slide" data-scale="0.3">
+            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : resources</h2>
+            <Q>The only bound client &lt;-&gt; server</Q>
             <pre><code data-language="javascript">var Widget = $resource(
     '/cv/:resumeId/:type/:id/:action',
     { type: type, resumeId: 12, id: '@id' },
@@ -449,7 +495,7 @@ scope.addThing = function (thing) {
         </div>
 
         <div class="step slide" data-scale="0.3">
-            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : les ressources</h2>
+            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : resources</h2>
             <br><br>
             <pre><code data-language="javascript">
 var w = new Widget({ type: ‘skills’, title: ‘felix’ });
@@ -461,12 +507,12 @@ w.$update(); //PUT -&gt; /cv/12/skills/1
 
 
         <div class="step" id="contrainte" data-scale="0.3" data-x="-400" data-y="2200" data-z="-1000" data-rotate-x="45">
-            <h3 class="subtitle">La contrainte</h3>
+            <h3 class="subtitle">The constraint</h3>
         </div>
 
         <div class="step" data-scale="0.3" data-x="-400" data-y="2200" data-z="-800" data-steps=2>
-            <q style="display: block; width: 100%; margin-top: 25%; text-align: center;" class="substep x1 fade"><samp>CV en mode 'édition' <br> === <br> CV en mode 'vue'</samp></q>
-            <q style="display: block; width: 100%; text-align: center; font-size: 60pt; font-weigth: bold;" class="substep s2 fade">Sans <img style="height: 1em;" src="./images/angularjs.png"> en mode vue !!</q>
+            <q style="display: block; width: 100%; margin-top: 25%; text-align: center;" class="substep x1 fade"><samp>Resume in 'edit' mode <br> === <br> Resume in 'view' mode </samp></q>
+            <q style="display: block; width: 100%; text-align: center; font-size: 60pt; font-weigth: bold;" class="substep s2 fade">without <img style="height: 1em;" src="./images/angularjs.png"> in view mode !!</q>
         </div>
 
 
@@ -477,7 +523,7 @@ w.$update(); //PUT -&gt; /cv/12/skills/1
         </div>
 
         <div class="step slide increment" data-scale="0.3" data-steps=8>
-            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : mode édition</h2>
+            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : edit mode </h2>
             <div class="edit-layout anim">
                 <img src="./images/filling/cv.layout.png" style="width: 100%">
                 <div class="anim widgets-views">
@@ -487,7 +533,7 @@ w.$update(); //PUT -&gt; /cv/12/skills/1
                 </div>
             </div>
 
-            <div class="anim forgot-smthg http-request">T'as&nbsp;pas&nbsp;oublié&nbsp;qqchose&nbsp;? </div>
+            <div class="anim forgot-smthg http-request">I&nbsp;think&nbsp;you&nbsp;forgot&nbsp;something? </div>
 
             <div class="js-libs anim">
                 <img src="./images/jsfile.png">
@@ -502,7 +548,7 @@ w.$update(); //PUT -&gt; /cv/12/skills/1
                 </div>
             </div>
 
-            <div class="anim send-cv http-request">Tu&nbsp;peux&nbsp;m'envoyer&nbsp;le&nbsp;CV&nbsp;? </div>
+            <div class="anim send-cv http-request">Can&nbsp;you&nbsp;send&nbsp;me&nbsp;the&nbsp;resume? </div>
 
             <div class="anim cv-json"><pre><code data-language="javascript">{
     widgets: [...],
@@ -512,7 +558,7 @@ w.$update(); //PUT -&gt; /cv/12/skills/1
         </div>
 
         <div class="step slide increment" data-scale="0.3" data-steps=2>
-            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : mode vue</h2>
+            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : view mode </h2>
             <div class="edit-layout anim">
                 <img src="./images/filling/cv.full.png" style="width: 100%">
             </div>
@@ -522,44 +568,39 @@ w.$update(); //PUT -&gt; /cv/12/skills/1
         </div>
 
         <div class="step slide counters-trigger" data-scale="0.3">
-            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : la contrainte</h2>
-            <q style="text-align: center">Chaque mois :</q>
+            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : the constraint</h2>
+            <q style="text-align: center">Each month :</q>
             <table class="flip-counter-table" style="text-align: center; width: 100%">
                 <tr>
                     <td><div class="flip-counter" id="editors-flip-counter"></div></td>
                     <td><div class="flip-counter" id="visitors-flip-counter"></div></td>
                 </tr>
                 <tr style="font-size: 40pt; font-weight: bold;">
-                    <td>CV Edités</td>
-                    <td>CV vus</td>
+                    <td>Resumes edited</td>
+                    <td>Resumes viewed</td>
                 </tr>
             </table>
         </div>
 
         <div class="step slide counters-trigger" data-scale="0.3">
-            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : la problématique</h2>
-            <q>Comment rendre de façon identique des vues qui sont générées à la fois en front et en back ?</q>
+            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : Problem</h2>
+            <q>How to render views generated on server side and views generated on client side exactly the same ?</q>
         </div>
 
         <div class="step slide" data-scale="0.3" data-steps=5>
-            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : la contrainte</h2>
-            <q>Plusieurs possibilités pour le rendu :</q>
+            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : Problem</h2>
+            <q>Many possibilities</q>
             <ul>
-                <li>tout le rendu se fait côté serveur <br><span class="substep s1" style="color: red">-&gt; peu de flexibilité</span></li>
-                <li>tout le rendu se fait côté client <br><span class="substep s2" style="color: red">-&gt; pas de JS en mode vue</span></li>
-                <li>duplication de la logique de rendu entre client et serveur <br><span class="substep s3" style="color: red">-&gt; maintenabilité 0</span></li>
-                <li>le client et le serveur utilisent le même moteur de rendu <br><span class="substep s4" style="color: red">-&gt; pas encore vraiment possible</span></li>
-                <li>le serveur rend des morceaux du CV et le client les place <span style="color: green" class="substep s5">✓</span></li>
+                <li>all the rendering on server side <br><span class="substep s1" style="color: red">-&gt; no flexibility</span></li>
+                <li>all the rendering on client side <br><span class="substep s2" style="color: red">-&gt; no JS on 'view' mode</span></li>
+                <li>duplication of rendering logic between server and client<br><span class="substep s3" style="color: red">-&gt; sustenability 0</span></li>
+                <li>the client and the server share the same rendering engine (twig.js)<br><span class="substep s4" style="color: red">-&gt; not really possible right now</span></li>
+                <li>the server render all the views and the client is only placing them<span style="color: green" class="substep s5">✓</span></li>
             </ul>
         </div>
 
         <div class="step slide" data-scale="0.3">
-            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : la contrainte</h2>
-            <img src="./images/dyb.widget.edit.png" style="width: 100%">
-        </div>
-
-        <div class="step slide" data-scale="0.3">
-            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : la contrainte</h2>
+            <h2><img src="./images/doyoubuzz.png" class="dyb-title"> + <img class="dyb-title" src="./images/angularjs.png"> : Problem</h2>
             <div id="two-way-demo-app">
                 <div style="position: absolute;">
                     <img src="./images/dyb.skills.form.png">
@@ -597,8 +638,8 @@ w.$update(); //PUT -&gt; /cv/12/skills/1
                     <div style="position: absolute; top: 30%; height: 60%; left: 2%; width: 96%; background-color: white" class="fake-widget" data-ng-bind-html="widget.$view | trustAsHtml">
                     </div>
                 </div>
-                <div class="http-post-request http-request" data-ng-class="{ 'loading': $request }">Comment tu rends ça {...} ?</div>
-                <div class="http-post-response http-request" data-ng-class="{ 'loading': $response }">Tiens : { $view: '...' } !</div>
+                <div class="http-post-request http-request" data-ng-class="{ 'loading': $request }">How do you render that {...} ?</div>
+                <div class="http-post-response http-request" data-ng-class="{ 'loading': $response }">Here it is : { $view: '...' } !</div>
             </div>
         </div>
 
@@ -611,22 +652,22 @@ w.$update(); //PUT -&gt; /cv/12/skills/1
                 <tr>
                     <td>
                         <ul>
-                            <li>interactions utilisateurs</li>
+                            <li>use interactions</li>
                             <li>AJAX</li>
-                            <li>injections HTML</li>
+                            <li>HTML injections</li>
                             <li>animations</li>
                         </ul>
                     </td>
                     <td>
                         <ul>
-                            <li>actions utilisateurs</li>
+                            <li>user actions</li>
                             <li>animations</li>
-                            <li>traitements du modèle</li>
-                            <li>logique d'affichage</li>
-                            <li>placement (widgets)</li>
-                            <li>navigation dans le CV</li>
-                            <li>messages d'information</li>
-                            <li>messages de limitation</li>
+                            <li>business logic</li>
+                            <li>rendering logic</li>
+                            <li>placement</li>
+                            <li>navigation inside the resume</li>
+                            <li>information tips</li>
+                            <li>limitation tips</li>
                         </ul>
                     </td>
                 </tr>
@@ -644,19 +685,10 @@ w.$update(); //PUT -&gt; /cv/12/skills/1
             <img class="substep x4" src="./images/dyb.v2.interactions.3.png" style="height: 700px;">
         </div>
 
-        <div id="find-me" data-scale="0.5" class="step">
-            <div id="preview-invitation">
-                <div class="hole"></div>
-                <h1 style="text-align: center;">Cadeau</h1>
-                <q><a href="http://preview.doyoubuzz.com">http://preview.doyoubuzz.com</a></q>
-                <q>nantesJS</q>
-            </div>
-        </div>
-
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-animate.min.js"></script>
     <script src="./js/rainbow.min.js"></script>
     <script src="./js/language/generic.js"></script>
     <script src="./js/language/javascript.js"></script>

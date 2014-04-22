@@ -146,7 +146,7 @@
                 datas: [],
                 add: function (element) {
                     if (this.datas.length >= 3) {
-                        return window.alert('dataManager dit : STOP je n\'ajouterai rien de plus');
+                        return window.alert('dataManager says : STOP I wont add anything more !');
                     }
                     this.datas.push(element);
                 }
@@ -202,7 +202,8 @@
             scope.widget = {};
 
             scope.$watch('widget.title', watchChange);
-            scope.$watch('widget.description', watchChange);
+            scope.$watch('widget.detail1', watchChange);
+            scope.$watch('widget.detail2', watchChange);
         }])
         .filter('stringify', function () {
             return function (input) {
