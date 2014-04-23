@@ -11,7 +11,7 @@ Quand vous faites de l'intégration continue avec un repository, vous avez plusi
 - le repo est privé et vous fournissez un login/mot de passe pour y accéder ;
 - le repo est privé vous avez une paire de clés (privée/publique) SSH enregistrées pour votre machine auprès de votre serveur GIT (ou SVN ou que sais-je).
 
-La solution SSH va s'avérer très pratique lorsque vous utiliser, par exemple, des submodules privés dans votre application.
+La solution SSH va s'avérer très pratique lorsque vous utilisez, par exemple, des submodules privés dans votre application.
 
 Si les deux premières possibilités sont très simples à mettre en place dans Elastic Bamboo, il va falloir ruser un peu pour utiliser la dernière.
 
@@ -30,7 +30,7 @@ ssh-keygen -t rsa
 Une fois cette commande exécutée, deux choses à faire : 
 
 - ajouter votre clé publique (générée par défaut dans `~/.ssh/id_rsa.pub`) comme clé autorisée sur votre serveur GIT ;
-- garder de côté les contenus de `~/.ssh/id_rsa`et `~/.ssh/id_rsa.pub`de côté pour la prochaine étape ;).
+- garder les contenus de `~/.ssh/id_rsa`et `~/.ssh/id_rsa.pub`de côté pour la prochaine étape ;).
 
 ##Installer les clés sur vos instances EC2
 
@@ -122,7 +122,7 @@ chmod 600 /home/bamboo/.ssh/id_rsa
 chmod 600 /home/bamboo/.ssh/config
 ```
 
-Une fois toutes ces étapes faites vous pourrez démarrer une nouvelle instance à partir de votre image fraichement configurée et faire le test ultime : 
+Une fois toutes ces étapes faites vous pourrez démarrer une nouvelle instance à partir de votre image fraichement configurée et faire le test ultime à partir de cette dernière :
 
 ```bash
 git clone git@bitbucket.com:username/yourrepo.git
