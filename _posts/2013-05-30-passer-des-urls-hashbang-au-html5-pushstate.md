@@ -6,7 +6,7 @@ redirect_from:
     - /posts/single-page-app-blog-passer-des-urls-hashbang-au-html5-pushstate/
 categories: [seo, ajax]
 ---
-Mon dernier article sur le [référencement d'une application Ajax](/p/le-referencement-d-une-application-ajax) s'appuyait entièrement sur les recommandations de Google pour l'indexation d'une application Javascript et notamment le hack du hashbang. Seulement, peu de temps après avoir écrit cet article, je me suis rendu compte que le hasbang n'était pas optimal du tout et entraînait bon nombre de complications (boutons de réseaux sociaux, référencement, lisibilité du code serveur ...). Je vais donc vous présenter ici les raisons pour lesquelles j'ai décidé de revoir complétement mes urls et surtout tout ce que cela implique.
+Mon dernier article sur le [référencement d'une application Ajax](/p/le-referencement-d-une-application-ajax/) s'appuyait entièrement sur les recommandations de Google pour l'indexation d'une application Javascript et notamment le hack du hashbang. Seulement, peu de temps après avoir écrit cet article, je me suis rendu compte que le hasbang n'était pas optimal du tout et entraînait bon nombre de complications (boutons de réseaux sociaux, référencement, lisibilité du code serveur ...). Je vais donc vous présenter ici les raisons pour lesquelles j'ai décidé de revoir complétement mes urls et surtout tout ce que cela implique.
 ##les #%!°$+!! de problèmes avec le #!
 
 La première chose qu'il faut bien comprendre c'est que le hashbang est un affreux hack pour faire croire, d'une part, à votre navigateur qu'il n'a pas changé de page et d'autre part pour faire savoir aux moteurs de recherche que votre application est Ajax. Or, par définition, un hack n'est pas franchement quelque chose de propre. Et en l'occurrence dans notre cas, notre hack va avec son lot de problèmes.
@@ -33,11 +33,11 @@ Il faut bien l'avouer, le référencement avec des #!, ce n'est pas de tout repo
 
 HTML5 vient avec une quantité phénoménale de fonctionnalités et parmi elles se cache le History API. Et il se trouve qu'il est là précisément pour faire ce que l'on cherche à faire ici : faire une application Ajax avec des urls pour chaque état ! En m'y mettant, j'avais peur que cela implique beaucoup de changements, mais au final tout s'est passé très bien et très rapidement.
 
-Bonne nouvelle par rapport à mon [précédent article sur le référencement](/p/le-referencement-d-une-application-ajax), nous allons pouvoir utiliser exactement le même code pour les visiteurs que pour les moteurs de recherche. Plus besoin de faire la distinction. De toute façon vous n'avez plus de moyen fiable pour la faire (du moins plus avec les urls). Deuxième bonne nouvelle, vous allez désormais être **compatible avec les visiteurs sans Javascript**.
+Bonne nouvelle par rapport à mon [précédent article sur le référencement](/p/le-referencement-d-une-application-ajax/), nous allons pouvoir utiliser exactement le même code pour les visiteurs que pour les moteurs de recherche. Plus besoin de faire la distinction. De toute façon vous n'avez plus de moyen fiable pour la faire (du moins plus avec les urls). Deuxième bonne nouvelle, vous allez désormais être **compatible avec les visiteurs sans Javascript**.
 
 L'idée est donc de renvoyer, dans tous les cas, le snapshot d'un état de l'application en fonction de l'url demandé. Ensuite les visiteurs qui ont Javascript navigueront en Ajax sur l'application alors que les visiteurs sans Javascript et les moteurs de recherches ne navigueront qu'au travers des snaphots de l'application.
 
-Pour ce qui est de la génération des snapshots je vous laisse consulter mon [article sur le référencement](/p/le-referencement-d-une-application-ajax).
+Pour ce qui est de la génération des snapshots je vous laisse consulter mon [article sur le référencement](/p/le-referencement-d-une-application-ajax/).
 
 ##Et voila
 

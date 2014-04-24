@@ -8,7 +8,7 @@ Récemment, nous sommes passés à de l'intégration continue chez [DoYouBuzz](h
 
 Voici donc les différentes étapes : 
 
-- [installation d'Elastic Bamboo avec instance Amazon EC2](/p/configuration-amazon-aws-ec2-elastic-bamboo) ;
+- [installation d'Elastic Bamboo avec instance Amazon EC2](/p/configuration-amazon-aws-ec2-elastic-bamboo/) ;
 - utilisation d'un repo en SSH avec Elastic Bamboo (en cours d'écriture) ;
-- [Bamboo et les tests Atoum](/p/lancer-des-tests-atoum-dans-bamboo) ;
+- [Bamboo et les tests Atoum](/p/lancer-des-tests-atoum-dans-bamboo/) ;
 - lancement et interprétation des test karma dans Bamboo (en cours d'écriture).

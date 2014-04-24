@@ -5,7 +5,7 @@ categories: [bamboo, aws, integration continue]
 description: Tutoriel d'installation d'une instance EC2 pour faire de l'intégration continue avec Bamboo
 ---
 
-Lors de la mise en place de Bamboo comme serveur d'[intégration continue à DoYouBuzz](/p/integration-continue-avec-bamboo), la phase qui m'a semblé la plus obscure a été la phase de configuration de mon instance AWS EC2. La [documentation d'Altassian sur Elastic Bamboo](https://confluence.atlassian.com/display/BAMBOO/Configuring+Elastic+Bamboo) est vraiment très fournie et même surement un peu trop, la rendant parfois confuse. Voici donc un petit tutoriel qui devrait vous permettre d'avoir un petit serveur d'intégration continue rapidement.
+Lors de la mise en place de Bamboo comme serveur d'[intégration continue à DoYouBuzz](/p/integration-continue-avec-bamboo/), la phase qui m'a semblé la plus obscure a été la phase de configuration de mon instance AWS EC2. La [documentation d'Altassian sur Elastic Bamboo](https://confluence.atlassian.com/display/BAMBOO/Configuring+Elastic+Bamboo) est vraiment très fournie et même surement un peu trop, la rendant parfois confuse. Voici donc un petit tutoriel qui devrait vous permettre d'avoir un petit serveur d'intégration continue rapidement.
 
 ##TL;DR;
 
@@ -104,5 +104,5 @@ Retour sur l'interface de Bamboo, on va pouvoir créer une nouvelle image. Rien 
 
 Arrivé ici, on a réussi à configurer une image système sur Amazon qui va nous permettre de jouer les builds de notre projet automatiquement. Je vous propose donc de passer à la suite : 
 
-- [Bamboo et les tests Atoum](/p/lancer-des-tests-atoum-dans-bamboo) ;
+- [Bamboo et les tests Atoum](/p/lancer-des-tests-atoum-dans-bamboo/) ;
 - jouer et interpréter des tests Karma dans Bamboo (en cours d'écriture).

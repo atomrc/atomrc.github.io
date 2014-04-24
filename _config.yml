@@ -1,7 +1,7 @@
 name: J'y suis, JS
 markdown: redcarpet
 url: "http://blog.thomasbelin.fr"
-permalink: /p/:title
+permalink: /p/:title/
 highlighter: pygments
 exclude: [node_modules, package.json, Gruntfile.js]
 gems:

@@ -7,7 +7,7 @@ description: Configurer votre serveur Bamboo pour jouer et interpréter vos test
 
 Chez [DoYouBuzz](http://www.doyoubuzz.com) nous utilisons [Atoum](http://docs.atoum.org/fr/) pour tous nos tests unitaires PHP. Je pense qu'il n'est pas nécessaire de vous rappeler l'interêts des tests unitaires. 
 
-Ecrire des tests c'est très bien, mais les jouer régulièrement, c'est mieux :) C'est pourquoi, nous avons mis en place un [serveur d'intégration continue chez DoYouBuzz](/p/integration-continue-avec-bamboo).
+Ecrire des tests c'est très bien, mais les jouer régulièrement, c'est mieux :) C'est pourquoi, nous avons mis en place un [serveur d'intégration continue chez DoYouBuzz](/p/integration-continue-avec-bamboo/).
 
 Comme Bamboo semble plutôt avoir été pensé pour le monde Java, le seul wrapper de tests disponible pour PHP est PHPUnit. Il va donc nous falloir faire notre propre script de lancement de tests Atoum.
 

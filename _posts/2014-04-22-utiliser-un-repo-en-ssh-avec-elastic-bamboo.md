@@ -17,7 +17,7 @@ Si les deux premières possibilités sont très simples à mettre en place dans 
 
 L'idée reste tout de même assez simple : copier les clés SSH (privée et publique) dans le répertoire `~/.shh` de votre utilisateur Bamboo à chaque lancement de l'instance Amazon EC2.
 
-Avant tout, je vous invite à aller lire [mon article sur la configuration d'une instance Amazon EC2 pour Elastic Bamboo](/p/configuration-amazon-aws-ec2-elastic-bamboo).
+Avant tout, je vous invite à aller lire [mon article sur la configuration d'une instance Amazon EC2 pour Elastic Bamboo](/p/configuration-amazon-aws-ec2-elastic-bamboo/).
 
 ##Génération d'une paire de clés pour votre image
 
@@ -128,4 +128,4 @@ Une fois toutes ces étapes faites vous pourrez démarrer une nouvelle instance 
 git clone git@bitbucket.com:username/yourrepo.git
 ```
 
-Si ça marche, c'est que vous êtes bon pour passer à l'étape de tests de votre application (des [tests Atoum par exemple](/p/lancer-des-tests-atoum-dans-bamboo) ;) ).
+Si ça marche, c'est que vous êtes bon pour passer à l'étape de tests de votre application (des [tests Atoum par exemple](/p/lancer-des-tests-atoum-dans-bamboo/) ;) ).

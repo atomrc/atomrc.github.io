@@ -6,7 +6,7 @@ redirect_from:
     - /posts/single-page-app-blog-requirejs-nest-pas-fait-pour-angularjs/
 categories: [javascript, angularjs, requirejs, amd]
 ---
-Il n'y a pas longtemps, je publiais un article sur la combinaison d'[AngularJS avec RequireJS](/p/combiner-angularjs-et-requirejs). Depuis, mon blog a connu un certain nombre d'évolutions et tout particulièrement une qui m'a fait revenir sur l'utilisation de RequireJS avec Angular. C'est le passage à des urls HTML5 et la façon dont je chargeais les pages qui m'ont fait voir le problème.
+Il n'y a pas longtemps, je publiais un article sur la combinaison d'[AngularJS avec RequireJS](/p/combiner-angularjs-et-requirejs/). Depuis, mon blog a connu un certain nombre d'évolutions et tout particulièrement une qui m'a fait revenir sur l'utilisation de RequireJS avec Angular. C'est le passage à des urls HTML5 et la façon dont je chargeais les pages qui m'ont fait voir le problème.
 
 ##Ne pas rater le bootstrap d'Angular
 
@@ -40,7 +40,7 @@ Attention, ici, il n'est pas question de se débarrasser complètement de Requir
 </head>
 ```
 
-De cette façon, quand la page est envoyée au navigateur, celui-ci va d'abord charger les fichiers Javascript indiqués avant de commencer le traitement du DOM. Angular sera donc présent lorsque le navigateur commencera cette opération. Bon je sais, si vous avez lu [mon article sur AngularJS et RequireJS](/p/combiner-angularjs-et-requirejs), vous pourrez dire que j'ai perdu :(.
+De cette façon, quand la page est envoyée au navigateur, celui-ci va d'abord charger les fichiers Javascript indiqués avant de commencer le traitement du DOM. Angular sera donc présent lorsque le navigateur commencera cette opération. Bon je sais, si vous avez lu [mon article sur AngularJS et RequireJS](/p/combiner-angularjs-et-requirejs/), vous pourrez dire que j'ai perdu :(.
 
 Comme je vous l'ai dit il n'est pas question d'abandonner totalement RequireJS et vous avez pu le voir dans ma nouvelle balise head qu'il est encore chargé sur mon blog. Pour tout vous dire je m'en sert pour charger d'autres bibliothèques externes (RainbowJS pour la coloration syntaxique par exemple), pour les boutons de réseaux sociaux et pour la compilation.
 
