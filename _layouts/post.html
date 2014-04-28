@@ -2,6 +2,16 @@
 layout: default
 ---
 <div id="full-article" class="soft-box">
+    <div id="share-panel">
+        {% assign url =  page.url | prepend: site.url | cgi_escape %}
+        {% assign desc =  page.description | cgi_escape %}
+        <div class="share-content" data-sticky>
+            <span class="text">Partager :&nbsp;</span>
+            <a class="share-provider" target="_blank" href="https://twitter.com/intent/tweet?url={{url}}&text={{desc}}&related=thomasbelin4"><img src="/images/icons/twitter_32.png" title="Partager sur Twitter" alt="Twitter"></a>
+            <a class="share-provider" target="_blank" href="https://plus.google.com/share?url={{url}}"><img src="/images/icons/plus_32.png" title="Partager sur Google+" alt="Google+"></a>
+            <a class="share-provider" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url}}"><img src="/images/icons/facebook_32.png" title="Partager sur Facebook" alt="Facebook"></a>
+        </div>
+    </div>
     <article>
         <header>
             <h1>{{page.title}}</h1>
@@ -51,3 +61,28 @@ layout: default
         </script>
     </article>
 </div>
+<script>
+    (function () {
+        'use strict';
+        var stickies = document.querySelectorAll('[data-sticky]'),
+            i,
+            sticky;
+        for (i = 0; i < stickies.length; i++) {
+            sticky = stickies[i];
+            sticky.style.width = sticky.parentNode.getBoundingClientRect().width + "px";
+        }
+        window.addEventListener('scroll', function () {
+            var currentTop,
+                sticky;
+            for (i = 0; i < stickies.length; i++) {
+                sticky = stickies[i];
+                currentTop = sticky.parentNode.getBoundingClientRect().top;
+                if (currentTop < 0) {
+                    sticky.classList.add('sticky');
+                } else {
+                    sticky.classList.remove('sticky');
+                }
+            }
+        });
+    }());
+</script>
