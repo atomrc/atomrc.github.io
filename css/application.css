@@ -267,10 +267,18 @@ body {
 h1,
 h2,
 strong,
+#not-found .code,
 #header .title {
   color: #ff0066;
   font-weight: normal;
   text-shadow: 1px 1px 0 white; }
+
+#not-found {
+  text-align: center; }
+  #not-found .code {
+    font-size: 100pt; }
+  #not-found .quote {
+    font-size: 20pt; }
 
 h1 {
   font-size: 2em; }

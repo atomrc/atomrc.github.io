@@ -35,10 +35,19 @@ body {
 h1,
 h2,
 strong,
+#not-found .code,
 #header .title {
     color: $pinkcolor;
     font-weight: normal;
     text-shadow: 1px 1px 0 white;
+}
+
+#not-found {
+    text-align: center;
+    .code {
+        font-size: 100pt;
+    }
+    .quote { font-size: 20pt; }
 }
 
 h1 { font-size: 2em; }
