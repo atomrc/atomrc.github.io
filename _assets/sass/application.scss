@@ -192,7 +192,8 @@ Articles
     position: relative;
     max-width: 900px;
     margin: auto;
-    padding: 2em 1.5em;
+    padding: 3em;
+    box-sizing: border-box;
     #share-panel {
         position: absolute;
         top: 0;
