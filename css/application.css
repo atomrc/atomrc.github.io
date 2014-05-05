@@ -450,10 +450,13 @@ Articles
       display: block;
       max-width: 90%;
       margin: auto; }
-  #full-article footer {
+  #full-article footer, #full-article #related {
     border-top: solid 1px #CCC;
     padding-top: 1em;
     margin: 2em 1em; }
+  #full-article #related .header {
+    font-weight: bold;
+    font-size: 1.5em; }
 
 #avatar {
   margin: 1em;

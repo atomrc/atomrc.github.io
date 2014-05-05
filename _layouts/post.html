@@ -34,6 +34,14 @@ layout: default
         {% endif %}
         {{ content }}
         </div>
+        <div id="related">
+            <div class="header"> A lire aussi :</div>
+            <ul>
+                {% for post in site.related_posts limit: 3 %}
+                    <li><a href="{{ post.url }}" title="{{ post.description }}">{{ post.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
         <footer>
             <img id="avatar" src="/images/avatar_s.jpeg">
             <div><b>{ <span rel="author">Thomas Belin</span> }</b></div><br>

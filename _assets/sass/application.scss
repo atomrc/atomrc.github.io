@@ -233,10 +233,16 @@ Articles
             margin: auto;
         }
     }
-    footer {
+    footer, #related {
         border-top: solid 1px #CCC;
         padding-top: 1em;
         margin: 2em 1em;
+    }
+    #related {
+        .header {
+            font-weight: bold;
+            font-size: 1.5em;
+        }
     }
 }
 
