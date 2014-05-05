@@ -32,13 +32,10 @@ body {
     background: #EEE;
 }
 
-h1,
-h2,
-strong,
+.title,
 #not-found .code,
 #header .title {
     color: $pinkcolor;
-    font-weight: normal;
     text-shadow: 1px 1px 0 white;
 }
 
@@ -50,14 +47,8 @@ strong,
     .quote { font-size: 20pt; }
 }
 
-h1 { font-size: 2em; }
-h2 { padding-left: 1em; }
-h3 { padding-left: 3em; }
-
 a { text-decoration:none; color: rgb(0, 132, 180); }
 ul { list-style: none; padding:0; }
-
-h1 a, h2 a { color:inherit; }
 
 time {
     color: gray;
@@ -185,8 +176,21 @@ section {
 Articles
 *****************************/
 #full-article {
+
+    h1 {
+        font-size: 2.5em;
+        font-weight: normal;
+    }
+    h2 {
+        padding: 1em 1em 0.5em 1em;
+        font-size: 2em;
+    }
+    h3 {
+        padding: 2em 4em 1em 4em;
+    }
+
     position: relative;
-    max-width: 800px;
+    max-width: 900px;
     margin: auto;
     padding: 2em 1.5em;
     #share-panel {

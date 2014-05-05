@@ -9,7 +9,7 @@ description: Les pérégrinations d'un développeur front-end
         {% for post in site.posts %}
             <li class="card soft-box">
                 <div>
-                    <a href="{{post.url}}"><strong>{{post.title}}</strong></a>
+                    <a class="title" href="{{post.url}}">{{post.title}}</a>
                 </div>
                 <time
                     datetime="{{post.date | date_to_xmlschema}}"

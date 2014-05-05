@@ -264,13 +264,10 @@ body {
   font-size: 13pt;
   background: #EEE; }
 
-h1,
-h2,
-strong,
+.title,
 #not-found .code,
 #header .title {
   color: #ff0066;
-  font-weight: normal;
   text-shadow: 1px 1px 0 white; }
 
 #not-found {
@@ -280,15 +277,6 @@ strong,
   #not-found .quote {
     font-size: 20pt; }
 
-h1 {
-  font-size: 2em; }
-
-h2 {
-  padding-left: 1em; }
-
-h3 {
-  padding-left: 3em; }
-
 a {
   text-decoration: none;
   color: #0084b4; }
@@ -296,9 +284,6 @@ a {
 ul {
   list-style: none;
   padding: 0; }
-
-h1 a, h2 a {
-  color: inherit; }
 
 time {
   color: gray;
@@ -411,9 +396,17 @@ Articles
 *****************************/
 #full-article {
   position: relative;
-  max-width: 800px;
+  max-width: 900px;
   margin: auto;
   padding: 2em 1.5em; }
+  #full-article h1 {
+    font-size: 2.5em;
+    font-weight: normal; }
+  #full-article h2 {
+    padding: 1em 1em 0.5em 1em;
+    font-size: 2em; }
+  #full-article h3 {
+    padding: 2em 4em 1em 4em; }
   #full-article #share-panel {
     position: absolute;
     top: 0;
