@@ -400,6 +400,8 @@ Articles
   margin: auto;
   padding: 3em;
   box-sizing: border-box; }
+  #full-article h1, #full-article h2, #full-article h3 {
+    text-align: left; }
   #full-article h1 {
     font-size: 2.5em;
     font-weight: normal; }
