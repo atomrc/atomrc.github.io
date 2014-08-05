@@ -8,3 +8,5 @@ sass:
 lsi: true
 gems:
   - jekyll-redirect-from
+kramdown:
+  input: GFM
