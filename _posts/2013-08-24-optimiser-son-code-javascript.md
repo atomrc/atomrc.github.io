@@ -21,7 +21,7 @@ Pour l'activer, rien de plus simple, il vous suffit de mettre le code suivant da
 "use strict";
 ```
 
-Prudence car le `"use strict"` s'applique à tout le code qui est de même niveau d'imbrication ou inférieur. Ça veut dire que si vous le mettez directement à la racine d'un fichier js, il s'appliquera à tous les autres fichiers qui seront inclus pas la suite (librairies, autres fichiers à vous ...). Or ces fichiers ne respectent pas toujours le mode strict et engendreront des erreurs sur votre application.
+Prudence car le `"use strict"` s'applique à tout le code qui est de même niveau d'imbrication ou inférieur. Ça veut dire que si vous le mettez directement à la racine d'un fichier js, il s'appliquera à tous les autres fichiers qui seront inclus pas la suite (librairies, autres fichiers à vous ...). Or ces fichiers ne respectent pas toujours le mode strict et engendreront des erreurs sur votre application.  
 Il est donc préférable de placer le `"use strict"` ; à l'intérieur des fonctions que vous écrivez.
 
 
