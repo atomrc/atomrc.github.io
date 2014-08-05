@@ -1,9 +1,10 @@
 name: J'y suis, JS
-markdown: redcarpet
 url: "http://blog.thomasbelin.fr"
 permalink: /p/:title/
 highlighter: pygments
 exclude: [node_modules, package.json, Gruntfile.js]
+sass:
+    sass_dir: css/_sass
 lsi: true
 gems:
   - jekyll-redirect-from

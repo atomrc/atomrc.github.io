@@ -1,3 +1,6 @@
+---
+---
+
 @mixin transition($property, $duration) {
     -webkit-transition: $property $duration;
     -moz-transition: $property $duration;
@@ -176,6 +179,7 @@ section {
 Articles
 *****************************/
 #full-article {
+    position: relative;
 
     h1, h2, h3 {
         text-align: left;
@@ -185,11 +189,14 @@ Articles
         font-weight: normal;
     }
     h2 {
-        padding: 1em 1em 0.5em 1em;
+        margin: 2em 1em 0.5em 1em;
         font-size: 2em;
     }
     h3 {
-        padding: 2em 4em 1em 4em;
+        margin: 2em 4em 1em 4em;
+    }
+    p {
+        line-height: 1.25em;
     }
 
     position: relative;
@@ -250,6 +257,17 @@ Articles
         .header {
             font-weight: bold;
             font-size: 1.5em;
+        }
+    }
+    #sticky-menu {
+        position: absolute;
+        top: 0;
+        right: 100%;
+        text-align: left;
+        .H2 {
+        }
+        .H3 {
+            margin-left: 1em;
         }
     }
 }

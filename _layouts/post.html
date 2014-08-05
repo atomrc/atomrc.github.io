@@ -70,9 +70,29 @@ layout: default
     </article>
 </div>
 <script>
-    (function () {
+    (function (doc) {
         'use strict';
-        var stickies = document.querySelectorAll('[data-sticky]'),
+        return;
+        var artbody = doc.querySelector("article .article-body"),
+            stickyMenu = doc.querySelector("#sticky-menu"),
+            headers = artbody.querySelectorAll("h2, h3"),
+            anchor,
+            header,
+            i;
+
+        for (i = 0; i < headers.length; i++) {
+            header = headers[i];
+            anchor = doc.createElement("a");
+            anchor.href = window.location + header.id;
+            anchor.classList.add(header.tagName);
+            anchor.textContent = header.textContent;
+            stickyMenu.appendChild(anchor);
+        }
+    }(document));
+
+    (function (doc) {
+        'use strict';
+        var stickies = doc.querySelectorAll('[data-sticky]'),
             i,
             sticky;
         for (i = 0; i < stickies.length; i++) {
@@ -92,5 +112,5 @@ layout: default
                 }
             }
         });
-    }());
+    }(document));
 </script>
