@@ -49,9 +49,9 @@ Il y a deux choses à avoir en tête quand vous utilisez Vim : il y a **plusieur
 
 Dans Vim, il y a 3 états distincts : l'**édition** (le mode `normal`), l'**insertion** (le mode `insert`) et le **visuel** (le mode `visual`).
 
-`Insert`. Le mode insertion, est le plus facile à comprendre. C'est en fait le mode par défaut de la majorité des éditeurs de textes. En bref, quand vous appuyez sur une touche, le caractère sur cette touche vient s'imprimer dans votre éditeur. Oui c'est ce qu'on attend d'un éditeur de texte et **non ça n'est pas le mode par défaut** ! Pour accéder à ce mode, tapez `i` (entre autres comme `a`, `o` ...) quand vous êtes en mode `edit`.
+`Insert`. Le mode insertion, est le plus facile à comprendre. C'est en fait le mode par défaut de la majorité des éditeurs de textes. En bref, quand vous appuyez sur une touche, le caractère sur cette touche vient s'imprimer dans votre éditeur. Oui c'est ce qu'on attend d'un éditeur de texte et **non ça n'est pas le mode par défaut** ! Pour accéder à ce mode, tapez `i` (entre autres comme `a`, `o` ...) quand vous êtes en mode `normal`.
 
-`Visual`. Le mode visuel va vous permettre de sélectionner du texte (à l'instar de la sélection via la souris) pour en faire ce que vous voulez (le copier, le supprimer, l'encadrer avec des balises ...). Pour mettre Vim en mode `visual` il vous suffit de taper `v` quand vous êtes en mode `edit`.
+`Visual`. Le mode visuel va vous permettre de sélectionner du texte (à l'instar de la sélection via la souris) pour en faire ce que vous voulez (le copier, le supprimer, l'encadrer avec des balises ...). Pour mettre Vim en mode `visual` il vous suffit de taper `v` quand vous êtes en mode `normal`.
 
 `Normal`. Le mode normal est le mode qui est de loin le plus intéressant de Vim, et c'est celui par défaut quand vous lancez Vim. C'est avec ce mode que vous allez pouvoir titiller la bête et vous amuser avec les commandes. Il ne faut plus voir votre clavier comme un ensemble de caractères, mais plutôt comme **un ensemble de raccourcis vers des commandes de modification de texte**. Pour l'activer appuyez simplement sur la touche `esc`.
 
