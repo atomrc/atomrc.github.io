@@ -24,7 +24,7 @@ Admettons le, il faut être un peu maso pour relancer la commande `vim` :). Pers
 
 Contrairement à beaucoup d'IDE qui vous donnent accès à toutes les commandes possibles à portée de souris, Vim vous parachute directement à poil en pleine jungle. Mais c'est là que vous allez progresser le plus. Vous allez devoir beaucoup mobiliser votre mémoire et faire un gros effort de compréhension/adaptation avant de pouvoir vous faire plaisir avec Vim.
 
-Quand vous commencerez à maitriser la bête, vous ne vous direz pas que vous avez trouvé un éditeur qui défonce, mais plutôt que vous êtes un demi-dieux de l'édition de code. Après tout c'est peut-être simplement ça que j'aime dans Vim, il flatte tout simplement mon égo !
+Quand vous commencerez à maîtriser la bête, vous ne vous direz pas que vous avez trouvé un éditeur qui défonce, mais plutôt que vous êtes un demi-dieux de l'édition de code. Après tout c'est peut-être simplement ça que j'aime dans Vim, il flatte tout simplement mon égo !
 
 ## Gardons les pieds sur terre
 
@@ -39,7 +39,7 @@ Voila quelques arguments un peu plus formels en faveur de Vim :
 - Pas d'interface graphique qui vous distrait, simplement votre code (une belle occasion de [faire la part belle au code](/p/faire-la-part-belle-au-code/)) ;
 - Vous pouvez exécuter n'importe quelle commande `bash` directement depuis Vim.
 
-Vous remarquerez que je ne parle pas ici d'amélioration de votre productivité (comme certains peuvent l'affirmer) parce que je ne pense vraiment pas que Vim y change grand chose. Certes vous gagnez un peu de temps en vous libérant de votre souris. Cependant, fasse aux temps de compilation / rechargements de page / temps de réflexion / pauses café ... Je ne pense vraiment pas que ça soit significatif.
+Vous remarquerez que je ne parle pas ici d'amélioration de votre productivité (comme certains peuvent l'affirmer) parce que je ne pense vraiment pas que Vim y change grand chose. Certes vous gagnez un peu de temps en vous libérant de votre souris. Cependant, face aux temps de compilation / rechargements de page / temps de réflexion / pauses café ... Je ne pense vraiment pas que ça soit significatif.
 
 ##Comprendre Vim
 
@@ -57,7 +57,7 @@ Dans Vim, il y a 3 états distincts : l'**édition** (le mode `normal`), l'**ins
 
 C'est intéressant de constater la séparation de ses trois modes. Alors que la plupart des éditeurs n'ont qu'un seul mode (un mélange des trois de Vim), Vim se laisse une place toute particulière pour les commandes d'édition. En `normal` tout le clavier est entièrement disponible pour accueillir les commandes, je vous laisse imaginer le nombre de possibilités à portées d'un seul caractère ;)
 
-Du fait d'avoir trois modes différents, vous devrez faire une petite gymnastique mentale pour savoir comment reconnaitre en quel mode vous êtes (par exemple le curseur change de style en fonction du mode) ou mieux vous rappelez en quel mode vous avez laissé votre Vim :). Assez souvent, ce sont surtout des automatismes qui se mettent en place tout seul. Par exemple j'ai pris le réflexe de toujours revenir en mode `normal` dès que j'ai finir de taper ce que j'avais en tête.
+Du fait d'avoir trois modes différents, vous devrez faire une petite gymnastique mentale pour savoir comment reconnaitre en quel mode vous êtes (par exemple le curseur change de style en fonction du mode) ou mieux vous rappeler en quel mode vous avez laissé votre Vim :). Assez souvent, ce sont surtout des automatismes qui se mettent en place tout seul. Par exemple j'ai pris le réflexe de toujours revenir en mode `normal` dès que j'ai finir de taper ce que j'avais en tête.
 
 ###Les commandes
 
