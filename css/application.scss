@@ -19,6 +19,7 @@
 $pinkcolor: #F06;
 $coolblue: rgb(114, 166, 252);
 
+$aboutWidth: 300px;
 $googlePlusColor: rgba(212, 11, 13, 1);
 $twitterColor: rgba(19, 157, 233, 1);
 $facebookColor: rgba(36, 71, 134, 1);
@@ -31,23 +32,7 @@ body {
     margin:0;
     color:#666;
     font-family:Open Sans, Arial;
-    font-size: 13pt;
-    background: #EEE;
-}
-
-.title,
-#not-found .code,
-#header .title {
-    color: $pinkcolor;
-    text-shadow: 1px 1px 0 white;
-}
-
-#not-found {
-    text-align: center;
-    .code {
-        font-size: 100pt;
-    }
-    .quote { font-size: 20pt; }
+    font-size: 12pt;
 }
 
 a { text-decoration:none; color: rgb(0, 132, 180); }
@@ -77,31 +62,90 @@ pre code {
     padding: 0;
 }
 
+#about {
+    background-color: #EEE;
+    padding: 2em 10px;
+    box-sizing: border-box;
+    position: fixed;
+    height: 100%;
+    width: $aboutWidth;
+    text-align: center;
+    .title {
+        font-size: 2em;
+        color: inherit;
+        font-weight: bold;
+    }
+    address {
+        margin: 20px 1px;
+        font-size: 11pt;
+        .social {
+            margin: 0.5em;
+            font-size: 19pt;
+        }
+    }
+}
+
+#avatar {
+    display: block;
+    margin: auto;
+    border: 3px solid #EEE;
+    border-radius: 60px;
+}
+
+#content {
+    margin-left: $aboutWidth;
+}
+
+@media (max-width: 900px) {
+    #about {
+        position: static;
+        height: auto;
+        width: auto;
+        padding: 1em;
+        address {
+            margin: 0;
+        }
+    }
+    #content {
+        margin: auto;
+    }
+    #full-article {
+        font-size: 11pt;
+    }
+}
+
+.title,
+#not-found .code,
+#header .title {
+    color: $pinkcolor;
+    text-shadow: 1px 1px 0 white;
+}
+
+#not-found {
+    text-align: center;
+    .code {
+        font-size: 100pt;
+    }
+    .quote { font-size: 20pt; }
+}
+
 /********************************
 ********** Components ************
 *********************************/
 .soft-box {
-    border: solid 1px #DDD;
+    border: solid 1px #CCC;
     border-radius: 3px;
     background-color: #FFF;
 }
 
-//.github { color: rgba(57, 223 ,255, 1);}
-.github:before { content: "\f113"; }
-//.github:before { content: "\f092"; }
-
-//.twitter { color: ;}
-.twitter:before { content: "\f099"; }
-//.twitter:before { content: "\f081"; }
+.github { color: rgba(57, 223 ,255, 1); }
+.twitter { color: $twitterColor; }
+.google-plus{ color: $googlePlusColor; }
 
 /*.doyoubuzz { color: rgba(255, 136, 0, 1);}*/
 
-//.google-plus{ color: rgba(212, 11, 13, 1);}
-.google-plus:before { content: "\f0d5"; }
-//.google-plus:before { content: "\f0d4"; }
 
 //.facebook { color: rgba(36, 71, 134, 1);}
-.facebook:before { content: "\f09a"; }
 
 /*****************************
 *********** Common ***********
@@ -126,19 +170,6 @@ pre code {
     }
 }
 
-#header {
-    //text-align: center;
-    //background-color: white;
-    padding: 1em 0 1em 0;
-    text-align: center;
-    .title {
-        font-size: 2em;
-        color: inherit;
-        font-weight: bold;
-        //display: block;
-    }
-}
-
 .tag {
     background: $coolblue;
     color: white;
@@ -150,7 +181,9 @@ pre code {
 *********** Home *************
 *****************************/
 section {
-    text-align: center;
+    &.list {
+        text-align: center;
+    }
     .section-header {
         font-weight: bold;
         text-shadow: 1px 1px 0 white;
@@ -196,13 +229,12 @@ Articles
         margin: 2em 4em 1em 4em;
     }
     p {
-        line-height: 1.25em;
+        line-height: 1.5em;
     }
 
     position: relative;
     max-width: 900px;
-    margin: auto;
-    padding: 3em;
+    padding: 2em;
     box-sizing: border-box;
     #share-panel {
         position: absolute;
@@ -271,11 +303,3 @@ Articles
         }
     }
 }
-
-#avatar {
-    margin: 1em;
-    border: 3px solid #EEE;
-    border-radius: 50px;
-    float: left;
-}
-

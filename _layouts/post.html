@@ -1,8 +1,8 @@
 ---
 layout: default
 ---
-<div id="full-article" class="soft-box">
-    <div id="share-panel">
+<div id="full-article">
+    <!--<div id="share-panel">
         {% assign url =  page.url | prepend: site.url | cgi_escape %}
         {% assign desc =  page.description | cgi_escape %}
         <div class="share-content" data-sticky>
@@ -11,7 +11,7 @@ layout: default
             <a class="share-provider" target="_blank" href="https://plus.google.com/share?url={{url}}"><img src="/images/icons/plus_32.png" title="Partager sur Google+" alt="Google+"></a>
             <a class="share-provider" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url}}"><img src="/images/icons/facebook_32.png" title="Partager sur Facebook" alt="Facebook"></a>
         </div>
-    </div>
+    </div>-->
     <article>
         <header>
             <h1 class="title">{{page.title}}</h1>
@@ -42,20 +42,6 @@ layout: default
                 {% endfor %}
             </ul>
         </section>
-        <footer>
-            <img id="avatar" src="/images/avatar_s.jpeg">
-            <div><b>{ <span rel="author">Thomas Belin</span> }</b></div><br>
-            <adresse>
-                Front End développeur chez <a href="http://www.doyoubuzz.com" target="_blank">DoYouBuzz</a> |
-                Je <a href="/p/faire-la-part-belle-au-code">fais la part belle au code</a> |
-                Je crois en la richesse du web |
-                Je m'éclate avec Javascript.<br>
-                Retrouvez moi :
-                <a href="https://twitter.com/ThomasBelin4" target="_blank">@ThomasBelin4</a>
-                <a href="https://plus.google.com/+ThomasBelin?rel=author" target="_blank">+ThomaBelin</a>
-                <a href="https://github.com/thomasbelin4" target="_blank">Github</a>
-            </adresse>
-        </footer>
         <br>
         <br>
         <section id="disqus_thread"></section>
