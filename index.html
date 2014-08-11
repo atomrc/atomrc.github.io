@@ -35,7 +35,7 @@ description: Les pérégrinations d'un développeur front-end
             {% if page.sitemap.include %}
             <li class="card soft-box">
                 <div>
-                    <a href="{{page.url | remove: 'index.html'}}"><strong>{{page.title}}</strong></a>
+                    <a class="title" href="{{page.url | remove: 'index.html'}}"><strong>{{page.title}}</strong></a>
                 </div>
                 <time
                     datetime="{{page.date | date_to_xmlschema}}"
