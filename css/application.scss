@@ -213,8 +213,10 @@ Articles
 *****************************/
 #full-article {
     position: relative;
+    font-family: Helvetica Neue;
 
     h1, h2, h3 {
+        font-family:Open Sans, Arial;
         text-align: left;
     }
     h1 {
@@ -222,11 +224,11 @@ Articles
         font-weight: normal;
     }
     h2 {
-        margin: 2em 1em 0.5em 1em;
+        margin: 1.25em 1em 0.5em 1em;
         font-size: 2em;
     }
     h3 {
-        margin: 2em 4em 1em 4em;
+        margin: 1.25em 4em 1em 4em;
     }
     p {
         line-height: 1.5em;
