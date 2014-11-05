@@ -97,6 +97,6 @@ La philosophie de Vim est de vous économiser un maximum de déplacement de main
 
 Vous verrez ensuite que beaucoup de services utilisent ce système de déplacement et de commandes mappées sur des touches (j'ai en tête [Github](http://github.com/), [Gmail](http://gmail.com/) et beaucoup de services Google d'ailleurs, [Bitbucket](https://bitbucket.org/), [Jira](http://jira.com/), [Feedly](http://feedly.com). Essayez donc d'appuyer sur `?` sur ces sites ;) ). Une fois que vous vous serez bien adapté à Vim, vous n'aurez pas de mal à utiliser les raccourcis de ses services.
 
-Même si Vim est très fonctionnel de base sans aucune configuration, il est important que vous personnalisiez votre environnement (coloration syntaxique, espace vs tabs ...). Pour ça je vous invite à aller voir [ma configuration](https://github.com/thomasbelin4/dotfiles/blob/master/vim/.vimrc) pour la mettre à votre sauce.
+Même si Vim est très fonctionnel de base sans aucune configuration, il est important que vous personnalisiez votre environnement (coloration syntaxique, espace vs tabs ...). Pour ça je vous invite à aller voir [ma configuration](https://github.com/atomrc/dotfiles/blob/master/vim/.vimrc) pour la mettre à votre sauce.
 
 Un petit conseil, pour vous y mettre doucement est de commencer par le tutoriel proposé par Vim directement. Pour ça tapez simplement `vimtutor` dans votre terminal et laissez vous guider ;)
