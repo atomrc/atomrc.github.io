@@ -3,11 +3,12 @@
 (function (win) {
     "use strict";
     module.exports = function (elements) {
-        var i, element;
+        var i, element, height;
 
         for (i = 0; i < elements.length; i++) {
             element = elements[i];
             element.dataset.stickyLimit = element.getBoundingClientRect().bottom;
+            height = element.getBoundingClientRect().height;
         }
 
         win.addEventListener("scroll", function () {

@@ -1,8 +1,9 @@
 /*global require, document*/
+var fader = require("./fader");
 
 (function (doc) {
     "use strict";
-    var sticky = require("./sticky");
 
-    sticky(doc.querySelectorAll("[data-sticky]"));
+    fader(doc.querySelectorAll("[data-fader]"));
+
 }(document));
