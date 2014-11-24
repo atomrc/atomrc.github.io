@@ -75,6 +75,8 @@ pre code {
     text-align: left;
     background-color: white;
     padding: 0.5em;
+    line-height: 0;
+    font-size: 12pt;
 
     .lefty {
         @include transition(transform, 0.5s);
@@ -82,8 +84,8 @@ pre code {
     }
 
     .title {
+        line-height: 1em;
         vertical-align: 50%;
-        font-size: 15pt;
         color: inherit;
         font-weight: bold;
     }
@@ -122,19 +124,15 @@ pre code {
 }
 
 #avatar-s {
-    height: 50px;
-    width: 50px;
-    border-radius: 25px;
+    height: 2em;
+    width: 2em;
+    border-radius: 1em;
 }
 
 #avatar {
     display: block;
     margin: auto;
     border-radius: 60px;
-}
-
-#content {
-    background-color: #EEE;
 }
 
 .title,
@@ -237,11 +235,7 @@ section {
     width: 300px;
     padding: 10px;
     margin: 5px;
-    @include transition(all, 0.2s);
-    &:hover {
-        box-shadow: 2px 2px 5px #CCC;
-        @include transform(translate(-2px, -2px));
-    }
+    box-shadow: 1px 1px 1px #CCC;
     .description {
         font-size: 11pt;
     }
