@@ -3,7 +3,7 @@
 (function (win) {
     "use strict";
     module.exports = function (elements) {
-        var i, element;
+        var i, element, isSticky = false;
 
         for (i = 0; i < elements.length; i++) {
             element = elements[i];
@@ -17,9 +17,15 @@
                 element = elements[i];
                 rect = element.parentNode.getBoundingClientRect();
 
-                if (rect.top <= 0) {
+                var shouldBeSticky = rect.top <= 0;
+
+                if (shouldBeSticky && !isSticky) {
+                    isSticky = true;
                     element.classList.add("sticky");
-                } else {
+                    return;
+                }
+                if (!shouldBeSticky && isSticky) {
+                    isSticky = false;
                     element.classList.remove("sticky");
                 }
             }
