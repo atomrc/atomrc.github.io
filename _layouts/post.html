@@ -2,25 +2,15 @@
 layout: default
 ---
 <div id="full-article">
-    <!--<div id="share-panel">
-        {% assign url =  page.url | prepend: site.url | cgi_escape %}
-        {% assign desc =  page.description | cgi_escape %}
-        <div class="share-content" data-sticky>
-            <span class="text">Partager :&nbsp;</span>
-            <a class="share-provider" target="_blank" href="https://twitter.com/intent/tweet?url={{url}}&text={{desc}}&related=atomrc"><img src="/images/icons/twitter_32.png" title="Partager sur Twitter" alt="Twitter"></a>
-            <a class="share-provider" target="_blank" href="https://plus.google.com/share?url={{url}}"><img src="/images/icons/plus_32.png" title="Partager sur Google+" alt="Google+"></a>
-            <a class="share-provider" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url}}"><img src="/images/icons/facebook_32.png" title="Partager sur Facebook" alt="Facebook"></a>
-        </div>
-    </div>-->
     <article>
         <header>
             <h1 class="title">{{page.title}}</h1>
-            <time datetime="{{page.date}}" pubdate itemprop="datePublished" content="{{page.date}}">
-                {{ page.date | date_to_string }}
-            </time>
-            <aside>
+            <aside class="folded-paper">
+                <time datetime="{{page.date}}" pubdate itemprop="datePublished" content="{{page.date}}">
+                    {{ page.date | date: '%-d <span class="month">%b</span> %Y' }}
+                </time>
                 {% for tag in page.categories %}
-                <span class="tag">{{ tag }}</span>&nbsp;
+                <span>{{ tag }}</span>&nbsp;
                 {% endfor %}
             </aside>
         </header>
@@ -34,6 +24,15 @@ layout: default
         {% endif %}
         {{ content }}
         </div>
+
+        <div id="share-panel">
+            {% assign url =  page.url | prepend: site.url | cgi_escape %}
+            {% assign desc =  page.description | cgi_escape %}
+            <a class="share-provider" target="_blank" href="https://twitter.com/intent/tweet?url={{url}}&text={{desc}}&related=atomrc"><img src="/images/icons/twitter_32.png" title="Partager sur Twitter" alt="Twitter"></a>
+            <a class="share-provider" target="_blank" href="https://plus.google.com/share?url={{url}}"><img src="/images/icons/plus_32.png" title="Partager sur Google+" alt="Google+"></a>
+            <a class="share-provider" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url}}"><img src="/images/icons/facebook_32.png" title="Partager sur Facebook" alt="Facebook"></a>
+        </div>
+
         <section id="related">
             <div class="header"> A lire aussi :</div>
             <ul>
@@ -44,59 +43,7 @@ layout: default
         </section>
         <br>
         <br>
-        <section id="disqus_thread"></section>
-        <script type="text/javascript">
-            var disqus_shortname = 'whysocurious';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
+
+        <section id="disqus_thread" data-lazy-disqus=""></section>
     </article>
 </div>
-<script>
-    (function (doc) {
-        'use strict';
-        return;
-        var artbody = doc.querySelector("article .article-body"),
-            stickyMenu = doc.querySelector("#sticky-menu"),
-            headers = artbody.querySelectorAll("h2, h3"),
-            anchor,
-            header,
-            i;
-
-        for (i = 0; i < headers.length; i++) {
-            header = headers[i];
-            anchor = doc.createElement("a");
-            anchor.href = window.location + header.id;
-            anchor.classList.add(header.tagName);
-            anchor.textContent = header.textContent;
-            stickyMenu.appendChild(anchor);
-        }
-    }(document));
-
-    (function (doc) {
-        'use strict';
-        var stickies = doc.querySelectorAll('[data-sticky]'),
-            i,
-            sticky;
-        for (i = 0; i < stickies.length; i++) {
-            sticky = stickies[i];
-            sticky.style.width = sticky.parentNode.getBoundingClientRect().width + "px";
-        }
-        window.addEventListener('scroll', function () {
-            var currentTop,
-                sticky;
-            for (i = 0; i < stickies.length; i++) {
-                sticky = stickies[i];
-                currentTop = sticky.parentNode.getBoundingClientRect().top;
-                if (currentTop < 0) {
-                    sticky.classList.add('sticky');
-                } else {
-                    sticky.classList.remove('sticky');
-                }
-            }
-        });
-    }(document));
-</script>

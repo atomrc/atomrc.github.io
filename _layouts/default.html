@@ -40,8 +40,23 @@
     <body>
 
         <section id="about">
-            <a href="/"><img id="avatar" src="/images/avatar_s.jpeg"></a>
-            <a class="title" href="/"><span rel="author">{{ site.name }}</span></a><br>
+            <div class="content" data-fader="">
+                <a href="/"><img id="avatar" src="/images/avatar_s.jpeg"></a>
+                <a class="title" href="/"><span rel="author">{{ site.name }}</span></a><br>
+            </div>
+            <div class="sticky-container">
+                <div data-sticky="" id="sticky-header">
+                    <a href="/"><img id="avatar-s" class="lefty" src="/images/avatar_s.jpeg"></a>
+                    <a class="title"  href="/"><span rel="author">{{ site.name }}</span></a><br>
+                </div>
+            </div>
+        </section>
+
+        <section id="content">
+            {{ content }}
+        </section>
+
+        <footer>
             <address>
                 Front End développeur chez <a href="http://www.thomas-belin.com" target="_blank">doyoubuzz</a><br>
                 Je <a href="/p/faire-la-part-belle-au-code">fais la part belle au code</a><br>
@@ -50,11 +65,7 @@
                 <a href="https://plus.google.com/+ThomasBelin?rel=author" target="_blank"><i class="social google-plus fa fa-google-plus"></i></a>
                 <a href="https://github.com/atomrc" target="_blank"><i class="social github fa fa-github-alt"></i></a>
             </address>
-        </section>
-
-        <section id="content">
-            {{ content }}
-        </section>
-
+        </footer>
     </body>
+    <script src="/js/application.js"></script>
 </html>

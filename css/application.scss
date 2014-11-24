@@ -1,11 +1,11 @@
 ---
 ---
 
-@mixin transition($property, $duration) {
-    -webkit-transition: $property $duration;
-    -moz-transition: $property $duration;
-    -o-transition: $property $duration;
-    transition: $property $duration;
+@mixin transition($property, $duration, $delay:0s) {
+    -webkit-transition: $property $duration $delay;
+    -moz-transition: $property $duration $delay;
+    -o-transition: $property $duration $delay;
+    transition: $property $duration $delay;
 }
 @mixin transform($property) {
     -webkit-transform: $property;
@@ -18,6 +18,7 @@
 
 $pinkcolor: #F06;
 $coolblue: rgb(114, 166, 252);
+$darkcoolblue: rgb(89, 134, 209);
 
 $aboutWidth: 300px;
 $googlePlusColor: rgba(212, 11, 13, 1);
@@ -26,23 +27,21 @@ $facebookColor: rgba(36, 71, 134, 1);
 
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600);
 
-html, body { height: 100%; }
 body {
-    background-color: #EEE;
     padding:0;
     margin:0;
     color:#666;
     font-family:Open Sans, Arial;
-    font-size: 12pt;
+    font-size: 13pt;
 }
 
 a { text-decoration:none; color: rgb(0, 132, 180); }
 ul { list-style: none; padding:0; }
 
 time {
-    color: gray;
-    font-size: 11pt;
-    font-weight: bold;
+    .month {
+        font-weight: bold;
+    }
 }
 
 pre, code {
@@ -63,21 +62,57 @@ pre code {
     padding: 0;
 }
 
-#about {
-    padding: 2em 10px;
-    box-sizing: border-box;
+.sticky {
     position: fixed;
-    height: 100%;
-    width: $aboutWidth;
-    border-right: solid 1px #CCC;
-    text-align: center;
+    box-shadow: 0 1px 5px #666;
+    width: 100%;
+    top: 0;
+}
+
+#sticky-header {
+    @include transition(opacity, 0.2s);
+    opacity: 0;
+    text-align: left;
+    background-color: white;
+    padding: 0.5em;
+
+    .lefty {
+        @include transition(transform, 0.5s);
+        @include transform(translateX(-50px));
+    }
+
     .title {
-        font-size: 2em;
+        vertical-align: 50%;
+        font-size: 15pt;
         color: inherit;
         font-weight: bold;
     }
+    &.sticky {
+        opacity: 1;
+        .lefty {
+            @include transform(translateX(0));
+        }
+    }
+}
+.sticky-container {
+    position: absolute;
+    bottom: 0;
+}
+
+#about {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    background-color: white;
+    .content {
+        padding: 1em;
+        .title {
+            font-size: 2em;
+            color: inherit;
+            font-weight: bold;
+        }
+    }
     address {
-        margin: 20px 1px;
         font-size: 11pt;
         .social {
             margin: 0.5em;
@@ -86,33 +121,20 @@ pre code {
     }
 }
 
+#avatar-s {
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+}
+
 #avatar {
     display: block;
     margin: auto;
-    border: 3px solid #EEE;
     border-radius: 60px;
 }
 
 #content {
-    margin-left: $aboutWidth;
-}
-
-@media (max-width: 900px) {
-    #about {
-        position: static;
-        height: auto;
-        width: auto;
-        padding: 1em;
-        address {
-            margin: 0;
-        }
-    }
-    #content {
-        margin: auto;
-    }
-    #full-article {
-        font-size: 11pt;
-    }
+    background-color: #EEE;
 }
 
 .title,
@@ -178,6 +200,21 @@ pre code {
     font-size: 11pt;
 }
 
+.folded-paper {
+    position: relative;
+    background: $coolblue;
+    &:after {
+        content: "";
+        height: 0;
+        width: 0;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        border-top: 1em solid $darkcoolblue;
+        border-right: 1em solid transparent;
+    }
+}
+
 /*****************************
 *********** Home *************
 *****************************/
@@ -214,8 +251,10 @@ Articles
 *****************************/
 #full-article {
     background-color: #FFF;
-    color: #444;
+    color: #666;
     font-family: Helvetica Neue;
+
+    header { position: relative; }
 
     h1, h2, h3 {
         font-family:Open Sans, Arial;
@@ -236,15 +275,22 @@ Articles
     p {
         line-height: 1.5em;
     }
+    aside {
+        position: absolute;
+        right: -1em;
+        color: white;
+        bottom: 0;
+    }
+
+    article {
+        max-width: 800px;
+        margin: auto;
+        padding: 2em;
+    }
 
     position: relative;
-    padding: 2em;
     box-sizing: border-box;
     #share-panel {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
         .share-content {
             .text {
                 font-size: 17pt;
@@ -264,7 +310,6 @@ Articles
         }
     }
     .article-body {
-        max-width: 700px;
         box-sizing: border-box;
         .notice {
             background-color: rgb(242, 191, 134);
