@@ -1,11 +1,12 @@
 {
-  "name": "thomasbelin.github.io",
+  "name": "atomrc.github.io",
   "version": "0.0.1",
   "description": "Blog",
   "devDependencies": {
-    "grunt": "*",
-    "grunt-contrib-watch": "~0.6.1",
-    "grunt-contrib-sass": "~0.7.3"
+    "browserify": "*",
+    "gulp": "*",
+    "gulp-browserify": "^0.5.0",
+    "gulp-uglify": "^1.0.1"
   },
   "author": "Thomas Belin",
   "license": "BSD-2-Clause"
