@@ -5,9 +5,13 @@ var fader = require("./fader"),
 
 (function (doc) {
     "use strict";
+    var disqusElement = doc.getElementById("disqus_thread");
 
     fader(doc.querySelectorAll("[data-fader]"));
     sticky(doc.querySelectorAll("[data-sticky]"));
-    lazyDisqus(doc.getElementById("disqus_thread"));
+
+    if (disqusElement) {
+        lazyDisqus(disqusElement);
+    }
 
 }(document));
