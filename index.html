@@ -7,6 +7,7 @@ description: Les pérégrinations d'un développeur front-end
     {% for post in site.posts %}
         <li class="card article-card">
             <a class="title" href="{{post.url}}">{{post.title}}</a>
+            <a class="hover-link" href="{{post.url}}"></a>
             <time
                 class="folded-paper"
                 datetime="{{post.date | date_to_xmlschema}}"
