@@ -4,13 +4,14 @@
     "use strict";
     module.exports = function (elements) {
         var previousPos = 0,
+            body = win.document.body,
             element;
         win.addEventListener("scroll", function (event) {
             for (var i = 0; i < elements.length; i++) {
-                var diff = previousPos - event.pageY;
+                var diff = previousPos - body.getBoundingClientRect().top;
                 element = elements[i];
-                previousPos = event.pageY;
-                if (diff < 0) {
+                previousPos = body.getBoundingClientRect().top;
+                if (diff >= 0) {
                     element.classList.add("visible");
                 } else {
                     element.classList.remove("visible");
