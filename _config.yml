@@ -8,3 +8,11 @@ sass:
     sass_dir: css/_sass
 gems:
   - jekyll-redirect-from
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "post"
+    values:
+      is_post: true

@@ -1,16 +1,24 @@
 ---
 layout: default
 ---
+<!--
+<div class="sticky-container">
+    <div data-sticky="" id="sticky-header" class="fixed-header">
+        <a href="/"><img class="avatar falling" src="/images/avatar_s.jpeg"></a>
+        <span class="title">{{ page.title }}</span>
+    </div>
+</div>
+-->
 <div id="full-article">
     <article>
         <header>
             <h1 class="title">{{page.title}}</h1>
-            <aside class="folded-paper">
-                <time datetime="{{page.date}}" pubdate itemprop="datePublished" content="{{page.date}}">
+            <aside>
+                <time class="folded-paper" datetime="{{page.date}}" pubdate itemprop="datePublished" content="{{page.date}}">
                     {{ page.date | date: '%-d <span class="month">%b</span> %Y' }}
                 </time>
                 {% for tag in page.categories %}
-                <span>{{ tag }}</span>&nbsp;
+                <span class="tag">{{ tag }}</span>&nbsp;
                 {% endfor %}
             </aside>
         </header>
@@ -25,12 +33,15 @@ layout: default
         {{ content }}
         </div>
 
-        <div id="share-panel">
+        <div id="share-panel" class="share-button" data-material-button="">
+            <i class="fa fa-share-alt"></i>
             {% assign url =  page.url | prepend: site.url | cgi_escape %}
             {% assign desc =  page.description | cgi_escape %}
-            <a class="share-provider" target="_blank" href="https://twitter.com/intent/tweet?url={{url}}&text={{desc}}&related=atomrc"><img src="/images/icons/twitter_32.png" title="Partager sur Twitter" alt="Twitter"></a>
-            <a class="share-provider" target="_blank" href="https://plus.google.com/share?url={{url}}"><img src="/images/icons/plus_32.png" title="Partager sur Google+" alt="Google+"></a>
-            <a class="share-provider" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url}}"><img src="/images/icons/facebook_32.png" title="Partager sur Facebook" alt="Facebook"></a>
+            <div class="content">
+                <a target="_blank" href="https://twitter.com/intent/tweet?url={{url}}&text={{desc}}&related=atomrc"><i class="fa fa-twitter"></i></a>
+                <a target="_blank" href="https://plus.google.com/share?url={{url}}"><i class="fa fa-google-plus"></i></a>
+                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url}}"><i class="fa fa-facebook"></i></a>
+            </div>
         </div>
 
         <section id="related">

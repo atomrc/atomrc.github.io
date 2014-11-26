@@ -1,0 +1,14 @@
+.folded-paper {
+    position: relative;
+    background: $coolblue;
+    &:after {
+        content: "";
+        height: 0;
+        width: 0;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        border-top: 1em solid $darkcoolblue;
+        border-right: 1em solid transparent;
+    }
+}

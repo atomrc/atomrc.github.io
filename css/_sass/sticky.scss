@@ -1,0 +1,28 @@
+@import "animation.scss";
+
+.sticky-container {
+    position: absolute;
+    width: 100%;
+}
+[data-sticky] {
+    top: 0;
+    opacity: 0;
+    &.sticky {
+        width: 100%;
+        opacity: 1;
+        position: fixed;
+        z-index: 1;
+        box-shadow: 0 2px 2px #CCC;
+    }
+}
+
+.falling {
+    @include transition(transform, 0.5s);
+    @include transform(translateY(-1em));
+}
+
+.sticky {
+    .falling {
+        @include transform(translateY(0));
+    }
+}

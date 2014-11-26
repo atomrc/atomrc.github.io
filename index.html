@@ -3,50 +3,43 @@ layout: default
 title: J'y suis, JS
 description: Les pérégrinations d'un développeur front-end
 ---
-<section class="list">
-    <div class="section-header">Articles</div>
-    <ul>
-        {% for post in site.posts %}
-            <li class="card soft-box">
-                <div>
-                    <a class="title" href="{{post.url}}">{{post.title}}</a>
-                </div>
-                <time
-                    datetime="{{post.date | date_to_xmlschema}}"
-                    pubdate
-                    itemprop="datePublished"
-                    content="{{post.date | date_to_xmlschema}}">
-                    {{ post.date | date_to_string }}
-                </time>
-                <aside>
-                    {% for tag in post.categories %}
-                    <span class="tag">{{ tag }}</span>&nbsp;
-                    {% endfor %}
-                </aside>
-                <p class="description">{{post.description}}</p>
-            </li >
-        {% endfor %}
-    </ul>
-</section>
-<section class="list">
-    <div class="section-header">Talks</div>
-    <ul>
-        {% for page in site.pages %}
-            {% if page.sitemap.include %}
-            <li class="card soft-box">
-                <div>
-                    <a class="title" href="{{page.url | remove: 'index.html'}}"><strong>{{page.title}}</strong></a>
-                </div>
-                <time
-                    datetime="{{page.date | date_to_xmlschema}}"
-                    pubdate
-                    itemprop="datePublished"
-                    content="{{page.date | date_to_xmlschema}}">
-                    {{ page.date | date_to_string }}
-                </time>
-                <p class="description">{{page.description}}</p>
-            </li >
-            {% endif %}
-        {% endfor %}
-    </ul>
-</section>
+<ul class="grid">
+    {% for post in site.posts %}
+        <li class="card article-card">
+            <a class="title" href="{{post.url}}">{{post.title}}</a>
+            <time
+                class="folded-paper"
+                datetime="{{post.date | date_to_xmlschema}}"
+                pubdate
+                itemprop="datePublished"
+                content="{{post.date | date_to_xmlschema}}">
+                {{ post.date | date_to_string }}
+            </time>
+            <aside>
+                {% for tag in post.categories %}
+                <span class="tag">{{ tag }}</span>&nbsp;
+                {% endfor %}
+            </aside>
+            <p class="description">{{post.description}}</p>
+        </li >
+    {% endfor %}
+</ul>
+<ul class="grid">
+    {% for page in site.pages %}
+        {% if page.sitemap.include %}
+        <li class="card">
+            <div>
+                <a class="title" href="{{page.url | remove: 'index.html'}}"><strong>{{page.title}}</strong></a>
+            </div>
+            <time
+                datetime="{{page.date | date_to_xmlschema}}"
+                pubdate
+                itemprop="datePublished"
+                content="{{page.date | date_to_xmlschema}}">
+                {{ page.date | date_to_string }}
+            </time>
+            <p class="description">{{page.description}}</p>
+        </li >
+        {% endif %}
+    {% endfor %}
+</ul>
