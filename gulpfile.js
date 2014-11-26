@@ -9,7 +9,7 @@ gulp.task("default", function() {
     gulp
         .src("_js/application.js")
         .pipe(browserify())
-        //.pipe(uglify())
+        .pipe(uglify())
         .pipe(gulp.dest("./js"));
 });
 
