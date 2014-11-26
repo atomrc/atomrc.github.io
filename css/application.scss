@@ -23,7 +23,7 @@ body {
     color:#666;
     background-color: #EEE;
     font-family:Open Sans, Arial;
-    font-size: 12pt;
+    font-size: 13pt;
 }
 
 body.article {
@@ -176,13 +176,33 @@ time.folded-paper {
     p.description {
         font-size: 11pt;
     }
+
+    time.folded-paper {
+        top: 1em;
+    }
+    .filler {
+        height: 40px;
+        width: 45px;
+        float: right;
+    }
 }
 
 article {
-    max-width: 800px;
+    max-width: 900px;
     margin: auto;
     padding: 2em;
     position: relative;
+    h1 {
+        font-size: 3em;
+    }
+    h2 {
+        font-size: 2em;
+        margin: 1em;
+    }
+    h3 {
+        font-size: 1.5em;
+        margin: 1em 2em;
+    }
     time.folded-paper {
         right: 0;
     }

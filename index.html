@@ -6,6 +6,7 @@ description: Les pérégrinations d'un développeur front-end
 <ul class="grid">
     {% for post in site.posts %}
         <li class="card article-card">
+            <div class="filler"></div>
             <a class="title" href="{{post.url}}">{{post.title}}</a>
             <a class="hover-link" href="{{post.url}}"></a>
             <time
@@ -14,7 +15,7 @@ description: Les pérégrinations d'un développeur front-end
                 pubdate
                 itemprop="datePublished"
                 content="{{post.date | date_to_xmlschema}}">
-                {{ post.date | date: '<span class="month">%b</span> %Y' }}
+                {{ post.date | date: '%-d <span class="month">%b</span> %y' }}
             </time>
             <aside>
                 {% for tag in post.categories %}

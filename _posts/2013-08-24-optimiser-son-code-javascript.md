@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Optimiser son code Javascript
+title: Soigner son code Javascript
 categories: [JavaScript, Code, Bonnes Pratiques]
 description: "Javascript a été prévu pour être un langage très simple d'accès au détriment de ses performances. C'est donc a vous de faire quelques efforts pour avoir un code optimisé"
 redirect_from:
