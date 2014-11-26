@@ -13,6 +13,7 @@ $facebookColor: rgba(36, 71, 134, 1);
 @import "syntax.scss";
 @import "sticky.scss";
 @import "card.scss";
+@import "material-button.scss";
 @import "folded-paper.scss";
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600);
 
@@ -60,14 +61,9 @@ h1 {
 
 .share-button {
     font-size: 25pt;
-    border-radius: 1em;
-    width: 2em;
-    height: 2em;
     background-color: $darkcoolblue;
     color: white;
     text-align: center;
-    line-height: 2em;
-    box-shadow: 0 4px 4px #999;
     position: fixed;
     bottom: 1em;
     right: 1em;
@@ -81,11 +77,13 @@ h1 {
         bottom: 100%;
         width: 100%;
         a {
-            text-shadow: 0 4px 4px #999;
+            color: white;
+            font-size: 15pt;
+            background-color: $coolblue;
+            margin: auto auto 1em;
+            display: block;
             @include transition(transform, 0.2s);
             @include transform(scale(0.1, 0.1));
-            display: block;
-            margin: auto;
         }
     }
     &:hover {
@@ -141,8 +139,22 @@ h1 {
     }
 
     .title {
+        text-shadow: 1px 1px 0px #FFF;
         color: inherit;
         font-weight: bold;
+    }
+}
+
+#footer {
+    background-color: $darkcoolblue;
+    color: white;
+    text-align: center;
+    padding: 1em;
+    a { color: #010733; }
+    i.social {
+        font-size: 2em;
+        color: white;
+        margin: 0.5em 1em;
     }
 }
 
@@ -161,6 +173,9 @@ time.folded-paper {
     }
     background-color: white;
     position: relative;
+    p.description {
+        font-size: 11pt;
+    }
 }
 
 article {

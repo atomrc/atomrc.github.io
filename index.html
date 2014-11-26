@@ -14,7 +14,7 @@ description: Les pérégrinations d'un développeur front-end
                 pubdate
                 itemprop="datePublished"
                 content="{{post.date | date_to_xmlschema}}">
-                {{ post.date | date_to_string }}
+                {{ post.date | date: '<span class="month">%b</span> %Y' }}
             </time>
             <aside>
                 {% for tag in post.categories %}
@@ -28,11 +28,10 @@ description: Les pérégrinations d'un développeur front-end
 <ul class="grid">
     {% for page in site.pages %}
         {% if page.sitemap.include %}
-        <li class="card">
-            <div>
-                <a class="title" href="{{page.url | remove: 'index.html'}}"><strong>{{page.title}}</strong></a>
-            </div>
+        <li class="card article-card">
+            <a class="title" href="{{page.url | remove: 'index.html'}}"><strong>{{page.title}}</strong></a>
             <time
+                class="folded-paper"
                 datetime="{{page.date | date_to_xmlschema}}"
                 pubdate
                 itemprop="datePublished"

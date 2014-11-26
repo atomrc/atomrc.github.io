@@ -33,14 +33,14 @@ layout: default
         {{ content }}
         </div>
 
-        <div id="share-panel" class="share-button" data-material-button="">
+        <div id="share-panel" class="share-button material-button" data-material-button="">
             <i class="fa fa-share-alt"></i>
             {% assign url =  page.url | prepend: site.url | cgi_escape %}
             {% assign desc =  page.description | cgi_escape %}
             <div class="content">
-                <a target="_blank" href="https://twitter.com/intent/tweet?url={{url}}&text={{desc}}&related=atomrc"><i class="fa fa-twitter"></i></a>
-                <a target="_blank" href="https://plus.google.com/share?url={{url}}"><i class="fa fa-google-plus"></i></a>
-                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url}}"><i class="fa fa-facebook"></i></a>
+                <a target="_blank" class="material-button" href="https://twitter.com/intent/tweet?url={{url}}&text={{desc}}&related=atomrc"><i class="fa fa-twitter"></i></a>
+                <a target="_blank" class="material-button" href="https://plus.google.com/share?url={{url}}"><i class="fa fa-google-plus"></i></a>
+                <a target="_blank" class="material-button" href="https://www.facebook.com/sharer/sharer.php?u={{url}}"><i class="fa fa-facebook"></i></a>
             </div>
         </div>
 
