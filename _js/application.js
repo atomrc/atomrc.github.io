@@ -1,5 +1,6 @@
 /*global require, document, ga*/
 var probe = require("./probe"),
+    sticky = require("./sticky"),
     compile = require("./compiler");
 
 (function (doc) {
@@ -12,11 +13,17 @@ var probe = require("./probe"),
                 (doc.getElementsByTagName("head")[0] || doc.getElementsByTagName("body")[0]).appendChild(dsq);
             });
         },
+
         "[data-reading-probe]": function (element) {
             probe(element, function (element) {
                 ga("send", "event", "article", "read", element.dataset.readingProbe);
             });
+        },
+
+        "[data-sticky]": function (element) {
+            sticky(element);
         }
+
     };
 
     compile(doc, directives);

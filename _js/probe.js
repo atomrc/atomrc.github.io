@@ -16,5 +16,7 @@
                 init = true;
             }
         });
+
+        return element;
     };
 }(window));
