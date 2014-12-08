@@ -60,7 +60,7 @@ h1 {
 }
 
 .share-button {
-    font-size: 25pt;
+    font-size: 17pt;
     background-color: $darkcoolblue;
     color: white;
     text-align: center;
@@ -78,12 +78,18 @@ h1 {
         width: 100%;
         a {
             color: white;
-            font-size: 15pt;
+            font-size: 13pt;
             background-color: $coolblue;
             margin: auto auto 1em;
             display: block;
             @include transition(transform, 0.2s);
             @include transform(scale(0.1, 0.1));
+        }
+        a:nth-child(1) {
+            @include transition(transform, 0.2s, 0.08s);
+        }
+        a:nth-child(2) {
+            @include transition(transform, 0.2s, 0.04s);
         }
     }
     &:hover {

@@ -1,7 +1,15 @@
 .material-button {
     box-shadow: 0 4px 4px #999;
-    border-radius: 1em;
-    width: 2em;
-    height: 2em;
-    line-height: 2em;
+    border-radius: 1.25em;
+    width: 2.5em;
+    height: 2.5em;
+    line-height: 2.5em;
+    cursor: pointer;
+
+    .material-button-icon {
+        @include transition(transform, 0.3s);
+    }
+    &:hover .material-button-icon {
+        @include transform(rotate(90deg));
+    }
 }
