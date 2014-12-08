@@ -11,10 +11,10 @@
                 var diff = previousPos - body.getBoundingClientRect().top;
                 element = elements[i];
                 previousPos = body.getBoundingClientRect().top;
-                if (diff >= 0) {
-                    element.classList.add("visible");
-                } else {
+                if (diff < -10) {
                     element.classList.remove("visible");
+                } else {
+                    element.classList.add("visible");
                 }
             }
         });

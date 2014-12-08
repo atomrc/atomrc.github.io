@@ -33,7 +33,7 @@ layout: default
         {{ content }}
         </div>
 
-        <div id="share-panel" class="share-button material-button" data-material-button="">
+        <div id="share-panel" class="share-button material-button visible" data-material-button="">
             <i class="fa fa-share-alt material-button-icon"></i>
             {% assign url =  page.url | prepend: site.url | cgi_escape %}
             {% assign desc =  page.description | cgi_escape %}
@@ -44,6 +44,7 @@ layout: default
             </div>
         </div>
 
+        <div data-reading-probe="{{page.url}}"></div>
         <section id="related">
             <div class="header"> A lire aussi :</div>
             <ul>
