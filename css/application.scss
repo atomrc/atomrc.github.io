@@ -194,9 +194,9 @@ time.folded-paper {
 }
 
 article {
-    max-width: 900px;
+    max-width: 800px;
     margin: auto;
-    padding: 2em;
+    padding: 1em;
     position: relative;
     h1 {
         font-size: 3em;
@@ -208,6 +208,9 @@ article {
     h3 {
         font-size: 1.5em;
         margin: 1em 2em;
+    }
+    p {
+        line-height: 1.70em;
     }
     time.folded-paper {
         right: 0;
