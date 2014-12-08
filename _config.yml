@@ -3,7 +3,7 @@ url: "http://blog.thomasbelin.fr"
 permalink: /p/:title/
 highlighter: pygments
 markdown: redcarpet
-exclude: [node_modules, package.json, Gruntfile.js]
+exclude: [node_modules, package.json, gulpfile.js]
 sass:
     sass_dir: css/_sass
 gems:
