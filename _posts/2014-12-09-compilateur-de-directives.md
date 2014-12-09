@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Un mirco compilateur de directives"
+title: "Un micro compilateur de directives"
 categories: [JavaScript]
 description: Un compilateur ultra light pour compiler des directives
 ---
