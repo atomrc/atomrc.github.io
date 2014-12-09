@@ -26,6 +26,6 @@ var probe = require("./probe"),
 
     };
 
-    compile(doc, directives);
+    compile(directives);
 
 }(document));
