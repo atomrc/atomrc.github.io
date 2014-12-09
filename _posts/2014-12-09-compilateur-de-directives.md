@@ -6,7 +6,7 @@ description: Un compilateur ultra light pour compiler des directives
 ---
 Comme j'aime bien l'approche `directive` d'AngularJS mais que, bien souvent, je n'ai pas besoin d'une machine de guerre comme ça pour mes projets perso, je me suis construit un micro compilateur de directives maison.
 
-Pas de notions de scopes ni rien de bien funky ici, mais simplement une méthode agréable pout organiser son code.
+Pas de notions de scopes ni rien de bien funky ici, mais simplement une méthode agréable pour organiser son code.
 
 Voila le code et je vous explique l'idée juste après ;) 
 
