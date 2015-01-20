@@ -11,8 +11,6 @@ Comme expliqué dans mon précédent billet ([Hackerbeach : Coder sur la plage .
 Ce n'est pas vraiment le genre d’environnement de travail auquel je suis habitué et ça serait dommage de ne pas profiter de ce cadre de rêve !  
 La question est donc : **comment m'organiser pour, à la fois, profiter à fond de la Dominique tout en bossant efficacement  ?**
 
-J'ai écrit la grande majorité de l'article lors de mes premiers jours en Dominique mais, à l'heure de sa publication, j'en suis déjà à la moitié de mon aventure. Aussi je ne parlerai ici que de l'idée du planning que j'avais en arrivant ici sans me laisser influencer par ce que je fais vraiment. Je vous dirais quelle a été la façon dont je me suis réellement organisé dans un prochain billet à mon retour ;)
-
 ##Vivre avec le soleil
 
 Voila ce que j'ai en tête pour la gestion de mon temps : ne perdre aucune minute de la journée. Pour arriver à ça il va falloir se synchroniser avec le soleil. Ce qui veut dire lever 6h15. Ca me permettra comme ça de pouvoir me libérer une bonne partie de la journée pour visiter, nager, marcher ...  
@@ -24,7 +22,7 @@ N'étant pas vraiment un lève tôt, je vous avoue que ça ne me parait pas faci
 
 Quitte à partir là bas, je compte bien sortir complètement de mes habitudes vélo / boulot / dodo. Et ça, ça commence par ne pas savoir où je vais bosser en me levant.  
 Pas de bureaux ici, nous sommes en itinérance complète. L'idée c'est vraiment de **bouger le plus possible** : voir plein de lieux, essayer de bosser dans des restaurants ou des bars.  
-Nous avons une connexion dans notre appartement et, si on s'autorise quelques demi journées de travail à domicile, il est hors de question de faire des journées entières sans bouger !
+Nous avons une connexion dans notre appartement et, si nous pouvons nous autoriser quelques demi journées de travail à domicile, il est hors de question de faire des journées entières sans bouger !
 
 Les autres gars de Hackerbeach vivent dans une ville voisine à la notre (à 3 ou 4 km pas plus) aussi, comme bon hacker qui se respecte, on se synchronise via IRC (#hackerbeach sur freenode si vous voulez suivre nos pérégrinations ;)). Aller les rejoindre est une motivation supplémentaire pour sortir de chez nous !
 
@@ -32,7 +30,7 @@ Les autres gars de Hackerbeach vivent dans une ville voisine à la notre (à 3 o
 
 Si me lever tôt fait partie de mes plans, rien ne dit que je vais nécessairement bosser dès le matin. Rien ne m'empêche de faire un petit bain de mer au réveil puis retour au boulot puis petit restaurant dans la ville, coder quelques heures dans un bar, prendre un pot avec l'équipe, reprendre mon boulot arrivé chez moi.
 
-Je sais assez bien comment je travaille. Dans une journée j'ai des périodes hyper productives qu'il ne faut surtout pas que je casse et des périodes où je me sens complètement inutile face à mon code. Si je suis dans une phase de créativité intensive, je sais parfaitement que je ne voudrai pas en sortir, quitte à annuler une activité que j'avais prévue. En revanche sur les phases de travail inefficaces une petite heure dans l'eau et c'est reparti !
+Dans une journée j'ai des périodes hyper productives qu'il ne faut surtout pas que je casse et des périodes où je me sens complètement inutile face à mon code. Si je suis dans une phase de créativité intensive, je sais parfaitement que je ne voudrai pas en sortir, quitte à annuler une activité que j'avais prévue. En revanche sur les phases de travail inefficaces une petite heure dans l'eau et c'est reparti !
 
 J'aime mon boulot et faire avancer DoYouBuzz me tient beaucoup à coeur, aussi je n'ai aucune crainte quant à une éventuelle perte de motivation. Je suis, avant tout, là pour bosser !
 
