@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Hackerbeach : Coder sur la plage ... en hiver"
-categories: [experience, remote]
+categories: [hackerbeach, experience, remote]
 description: Je suis parti bosser en Dominique :)
 ---
 
