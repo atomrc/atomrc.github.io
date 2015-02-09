@@ -89,10 +89,11 @@ background-image: url(images/beachhackers.jpg)
 ## Pourquoi se cailler le c** en Europe alors qu'on pourrait bosser de la plage ?
 
 ---
+name: map
 # Hackerbeach 2015
 
 <div class="button-container"><button id="map-not-here">pas ici</button><button id="map-here">ici</button></div>
-<div id="map" data-position="[51.505, -0.09], 13"></div>
+<div id="map"></div>
 
 ---
 # Hackerbeach 2015
@@ -243,30 +244,36 @@ background-image: url(images/rdv.jpg)
 
 
         </textarea>
-        <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
-        </script>
-        <script>
-            var slideshow = remark.create();
-        </script>
-        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+        <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
         <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
         <script>
+            //init remarkjs
+            var slideshow = remark.create();
+            var map;
             var mapHere = document.getElementById("map-here");
             var mapNotHere = document.getElementById("map-not-here");
             var mapAnimation = {animate: true, zoom: { duration: 10 }};
 
-            var map = L.map('map').setView([17.384038, -63.255208], 3);
-            // add an OpenStreetMap tile layer
-            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
+            slideshow.on("afterShowSlide", function (slide) {
 
-            mapNotHere.addEventListener("click", function () {
-                map.setView([18.939391, -70.698445], 6, mapAnimation);
-            });
-            mapHere.addEventListener("click", function () {
-                map.setView([15.323238, -61.316121], 7, mapAnimation);
+                if (!map && slide.properties.name === "map") {
+
+                    map = L.map('map').setView([17.384038, -63.255208], 3);
+                    // add an OpenStreetMap tile layer
+                    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    }).addTo(map);
+
+                    mapNotHere.addEventListener("click", function () {
+                        map.setView([18.939391, -70.698445], 6, mapAnimation);
+                    });
+                    mapHere.addEventListener("click", function () {
+                        map.setView([15.323238, -61.316121], 7, mapAnimation);
+                    });
+
+                }
             });
         </script>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     </body>
 </html>
