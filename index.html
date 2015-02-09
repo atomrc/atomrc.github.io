@@ -26,6 +26,7 @@ description: Les pérégrinations d'un développeur front-end
         </li >
     {% endfor %}
 </ul>
+<h2>Talks</h2>
 <ul class="grid">
     {% for page in site.pages %}
         {% if page.sitemap.include %}
@@ -39,6 +40,11 @@ description: Les pérégrinations d'un développeur front-end
                 content="{{page.date | date_to_xmlschema}}">
                 {{ page.date | date_to_string }}
             </time>
+            <aside>
+                {% for tag in page.categories %}
+                <span class="tag">{{ tag }}</span>&nbsp;
+                {% endfor %}
+            </aside>
             <p class="description">{{page.description}}</p>
         </li >
         {% endif %}
