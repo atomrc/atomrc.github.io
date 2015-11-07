@@ -1,11 +1,17 @@
 /*global require, document, ga*/
 var probe = require("./probe"),
-    sticky = require("./sticky"),
     compile = require("./compiler");
 
 (function (doc) {
     "use strict";
     var directives = {
+        "article h2, article h3": function (element) {
+            var anchor = doc.createElement("a");
+            anchor.href = "#" + element.id;
+            anchor.classList.add("anchor");
+            element.appendChild(anchor);
+        },
+
         "#disqus_thread": function (element) {
             probe(element, function(/*element*/) {
                 var dsq = doc.createElement("script"); dsq.type = "text/javascript"; dsq.async = true;
@@ -18,14 +24,18 @@ var probe = require("./probe"),
             probe(element, function (element) {
                 ga("send", "event", "article", "read", element.dataset.readingProbe);
             });
-        },
-
-        "[data-sticky]": function (element) {
-            sticky(element);
         }
 
     };
 
     compile(directives);
+
+    doc.addEventListener("DOMContentLoaded", function () {
+        //hack to force the browser to interpret the
+        //anchor hash when page is loaded
+        if (window.location.hash) {
+            window.location.hash = window.location.hash;
+        }
+    });
 
 }(document));

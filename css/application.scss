@@ -11,7 +11,6 @@ $facebookColor: rgba(36, 71, 134, 1);
 
 @import "animation.scss";
 @import "syntax.scss";
-@import "sticky.scss";
 @import "card.scss";
 @import "material-button.scss";
 @import "folded-paper.scss";
@@ -198,6 +197,24 @@ article {
     margin: auto;
     padding: 1em;
     position: relative;
+    h2, h3 {
+        position: relative;
+        .anchor {
+            color: #666;
+            transition: opacity 0.3s;
+            position: absolute;
+            right: 100%;
+            opacity: 0;
+            &:after {
+                content: "#";
+            }
+        }
+        &:hover {
+            .anchor {
+                opacity: 1;
+            }
+        }
+    }
     h1 {
         font-size: 3em;
     }
@@ -251,8 +268,4 @@ pre code {
     background-color: transparent;
     border: none;
     padding: 0;
-}
-
-iframe.twitter-tweet {
-    height: 200px;
 }
