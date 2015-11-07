@@ -8,6 +8,7 @@ sass:
     sass_dir: css/_sass
 gems:
   - jekyll-redirect-from
+  - jekyll-gist
 
 defaults:
   -
