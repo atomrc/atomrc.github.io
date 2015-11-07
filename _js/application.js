@@ -33,7 +33,9 @@ var probe = require("./probe"),
     doc.addEventListener("DOMContentLoaded", function () {
         //hack to force the browser to interpret the
         //anchor hash when page is loaded
-        window.location.hash = window.location.hash;
+        if (window.location.hash) {
+            window.location.hash = window.location.hash;
+        }
     });
 
 }(document));
