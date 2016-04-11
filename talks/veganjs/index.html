@@ -1,5 +1,5 @@
 ---
-title: "The Vegan Guide To ES6 Classes"
+title: "The JS Vegan Guide"
 date: 2016/04/12
 description: "Et si je vous disais que JavaScript était vegan ?"
 categories: [javascript]
@@ -9,7 +9,7 @@ sitemap:
 <!DOCTYPE html>
 <html>
     <head>
-        <title>The Vegan Guide To ES6 Classes</title>
+        <title>The JS Vegan Guide</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <style type="text/css">
             @import url(https://fonts.googleapis.com/css?family=Open+Sans:300);
@@ -198,9 +198,7 @@ layout: true
 class: center, middle, naked
 name: intro
 
-# The Vegan Guide To ES6 Classes
-
-???
+# The JS Vegan Guide
 
 ---
 class: center
@@ -227,7 +225,6 @@ class: center
 --
 <div class="recipe">
     Oeufs Brouillés Vegan :
-
     <ul>
         <li>Tofu</li>
         <li>Sel, poivre</li>
@@ -341,6 +338,10 @@ class:center, middle
 
 ![Deal With It](images/googlerequest-classisjs.png)
 
+???
+parce que oui, comme il n'y a pas d'oeufs en cuisine vegan,
+il n'y a pas de classes en JavaScript
+
 ---
 class:center
 ##Pas de classes en JavaScript
@@ -357,7 +358,7 @@ class:center, middle
 ![Deal With It](images/googlerequest-jsprototypal.png)
 
 
-![LikeABoss](https://media.giphy.com/media/ToMjGpA3C2Mb0LJeTle/giphy.gif)
+![LikeABoss](https://media.giphy.com/media/vGDNMIUN07UXK/giphy.gif)
 ---
 class:center
 ##JavaScript est <span style="text-decoration: line-through">vegan</span> orienté prototype
@@ -397,6 +398,18 @@ strLitteral instanceof String
 
 strObj instanceof String
 //true
+```
+
+---
+#typeof
+##n'est pas mieux
+
+```javascript
+typeof "test"
+//string
+
+typeof new String("test")
+//object
 ```
 
 ---
@@ -442,6 +455,19 @@ function createFood(type, weigth) {
 
 const steak = createFood("steak", 120);
 ```
+
+???
+on utilise : 
+
+- les closures ;
+- les factories ;
+
+et du coup on limite les mots clés utilisé pour une approche plus fonctionnelle :
+
+- pas de `this`
+- pas de `new`
+- pas de `class`
+
 ---
 #Le Vegan JS
 
@@ -464,10 +490,13 @@ function canGoInsideBurger(food) {
 #Le Vegan JS : en résumé
 
 - pas de `class` ;
-- pas de `new` (if you are brave enough, factories et `Object.create`) ;
-- pas de `instanceof` (duck typing, pattern matching) ;
+- pas de `new` (factories et `Object.create`) ;
+- pas de `instanceof` || `typeof` (duck typing, pattern matching) ;
 - pas de `this` (functional programming style, tout est explicite).
 
+???
+
+limitation : si une lib vous force à utiliser le `new` ou les class es6 (React et alternative preact)
 --
 
 <div style="text-align: center">
