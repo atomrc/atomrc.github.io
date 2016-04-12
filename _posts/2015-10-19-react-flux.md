@@ -9,7 +9,7 @@ En commençant [Flux](https://facebook.github.io/flux/docs/overview.html#content
 
 Je vous propose donc de revenir un peu sur la source de ma confusion puis de reprendre, avec les idées au clair, les concepts de Flux emsemble.
 
-##Pourquoi j'ai été confus par Flux
+## Pourquoi j'ai été confus par Flux
 
 La majeure partie de ma confusion venait du fait que je n'avais pas bien compris de quoi la doc traitait.  
 Le souci c'est qu'une partie de la doc parle du concept de Flux en montrant des exemple de code (c'est le cas du sempiternel exemple de la TODO list) alors que d'autres parties de la doc parlent de l'[implémentation que Facebook utilise](https://facebook.github.io/flux/docs/dispatcher.html#content) et dont on trouve le code sur Github.
@@ -23,7 +23,7 @@ Du coup, pour lire la suite de cet article mettez vous bien en tête que :
 
 Sachez qu'il existe un grand nombre d'implémentations de Flux qui se baladent avec de solides documentations. Je vous invite à consulter ce site qui vous montrera un peu les tendances d'utilisation des différentes implémentations : [Which Flux implementation should I use?](https://github.com/kriasoft/react-starter-kit/issues/22).
 
-##le problème que résout Flux
+## le problème que résout Flux
 Dans le modèle MVC classique, vous avez votre modèle (les données brutes) vos contrôleurs (qui passent les données aux vues et qui récupèrent les actions des vues pour mettre à jour le modèle) et vos vues (qui s'occupent simplement d'afficher les donnés calculées dans un template et d'envoyer des évènements aux contrôleurs).
 Le souci de ce schéma est que vos contrôleurs font beaucoup trop de choses dans votre application. Les vrais problèmes commencent à apparaitre quand vous commencez à avoir un contrôleur qui gère un type de données et plusieurs vues qui affichent cette même donnée.
 
@@ -84,7 +84,7 @@ Flux répond à ça en deux points assez simples :
 - un **flux d'actions unidirectionnel** ;
 - la fin de la séparation des vues et contrôleurs au profit de **controller-views** responsables de transformer les données qu'ils affichent.
 
-##Flux
+## Flux
 
 La principale idée de flux est de faire passer le moindre évènement de votre application au travers d'une boucle qui va parcourir tous vos stores (les éléments qui contiennent les données de votre application, nous reviendrons dessus juste après).  
 Si vous allez voire le [code de Flux](https://github.com/facebook/flux/tree/master/src) vous vous rendrez compte qu'il ne se compose en fait que d'un dispatcher (et de quelques helpers). Car en réalité **Flux n'est pas du code mais plutôt une nouvelle façon de penser son code**.
@@ -96,7 +96,7 @@ Avec Flux votre codebase va se décomposer de la façon suivante :
 - un (et un seul) **dispatcher** qui notifie les stores des actions effectuées ;
 - des **controller-views** qui vont transformer et afficher les données qu'on leur donne.
 
-###Les stores
+### Les stores
 C'est ici que tout vos modèles vont vivre. Les stores sont en fait une représentation complète de l'état, à un instant `t`, de votre application. Il ne doit y avoir **aucun de vos modèles qui vit en dehors d'un store**.  
 Si vous vous pliez à cette règle, il vous suffira de faire une sauvegarde des données de vos stores et la recharger plus tard pour pouvoir retrouver l'application dans l'état exact dans laquelle vous l'aviez laissée.
 
@@ -104,7 +104,7 @@ Les stores se comportent comme un modèle observable (il dispose de getters et d
 
 À ce stade vous vous demandez donc normalement comment faire pour pouvoir changer l'état de l'application si on a aucun setter dans notre entité qui contient tous les modèles de l'application. C'est à ce moment là que le **dispatcher** entre en jeux.
 
-###Le dispatcher
+### Le dispatcher
 Le dispatcher est là pour faire transiter **absolument tout ce qu'il se passe sur l'application par vos stores**. Quand je parle de tout ce qui se passe, je parle bien sûr des évènements. Les évènements c'est par exemple :
 
 - « l'utilisateur a cliqué sur le bouton de suppression »
@@ -200,7 +200,7 @@ module.exports = todosStore;
 
 Ça y est nous avons de quoi stocker nos données dans l'application mais rien ni pour les afficher ni pour les remplir. Je vous propose donc de parler des vues avant de finir sur les actions.
 
-###Les vues
+### Les vues
 
 Allez maintenant qu'on sait comment stocker nos données, voyons un peu comment les afficher. Pour ça, on va utiliser les controller-views.  
 L'idée principale du controller-view est de regrouper ensemble le contrôleur et sa vue associée. Ainsi on se débarrasse d'une partie du problème qu'introduit Facebook avec son chat : **le contrôleur responsable de beaucoup de vues**.  
@@ -208,7 +208,7 @@ Facebook distingue tout de même deux type de vues différentes dans Flux : les 
 
 Dans la suite de ce paragraphe, je vais considérer qu'on utilise [React](https://facebook.github.io/react/docs/getting-started.html) pour faire nos vues, et que vous avez une connaissance des [concepts de base de React](https://facebook.github.io/react/docs/getting-started.html). Sachez que rien ne vous oblige à utiliser React pour vos vues.
 
-####les containers
+#### les containers
 
 Les containers sont des controller-views un peu spéciaux : ils écoutent les changements d'un store.  
 L'idée du container est de centraliser les données relatives à une partie de votre application à un seul endroit. Le container passera ensuite ces données à ses enfants pour affichage.  
@@ -247,7 +247,7 @@ Comme son nom l'indique, le container ne fait que contenir des données. Et, à 
 
 Ainsi, vos container ne sont responsables que d'une seule chose : mettre à jour les données pour tout le reste des composants. On respecte bien le fameux [Single Responsability Principle](https://en.wikipedia.org/wiki/Single_responsibility_principle) et le débug ne s'en porte que mieux. 
 
-####Les controller-views
+#### Les controller-views
 
 Les controller-views ne sont là que pour transformer vos données brutes et les afficher comme vous le voulez. Il reçoivent donc toutes leurs données via des propriétés et sont censés être complètement *stateless*.  
 On retrouve, avec les vues, un concept propre à la programmation fonctionnelle : une fonction retournera toujours le même résultat si on lui donne les mêmes paramètres. On appelle ça les [fonctions pures](https://fr.wikipedia.org/wiki/Fonction_pure).  
@@ -271,7 +271,7 @@ var App = function (props) {
 
 Note : les composant-fonctions sont les composants les plus simples qu'on puisse trouver. Pas d'event handler dedans, de mixin ni de réécriture de [méthode du cycle de vie du composant](https://facebook.github.io/react/docs/component-specs.html#lifecycle-methods) (comme `componentWillMount` par exemple). Ne vous sentez donc pas obligé de n'utiliser que des composant-fonctions. Utilisez les dès que vous pouvez.
 
-###Les actions
+### Les actions
 
 Ok si on récapitule on a donc les vues qui récupèrent leurs données depuis les stores qui eux modifient leurs données selon les informations du dispatcher, la question qui réside est : qui donc fait appel au dispatcher ? La réponse est, bien sûr, les actions.  
 
@@ -335,7 +335,7 @@ Notez que les évènements dispatchés par les actions décrivent des **choses q
 Prenons le cas où la sauvegarde sur le serveur s'est mal passée (donc on passe dans le `catch`), on pourrait avoir envie de dispatcher un `"SHOW_NOTIFICATION_TODOS_SAVE_FAIL"`. En faisant ça, on donne à l'action une connaissance de ce que l'application peut faire.  
 Or une action ne doit faire que constater ce qu'il se passe et le transmettre.
 
-###Flux en résumé
+### Flux en résumé
 
 Pour résumer un peu voila les idées qui sortent de Flux :
 
@@ -364,7 +364,7 @@ application(state1, action) => state2
 
 Si on considère que cette fonction est [pure](https://fr.wikipedia.org/wiki/Fonction_pure) (qu'elle ne fait que retourner un nouvel état sans rien modifier en mémoire pour faire simple), alors tous les états de cette application sont déterministes (une même action ne pourra pas donner deux résultats différents) et vous pouvez par exemple facilement mettre en oeuvre du *undo/redo* (la [doc de Redux](http://rackt.org/redux/docs/recipes/ImplementingUndoHistory.html) explique ça très bien).
 
-##Conclusion
+## Conclusion
 
 Je trouve l'idée qu'a eu Facebook d'implémenter le concept de Flux entièrement dans sa doc très bonne. C'est un peu comme ces articles qui réimplémente une techno populaire (eg. [Make your own Angular](http://teropa.info/blog/2013/11/03/make-your-own-angular-part-1-scopes-and-digest.html)) pour l'expliquer. C'est très didactique et permet de vraiment comprendre ce qu'il se passe *sous la capuche* (comme disent les américains) des outils qu'on utilise tous les jours (ou presque).  
 En revanche je trouve dommage qu'ils n'aient pas plus séparé le concept et l'implémentation dans leur doc. Je reconnais avec le recul que j'aurais pu comprendre ça plus tôt. Je suis surement parti trop vite dans le code sans lire à fond le concept d'abord, mais je pense que je ne suis pas le seul à avoir pris ce chemin.

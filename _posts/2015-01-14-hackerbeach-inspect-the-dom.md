@@ -20,9 +20,9 @@ Cette démarche s'inscrivait aussi parfaitement dans le reboot de DoYouBuzz qu'o
 
 Cet article a pour but de présenter brièvement l'idée derrière Hackerbeach et mes impressions sur l'île jusque là. Je ferai, par la suite, un article qui parlera plus de mon organisation personnelle vis à vis de mon travail / rythme de vie.
 
-##Hackerbeach qu'est ce que ça ?
+## Hackerbeach qu'est ce que ça ?
 
-###L'initiative
+### L'initiative
 Hackerbeach c'est une bande de potes qui se sont dit, il y a trois ans : "bordel, **pourquoi on s'oblige à bosser en Europe en hiver par 0°C alors qu'on pourrait bosser en sirotant des cocktails sur des plages paradisiaques ?**".  
 Quand on sais que pour bosser on a juste besoin d'un portable et d'une connexion internet décente, la question est tout à fait légitime !  
 Sur ce principe là, ils se sont mis en quête d'endroits rêvés pour exercer leur art.
@@ -34,14 +34,14 @@ Sur ce principe là, ils se sont mis en quête d'endroits rêvés pour exercer l
 Ils ont rendu l'évènement public et chacun est libre de venir les rejoindre pour passer du bon temps entre hackers tout en ayant une vraie ambiance de taf.  
 Après trois jours de boulot avec eux, je peux vous dire que ces mecs sont des bosseurs. Dès qu'ils ont 5 min et une connexion à proximité, ils dégainent leurs ordi pour descendre du bug ou juste avancer un petit bout de code en suspens.
 
-###L'édition 2015
+### L'édition 2015
 
 Cette année on est 11 sur l'île (mais je n'ai pas encore eu l’occasion de les rencontrer tous). C'est génial de voir que pas mal de monde s'est motivé pour venir. Il y a des gens qui viennent d'Allemagne, de France et de République Tchèque.
 
 Si l'idée principale est, bien sûr, de coder, il est hors de question de chômer en dehors des heures de boulot. On s'est notamment inscrit pour passer notre premier niveau de plongée :)  
 Pas besoin de préciser que randos, baignades, visites et autres activités touristiques en tout genre sont au programme ;)
 
-##La Dominique
+## La Dominique
 
 Ca fait tout juste 5 jours que je suis arrivé en Dominique et s'il y a bien une chose que je peux dire, c'est que les gens sont **vraiment gentils**.  
 Autant dans la capitale, Roseau, les locaux savent bien repérer les touristes et font tout pour leur faire cracher quelques dollars, autant dans notre coin, Portsmouth, les gens sont juste adorables.  
@@ -49,7 +49,7 @@ Notre hôte, par exemple, nous avait commandé des pizzas un peu avant qu'on arr
 
 Un autre point avec la Dominique, il ne faut jamais être trop pressé. Globalement les gens n'ont pas l'air de se mettre une quelconque pression pour quoi que ce soit. Exemple amusant : on avait besoin d'acheter une bouteille de gaz dans un supermarché, seulement il pleuvait ce jour là. Le gars qui tenais la caisse n'avait pas vraiment envie de se mouiller, qu'est-ce qu'il a fait alors ? Il a patiemment attendu que la pluie s'arrête avant d'aller chercher la bouteille. Ca a bien duré 10 minutes et il y avait des clients derrière qui faisaient la queue mais personne n'avait l'air de vouloir bouger pour faire avancer la situation.
 
-##Let's Hack
+## Let's Hack
 
 Pour l'instant nous n'avons que trois jours de hack au compteur, donc pas vraiment de retour d'expérience significatif à partager. Mais je compte faire un autre article qui s'orientera plus sur mon organisation (boulot, activités, rythme de vie ...). Je ferai sûrement ça à la fin de ma première semaine de boulot remote.
 

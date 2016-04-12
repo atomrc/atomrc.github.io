@@ -9,7 +9,7 @@ redirect_from:
 
 Javascript est single-threaded, c'est quelque chose qui est rentré dans la tête de la plupart des développeurs front-end. Cependant ce à quoi on ne réfléchit pas assez c'est : comment est-il possible d'être à la fois single-threaded et de gérer du code asynchrone.
 
-##Les conséquences du thread unique
+## Les conséquences du thread unique
 
 Bon c'est bien beau de savoir que Javascript ne dispose que d'un seul thread mais commençons par voir ce que ça implique ?
 
@@ -44,7 +44,7 @@ Dans ce code, je suis sûr et certain que ma console affichera "start" en premie
 Si setTimeout avait créé un nouveau thread, je n'aurais pas pu prédire si ma console allait afficher "start" puis "done" ou le contraire.
 Autre chose à prendre en compte, si l'exécution de timeConsumingFunction prend plus que 100ms, importantThingToDo sera retardée. Si vous ajoutez à ça des interactions utilisateurs, vous pourrez encore retarder un peu son exécution.
 
-##Les timers
+## Les timers
 
 Les timers (setTimeout et setInterval) sont nos outils pour faire du code asynchrone avec Javascript. On se donnerait presque l'impression qu'on créé des threads et pourtant ...
 En réalité il ne faut pas voir les timers comme des fonctions asynchrones mais plutôt comme des gestionnaires de queue. Et oui, la fonction principale des timers est d'empiler des fonctions qui seront exécutées séquentiellement et au plus tôt n millisecondes plus tard.
@@ -60,7 +60,7 @@ D'où la faible fiabilité des timers Javascript.
 
 Pour une explication un peu plus complète sur le fonctionnement des timers de Javascript, je vous invite à lire l'article [How JavaScript Timers Work](http://ejohn.org/blog/how-javascript-timers-work/) de John Resig dont je me suis beaucoup inspiré pour mon article.
 
-##Les événements, le secret des opérations asynchrones
+## Les événements, le secret des opérations asynchrones
 
 Vous avez dû souvent aussi entendre que Javascript était Event Driven et en effet, si vous y regardez de plus près, l'exécution de code Javascript se fait toujours dans le cadre d'un événement envoyé par le navigateur (load, click, mouseover, progress ...). Ensuite c'est à vous, développeur, de définir ce qu'il va se passer en fonction de ces événements.
 
@@ -91,7 +91,7 @@ window.setTimeout(function () {
 
 Vous ne pourrez pas dire si votre console va vous afficher "request done" puis "timeout ended" ou le contraire puisque vous n'avez aucune idée de quand l'événement load sera lancé.
 
-##Conclusion
+## Conclusion
 
 Je pense qu'il est important de bien comprendre le fonctionnement interne des technologies que nous utilisons afin de bien les utiliser. Pour Javascript, S'il y a bien quelque chose à retenir c'est que Javascript n'éxécute qu'un seul morceau de code à la fois ! En gardant bien ça en tête vous verrez que certains comportements que vous ne vous expliquiez pas deviendrons clair.
 

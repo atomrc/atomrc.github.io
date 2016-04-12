@@ -19,7 +19,7 @@ L'idée reste tout de même assez simple : copier les clés SSH (privée et publ
 
 Avant tout, je vous invite à aller lire [mon article sur la configuration d'une instance Amazon EC2 pour Elastic Bamboo](/p/configuration-amazon-aws-ec2-elastic-bamboo/).
 
-##Génération d'une paire de clés pour votre image
+## Génération d'une paire de clés pour votre image
 
 Bon comme il est toujours bon de le rappeler, voila comment générer une paire de clés SSH. **Attention à ne pas mettre de passphrase à votre clé sinon votre script restera bloqué sur une invite d'input !**
 
@@ -32,7 +32,7 @@ Une fois cette commande exécutée, deux choses à faire :
 - ajouter votre clé publique (générée par défaut dans `~/.ssh/id_rsa.pub`) comme clé autorisée sur votre serveur GIT ;
 - garder les contenus de `~/.ssh/id_rsa`et `~/.ssh/id_rsa.pub`de côté pour la prochaine étape ;).
 
-##Installer les clés sur vos instances EC2
+## Installer les clés sur vos instances EC2
 
 La suite consiste à donner les clés SSH fraichement générées à vos instances Amazon afin de leur donner accès à votre serveur GIT.
 

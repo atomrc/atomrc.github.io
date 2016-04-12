@@ -9,11 +9,11 @@ redirect_from:
 
 Javascript avait initialement été prévu pour être très facile d'accès. Seulement sa permissivité entraine également une réduction des performances globales et surtout la possibilité de faire du code très difficile à maintenir. Voila donc quelques conseils simples pour augmenter la lisibilité et la fiabilité de votre code et gagner un peu en performances.
 
-##"use strict";
+## "use strict";
 
 Si vous avez déjà lu le code de certaines librairies Javascript vous avez surement rencontré le `"use strict"`;. C'est le premier réflexe à avoir quand vous commencez un nouveau projet Javascript puisqu'il va dire au navigateur de ne pas laisser passer certaines aberrations normalement possibles avec Javascript.
 
-###Activer le mode strict
+### Activer le mode strict
 
 Pour l'activer, rien de plus simple, il vous suffit de mettre le code suivant dans vos fichier js :
 
@@ -47,11 +47,11 @@ Le `"use strict"`; va vous permettre de ne pas faire d'erreurs classiques et nor
 
 Pour vraiment tout savoir sur le `"use strict"`, je vous suggère de lire absolument l'article "[strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode)" du Mozilla Developer Network sur le sujet !
 
-##Le point-virgule !
+## Le point-virgule !
 
 Voila une habitude qu'il faut prendre très vite quand on fait du Javascript : mettre un point-virgule à la fin de chaque instruction !
 
-###Pourquoi c'est (très) important ?
+### Pourquoi c'est (très) important ?
 
 Javascript est tellement permissif, qu'il permet de ne pas mettre les ';'. Seulement, lorsque votre code n'a pas de ';', le moteur Javascript n'a aucun moyen de distinguer les différentes instructions ! Seulement il y arrive tout de même, alors comment fait-il ? En réalité, la solution est simple : quand il détecte une erreur de compilation, il ajoute des points virgules un peu partout jusqu'à ce qu'il trouve des instructions valides (aie). S'il ne trouve pas d'instruction js valide alors il lance une exception.
 
@@ -59,7 +59,7 @@ Je pense que vous voyez le gouffre à performances que cette fonctionnalité eng
 
 Bien sur le moteur JS est assez intelligent pour ne pas tester toutes les combinaisons possibles de placement de ';' et utilise des heuristiques pour essayer de deviner où pourraient être les points virgules (comme vous feriez en lisant mon cadeau empoisonné).
 
-##On laisse l'objet global window tranquille 
+## On laisse l'objet global window tranquille 
 
 Vous le savez peut-être l'objet window est l'objet racine de tout le code Javascript (uniquement pour une application navigateur bien sûr). Pour garder votre application organisée et lisible par un autre développeur, il est préférable de ne pas surcharger cet objet. Pour cela, sachez que tout ce que vous définissez à la racine de vos fichiers js sera ajouté à l'objet window. Voila un exemple plus concret :
 
@@ -114,7 +114,7 @@ console.log(debug) //-> true
 
 Un autre confort que vous apporte la fonction wrapper est de pouvoir la portée du `"use strict"` sans avoir à le mettre dans chaque fonction que vous définissez. Tout ce que vous coderez dans le wrapper sera considéré strict et tout le reste non.
 
-##Injection de dépendances
+## Injection de dépendances
 
 L'injection de dépendances est une bonne pratique qui est utilisée dans bon nombre de frameworks (je pense par exemple à Symfony 2 pour PHP et AngularJS pour Javascript) et qui permet de rendre votre application très faiblement dépendante du contexte dans lequel elle s'exécute. La fonction wrapper que nous avons vu au dessus, va nous permettre de faire de l'injection de dépendances. Par exemple admettons que dans le code de votre application, vous ayez besoin de l'objet document, nous allons pouvoir injecter cet objet dans le wrapper de votre code.
 
@@ -139,7 +139,7 @@ L'autre intérêt, spécifique au Javascript, va se trouver dans la minification
 (function(d){"use strict";console.log(d.title);}(window.document));
 ```
 
-##Connaitre Javascript
+## Connaitre Javascript
 
 Bon oui je sais ce point parait trivial, et pourtant, c'est le plus important ! C'est un point qui est valable pour n'importe quel langage dans lequel vous vous lancez. Vous mettrez peut-être 30min à comprendre la syntaxe du langage (faire des boucles, des conditions ...), quelques heures à installer et comprendre l'environnement d'exécution (compilateur/interpréteur) et quelques autres heures à connaitre les bases du langage (comment déclarer une fonction, par où commence l’exécution de l'application).
 
@@ -180,7 +180,7 @@ hasValue(t, 5); // -> false
 
 De façon générale, je vous suggère d'aller systématiquement faire un tour sur les documentations des API que vous utilisées pour en connaitre toutes les possibilités. (Pour Javascript, la documentation w3schools.com est très bien faite et simple d'accès et pour vraiment tout savoir sur Javascript, il n'y a qu'une adresse : developer.mozilla.org).
 
-##tl;dr;
+## tl;dr;
 
 En bref les quelques bonne habitudes à prendre quand vous développez en Javascript :
 

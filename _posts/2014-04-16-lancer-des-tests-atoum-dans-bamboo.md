@@ -11,7 +11,7 @@ Ecrire des tests c'est très bien, mais les jouer régulièrement, c'est mieux :
 
 Comme Bamboo semble plutôt avoir été pensé pour le monde Java, le seul wrapper de tests disponible pour PHP est PHPUnit. Il va donc nous falloir faire notre propre script de lancement de tests Atoum.
 
-##TLDR
+## TLDR
 Le script à exécuter pour lancer les tests Atoum dans Bamboo : 
 
 ```bash
@@ -39,7 +39,7 @@ $xunit->addWriter($writer);
 ```
 
 
-##Excécution des tests Atoum
+## Excécution des tests Atoum
 
 Pour ça, on va configurer notre projet Bamboo pour lui ajouter un nouveau "Stage". (pour bien comprendre les différences entre "Project", "Plan", "Stage", "Job" et "Task" je vous laisse lire la [documentation de Bamboo sur le sujet](https://confluence.atlassian.com/display/BAMBOO/Configuring+plans)).
 
@@ -59,7 +59,7 @@ Je pense que la première partie du script est facilement compréhensible, c'est
 
 En réalité, quand vous ajouter un script comme "Task" de Bamboo, Bamboo s'attend à recevoir un code de succès après ’exécution du script. Dans le cas contraire, le build s'arrête et est considéré comme un "fail". Aucune des "Task" qui suivent ne seront jouées. Aussi si vos tests échouent, ce que vous aurez prévu ensuite ne sera pas joué et vous n'aurez pas non plus le bénéfice du rapport d'erreur Atoum.
 
-##Génération et interprétation du rapport de test
+## Génération et interprétation du rapport de test
 
 Bamboo vous permet d'ajouter un ou plusieurs rapports de tests qui seront interprétés pendant un "Job".
 
@@ -91,6 +91,6 @@ Le plus simple est de faire un répertoire dans lequel on va mettre tous les rap
 
 Ainsi tous les rapports de tests avec l'extension `.xunit.xml` qui seront ajoutés au répertoire `/chemin/vers/le/rapport` seront interprétés par Bamboo.
 
-##Pour aller plus loin
+## Pour aller plus loin
 
 Vous pouvez demander à Atoum de générer un rapport de couverture de code à la fin de vos tests. Bamboo est tout à fait capable d'interpréter ce rapport. malheureusement, je n'ai pas vraiment pu explorer cette piste à fond puisque une fois l'extension php `xdebug` installée sur notre serveur, les tests utilisent trop de mémoire sur notre instance micro Amazon qui bloque le build en cours côté Bamboo.

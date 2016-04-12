@@ -40,11 +40,11 @@ Voila quelques arguments un peu plus formels en faveur de Vim :
 
 Vous remarquerez que je ne parle pas ici d'amélioration de votre productivité (comme certains peuvent l'affirmer) parce que je ne pense vraiment pas que Vim y change grand chose. Certes vous gagnez un peu de temps en vous libérant de votre souris. Cependant, face aux temps de compilation / rechargements de page / temps de réflexion / pauses café ... Je ne pense vraiment pas que ça soit significatif.
 
-##Comprendre Vim
+## Comprendre Vim
 
 Il y a deux choses à avoir en tête quand vous utilisez Vim : il y a **plusieurs états** et **les commandes sont une suite d'instructions atomiques**.
 
-###Les états
+### Les états
 
 Dans Vim, il y a 3 états distincts : l'**édition** (le mode `normal`), l'**insertion** (le mode `insert`) et le **visuel** (le mode `visual`).
 
@@ -58,7 +58,7 @@ C'est intéressant de constater la séparation de ses trois modes. Alors que la 
 
 Du fait d'avoir trois modes différents, vous devrez faire une petite gymnastique mentale pour savoir comment reconnaitre en quel mode vous êtes (par exemple le curseur change de style en fonction du mode) ou mieux vous rappeler en quel mode vous avez laissé votre Vim :). Assez souvent, ce sont surtout des automatismes qui se mettent en place tout seul. Par exemple j'ai pris le réflexe de toujours revenir en mode `normal` dès que j'ai finir de taper ce que j'avais en tête.
 
-###Les commandes
+### Les commandes
 
 Vous l'aurez compris, pour accéder à la toute puissance de Vim (les commandes), il faudra vous mettre en mode `normal`. La clé pour comprendre la suite des opérations est de se rentrer en tête que Vim ne fait que des traitements très atomiques sur votre texte. C'est à vous de combiner les opérations atomiques pour faire ce que vous voulez sur votre texte.
 
@@ -90,7 +90,7 @@ Normalement, si vous avez bien compris ça, vous allez être à même de déchif
 
 Je vous conseille de la garder près de vous surtout au début.
 
-##Les mots de la fin
+## Les mots de la fin
 
 La philosophie de Vim est de vous économiser un maximum de déplacement de mains sur votre clavier. Aussi, même si c'est un peu dur au début, essayer de vous forcer à utiliser `h`, `j`, `k` et `l` (en mode `normal`) pour vous déplacer caractère par caractère au lieux d'utiliser les flèches (ou pire la souris). Avec l'habitude vous aurez même tendance à ne vous déplacer que par recherche (avec `/`, `?`, `t`, `T`, `f` et `F` article à lire absolument sur le sujet [Learning Vim in 2014: Search](http://benmccormick.org/2014/08/04/learning-vim-in-2014-search/)) ou par positions spéciales comme `$` (fin de la ligne) ou `^` (début de la ligne). C'est aussi l’occasion d'apprendre à bien placer et à bien utiliser tous ses doigts sur le clavier ;)
 
