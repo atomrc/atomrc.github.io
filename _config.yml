@@ -1,7 +1,7 @@
 name: Thomas Belin
 url: "http://blog.thomasbelin.fr"
 permalink: /p/:title/
-exclude: [node_modules, package.json, gulpfile.js]
+exclude: [node_modules, package.json, gulpfile.js, vendor]
 sass:
     sass_dir: css/_sass
 gems:
