@@ -5,6 +5,7 @@ description: "Utiliser RequireJS plus intelligemment afin de ne pas brider Angul
 redirect_from:
     - /posts/single-page-app-blog-requirejs-nest-pas-fait-pour-angularjs/
 categories: [javascript, angularjs, requirejs, amd]
+image: "http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=200"
 ---
 Il n'y a pas longtemps, je publiais un article sur la combinaison d'[AngularJS avec RequireJS](/p/combiner-angularjs-et-requirejs/). Depuis, mon blog a connu un certain nombre d'évolutions et tout particulièrement une qui m'a fait revenir sur l'utilisation de RequireJS avec Angular. C'est le passage à des urls HTML5 et la façon dont je chargeais les pages qui m'ont fait voir le problème.
 

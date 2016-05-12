@@ -5,6 +5,7 @@ description: "Après avoir fait tout mon blog avec des urls hashbang, pourquoi e
 redirect_from:
     - /posts/single-page-app-blog-passer-des-urls-hashbang-au-html5-pushstate/
 categories: [seo, ajax]
+image: "http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=200"
 ---
 Mon dernier article sur le [référencement d'une application Ajax](/p/le-referencement-d-une-application-ajax/) s'appuyait entièrement sur les recommandations de Google pour l'indexation d'une application Javascript et notamment le hack du hashbang. Seulement, peu de temps après avoir écrit cet article, je me suis rendu compte que le hasbang n'était pas optimal du tout et entraînait bon nombre de complications (boutons de réseaux sociaux, référencement, lisibilité du code serveur ...). Je vais donc vous présenter ici les raisons pour lesquelles j'ai décidé de revoir complétement mes urls et surtout tout ce que cela implique.
 

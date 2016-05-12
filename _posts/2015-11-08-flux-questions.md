@@ -3,6 +3,7 @@ layout: post
 title: "Quelques questions courantes avec Flux"
 categories: [ReactJS, Flux]
 description: Les quelques questions que je me suis posé en utilisant Flux
+image: "http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=200"
 ---
 
 Lors de ma découverte de Flux, je me suis posé un certain nombre de questions. Je voudrais vous les exposer ici, pas simplement parce que vous risquez de vous les poser mais surtout parce que les réponses mettent en valeur les principes de Flux.
