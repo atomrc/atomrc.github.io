@@ -11,6 +11,8 @@ gems:
 
 twitter:
     username: atomrc
+author:
+    twitter: atomrc
 defaults:
   -
     scope:
