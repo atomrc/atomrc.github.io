@@ -3,6 +3,7 @@ layout: post
 title: "Hackerbeach : Organiser mon temps"
 categories: [hackerbeach, experience, remote]
 description: M'organiser pour bosser efficacement en Dominique
+image: "http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=200"
 ---
 
 ![Hacking sur la plage](http://i.imgur.com/hhN5FuI.jpg)

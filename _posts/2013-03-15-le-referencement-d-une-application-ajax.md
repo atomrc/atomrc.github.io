@@ -9,6 +9,7 @@ notices: [
     "Depuis cet article, je suis complétement revenu sur les urls en hashbang au profit des urls HTML5. Aujourd'hui, je ne vous conseille pas d'utiliser les hashbang. Pour comprendre pourquoi je vous invite à lire l'article [passer des url hashbang aux urls HTML5](/p/passer-des-urls-hashbang-au-html5-pushstate/).",
     "Le blog que vous consultez aujourd'hui n'utilise plus du tout d'AJAX pour charger son conenu."
     ]
+image: "http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=200"
 ---
 Quand vous faites un blog, ce que vous allez vouloir garder en tête c'est : comment être bien référencé sur les moteurs de recherche. En temps normal, votre premier travail consisterait à faire : du contenu de qualité, ajouter de la [sémantique](http://googlewebmastercentral.blogspot.fr/2012/07/on-web-semantics.html) à vos articles pour être "compris" des moteurs, optimiser les performances, mettre des liens vers votre sites sur tout le web ...
 

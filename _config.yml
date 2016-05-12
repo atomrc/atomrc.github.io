@@ -1,5 +1,7 @@
 name: Thomas Belin
 url: "http://blog.thomasbelin.fr"
+description: Les pérégrinations d'un développeur front-end
+title: JS rocks
 permalink: /p/:title/
 exclude: [node_modules, package.json, gulpfile.js, vendor]
 sass:
@@ -7,7 +9,12 @@ sass:
 gems:
   - jekyll-redirect-from
   - jekyll-gist
+  - jekyll-seo-tag
 
+twitter:
+    username: atomrc
+author:
+    twitter: atomrc
 defaults:
   -
     scope:

@@ -3,6 +3,7 @@ layout: post
 title: "Un micro compilateur de directives"
 categories: [JavaScript]
 description: Un compilateur ultra light pour compiler des directives
+image: "http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=200"
 ---
 Comme j'aime bien l'approche `directive` d'AngularJS mais que, bien souvent, je n'ai pas besoin d'une machine de guerre comme ça pour mes projets perso, je me suis construit un micro compilateur de directives maison.
 
