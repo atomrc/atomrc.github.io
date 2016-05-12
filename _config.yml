@@ -7,7 +7,10 @@ sass:
 gems:
   - jekyll-redirect-from
   - jekyll-gist
+  - jekyll-seo-tag
 
+twitter:
+    username: atomrc
 defaults:
   -
     scope:
