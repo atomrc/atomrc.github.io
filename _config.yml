@@ -10,6 +10,7 @@ gems:
   - jekyll-redirect-from
   - jekyll-gist
   - jekyll-seo-tag
+  - jekyll-feed
 
 twitter:
     username: atomrc
