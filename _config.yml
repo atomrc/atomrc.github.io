@@ -12,10 +12,12 @@ gems:
   - jekyll-seo-tag
   - jekyll-feed
 
-twitter:
-    username: atomrc
 author:
     twitter: atomrc
+    name: atomrc
+    uri: https://twitter.com/atomrc
+twitter:
+    username: atomrc
 defaults:
   -
     scope:
