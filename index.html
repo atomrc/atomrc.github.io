@@ -28,25 +28,24 @@ image: http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=300
 </ul>
 <h2>Talks</h2>
 <ul class="grid">
-    {% for page in site.pages %}
-        {% if page.sitemap.include %}
+    {% assign talks = site.talks | sort: 'date' | reverse %}
+    {% for talk in talks %}
         <li class="card article-card">
-            <a class="title" href="{{page.url | remove: 'index.html'}}"><strong>{{page.title}}</strong></a>
+            <a class="title" href="{{talk.url | remove: 'index.html'}}"><strong>{{talk.title}}</strong></a>
             <time
                 class="folded-paper"
-                datetime="{{page.date | date_to_xmlschema}}"
+                datetime="{{talk.date | date_to_xmlschema}}"
                 pubdate
                 itemprop="datePublished"
-                content="{{page.date | date_to_xmlschema}}">
-                {{ page.date | date_to_string }}
+                content="{{talk.date | date_to_xmlschema}}">
+                {{ talk.date | date_to_string }}
             </time>
             <aside>
-                {% for tag in page.categories %}
+                {% for tag in talk.categories %}
                 <span class="tag">{{ tag }}</span>&nbsp;
                 {% endfor %}
             </aside>
-            <p class="description">{{page.description}}</p>
+            <p class="description">{{talk.description}}</p>
         </li >
-        {% endif %}
     {% endfor %}
 </ul>

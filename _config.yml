@@ -26,8 +26,12 @@ collections:
 defaults:
     -
         scope:
-            path: ""
-            type: "posts"
+            type: posts
         values:
             layout: post
             image: http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=200
+    -
+        scope:
+            type: talks
+        values:
+            permalink: /talks/:title/
