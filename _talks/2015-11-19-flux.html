@@ -1,179 +1,61 @@
 ---
+layout: talk-remark
 title: "Les doigts dans le Flux"
 date: 2015/11/19
 description: "Présentation sur l'architecture Flux pour le NantesJS"
 categories: [react, flux]
-sitemap:
-    include: true
 ---
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Les doigts dans le Flux</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <style type="text/css">
-            @import url(https://fonts.googleapis.com/css?family=Open+Sans:300);
-            @import url(http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
 
-            body { font-family: Open Sans, Arial, sans serif; color: white; }
+<style>
+    img[alt="pure functions"] {
+        position: absolute;
+        top: 25%;
+        left: 20%;
+    }
 
-            .remark-slide-content {
-                background-color: rgb(61, 184, 67);
-                padding: 0 3em;
-            }
+    #fb-solution-react, #fb-solution-flux {
+        position: absolute;
+        color: #666;
+        transition: top 1s;
+        transform: rotate(-20deg);
+        padding: 1em;
+        background-color: #EEE;
+        font-size: 1.5em;
+        top: -25%;
+    }
+    #fb-solution-react {
+        left: 13%;
+    }
+    .remark-visible.entered #fb-solution-react {
+        top: 45%;
+    }
+    #fb-solution-flux {
+        right: 13%;
+    }
+    .remark-visible.entered #fb-solution-flux {
+        top: 45%;
+    }
 
-            h1, h2, h3 {
-                margin: 0.1em;
-                margin-bottom: 1em;
-                text-align: center;
-                font-weight: lighter;
-            }
+    #slide-intro h1, #slide-outro h1 {
+        margin: 0;
+        font-size: 5em;
+        line-height: 1em;
+    }
 
-            a { color: inherit; }
+    #slide-intro h2, #slide-outro h2 {
+        font-size: 1em;
+        margin: 0;
+    }
+    #slide-intro p {
+        margin: 0;
+    }
 
-            img {
-                max-width: 100%;
-            }
+    #slide-me {
+        font-size: 1.5em;
+    }
+</style>
 
-            li {
-                padding: 0.5em;
-            }
-
-            .naked .foot, .naked .remark-slide-number {
-                display: none;
-            }
-
-            .foot {
-                position: absolute;
-                bottom: 1em;
-                left: 1em;
-            }
-
-            .code-overlay pre {
-                position: absolute;
-                display: flex;
-                height: 100%;
-                top: 0;
-            }
-            .code-overlay pre code {
-                flex: 1;
-                margin: auto;
-                box-shadow: 5px 5px 3px #AAA;
-            }
-            .centered-code {
-                position: absolute;
-                top: 0;
-                left: 0;
-                height: 100%;
-                width: 100%;
-                display: flex;
-            }
-            .text-content {
-                font-size: 1.2em;
-                background-color: white;
-                width: 100%;
-                height: 65%;
-                position: absolute;
-                left: 0px;
-                color: #333;
-                padding: 1em 2em;
-                box-sizing: border-box;
-            }
-            .text-content::after {
-                content: "";
-                background-color: white;
-                position: absolute;
-                bottom: -20px;
-                left: 3em;
-                width: 40px;
-                height: 40px;
-                transform: rotate(45deg);
-            }
-            .centered-code pre{
-                flex: 1;
-                margin: auto;
-            }
-            .centered-code code.hljs {
-                padding: 3em;
-            }
-
-            .warning {
-                background-color: orange;
-                padding: 1em;
-                position: absolute;
-                top: 25%;
-                transform: rotate(-20deg);
-                color: white;
-                font-size: 2em;
-                font-weight: bold;
-                text-shadow: 1px 1px 3px black;
-            }
-
-            img[alt="thomas belin"] {
-                border-radius: 100px;
-                border: solid 5px white;
-            }
-
-            img[alt="pure functions"] {
-                position: absolute;
-                top: 25%;
-                left: 20%;
-            }
-
-            #fb-solution-react, #fb-solution-flux {
-                position: absolute;
-                color: #666;
-                transition: top 1s;
-                transform: rotate(-20deg);
-                padding: 1em;
-                background-color: #EEE;
-                font-size: 1.5em;
-                top: -25%;
-            }
-            #fb-solution-react {
-                left: 13%;
-            }
-            .remark-visible.entered #fb-solution-react {
-                top: 45%;
-            }
-            #fb-solution-flux {
-                right: 13%;
-            }
-            .remark-visible.entered #fb-solution-flux {
-                top: 45%;
-            }
-
-            #slide-intro h1, #slide-outro h1 {
-                margin: 0;
-                font-size: 5em;
-                line-height: 1em;
-            }
-
-            #slide-intro h2, #slide-outro h2 {
-                font-size: 1em;
-                margin: 0;
-            }
-            #slide-intro p {
-                margin: 0;
-            }
-
-            #slide-me {
-                font-size: 1.5em;
-            }
-        </style>
-
-        <script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-            ga('create', 'UA-34218773-1', { siteSpeedSampleRate: 100 });
-            ga('send', 'pageview');
-        </script>
-    </head>
-    <body>
-        <textarea id="source">
-
+<textarea id="source">
 
 layout: true
 
@@ -183,7 +65,7 @@ layout: true
 class: center, middle, naked
 name: intro
 
-![flux](images/flux-logo.png)
+![flux](http://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-logo.png)
 # Flux
 ## Les doigts dans le Flux !
 
@@ -204,7 +86,7 @@ Pourquoi je suis venu parler de Flux : Side-project
 
 ---
 # Popularité
-![google trends](images/flux-google-trends-1.png)
+![google trends](http://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-google-trends-1.png)
 
 ???
 Ok ça c'est une courbe qui monte vite
@@ -214,7 +96,7 @@ Mais ça veut rien dire du tout (pas d'échelle)
 ---
 # Popularité
 
-![google trends flux vs camembert](images/flux-google-trends-2.png)
+![google trends flux vs camembert](http://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-google-trends-2.png)
 
 ???
 Complétement non repésentatif
@@ -223,7 +105,7 @@ Le seul apprentissage de cette slide : pic de recherche de "camembert" en décem
 ---
 # Popularité
 
-![Which Flux Implementation Should I Use](images/flux-trends.png)
+![Which Flux Implementation Should I Use](http://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-trends.png)
 
 ???
 - Flux n'est pas du code c'est un concept
@@ -233,7 +115,7 @@ Le seul apprentissage de cette slide : pic de recherche de "camembert" en décem
 ---
 # Quel problème résout Flux ?
 
-![fb chat panel](images/fb-chat-1.png)
+![fb chat panel](http://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/fb-chat-1.png)
 
 --
 class: code-overlay
@@ -247,7 +129,7 @@ function onMessage(message) {
 ---
 # Quel problème résout Flux ?
 
-![fb chat panel](images/fb-chat-2.png)
+![fb chat panel](http://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/fb-chat-2.png)
 
 --
 class: code-overlay
@@ -267,7 +149,7 @@ function onMessage(message) {
 ---
 # Quel problème résout Flux ?
 
-![fb chat panel](images/fb-chat-3.png)
+![fb chat panel](http://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/fb-chat-3.png)
 
 --
 class: code-overlay
@@ -295,7 +177,7 @@ PB de fond du MVC : un contrôleur peut être relié à plusieurs vues
 class: center
 # MVC
 
-![facebook chat MVC](images/fb-chat-mvc.png)
+![facebook chat MVC](http://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/fb-chat-mvc.png)
 
 ???
 ça ne scale pas du tout. 
@@ -310,7 +192,7 @@ Les soucis :
 class: center
 # La réponse de Facebook
 
-![react+flux](images/react+flux.png)
+![react+flux](http://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/react-plus-flux.png)
 
 --
 <div id="fb-solution-react">View-Controllers</div>
@@ -321,12 +203,12 @@ class: center
 ---
 # Parlons un peu de la doc ...
 
-![Flux doc](images/flux-doc-naked.png)
+![Flux doc](http://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-doc-naked.png)
 
 ---
 # Parlons un peu de la doc ...
 
-![Flux doc](images/flux-doc-concept.png)
+![Flux doc](http://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-doc-concept.png)
 
 ???
 ici on réimplémente Flux from scratch (excellente idée)
@@ -334,12 +216,12 @@ ici on réimplémente Flux from scratch (excellente idée)
 ---
 # Parlons un peu de la doc ...
 
-![Flux doc](images/flux-doc-code.png)
+![Flux doc](http://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-doc-code.png)
 
 ---
 # Parlons un peu de la doc ...
 
-![Flux doc](images/flux-doc-code-2.png)
+![Flux doc](http://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-doc-code-2.png)
 ---
 # Parlons un peu de la doc ...
 
@@ -368,7 +250,7 @@ class: middle
 class: middle
 # Flux
 
-![Flux illustrated](images/flux.png)
+![Flux illustrated](http://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux.png)
 
 ???
 Flux ça n'est pas du code mais un concept
@@ -584,15 +466,15 @@ class: middle
 ---
 # Flux vu autrement
 
-![Flux illustrated](images/flux.png)
+![Flux illustrated](http://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux.png)
 
 ---
 # Flux vu autrement
-![Flux as server](images/flux-backend.png)
+![Flux as server](http://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-backend.png)
 
 ---
 # Flux vu ~~autrement~~ par les mecs du back
-![Flux as server](images/flux-backend-2.png)
+![Flux as server](http://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-backend-2.png)
 
 ???
 ATTENTION : ce n'est pas une comparaison one to one  
@@ -651,7 +533,7 @@ function onAction(action) {
 
 ---
 template: pure-functions
-![pure functions](images/pure-functions.jpg)
+![pure functions](http://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/pure-functions.jpg)
 
 ---
 class: middle
@@ -696,18 +578,4 @@ name: outro
 # Merci
 ## On se sort les doigts du Flux
 
-        </textarea>
-        <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
-        <script>
-            //init remarkjs
-            var slideshow = remark.create({
-                highlightStyle: 'monokai'
-            });
-            slideshow.on("afterShowSlide", function (slide) {
-                window.setTimeout(function () {
-                    document.querySelector(".remark-visible").classList.add("entered");
-                }, 100);
-            });
-        </script>
-    </body>
-</html>
+</textarea>
