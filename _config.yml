@@ -1,6 +1,6 @@
 name: Thomas Belin
 url: "http://blog.thomasbelin.fr"
-description: Les pérégrinations d'un développeur front-end
+description: Full-Stack développeur chez doyoubuzz. Je fais la part belle au code. Je m'éclate avec Javascript.
 title: JS rocks
 permalink: /p/:title/
 exclude: [node_modules, package.json, gulpfile.js, vendor]
@@ -19,10 +19,19 @@ author:
     uri: https://twitter.com/atomrc
 twitter:
     username: atomrc
+collections:
+    talks:
+        output: true
+
 defaults:
-  -
-    scope:
-      path: ""
-      type: "posts"
-    values:
-      is_post: true
+    -
+        scope:
+            type: posts
+        values:
+            layout: post
+            image: http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=200
+    -
+        scope:
+            type: talks
+        values:
+            permalink: /talks/:title/

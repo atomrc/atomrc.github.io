@@ -1,9 +1,7 @@
 ---
-layout: post
 title: L'intégration continue avec Elastic Bamboo, Atoum et Karma
 categories: [bamboo, integration continue]
 description: Mettre en place de l'intégration continue avec un serveur Elastic Bamboo et des tests Atoum et Karma
-image: "http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=200"
 ---
 Récemment, nous sommes passés à de l'intégration continue chez [DoYouBuzz](http://www.doyoubuzz.com). Etant de fervant utilisateurs des produits Atlassian, nous avons choisi [Bamboo](https://www.atlassian.com/software/bamboo) comme serveur d'intégration continue. Comme toute les étapes n'ont pas toujours été évidentes, j'ai décidé de faire un petit récapitulatif des différentes étapes. Comme les différentes étapes ont toutes des buts distincts et nécessitent des outils/compétences différentes, j'ai séparé le tout dans différents articles. 
 

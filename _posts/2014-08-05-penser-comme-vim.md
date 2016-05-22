@@ -1,9 +1,7 @@
 ---
-layout: post
 title: "Penser comme Vim"
 categories: [vim, code]
 description: Comprendre la philosophie de Vim pour penser comme lui
-image: "http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=200"
 ---
 
 Ca fait maintenant 3 ans que je n'utilise plus que Vim comme éditeur de textes. Ca fait aussi longtemps que je pensais écrire un article dessus et, allez, aujourd'hui, je me lance :)

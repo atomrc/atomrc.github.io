@@ -18,7 +18,7 @@
             ga('send', 'pageview');
         </script>
     </head>
-    <body class="{% if page.is_post %}article{%endif%}">
+    <body class="{% if page.collection == 'posts' %}article{%endif%}">
         <section id="header">
             <div class="content">
                 <a href="/"><img class="avatar" src="http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=200"></a>

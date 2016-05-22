@@ -1,11 +1,9 @@
 ---
-layout: post
 title: La notion de classe en Javascript
 categories: [javascript, internals]
 description: JavaScript est un langage orienté objet mais ne dispose pas de classes. Comment donc faire de l'objet sans classes ?
 redirect_from:
     - /posts/javascript-et-les-classes/
-image: "http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=200"
 ---
 
 La plupart des langages orientés objet dispose d'un mécanisme simple pour définir les propriétés et méthodes d'un objet : les classes. Seulement JavaScript ne propose pas cette solution pour faire de l'objet mais propose à la place les prototypes.
