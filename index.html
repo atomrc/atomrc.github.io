@@ -31,7 +31,7 @@ image: http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=300
     {% assign talks = site.talks | sort: 'date' | reverse %}
     {% for talk in talks %}
         <li class="card article-card">
-            <a class="title" href="{{talk.url | remove: 'index.html'}}"><strong>{{talk.title}}</strong></a>
+            <a class="title" href="{{talk.url | remove: 'index.html'}}">{{talk.title}}</a>
             <time
                 class="folded-paper"
                 datetime="{{talk.date | date_to_xmlschema}}"
