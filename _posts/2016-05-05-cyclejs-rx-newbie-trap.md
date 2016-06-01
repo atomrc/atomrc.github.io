@@ -174,7 +174,8 @@ Which means that each stream has access to a different "instance" of `UserContai
 In other words: we subscribe to events of a component that is not displayed on screen and, as such, does not receive any DOM event\*\*.  
 \*\*this last statement is only true because the UserContainer is isolated (see [@cycle/isolate](https://github.com/cyclejs/isolate))
 
-Now the `shareReplay(1)` solution does not transform the observable into a hot observable, it just tells the observable to keep the last produced element (that's what the `1` parameter is about) in memory to feed it to future subscribers. Which means that now, we are only creating a single `UserContainer` and that all the underlying subscribers will work on the same "instance".
+Now the `shareReplay(1)` solution transforms the observable into a **hot observable**. This means the whole subscription sequence will only be executed once per value produced by the stream `user$`. We also keep the last produced value for further subscriber to get that value when they subscribe.  
+Which means that now, we are only creating a single `UserContainer` per value produced by the `user$` stream and that all the underlying subscribers will work on the same "instance" of that `UserContainer`.
 
 ## Conclusion
 
