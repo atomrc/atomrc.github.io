@@ -1,0 +1,163 @@
+---
+layout: talk-remark
+title: "Reactive programming"
+description: "Let's apply fonctionnal programming to streams"
+categories: [javascript, reactive]
+---
+
+<style></style>
+<textarea id="source">
+layout: true
+
+.foot[<i class="ion-social-twitter"></i> @atomrc]
+
+---
+class: center, middle, naked
+name: intro
+
+# Reactive Programming
+
+---
+class: center
+# Let's code a spreadsheet
+
+<table>
+    <THEAD>
+        <tr>
+            <td>A</td>
+            <td>B</td>
+            <td>C = A + B</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input id="a1" type=""></td>
+            <td><input id="b1" type=""></td>
+            <td><input id="c1" type=""> </td>
+        </tr>
+    </tbody>
+</table>
+
+---
+## The imperative way
+
+```javascript
+$("#a, #b").on("keyup", function computeAndUpdateC() {
+*   var a = $("#a").val();
+*   var b = $("#b").val();
+    var c = a + b;
+
+*   $("#c").val(c);
+});
+```
+
+--
+
+`computeAndUpdateC` is responsible for:
+
+- getting the value of `#a` and `#b`
+- computing `c`
+- updating `#c` value
+
+---
+## Better?
+
+```javascript
+var a = '';
+var b = '';
+
+function computeC(a, b) {
+    return a + b;
+}
+function renderC(c) {
+    $("#c").val(c);
+}
+
+$("#a, #b").on("keyup", function (event) {
+    var target = event.target;
+    window[target.id] = target.value;
+    var c = computeC(a, b);
+    renderC(c);
+});
+```
+
+---
+class: middle, center
+![no](http://i2.kym-cdn.com/entries/icons/original/000/007/423/untitle.JPG)
+
+---
+## Better?
+
+```javascript
+*var a = ''; //global
+*var b = ''; //global
+
+function computeC(a, b) {
+    return a + b;
+}
+function renderC(c) {
+    $("#c").val(c);
+}
+
+$("#a, #b").on("keyup", function (event) {
+    var target = event.target;
+*   window[target.id] = target.value; //OH GOD NO
+*   var c = computeC(a, b); //responsible for computing c
+*   renderC(c); //responsible for rendering c
+});
+```
+--
+
+???
+TODO dependencies diagram:
+
+- computeAndUpdateC is reacting to a and b
+- ... is acting on a and b and c
+- ... c is passive while things happen to it
+
+---
+```javascript
+```
+
+---
+## Declarative programming: what the program should do?
+
+```javascript
+function program(numbers) {
+    return numbers
+        .map(num => multBy2(num))
+
+}
+```
+
+</textarea>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.lite.min.js"></script>
+<script>
+var O = Rx.Observable;
+setTimeout(function () {
+    var aInput = document.querySelector("#a1");
+    var bInput = document.querySelector("#b1");
+    var cInput = document.querySelector("#c1");
+
+    var a$ = O
+        .fromEvent(aInput, "keyup")
+        .map(e => e.target.value);
+
+    var b$ = O
+        .fromEvent(bInput, "keyup")
+        .map(e => e.target.value);
+
+    var c$ = O
+        .combineLatest(
+            a$.startWith(''),
+            b$.startWith(''),
+            (a, b) => a + b
+        );
+
+    c$.subscribe(function (c) {
+        cInput.value = c;
+    })
+}, 1000);
+</script>
+

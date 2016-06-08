@@ -123,7 +123,8 @@
         <script>
             //init remarkjs
             var slideshow = remark.create({
-                highlightStyle: 'monokai'
+                highlightStyle: 'monokai',
+                highlightLines: true
             });
             slideshow.on("afterShowSlide", function (slide) {
                 window.setTimeout(function () {
