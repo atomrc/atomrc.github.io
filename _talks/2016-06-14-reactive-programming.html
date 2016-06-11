@@ -39,85 +39,193 @@ class: center
 </table>
 
 ---
-## The imperative way
+## The over-interactive way
 
-```javascript
-$("#a, #b").on("keyup", function computeAndUpdateC() {
-*   var a = $("#a").val();
-*   var b = $("#b").val();
-    var c = a + b;
-
-*   $("#c").val(c);
-});
+```html
+<input id="a" onkeyup="computeAndRender">
+<input id="b" onkeyup="computeAndRender">
+<input id="c">
 ```
 
---
-
-`computeAndUpdateC` is responsible for:
-
-- getting the value of `#a` and `#b`
-- computing `c`
-- updating `#c` value
-
----
-## Better?
-
 ```javascript
-var a = '';
-var b = '';
+var a, b;
 
-function computeC(a, b) {
+function compute(a, b) {
     return a + b;
 }
-function renderC(c) {
+
+function render(c) {
     $("#c").val(c);
 }
 
-$("#a, #b").on("keyup", function (event) {
+function computeAndRender(event) {
     var target = event.target;
     window[target.id] = target.value;
-    var c = computeC(a, b);
+
+    var c = compute(window.a, window.b);
+
+    render(c);
+}
+```
+
+---
+## The over-interactive way
+
+<br><br><br>
+## **What should happen when** user types in, for `#c` to be up-to-date?
+
+---
+## The over-interactive way
+
+### problems:
+- input `#a` and `#b` are responsible for calling `computeAndRender`
+- `computeAndRender` is responsible for computing `c`
+- `computeAndRender` is responsible for updating `#c`
+
+---
+## The unobtrusive-interactive way
+
+```html
+<input id="a">
+<input id="b">
+<input id="c">
+```
+
+```javascript
+function compute(a, b) {
+    return a + b;
+}
+
+function render(c) {
+    $("#c").val(c);
+}
+
+$("#a, #b").on("keyup", function computeAndRender(/*event*/) {
+    var a = $("#a").val();
+    var b = $("#b").val();
+
+    var c = compute(a, b);
+
+    render(c);
+});
+```
+
+---
+## The unobtrusive-interactive way
+
+<br><br><br>
+## **What should I do when** `#a` and `#b` emit a keyup event, for `#c` to be up-to-date?
+
+---
+## The unobtrusive-interactive way
+
+### problems:
+
+`computeAndRender` is responsible for:
+- getting the value of `#a` and `#b`
+- computing `c`
+- updating `#c`
+
+
+---
+## The unobtrusive-interactive-event-consumer way
+
+```javascript
+var inputValues = {};
+
+function compute(a, b) {
+    return a + b;
+}
+
+function render(c) {
+    $("#c").val(c);
+}
+
+$("#a, #b").on("keyup", function computeAndRender(event) {
+    var target = event.target;
+    inputValues[target.id] = target.value;
+
+    var c = compute(inputValues.a, inputValues.b);
+
     renderC(c);
 });
 ```
 
 ---
-class: middle, center
-![no](http://i2.kym-cdn.com/entries/icons/original/000/007/423/untitle.JPG)
+## The unobtrusive-interactive-event-consumer way
+
+<br><br><br>
+## **What should I do with** the event the inputs are sending me, for `#c` to be up-to-date?
 
 ---
-## Better?
+## The unobtrusive-interactive-event-consumer way
+
+### problems:
+
+`computeAndRender` is responsible for:
+- ~~getting the value of `#a` and `#b`~~
+- computing `c`
+- updating `#c`
+
+---
+## the event-driven way
 
 ```javascript
-*var a = ''; //global
-*var b = ''; //global
+$("#a, #b").on("keyup", function gatherValues(event) {
+    inputValues[event.target.id] = event.target.value;
+    $(document).trigger("valuesChange", inputValues);
+})
+```
 
-function computeC(a, b) {
-    return a + b;
-}
-function renderC(c) {
-    $("#c").val(c);
-}
-
-$("#a, #b").on("keyup", function (event) {
-    var target = event.target;
-*   window[target.id] = target.value; //OH GOD NO
-*   var c = computeC(a, b); //responsible for computing c
-*   renderC(c); //responsible for rendering c
+--
+```javascript
+$(document).on("valuesChange", function computeC(event, values) {
+    var c = values.a + values.b;
+    $(document).trigger("cChange", c);
 });
 ```
+
 --
-
-???
-TODO dependencies diagram:
-
-- computeAndUpdateC is reacting to a and b
-- ... is acting on a and b and c
-- ... c is passive while things happen to it
+```javascript
+$(document).on("cChange", function render(event, c) {
+    $("#c").val(c);
+});
+```
 
 ---
+## the event-driven way v2
+
 ```javascript
+$("#a, #b").on("keyup", gatherValues)
+$(document).on("valuesChange", computeC);
+$(document).on("cChange", render);
+
+function gatherValues(event) { /*...*/ }
+
+function computeC(event, values) { /*...*/ }
+
+function render(event, c) { /*...*/ }
 ```
+
+---
+## the event-driven way
+
+## **What should I do when** user types in?
+
+--
+## **What should I do when** values are updated?
+
+--
+## **What should I do when** a new value of `c` is computed?
+
+---
+## Let's think the other way around
+
+###~~**What should I do when ...?**~~
+
+--
+##**What do I depend on to play my part?**
+
 
 ---
 ## Declarative programming: what the program should do?
