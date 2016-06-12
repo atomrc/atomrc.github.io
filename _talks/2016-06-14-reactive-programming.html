@@ -5,13 +5,20 @@ description: "Let's apply fonctionnal programming to streams"
 categories: [javascript, reactive]
 ---
 <style>
+    .remark-slide-content {
+        background-color: #EEE;
+        color: #555;
+        padding: 0 3em;
+        font-size: 1.1em;
+    }
+
     .box {
         color: white;
         background-color: #3e3e3e;
         border-radius: 5px;
         padding: 0.5em;
     }
-    ul {
+    ul.pro-cons {
         list-style-type: none;
     }
     li.ok:before {
@@ -26,6 +33,9 @@ categories: [javascript, reactive]
         position: absolute;
         top: 100%;
         transition: top 1s;
+    }
+    img[alt="cyclejs"] {
+        width: 50%;
     }
     .entered .animate-from-bottom {
         top: 25%;
@@ -106,7 +116,7 @@ function render(c) {
 
 --
 <div class="box animate-from-bottom">
-    <ul>
+    <ul class="pro-cons">
         <li class="ko"> input #a and #b are responsible for calling computeAndRender</li>
         <li class="ko"> computeAndRender is responsible for computing c</li>
         <li class="ko"> computeAndRender is responsible for updating #c</li>
@@ -117,15 +127,15 @@ function render(c) {
 ## the event-driven way
 
 ```javascript
-$("#a, #b").on("keyup", function gatherValues(event) {
+$("#a, #b").on("keyup", function storeValues(event) {
     inputValues[event.target.id] = event.target.value;
-    $(document).trigger("valuesChange", inputValues);
-})
+    $(document).trigger("valueChange", inputValues);
+});
 ```
 
 --
 ```javascript
-$(document).on("valuesChange", function computeC(event, values) {
+$(document).on("valueChange", function computeC(event, values) {
     var c = values.a + values.b;
     $(document).trigger("cChange", c);
 });
@@ -142,11 +152,11 @@ $(document).on("cChange", function render(event, c) {
 ## the event-driven way v2
 
 ```javascript
-$("#a, #b").on("keyup", gatherValues)
+$("#a, #b").on("keyup", storeValues)
 $(document).on("valuesChange", computeC);
 $(document).on("cChange", render);
 
-function gatherValues(event) { /*...*/ }
+function storeValues(event) { /*...*/ }
 
 function computeC(event, values) { /*...*/ }
 
@@ -156,13 +166,13 @@ function render(event, c) { /*...*/ }
 ---
 ## the event-driven way
 
-## **What should I do when** user types in?
+- **What should I do when** user types in?
 
 --
-## **What should I do when** values are updated?
+- **What should I do when** values are updated?
 
 --
-## **What should I do when** a new value of `c` is computed?
+- **What should I do when** a new value of `c` is computed?
 
 ---
 ## the event-driven way
@@ -170,9 +180,9 @@ function render(event, c) { /*...*/ }
 
 --
 <div class="box animate-from-bottom">
-    <ul>
+    <ul class="pro-cons">
         <li class="ok"> input "a" and "b" are independent</li>
-        <li class="ok"> "gatherValue" is only responsible for keeping values in memory</li>
+        <li class="ok"> "storeValues" is only responsible for keeping values in memory</li>
         <li class="ok"> "update" only computes the new value of "c"</li>
         <li class="ok"> "render" only render the given "c" on the DOM</li>
         <li class="ko"> The level of decoupling is to damn high!</li>
@@ -187,10 +197,10 @@ function render(event, c) { /*...*/ }
 ---
 ## Let's think the other way around
 
-###~~**What should I do when ...?**~~
+~~**What should I do when ...?**~~
 
 --
-##**What data do I depend on to play my part?**
+## What data do I depend on to play my part?
 
 ---
 class: middle
@@ -199,14 +209,14 @@ class: middle
 ---
 ## Time to go reactive!
 
-I am `#c`, what data do I need to render?
+### I am `#c`, what data do I need to render?
 
 --
 
 The latest value of `c`
 
 ```javascript
-c.subscribe(function render(c) {
+c$.subscribe(function render(c) {
     $("#c").val(c);
 });
 ```
@@ -214,17 +224,17 @@ c.subscribe(function render(c) {
 ---
 ## Time to go reactive!
 
-I am `c`, what data do I need to compute my value?
+### I am `c$`, what data do I need to compute my value?
 
 --
 
 The latest value of `a` and `b`
 
 ```javascript
-var c = Rx.Observable
+var c$ = Rx.Observable
     .combineLatest(
-        a,
-        b,
+        a$,
+        b$,
         function computeC(a, b) {
             return a + b
         }
@@ -234,20 +244,20 @@ var c = Rx.Observable
 ---
 ## Time to go reactive!
 
-We are `a` and `b`, what data do we need to know our values?
+### We are `a$` and `b$`, what data do we need to know our values?
 
 --
 
 The event emitted by `#a` and `#b`
 
 ```javascript
-var a = Rx.Observable
+var a$ = Rx.Observable
     .fromEvent(aInput, "keyup")
     .map(function getValue(event) {
         return event.target.value;
     });
 
-var b = Rx.Observable
+var b$ = Rx.Observable
     .fromEvent(bInput, "keyup")
     .map(function getValue(event) {
         return event.target.value;
@@ -260,25 +270,25 @@ var b = Rx.Observable
 ```javascript
 var O = Rx.Observable;
 
-var a = O.fromEvent($("#a"), "keyup")
+var a$ = O.fromEvent($("#a"), "keyup")
     .map(function getValue(event) {
         return event.target.value;
     });
 
-var b = O.fromEvent($("#b"), "keyup")
+var b$ = O.fromEvent($("#b"), "keyup")
     .map(function getValue(event) {
         return event.target.value;
     });
 
-var c = O.combineLatest(
-    a,
-    b,
+var c$ = O.combineLatest(
+    a$,
+    b$,
     function computeC(a, b) {
         return a + b
     }
 );
 
-c.subscribe(function render(c) {
+c$.subscribe(function render(c) {
     $("#c").val(c);
 });
 ```
@@ -296,7 +306,31 @@ c.subscribe(function render(c) {
 ---
 ## Reactive Programming
 
-![marble circuit](http://www.eurekakids.net/g/6666588-3/super-marble-run-vortex-circuit-for-marbles.jpg)
+![marble circuit](/images/cycle-marble.png)
+
+---
+class: center
+## Cycle.js
+
+![cyclejs](http://cycle.js.org/img/cyclejs_logo.svg)
+
+---
+## Fun facts
+
+- reactive programming === (Observer pattern + dataflow)
+- reative is a great pattern to design **any** UI (not only spreadsheet ;))
+- AngularJS uses the Observer pattern a lot internally (`$scope.$watch()` anyone?)
+- [rx.angular.js](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/howdoi/angular.md) can add a dataflow layer to Angular
+- react is not 100% reactive (rendering is, state management is not)
+
+---
+name: me
+class: center, middle, naked
+![thomas belin](http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=150)  
+Thomas Belin  
+Front-end developer @ doyoubuzz  
+<i class="ion-social-twitter"></i>
+[@atomrc](https://twitter.com/atomrc) | [thomasbelin.fr](http://blog.thomasbelin.fr)
 </textarea>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.lite.min.js"></script>
