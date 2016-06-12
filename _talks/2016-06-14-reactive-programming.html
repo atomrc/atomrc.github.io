@@ -114,50 +114,6 @@ function render(c) {
 </div>
 
 ---
-## The inobtrusive way
-
-```javascript
-var inputValues = {};
-
-$("#a, #b").on("keyup", function computeAndRender(event) {
-    var target = event.target;
-    inputValues[target.id] = target.value;
-
-    var c = compute(inputValues.a, inputValues.b);
-
-    renderC(c);
-});
-
-function compute(a, b) {
-    return a + b;
-}
-
-function render(c) {
-    $("#c").val(c);
-}
-```
-
----
-## The inobtrusive way
-
-<br><br><br>
-## **What should I do when** `#a` and `#b` emit a keyup event, for `#c` to be up-to-date?
-
----
-## The inobtrusive way
-
-![event driven diagram](/images/unobtrusive.png)
-
---
-<div class="box animate-from-bottom">
-    <ul>
-        <li class="ok"> input a and b are independent</li>
-        <li class="ko"> computeAndRender is responsible for computing c</li>
-        <li class="ko"> computeAndRender is responsible for updating #c</li>
-    </ul>
-</div>
-
----
 ## the event-driven way
 
 ```javascript
