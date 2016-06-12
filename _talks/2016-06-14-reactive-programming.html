@@ -4,8 +4,33 @@ title: "Reactive programming"
 description: "Let's apply fonctionnal programming to streams"
 categories: [javascript, reactive]
 ---
-
-<style></style>
+<style>
+    .box {
+        color: white;
+        background-color: #3e3e3e;
+        border-radius: 5px;
+        padding: 0.5em;
+    }
+    ul {
+        list-style-type: none;
+    }
+    li.ok:before {
+        color: green;
+        content: "\2713";
+    }
+    li.ko:before {
+        color: red;
+        content: "\00D7";
+    }
+    .animate-from-bottom {
+        position: absolute;
+        top: 100%;
+        transition: top 1s;
+    }
+    .entered .animate-from-bottom {
+        top: 25%;
+    }
+</style>
 <textarea id="source">
 layout: true
 
@@ -48,7 +73,16 @@ class: center
 ```
 
 ```javascript
-var a, b;
+var inputValues = {}
+
+function computeAndRender(event) {
+    var target = event.target;
+    inputValues[target.id] = target.value;
+
+    var c = compute(inputValues.a, inputValues.b);
+
+    render(c);
+}
 
 function compute(a, b) {
     return a + b;
@@ -56,15 +90,6 @@ function compute(a, b) {
 
 function render(c) {
     $("#c").val(c);
-}
-
-function computeAndRender(event) {
-    var target = event.target;
-    window[target.id] = target.value;
-
-    var c = compute(window.a, window.b);
-
-    render(c);
 }
 ```
 
@@ -77,69 +102,22 @@ function computeAndRender(event) {
 ---
 ## The over-interactive way
 
-### problems:
-- input `#a` and `#b` are responsible for calling `computeAndRender`
-- `computeAndRender` is responsible for computing `c`
-- `computeAndRender` is responsible for updating `#c`
+![over interactive diagram](/images/over-interactive.png)
+
+--
+<div class="box animate-from-bottom">
+    <ul>
+        <li class="ko"> input #a and #b are responsible for calling computeAndRender</li>
+        <li class="ko"> computeAndRender is responsible for computing c</li>
+        <li class="ko"> computeAndRender is responsible for updating #c</li>
+    </ul>
+</div>
 
 ---
-## The unobtrusive-interactive way
-
-```html
-<input id="a">
-<input id="b">
-<input id="c">
-```
-
-```javascript
-function compute(a, b) {
-    return a + b;
-}
-
-function render(c) {
-    $("#c").val(c);
-}
-
-$("#a, #b").on("keyup", function computeAndRender(/*event*/) {
-    var a = $("#a").val();
-    var b = $("#b").val();
-
-    var c = compute(a, b);
-
-    render(c);
-});
-```
-
----
-## The unobtrusive-interactive way
-
-<br><br><br>
-## **What should I do when** `#a` and `#b` emit a keyup event, for `#c` to be up-to-date?
-
----
-## The unobtrusive-interactive way
-
-### problems:
-
-`computeAndRender` is responsible for:
-- getting the value of `#a` and `#b`
-- computing `c`
-- updating `#c`
-
-
----
-## The unobtrusive-interactive-event-consumer way
+## The inobtrusive way
 
 ```javascript
 var inputValues = {};
-
-function compute(a, b) {
-    return a + b;
-}
-
-function render(c) {
-    $("#c").val(c);
-}
 
 $("#a, #b").on("keyup", function computeAndRender(event) {
     var target = event.target;
@@ -149,23 +127,35 @@ $("#a, #b").on("keyup", function computeAndRender(event) {
 
     renderC(c);
 });
+
+function compute(a, b) {
+    return a + b;
+}
+
+function render(c) {
+    $("#c").val(c);
+}
 ```
 
 ---
-## The unobtrusive-interactive-event-consumer way
+## The inobtrusive way
 
 <br><br><br>
-## **What should I do with** the event the inputs are sending me, for `#c` to be up-to-date?
+## **What should I do when** `#a` and `#b` emit a keyup event, for `#c` to be up-to-date?
 
 ---
-## The unobtrusive-interactive-event-consumer way
+## The inobtrusive way
 
-### problems:
+![event driven diagram](/images/unobtrusive.png)
 
-`computeAndRender` is responsible for:
-- ~~getting the value of `#a` and `#b`~~
-- computing `c`
-- updating `#c`
+--
+<div class="box animate-from-bottom">
+    <ul>
+        <li class="ok"> input a and b are independent</li>
+        <li class="ko"> computeAndRender is responsible for computing c</li>
+        <li class="ko"> computeAndRender is responsible for updating #c</li>
+    </ul>
+</div>
 
 ---
 ## the event-driven way
@@ -219,25 +209,138 @@ function render(event, c) { /*...*/ }
 ## **What should I do when** a new value of `c` is computed?
 
 ---
+## the event-driven way
+![event driven diagram](/images/event-driven.png)
+
+--
+<div class="box animate-from-bottom">
+    <ul>
+        <li class="ok"> input "a" and "b" are independent</li>
+        <li class="ok"> "gatherValue" is only responsible for keeping values in memory</li>
+        <li class="ok"> "update" only computes the new value of "c"</li>
+        <li class="ok"> "render" only render the given "c" on the DOM</li>
+        <li class="ko"> The level of decoupling is to damn high!</li>
+        <li class="ko"> Semantically wrong: value changing over time !== event</li>
+    </ul>
+</div>
+
+---
+## the event-driven way (fixed)
+![event driven diagram](/images/event-driven-fixed.png)
+
+---
 ## Let's think the other way around
 
 ###~~**What should I do when ...?**~~
 
 --
-##**What do I depend on to play my part?**
-
+##**What data do I depend on to play my part?**
 
 ---
-## Declarative programming: what the program should do?
+class: middle
+## Time to go reactive!
+
+---
+## Time to go reactive!
+
+I am `#c`, what data do I need to render?
+
+--
+
+The latest value of `c`
 
 ```javascript
-function program(numbers) {
-    return numbers
-        .map(num => multBy2(num))
-
-}
+c.subscribe(function render(c) {
+    $("#c").val(c);
+});
 ```
 
+---
+## Time to go reactive!
+
+I am `c`, what data do I need to compute my value?
+
+--
+
+The latest value of `a` and `b`
+
+```javascript
+var c = Rx.Observable
+    .combineLatest(
+        a,
+        b,
+        function computeC(a, b) {
+            return a + b
+        }
+    );
+```
+
+---
+## Time to go reactive!
+
+We are `a` and `b`, what data do we need to know our values?
+
+--
+
+The event emitted by `#a` and `#b`
+
+```javascript
+var a = Rx.Observable
+    .fromEvent(aInput, "keyup")
+    .map(function getValue(event) {
+        return event.target.value;
+    });
+
+var b = Rx.Observable
+    .fromEvent(bInput, "keyup")
+    .map(function getValue(event) {
+        return event.target.value;
+    });
+```
+
+---
+## Wrapping up
+
+```javascript
+var O = Rx.Observable;
+
+var a = O.fromEvent($("#a"), "keyup")
+    .map(function getValue(event) {
+        return event.target.value;
+    });
+
+var b = O.fromEvent($("#b"), "keyup")
+    .map(function getValue(event) {
+        return event.target.value;
+    });
+
+var c = O.combineLatest(
+    a,
+    b,
+    function computeC(a, b) {
+        return a + b
+    }
+);
+
+c.subscribe(function render(c) {
+    $("#c").val(c);
+});
+```
+
+---
+## Reactive Programming
+
+![reactive diagram](/images/reactive.png)
+
+---
+## Reactive Programming
+
+![reactive splitted diagram](/images/reactive-splitted.png)
+
+---
+## Reactive Programming
+
+![marble circuit](http://www.eurekakids.net/g/6666588-3/super-marble-run-vortex-circuit-for-marbles.jpg)
 </textarea>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.lite.min.js"></script>
