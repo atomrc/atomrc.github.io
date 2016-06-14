@@ -89,7 +89,7 @@ class: center
         <tr>
             <td><input id="a1" type=""></td>
             <td><input id="b1" type=""></td>
-            <td><input id="c1" type=""> </td>
+            <td><input id="c1" type=""></td>
         </tr>
     </tbody>
 </table>
@@ -146,6 +146,12 @@ function render(c) {
 
 ---
 # the event-driven way
+
+```html
+<input id="a">
+<input id="b">
+<input id="c">
+```
 
 ```javascript
 $("#a, #b").on("keyup", function storeValues(event) {
@@ -204,7 +210,7 @@ function render(event, c) { /*...*/ }
     <ul class="pro-cons">
         <li class="ok"> input "a" and "b" are independent</li>
         <li class="ok"> "storeValues" is only responsible for keeping values in memory</li>
-        <li class="ok"> "update" only computes the new value of "c"</li>
+        <li class="ok"> "computeC" only computes the new value of "c"</li>
         <li class="ok"> "render" only render the given "c" on the DOM</li>
         <li class="ko"> The level of decoupling is to damn high!</li>
         <li class="ko"> Semantically wrong: value changing over time !== event</li>
@@ -340,7 +346,7 @@ class: center
 # Fun facts
 
 - reactive programming === (Observer pattern + dataflow)
-- reative is a great pattern to design **any** UI (not only spreadsheet ;))
+- reactive is a great pattern to design **any** ~~UI~~ app (not only spreadsheet ;))
 - AngularJS uses the Observer pattern a lot internally (`$scope.$watch()` anyone?)
 - [rx.angular.js](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/howdoi/angular.md) can add a dataflow layer to Angular
 - react is not 100% reactive (rendering is, state management is not)
