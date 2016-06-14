@@ -7,11 +7,18 @@
             @import url(https://fonts.googleapis.com/css?family=Open+Sans:300);
             @import url(http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
 
-            body { font-family: Open Sans, Arial, sans serif; color: white; }
+            body {
+                font-family: Open Sans, Arial, sans serif;
+                color: white;
+            }
 
             .remark-slide-content {
                 background-color: rgb(61, 184, 67);
                 padding: 0 3em;
+            }
+
+            .center {
+                text-align: center;
             }
 
             h1, h2, h3 {
@@ -123,7 +130,8 @@
         <script>
             //init remarkjs
             var slideshow = remark.create({
-                highlightStyle: 'monokai'
+                highlightStyle: 'monokai',
+                highlightLines: true
             });
             slideshow.on("afterShowSlide", function (slide) {
                 window.setTimeout(function () {

@@ -1,0 +1,431 @@
+---
+layout: talk-remark
+title: "Reactive programming"
+description: "Let's apply fonctionnal programming to streams"
+categories: [javascript, reactive]
+---
+<style>
+    .remark-container {
+        background-color: #50A3D9;
+    }
+
+    .remark-slide-content {
+        background-color: #EEE;
+        color: #444;
+        padding: 0 3em;
+        font-size: 1.1em;
+    }
+
+    h1 {
+        color: #F06;
+    }
+
+    .box {
+        color: white;
+        background-color: #3e3e3e;
+        border-radius: 5px;
+        padding: 0.5em;
+    }
+
+    img[alt="cheese reaction"] {
+        width: 60%;
+    }
+
+    ul.pro-cons {
+        list-style-type: none;
+    }
+    li.ok:before {
+        color: green;
+        content: "\2713";
+    }
+    li.ko:before {
+        color: red;
+        content: "\00D7";
+    }
+    .animate-from-bottom {
+        position: absolute;
+        top: 100%;
+        transition: top 1s;
+    }
+    img[alt="cyclejs"] {
+        width: 200px;
+    }
+    .entered .animate-from-bottom {
+        top: 25%;
+    }
+</style>
+<textarea id="source">
+layout: true
+
+.foot[<i class="ion-social-twitter"></i> @atomrc]
+
+---
+class: center, middle, naked
+name: intro
+
+# Reactive Programming
+
+---
+# Reactive Programming
+
+## defining reactions to input signals
+
+--
+### Signals: whatever is happening in your application (events, data changing)
+
+---
+class: center
+# Let's code a spreadsheet
+
+<table>
+    <THEAD>
+        <tr>
+            <td>A</td>
+            <td>B</td>
+            <td>C = A + B</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input id="a1" type=""></td>
+            <td><input id="b1" type=""></td>
+            <td><input id="c1" type=""></td>
+        </tr>
+    </tbody>
+</table>
+
+---
+# The over-interactive way
+
+```html
+<input id="a" onkeyup="computeAndRender">
+<input id="b" onkeyup="computeAndRender">
+<input id="c">
+```
+
+```javascript
+var inputValues = {}
+
+function computeAndRender(event) {
+    var target = event.target;
+    inputValues[target.id] = target.value;
+
+    var c = compute(inputValues.a, inputValues.b);
+
+    render(c);
+}
+
+function compute(a, b) {
+    return a + b;
+}
+
+function render(c) {
+    $("#c").val(c);
+}
+```
+
+---
+# The over-interactive way
+
+<br><br><br>
+## **What should happen when** user types in, for `#c` to be up-to-date?
+
+---
+# The over-interactive way
+
+![over interactive diagram](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/over-interactive.png)
+
+--
+<div class="box animate-from-bottom">
+    <ul class="pro-cons">
+        <li class="ko"> input #a and #b are responsible for calling computeAndRender</li>
+        <li class="ko"> computeAndRender is responsible for computing c</li>
+        <li class="ko"> computeAndRender is responsible for updating #c</li>
+    </ul>
+</div>
+
+---
+# the event-driven way
+
+```html
+<input id="a">
+<input id="b">
+<input id="c">
+```
+
+```javascript
+$("#a, #b").on("keyup", function storeValues(event) {
+    inputValues[event.target.id] = event.target.value;
+    $(document).trigger("valueChange", inputValues);
+});
+```
+
+--
+```javascript
+$(document).on("valueChange", function computeC(event, values) {
+    var c = values.a + values.b;
+    $(document).trigger("cChange", c);
+});
+```
+
+--
+```javascript
+$(document).on("cChange", function render(event, c) {
+    $("#c").val(c);
+});
+```
+
+---
+# the event-driven way v2
+
+```javascript
+$("#a, #b").on("keyup", storeValues)
+$(document).on("valuesChange", computeC);
+$(document).on("cChange", render);
+
+function storeValues(event) { /*...*/ }
+
+function computeC(event, values) { /*...*/ }
+
+function render(event, c) { /*...*/ }
+```
+
+---
+# the event-driven way
+
+- **What should I do when** user types in?
+
+--
+- **What should I do when** values are updated?
+
+--
+- **What should I do when** a new value of `c` is computed?
+
+---
+# the event-driven way
+![event driven diagram](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/event-driven.png)
+
+--
+<div class="box animate-from-bottom">
+    <ul class="pro-cons">
+        <li class="ok"> input "a" and "b" are independent</li>
+        <li class="ok"> "storeValues" is only responsible for keeping values in memory</li>
+        <li class="ok"> "computeC" only computes the new value of "c"</li>
+        <li class="ok"> "render" only render the given "c" on the DOM</li>
+        <li class="ko"> The level of decoupling is to damn high!</li>
+        <li class="ko"> Semantically wrong: value changing over time !== event</li>
+    </ul>
+</div>
+
+---
+# the event-driven way (fixed)
+![event driven diagram](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/event-driven-fixed.png)
+
+---
+# Let's think the other way around
+
+~~**What should I do when ...?**~~
+
+--
+## What data do I depend on to play my part?
+
+---
+class: middle
+# Time to go reactive!
+
+---
+# Time to go reactive!
+
+### I am `#c`, what data do I need to render?
+
+--
+
+The latest value of `c`
+
+```javascript
+c$.subscribe(function render(c) {
+    $("#c").val(c);
+});
+```
+
+---
+# Time to go reactive!
+
+### I am `c$`, what data do I need to compute my value?
+
+--
+
+The latest value of `a` and `b`
+
+```javascript
+var c$ = Rx.Observable
+    .combineLatest(
+        a$,
+        b$,
+        function computeC(a, b) {
+            return a + b
+        }
+    );
+```
+
+---
+# Time to go reactive!
+
+### We are `a$` and `b$`, what data do we need to know our values?
+
+--
+
+The event emitted by `#a` and `#b`
+
+```javascript
+var a$ = Rx.Observable
+    .fromEvent(aInput, "keyup")
+    .map(function getValue(event) {
+        return event.target.value;
+    });
+
+var b$ = Rx.Observable
+    .fromEvent(bInput, "keyup")
+    .map(function getValue(event) {
+        return event.target.value;
+    });
+```
+
+---
+# Wrapping up
+
+```javascript
+var O = Rx.Observable;
+
+var a$ = O.fromEvent($("#a"), "keyup")
+    .map(function getValue(event) {
+        return event.target.value;
+    });
+
+var b$ = O.fromEvent($("#b"), "keyup")
+    .map(function getValue(event) {
+        return event.target.value;
+    });
+
+var c$ = O.combineLatest(
+    a$,
+    b$,
+    function computeC(a, b) {
+        return a + b
+    }
+);
+
+c$.subscribe(function render(c) {
+    $("#c").val(c);
+});
+```
+
+---
+# Reactive Programming
+
+![reactive diagram](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/reactive.png)
+
+---
+# Reactive Programming
+
+![reactive splitted diagram](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/reactive-splitted.png)
+
+---
+class: center
+# Reactive Programming
+
+![marble circuit](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/cycle-marble.png)
+
+--
+<div class="animate-from-bottom" style="text-align: center; width: 90%; padding-top: 100px">
+    <img alt="cyclejs" src="http://cycle.js.org/img/cyclejs_logo.svg">
+    <div style="font-size: 3em; font-weight: bold; color: white; text-shadow: 6px 4px 10px black;">Cycle.js</div>
+</div>
+
+---
+# Fun facts
+
+- reactive programming === (Observer pattern + dataflow)
+- reactive is a great pattern to design **any** ~~UI~~ app (not only spreadsheet ;))
+- AngularJS uses the Observer pattern a lot internally (`$scope.$watch()` anyone?)
+- [rx.angular.js](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/howdoi/angular.md) can add a dataflow layer to Angular
+- react is not 100% reactive (rendering is, state management is not)
+
+---
+name: me
+class: center, middle, naked
+![thomas belin](http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=150)  
+Thomas Belin  
+Front-end developer @ doyoubuzz  
+<i class="ion-social-twitter"></i>
+[@atomrc](https://twitter.com/atomrc) | [thomasbelin.fr](http://blog.thomasbelin.fr)
+
+---
+# Interactive end
+
+```javascript
+//speaker.js
+function talk(participants) {
+    doTalk();
+    participants.forEach(function (participant) {
+        participant.applause();
+    });
+}
+```
+
+---
+# Reactive end
+
+```javascript
+//main.js
+var endOfTalk$ = Rx
+    .fromEvent(speaker, "talkended");
+
+//participant1.js
+endOfTalk$.subscribe(function () {
+    applause();
+});
+
+//clement.js
+endOfTalk$.subscribe(function () {
+    stateFact("I am disappointed, there is no camembert in this talk!");
+});
+```
+
+---
+class: center, expand-image
+# Bonus: Vince McMahon `react`ing to Cheese
+
+![cheese reaction](https://media.giphy.com/media/AOEyRzRZ0RiKs/giphy.gif)
+
+</textarea>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.lite.min.js"></script>
+<script>
+var O = Rx.Observable;
+setTimeout(function () {
+    var aInput = document.querySelector("#a1");
+    var bInput = document.querySelector("#b1");
+    var cInput = document.querySelector("#c1");
+
+    var a$ = O
+        .fromEvent(aInput, "keyup")
+        .map(e => e.target.value);
+
+    var b$ = O
+        .fromEvent(bInput, "keyup")
+        .map(e => e.target.value);
+
+    var c$ = O
+        .combineLatest(
+            a$.startWith(''),
+            b$.startWith(''),
+            (a, b) => a + b
+        );
+
+    c$.subscribe(function (c) {
+        cInput.value = c;
+    })
+}, 1000);
+</script>
+
