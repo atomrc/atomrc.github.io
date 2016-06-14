@@ -5,11 +5,19 @@ description: "Let's apply fonctionnal programming to streams"
 categories: [javascript, reactive]
 ---
 <style>
+    .remark-container {
+        background-color: #50A3D9;
+    }
+
     .remark-slide-content {
         background-color: #EEE;
-        color: #555;
+        color: #444;
         padding: 0 3em;
         font-size: 1.1em;
+    }
+
+    h1 {
+        color: #F06;
     }
 
     .box {
@@ -87,7 +95,7 @@ class: center
 </table>
 
 ---
-## The over-interactive way
+# The over-interactive way
 
 ```html
 <input id="a" onkeyup="computeAndRender">
@@ -117,13 +125,13 @@ function render(c) {
 ```
 
 ---
-## The over-interactive way
+# The over-interactive way
 
 <br><br><br>
 ## **What should happen when** user types in, for `#c` to be up-to-date?
 
 ---
-## The over-interactive way
+# The over-interactive way
 
 ![over interactive diagram](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/over-interactive.png)
 
@@ -137,7 +145,7 @@ function render(c) {
 </div>
 
 ---
-## the event-driven way
+# the event-driven way
 
 ```javascript
 $("#a, #b").on("keyup", function storeValues(event) {
@@ -162,7 +170,7 @@ $(document).on("cChange", function render(event, c) {
 ```
 
 ---
-## the event-driven way v2
+# the event-driven way v2
 
 ```javascript
 $("#a, #b").on("keyup", storeValues)
@@ -177,7 +185,7 @@ function render(event, c) { /*...*/ }
 ```
 
 ---
-## the event-driven way
+# the event-driven way
 
 - **What should I do when** user types in?
 
@@ -188,7 +196,7 @@ function render(event, c) { /*...*/ }
 - **What should I do when** a new value of `c` is computed?
 
 ---
-## the event-driven way
+# the event-driven way
 ![event driven diagram](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/event-driven.png)
 
 --
@@ -204,11 +212,11 @@ function render(event, c) { /*...*/ }
 </div>
 
 ---
-## the event-driven way (fixed)
+# the event-driven way (fixed)
 ![event driven diagram](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/event-driven-fixed.png)
 
 ---
-## Let's think the other way around
+# Let's think the other way around
 
 ~~**What should I do when ...?**~~
 
@@ -217,10 +225,10 @@ function render(event, c) { /*...*/ }
 
 ---
 class: middle
-## Time to go reactive!
+# Time to go reactive!
 
 ---
-## Time to go reactive!
+# Time to go reactive!
 
 ### I am `#c`, what data do I need to render?
 
@@ -235,7 +243,7 @@ c$.subscribe(function render(c) {
 ```
 
 ---
-## Time to go reactive!
+# Time to go reactive!
 
 ### I am `c$`, what data do I need to compute my value?
 
@@ -255,7 +263,7 @@ var c$ = Rx.Observable
 ```
 
 ---
-## Time to go reactive!
+# Time to go reactive!
 
 ### We are `a$` and `b$`, what data do we need to know our values?
 
@@ -278,7 +286,7 @@ var b$ = Rx.Observable
 ```
 
 ---
-## Wrapping up
+# Wrapping up
 
 ```javascript
 var O = Rx.Observable;
@@ -307,18 +315,18 @@ c$.subscribe(function render(c) {
 ```
 
 ---
-## Reactive Programming
+# Reactive Programming
 
 ![reactive diagram](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/reactive.png)
 
 ---
-## Reactive Programming
+# Reactive Programming
 
 ![reactive splitted diagram](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/reactive-splitted.png)
 
 ---
 class: center
-## Reactive Programming
+# Reactive Programming
 
 ![marble circuit](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/cycle-marble.png)
 
@@ -329,7 +337,7 @@ class: center
 </div>
 
 ---
-## Fun facts
+# Fun facts
 
 - reactive programming === (Observer pattern + dataflow)
 - reative is a great pattern to design **any** UI (not only spreadsheet ;))
@@ -347,7 +355,7 @@ Front-end developer @ doyoubuzz
 [@atomrc](https://twitter.com/atomrc) | [thomasbelin.fr](http://blog.thomasbelin.fr)
 
 ---
-## Interactive end
+# Interactive end
 
 ```javascript
 //speaker.js
@@ -360,7 +368,7 @@ function talk(participants) {
 ```
 
 ---
-## Reactive end
+# Reactive end
 
 ```javascript
 //main.js
@@ -380,7 +388,7 @@ endOfTalk$.subscribe(function () {
 
 ---
 class: center, expand-image
-## Bonus: Vince McMahon `react`ing to Cheese
+# Bonus: Vince McMahon `react`ing to Cheese
 
 ![cheese reaction](https://media.giphy.com/media/AOEyRzRZ0RiKs/giphy.gif)
 
