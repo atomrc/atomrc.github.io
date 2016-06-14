@@ -18,6 +18,11 @@ categories: [javascript, reactive]
         border-radius: 5px;
         padding: 0.5em;
     }
+
+    img[alt="cheese reaction"] {
+        width: 60%;
+    }
+
     ul.pro-cons {
         list-style-type: none;
     }
@@ -340,6 +345,45 @@ Thomas Belin
 Front-end developer @ doyoubuzz  
 <i class="ion-social-twitter"></i>
 [@atomrc](https://twitter.com/atomrc) | [thomasbelin.fr](http://blog.thomasbelin.fr)
+
+---
+## Interactive end
+
+```javascript
+//speaker.js
+function talk(participants) {
+    doTalk();
+    participants.forEach(function (participant) {
+        participant.applause();
+    });
+}
+```
+
+---
+## Reactive end
+
+```javascript
+//main.js
+var endOfTalk$ = Rx
+    .fromEvent(speaker, "talkended");
+
+//participant1.js
+endOfTalk$.subscribe(function () {
+    applause();
+});
+
+//clement.js
+endOfTalk$.subscribe(function () {
+    stateFact("I am disappointed, there is no camembert in this talk!");
+});
+```
+
+---
+class: center, expand-image
+## Bonus: Vince McMahon `react`ing to Cheese
+
+![cheese reaction](https://media.giphy.com/media/AOEyRzRZ0RiKs/giphy.gif)
+
 </textarea>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.lite.min.js"></script>
