@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   height="151.84331pt"
+   id="svg1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="tshirt.svg"
+   sodipodi:version="0.32"
+   width="153.44063pt"
+   version="1.1">
+  <metadata
+     id="metadata3">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>t-shirt</dc:title>
+        <dc:description />
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li />
+            <rdf:li>people</rdf:li>
+            <rdf:li>clothing</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://www.openclipart.org">
+            <dc:title>Nicu Buculei</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Nicu Buculei</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Nicu Buculei</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:date />
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://web.resource.org/cc/PublicDomain" />
+        <dc:language>en</dc:language>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://web.resource.org/cc/PublicDomain">
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Reproduction" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Distribution" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs3" />
+  <sodipodi:namedview
+     bordercolor="#666666"
+     borderopacity="1.0"
+     id="base"
+     inkscape:cx="176.31226"
+     inkscape:cy="54.95582"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:window-height="1010"
+     inkscape:window-width="1673"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:zoom="2"
+     pagecolor="#ffffff"
+     showgrid="false"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:object-nodes="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg1" />
+  <g
+     id="g2776"
+     style="fill:#36bf44;fill-opacity:1;stroke:none"
+     transform="translate(-5.78125,-4.59375)">
+    <path
+       style="fill:#3189dd;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:3.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1"
+       d="M 83.03125,4.59375 C 77.453404,12.463182 62.43852,15.157634 53.167969,21.490234 44.01126,27.093542 32.00712,30.44332 27.666016,41.251953 18.785751,59.285672 10.555505,76.491767 5.78125,96.0625 c 3.1057775,9.33705 16.7465,10.85917 25.064453,14.62695 2.798036,0.73475 8.589358,2.36957 12.269531,1.51172 0.467379,-0.41658 0.878647,-0.90195 1.251954,-1.44726 0.576399,-0.57641 1.025029,-1.57026 1.392578,-2.80469 1.073613,-2.91994 1.754096,-6.95115 2.673828,-12.408204 4.078639,17.298024 -5.397428,65.860454 -6.619141,93.041014 7.617885,6.33163 22.638521,4.25178 33.748047,5.52344 27.84207,0.90749 59.9626,-0.49785 85.75,-1.48438 -1.16401,-9.31579 -2.52718,-21.27613 -2.32031,-31.09179 -1.80222,-17.84133 -4.87677,-34.96082 -5.78321,-52.87696 -0.58065,-1.20296 -0.40772,-8.04565 -0.79687,-11.447262 1.60223,3.356262 2.80618,7.086192 3.4707,9.615232 0.0124,0.0795 0.0352,0.2121 0.0469,0.28711 0.008,0.002 0.0189,0.003 0.0273,0.006 0.30896,1.21084 0.49517,2.13568 0.50586,2.50195 5.42313,-0.95387 23.34932,-3.25637 28.27344,-4.27148 5.22691,-0.2986 10.085,-0.94933 12.8457,-3.07227 -0.0965,-2.480084 -1.57647,-7.146278 -2.5918,-14.761714 C 188.80965,68.759875 182.7365,49.678921 173,32.4375 163.89311,24.664269 150.6261,23.01729 140.02734,17.587891 130.68897,14.949049 127.49662,10.077322 121.09766,6.2988281 109.31323,9.5720326 96.838625,10.888272 83.03125,4.59375 Z m 15.740234,53.892578 c 2.904796,-0.0063 4.613046,2.375371 5.109376,3.041016 0.45837,0.614737 11.63231,18.395254 15.49219,25.960937 0.55778,1.093304 0.88867,1.954222 0.88867,2.628907 0,0.674682 -0.33089,1.535606 -0.88867,2.628906 -3.85988,7.565686 -15.03382,25.346196 -15.49219,25.960936 -0.49633,0.66565 -2.20458,3.04802 -5.109376,3.04102 l -13.414062,-0.0293 c -1.174661,-0.003 -2.729972,-1.11774 -2.119141,-2.12109 L 98.996094,93.714844 c 0,0 1.205076,-2.882554 1.205076,-3.597656 0,-0.715098 -1.205076,-3.597657 -1.205076,-3.597657 L 83.238281,60.636719 c -0.610831,-1.003351 0.94448,-2.118494 2.119141,-2.121094 l 13.414062,-0.0293 z"
+       id="path2773"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>
