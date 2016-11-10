@@ -1001,8 +1001,6 @@ background-image: url(https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/tal
             var bInput = document.querySelector("#b1");
             var cInput = document.querySelector("#c1");
 
-            var totalInput = "♥ you devfest";
-
             var a$ = O
                 .fromEvent(aInput, "keyup")
                 .map(e => e.target.value);
@@ -1017,7 +1015,6 @@ background-image: url(https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/tal
                     b$.startWith(''),
                     (a, b) => a + b
                 )
-                .map(c => totalInput.substr(0, c.length));
 
             c$.subscribe(function (c) {
                 cInput.value = c;
