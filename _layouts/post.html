@@ -9,6 +9,7 @@ layout: default
   </div>
   </div>
 -->
+<link href="/css/article.css" type="text/css" rel="stylesheet">
 <div id="full-article">
   <article lang="{{page.lang}}">
     <header>
@@ -17,6 +18,7 @@ layout: default
         <time class="folded-paper" datetime="{{page.date}}" pubdate itemprop="datePublished" content="{{page.date}}">
           {{ page.date | date: '%-d <span class="month">%b</span> %Y' }}
         </time>
+        <br>
         {% for tag in page.categories %}
         <span class="tag">{{ tag }}</span>&nbsp;
         {% endfor %}
@@ -33,16 +35,9 @@ layout: default
       {{ content }}
     </div>
 
-    <div id="share-panel" class="share-button material-button visible" data-material-button="">
-      <i class="fa fa-share-alt material-button-icon"></i>
-      {% assign url =  page.url | prepend: site.url | cgi_escape %}
-      {% assign desc =  page.description | cgi_escape %}
-      <div class="content">
-        <a target="_blank" class="material-button" href="https://twitter.com/intent/tweet?url={{url}}&text={{desc}}&related=atomrc"><i class="fa fa-twitter"></i></a>
-        <a target="_blank" class="material-button" href="https://plus.google.com/share?url={{url}}"><i class="fa fa-google-plus"></i></a>
-        <a target="_blank" class="material-button" href="https://www.facebook.com/sharer/sharer.php?u={{url}}"><i class="fa fa-facebook"></i></a>
-      </div>
-    </div>
+    {% assign url =  page.url | prepend: site.url | cgi_escape %}
+    {% assign desc =  page.description | cgi_escape %}
+    <a target="_blank" href="https://twitter.com/intent/tweet?url={{url}}&text={{desc}}&related=atomrc">Tweet this</a>
 
     <div data-reading-probe="{{page.url}}"></div>
     <section id="related">
@@ -58,4 +53,5 @@ layout: default
 
     <section id="disqus_thread" data-lazy-disqus=""></section>
   </article>
+  <script src="/js/application.js" async></script>
 </div>
