@@ -6,19 +6,17 @@ image: http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=300
 <link href="/css/home.css" type="text/css" rel="stylesheet">
 <div class="home-container">
   <h2>About Me</h2>
-  <div class="aboutme-container">
-    <p class="aboutme">
-      {% include signature.html %}
-    </p>
-  </div>
+  <p class="centered">
+    {% include signature.html %}
+  </p>
   <h2>Articles</h2>
-  <ul class="list">
+  <ul class="list centered">
     {% for post in site.posts %}
     {% include post-list-element.html post=post %}
     {% endfor %}
   </ul>
   <h2>Talks</h2>
-  <ul class="list">
+  <ul class="list centered">
     {% assign talks = site.talks | sort: 'date' | reverse %}
     {% for talk in talks %}
     {% include post-list-element.html post=talk %}

@@ -3,15 +3,10 @@
 .home-container {
   max-width: 50%;
   margin: auto;
-  h2 {
-    text-align: center;
-  }
-  .aboutme-container {
-    text-align: center;
-    .aboutme {
-      display: inline-block;
-      text-align: left;
-    }
+  text-align: center;
+  > .centered {
+    display: inline-block;
+    text-align: left;
   }
   .list {
     li { display: flex; }
