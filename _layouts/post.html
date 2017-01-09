@@ -2,60 +2,60 @@
 layout: default
 ---
 <!--
-<div class="sticky-container">
-    <div data-sticky="" id="sticky-header" class="fixed-header">
-        <a href="/"><img class="avatar falling" src="/images/avatar_s.jpeg"></a>
-        <span class="title">{{ page.title }}</span>
-    </div>
-</div>
+  <div class="sticky-container">
+  <div data-sticky="" id="sticky-header" class="fixed-header">
+  <a href="/"><img class="avatar falling" src="/images/avatar_s.jpeg"></a>
+  <span class="title">{{ page.title }}</span>
+  </div>
+  </div>
 -->
 <div id="full-article">
-    <article lang="{{page.lang}}">
-        <header>
-            <h1 class="title">{{page.title}}</h1>
-            <aside>
-                <time class="folded-paper" datetime="{{page.date}}" pubdate itemprop="datePublished" content="{{page.date}}">
-                    {{ page.date | date: '%-d <span class="month">%b</span> %Y' }}
-                </time>
-                {% for tag in page.categories %}
-                <span class="tag">{{ tag }}</span>&nbsp;
-                {% endfor %}
-            </aside>
-        </header>
-        <div class="article-body">
-        {% if page.notices %}
-            {% for notice in page.notices %}
-            <div class="notice">
-                {{ notice | markdownify }}
-            </div>
-            {% endfor %}
-        {% endif %}
-        {{ content }}
-        </div>
+  <article lang="{{page.lang}}">
+    <header>
+      <h1 class="title">{{page.title}}</h1>
+      <aside>
+        <time class="folded-paper" datetime="{{page.date}}" pubdate itemprop="datePublished" content="{{page.date}}">
+          {{ page.date | date: '%-d <span class="month">%b</span> %Y' }}
+        </time>
+        {% for tag in page.categories %}
+        <span class="tag">{{ tag }}</span>&nbsp;
+        {% endfor %}
+      </aside>
+    </header>
+    <div class="article-body">
+      {% if page.notices %}
+      {% for notice in page.notices %}
+      <div class="notice">
+        {{ notice | markdownify }}
+      </div>
+      {% endfor %}
+      {% endif %}
+      {{ content }}
+    </div>
 
-        <div id="share-panel" class="share-button material-button visible" data-material-button="">
-            <i class="fa fa-share-alt material-button-icon"></i>
-            {% assign url =  page.url | prepend: site.url | cgi_escape %}
-            {% assign desc =  page.description | cgi_escape %}
-            <div class="content">
-                <a target="_blank" class="material-button" href="https://twitter.com/intent/tweet?url={{url}}&text={{desc}}&related=atomrc"><i class="fa fa-twitter"></i></a>
-                <a target="_blank" class="material-button" href="https://plus.google.com/share?url={{url}}"><i class="fa fa-google-plus"></i></a>
-                <a target="_blank" class="material-button" href="https://www.facebook.com/sharer/sharer.php?u={{url}}"><i class="fa fa-facebook"></i></a>
-            </div>
-        </div>
+    <div id="share-panel" class="share-button material-button visible" data-material-button="">
+      <i class="fa fa-share-alt material-button-icon"></i>
+      {% assign url =  page.url | prepend: site.url | cgi_escape %}
+      {% assign desc =  page.description | cgi_escape %}
+      <div class="content">
+        <a target="_blank" class="material-button" href="https://twitter.com/intent/tweet?url={{url}}&text={{desc}}&related=atomrc"><i class="fa fa-twitter"></i></a>
+        <a target="_blank" class="material-button" href="https://plus.google.com/share?url={{url}}"><i class="fa fa-google-plus"></i></a>
+        <a target="_blank" class="material-button" href="https://www.facebook.com/sharer/sharer.php?u={{url}}"><i class="fa fa-facebook"></i></a>
+      </div>
+    </div>
 
-        <div data-reading-probe="{{page.url}}"></div>
-        <section id="related">
-            <div class="header"> A lire aussi :</div>
-            <ul>
-                {% for post in site.related_posts limit: 3 %}
-                    <li><a href="{{ post.url }}" title="{{ post.description }}">{{ post.title }}</a></li>
-                {% endfor %}
-            </ul>
-        </section>
-        <br>
-        <br>
+    <div data-reading-probe="{{page.url}}"></div>
+    <section id="related">
+      <div class="header"> A lire aussi :</div>
+      <ul>
+        {% for post in site.related_posts limit: 3 %}
+        <li><a href="{{ post.url }}" title="{{ post.description }}">{{ post.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+    <br>
+    <br>
 
-        <section id="disqus_thread" data-lazy-disqus=""></section>
-    </article>
+    <section id="disqus_thread" data-lazy-disqus=""></section>
+  </article>
 </div>

@@ -4,48 +4,48 @@ title: Welcome
 image: http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=300
 ---
 <ul class="grid">
-    {% for post in site.posts %}
-    <li class="card article-card" lang="{{post.lang}}">
-        <div class="filler"></div>
-        <a class="title" href="{{post.url}}">{{post.title}}</a>
-        <a class="hover-link" href="{{post.url}}"></a>
-        <time
-            class="folded-paper"
-            datetime="{{post.date | date_to_xmlschema}}"
-            pubdate
-            itemprop="datePublished"
-            content="{{post.date | date_to_xmlschema}}">
-            {{ post.date | date: '%-d <span class="month">%b</span> %y' }}
-        </time>
-        <aside>
-            {% for tag in post.categories %}
-            <span class="tag">{{ tag }}</span>&nbsp;
-            {% endfor %}
-        </aside>
-        <p class="description">{{post.description}}</p>
-    </li >
-    {% endfor %}
+  {% for post in site.posts %}
+  <li class="card article-card" lang="{{post.lang}}">
+    <div class="filler"></div>
+    <a class="title" href="{{post.url}}">{{post.title}}</a>
+    <a class="hover-link" href="{{post.url}}"></a>
+    <time
+      class="folded-paper"
+      datetime="{{post.date | date_to_xmlschema}}"
+      pubdate
+      itemprop="datePublished"
+      content="{{post.date | date_to_xmlschema}}">
+      {{ post.date | date: '%-d <span class="month">%b</span> %y' }}
+    </time>
+    <aside>
+      {% for tag in post.categories %}
+      <span class="tag">{{ tag }}</span>&nbsp;
+      {% endfor %}
+    </aside>
+    <p class="description">{{post.description}}</p>
+  </li >
+  {% endfor %}
 </ul>
 <h2>Talks</h2>
 <ul class="grid">
-    {% assign talks = site.talks | sort: 'date' | reverse %}
-    {% for talk in talks %}
-    <li class="card article-card" lang="{{talk.lang}}">
-        <a class="title" href="{{talk.url | remove: 'index.html'}}">{{talk.title}}</a>
-        <time
-            class="folded-paper"
-            datetime="{{talk.date | date_to_xmlschema}}"
-            pubdate
-            itemprop="datePublished"
-            content="{{talk.date | date_to_xmlschema}}">
-            {{ talk.date | date_to_string }}
-        </time>
-        <aside>
-            {% for tag in talk.categories %}
-            <span class="tag">{{ tag }}</span>&nbsp;
-            {% endfor %}
-        </aside>
-        <p class="description">{{talk.description}}</p>
-    </li >
-    {% endfor %}
+  {% assign talks = site.talks | sort: 'date' | reverse %}
+  {% for talk in talks %}
+  <li class="card article-card" lang="{{talk.lang}}">
+    <a class="title" href="{{talk.url | remove: 'index.html'}}">{{talk.title}}</a>
+    <time
+     class="folded-paper"
+     datetime="{{talk.date | date_to_xmlschema}}"
+     pubdate
+     itemprop="datePublished"
+     content="{{talk.date | date_to_xmlschema}}">
+      {{ talk.date | date_to_string }}
+    </time>
+    <aside>
+      {% for tag in talk.categories %}
+      <span class="tag">{{ tag }}</span>&nbsp;
+      {% endfor %}
+    </aside>
+    <p class="description">{{talk.description}}</p>
+  </li >
+  {% endfor %}
 </ul>
