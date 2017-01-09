@@ -1,0 +1,18 @@
+<li lang="{{include.post.lang}}">
+  <time
+    datetime="{{include.post.date | date_to_xmlschema}}"
+    pubdate
+    itemprop="datePublished"
+    content="{{include.post.date | date_to_xmlschema}}">
+    {{ include.post.date | date: '%-d&nbsp;%b&nbsp;%y' }}
+  </time>
+  &nbsp;
+  <div>
+    <a class="title" title="{{include.post.description}}" href="{{include.post.url}}">{{include.post.title}}</a>
+    <aside>
+      {% for tag in include.post.categories %}
+      <span class="tag">{{ tag }}</span>&nbsp;
+      {% endfor %}
+    </aside>
+  </div>
+</li>

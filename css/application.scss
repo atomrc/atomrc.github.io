@@ -20,13 +20,9 @@ body {
   padding:0;
   margin:0;
   color:#333;
-  background-color: #EEE;
+  background-color: white;
   font-family:Open Sans, Arial;
   font-size: 13pt;
-}
-
-body.article {
-  background-color: white;
 }
 
 a {
@@ -43,19 +39,6 @@ h1 {
   height: 2em;
   width: 2em;
   border-radius: 1em;
-}
-
-.grid {
-  text-align: center;
-  li {
-    text-align: left;
-    display: inline-block;
-    width: 300px;
-    height: 200px;
-    margin: 0.5em;
-    padding: 0.5em;
-    vertical-align: top;
-  }
 }
 
 .share-button {
@@ -114,13 +97,26 @@ h1 {
   font-style: italic;
 }
 
-.hover-link {
-  display: block;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+.home-container {
+    max-width: 50%;
+    margin: auto;
+    h2 {
+        text-align: center;
+    }
+    .aboutme-container {
+      text-align: center;
+      .aboutme {
+        display: inline-block;
+        text-align: left;
+      }
+    }
+    .list {
+      li { display: flex; }
+      time {
+        min-width: 90px;
+        text-align: right;
+      }
+    }
 }
 
 .fixed-header {
@@ -169,27 +165,6 @@ time.folded-paper {
   right: -1em;
   font-size: 11pt;
   color: white;
-}
-.article-card {
-  @include transition(all, 0.5s);
-  &:hover {
-    box-shadow: 0.2em 0.2em 4px #AAA;
-    @include transform(translate(-0.2em, -0.2em));
-  }
-  background-color: white;
-  position: relative;
-  p.description {
-    font-size: 11pt;
-  }
-
-  time.folded-paper {
-    top: 1em;
-  }
-  .filler {
-    height: 40px;
-    width: 45px;
-    float: right;
-  }
 }
 
 article {
