@@ -15,3 +15,7 @@ Monday 9 Jan 2017
 
 - redesigned the look and feel of my blog. I was tired of the previous version of my blog so I simplified it a lot and did some performances optimizations (split css styles between home page and the article page, remove font-awesome that I was using for 2 logos on the whole blog)
 - started the candle experiment's blogpost
+
+Thrusday 10 Jan 2017
+
+- I discovered the homepage of my blog was aweful on a mobile. So I added a few @media rules
