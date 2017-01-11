@@ -19,3 +19,7 @@ Monday 9 Jan 2017
 Thrusday 10 Jan 2017
 
 - I discovered the homepage of my blog was aweful on a mobile. So I added a few @media rules
+
+Wednesday 11 Jan 2017
+
+- wrote the first slides for the class I am going to teach at the end of the month (I'd say 25% of the content is done)
