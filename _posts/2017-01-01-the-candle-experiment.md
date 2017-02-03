@@ -27,3 +27,24 @@ Wednesday 11 Jan 2017
 Thrusday 12 Jan 2017
 
 - tryied to rewrite the api I designed on monday with hapi with cycle.js. It doesn't seem really trivial. I need to find a way to isolate everything by default and I am still not sure what would be the right solution for routing. I need a little more time to work on this ...
+
+Saturday 14 Jan 2017
+
+- Continued the slides for the lecture on JavaScript
+
+Sunday 15 Jan 2017
+
+- minors updates and improvements of the absurde seance's website
+- finished the section on the DOM API and started section on React (Virtual DOM, JSX, Components)
+
+From 16 Jan to 27
+
+- worked on the Absurde Seance website
+- continue the slides for my lecture
+- completely reorganized the NantesJS website
+
+From 27 to 3 Feb
+
+- Finished the practical work for my students (deployed on now and db hosted on aws)
+- polished the slides for my lecture
+- some quick improvements of the Absurde Seance's website
