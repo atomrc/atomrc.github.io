@@ -11,6 +11,153 @@ extra: "Devoxx 2017"
     <title>Les Interfaces Utilisateur comme Fonctions Pures du Temps</title>
     <meta name="robots" content="noindex">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans:300);
+
+      body {
+        font-family: Open Sans, Arial, sans serif;
+        color: #555;
+      }
+
+      img {
+        max-width: 90%;
+        max-height: 90%;
+      }
+      .remark-slide-content {
+        background: white;
+        padding: 0 3em;
+      }
+      .remark-container {
+        background-color: #EEE;
+      }
+      .remark-code {
+        padding: 0 10em;
+      }
+      .remark-slide-scaler {
+        box-shadow: none;
+      }
+
+      .center {
+        text-align: center;
+      }
+
+      h1, h2, h3 {
+        margin: 1em;
+        margin-bottom: 1em;
+        text-align: center;
+        font-weight: lighter;
+      }
+
+      h1 {
+        color: #F06;
+      }
+
+      a { color: inherit; }
+
+      svg {
+        max-width: 90%;
+        max-height: 520px;
+      }
+
+      li {
+        padding: 0.5em;
+      }
+
+      .naked .foot, .naked .remark-slide-number {
+        display: none;
+      }
+
+      .foot {
+        position: absolute;
+        bottom: 1em;
+        left: 1em;
+      }
+
+      .remark-inline-code {
+        background-color: #EEE;
+        padding: 2px;
+        border-radius: 0.2em;
+      }
+      .centered-code pre{
+        flex: 1;
+        margin: auto;
+      }
+      .centered-code code.hljs {
+        padding: 3em;
+      }
+
+      .box {
+        margin: auto;
+        color: white;
+        background-color: #3e3e3e;
+        border-radius: 5px;
+        padding: 0.5em;
+      }
+
+      .animate-from-bottom {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        transform: translateY(100%);
+        transition: transform 1s;
+      }
+      .middled {
+        margin: auto;
+      }
+      .entered .animate-from-bottom {
+        transform: translateY(0);
+      }
+
+      img[alt="thomas belin"] {
+        border-radius: 100px;
+        border: solid 5px white;
+      }
+      blockquote {
+        text-align: center;
+        background: white;
+        color: #444;
+        border-radius: 5px;
+        padding: 0.5em 1em;
+        font-size: 2em;
+        position: relative;
+        border: 1px solid #CCC;
+      }
+      blockquote::before, blockquote::after {
+        position: absolute;
+        content: "✶";
+      }
+      blockquote::before {
+        top: 0.25em;
+        left: 0.25em;
+      }
+      blockquote::after {
+        bottom: 0.25em;
+        right: 0.25em;
+      }
+
+      svg .hidden {
+        opacity: 0;
+      }
+      .hljs-github .hljs-comment {
+          color: #0040f8;
+      }
+      .remark-code-line-highlighted {
+          background-color: rgba(0, 237, 255, 0.5);
+      }
+
+      .huge-code .remark-code {
+        font-size: 2em;
+      }
+      .check {
+        font-size: 3em;
+        color: green;
+      }
+
+    </style>
   </head>
   <body class="dark">
     <textarea id="source">
@@ -131,26 +278,26 @@ Visiblement, l'application peut alterer son temps
 
 ```javascript
 function run() {
-  // do stuff
-  // do stuff
+  // code
+  // code
   if (!paused) {
-    // do stuff
-    // do stuff
-    // do stuff
-    // do stuff
-    // do stuff
-    // do stuff
-    // do stuff
+    // code
+    // code
+    // code
+    // code
+    // code
+    // code
+    // code
     requestAnimationFrame(run)
-    // do stuff
-    // do stuff
-    // do stuff
-    // do stuff
+    // code
+    // code
+    // code
+    // code
   }
-  // do stuff
-  // do stuff
-  // do stuff
-  // do stuff
+  // code
+  // code
+  // code
+  // code
 }
 ```
 
@@ -225,6 +372,15 @@ function main() {
 ## Toujours pas mieux !!
 
 ---
+class: center
+name: beforecycle
+# Temps embarqué
+
+<div>
+  {% include devoxx/before-cycle.svg %}
+</div>
+
+---
 class: middle
 # Et puis il y a Cycle.js
 
@@ -242,7 +398,6 @@ function main({ time }) {
   }
 }
 
-//TO REMOVE ?
 run(main, {
   DOM: makeDOMDriver("#main"),
   time: timeDriver
@@ -250,14 +405,13 @@ run(main, {
 ```
 
 ---
-# Avant
+class: center
+name: aftercycle
+# Temps injecté
 
-TODO animation temps qui tourne dans l'application même (qui ne vient pas de l'exterieur
-
----
-# Maintenant
-
-TODO animation temps qui passe dans l'application
+<div>
+  {% include devoxx/after-cycle.svg %}
+</div>
 
 ---
 class: middle
@@ -282,8 +436,8 @@ layout: true
 > Une fonction du temps
 
 ```javascript
-function raf(time) {
-  return time % 16 === 0;
+function raf(timestamp) {
+  return timestamp % 16 === 0;
 }
 ```
 ---
@@ -308,32 +462,41 @@ class: middle
 # Tout est signal ? Vraiment ?
 
 ---
+class: center, huge-code
 # Messages Hardware ?
 
 ```
 raf ---x---x---x---x---x---x--->
+
 geo ---48.8;2.2---48.8;2.3----->
 ```
 
-check
+--
+.check[✓]
 
 ---
+class: center, huge-code
 # Réponse serveur ?
 
 ```
 server ----200-----404--------->
 ```
 
-check
+--
+.check[✓]
 
 ---
+class: center, huge-code
 # Actions utilisateur ?
 
 ```
 keyup ---------x---------x----->
+
+click ----x----------x--------->
 ```
 
-check
+--
+.check[✓]
 
 ---
 # Plutôt que de se débarrasser du temps le plus vite possible ...
@@ -442,18 +605,12 @@ class: middle
 # Implémentons la pause
 
 ---
-# La Pause
+class: middle
+name: pausev1
 
-```
-raf
- |
- x
- |
- x
- |
- v
-DOM
-```
+<div style="float: right">
+  {% include devoxx/pause-v1.svg %}
+</div>
 
 ```javascript
 function main({ time }) {
@@ -469,18 +626,13 @@ function main({ time }) {
 ```
 
 ---
-# La Pause
+name: pausev2
+class: middle
 
-```
-raf paused
- |    0
- x    0
- |    0
- x    1
- |    1
- v    v
-DOM
-```
+<div style="float: right">
+  {% include devoxx/pause-v2.svg %}
+</div>
+
 
 ```javascript
 function main({ time, DOM }) {
@@ -502,20 +654,12 @@ function main({ time, DOM }) {
 ```
 
 ---
-# La Pause
+name: pausev3
+class: middle
 
-```
-raf paused
- |    0
- x    0
- |    0
- x    1
- \   /
-  \ /
-   |
-   v
-  DOM
-```
+<div style="float: right">
+  {% include devoxx/pause-v3.svg %}
+</div>
 
 ```javascript
 function main({ time, DOM }) {
@@ -540,33 +684,45 @@ function main({ time, DOM }) {
 
 ---
 name:reactarch
+class: center
 # Architecture React
 
-{% include devoxx/reactarch.svg %}
+<div>
+  {% include devoxx/reactarch.svg %}
+</div>
 
 --
 .animate-from-bottom[.middled[`app = function ()`]]
 
 ---
 name:reduxarch
+class: center
 # Architecture React + Redux
 
-{% include devoxx/reduxarch.svg %}
+<div>
+  {% include devoxx/reduxarch.svg %}
+</div>
 
 --
 .animate-from-bottom[.middled[`app = function (state)`]]
 
 ---
 name:cyclearch
+class: center
 # Architecture Cycle.js
 
-{% include devoxx/cyclearch.svg %}
+<div>
+  {% include devoxx/cyclearch.svg %}
+</div>
 
 ---
 name:cyclearchext
+class: center
 # Architecture Cycle.js (fixed)
 
-{% include devoxx/cyclearch-ext.svg %}
+<div>
+  {% include devoxx/cyclearch-ext.svg %}
+</div>
 
 --
 .animate-from-bottom[.middled[`app = function (signals)`]]
@@ -635,6 +791,124 @@ function vibrate(elm) {
 }
 
 var animations = {
+  beforecycle: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var minTimeline = new TimelineMax();
+    var hourTimeline = new TimelineMax();
+    var eventTimeline = new TimelineMax();
+
+    var min = slide.querySelectorAll(".time-min");
+    var hour = slide.querySelectorAll(".time-hour");
+    var ev = slide.querySelectorAll(".event");
+    var sideef = slide.querySelectorAll(".side-effect");
+
+    minTimeline
+      .to(min, 1, { rotation: 360, transformOrigin: "left bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    hourTimeline
+      .to(hour, 10, { rotation: 360, transformOrigin: "right bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    eventTimeline
+      .to(ev, 1, { x: 75, opacity: 1 })
+      .to(ev, .3, { opacity: 0, ease: Power0.easeNone })
+      .to(sideef, 1, { x: 75 })
+      .repeatDelay(2)
+      .repeat(-1)
+
+      return timeline;
+  }),
+
+  aftercycle: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var minTimeline = new TimelineMax();
+    var hourTimeline = new TimelineMax();
+    var eventTimeline = new TimelineMax();
+
+    var min = slide.querySelectorAll(".time-min");
+    var hour = slide.querySelectorAll(".time-hour");
+    var ev = slide.querySelectorAll(".event");
+    var sideef = slide.querySelectorAll(".side-effect");
+
+    minTimeline
+      .to(min, 1, { rotation: 360, transformOrigin: "left bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    hourTimeline
+      .to(hour, 10, { rotation: 360, transformOrigin: "right bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    eventTimeline
+      .to(ev, 1, { x: 150, opacity: 1 })
+      .to(ev, .3, { opacity: 0, ease: Power0.easeNone })
+      .to(sideef, 1, { x: 75 })
+      .repeatDelay(2)
+      .repeat(-1)
+
+      return timeline;
+  }),
+
+  pausev1: once(function init(slide) {
+    var timeline = new TimelineMax();
+
+    var raf = slide.querySelectorAll(".raf-stream");
+
+    timeline
+      .to(raf, 10, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .repeat(-1)
+
+    return timeline;
+  }),
+
+  pausev2: once(function init(slide) {
+    var timeline = new TimelineMax();
+
+    var raf = slide.querySelectorAll(".raf-stream");
+    var dom = slide.querySelectorAll(".dom-stream");
+
+    var rafTl = new TimelineMax();
+
+    domTl = new TimelineMax();
+
+    domTl
+      .to(dom, 3, { strokeDashoffset:-50, ease: Power0.easeNone })
+      .repeat(-1)
+
+    rafTl
+      .to(raf, 10, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .repeat(-1)
+
+    return timeline;
+  }),
+
+  pausev3: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var rafTl = new TimelineMax();
+    var domTl = new TimelineMax();
+    var outTl = new TimelineMax();
+
+    var raf = slide.querySelectorAll(".raf-stream");
+    var dom = slide.querySelectorAll(".dom-stream");
+    var out = slide.querySelectorAll(".out-stream");
+
+    domTl
+      .to(dom, 3, { strokeDashoffset:-50, ease: Power0.easeNone })
+      .repeat(-1)
+
+    outTl
+      .to(out, 3, { strokeDashoffset:-50, ease: Power0.easeNone })
+      .to(out, 0, { opacity: 0 })
+      .repeatDelay(3)
+      .repeat(-1)
+
+    rafTl
+      .to(raf, 10, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .repeat(-1)
+
+    return timeline;
+  }),
+
   reactarch: once(function init(slide) {
     var timeline = new TimelineMax();
 
@@ -788,23 +1062,35 @@ var animations = {
 };
     </script>
     <script>
-//init remarkjs
-var slideshow = remark.create({
-  highlightStyle: 'monokai',
-  highlightLines: true,
-  ratio: "16:9"
-});
-slideshow.on("afterShowSlide", function (slide) {
-  var enteredSlide = document.querySelector(".remark-slide-container.entered");
-  if (enteredSlide) {
-    enteredSlide.classList.remove("entered");
-  }
-  window.setTimeout(function () {
-    var slideElm = document.querySelector(".remark-visible");
-    slideElm.classList.add("entered");
-    return animations[slide.properties.name] ? animations[slide.properties.name](slideElm) : null;
-  }, 100);
-});
+      //init remarkjs
+      var timeout = window.setTimeout;
+      var slideshow = remark.create({
+        highlightStyle: 'github',
+        highlightLines: true,
+        ratio: "16:9"
+      });
+
+      slideshow.on("beforeHideSlide", function (slide) {
+        var currentSlide = document.querySelector(".remark-slide-container.entered");
+        currentSlide.classList.remove("entered");
+      });
+
+      slideshow.on("afterShowSlide", function (slide) {
+        timeout(launchAnimations, 50, slide);
+      });
+
+      timeout(
+        launchAnimations,
+        50,
+        slideshow.getSlides()[slideshow.getCurrentSlideIndex()]
+      );
+
+      function launchAnimations(slide) {
+          var element = document.querySelector(".remark-visible");
+          element.classList.add("entered");
+          return animations[slide.properties.name] ? animations[slide.properties.name](element) : null;
+      }
+
     </script>
 
     <script>
@@ -816,141 +1102,5 @@ ga('create', 'UA-34218773-1', { siteSpeedSampleRate: 100 });
 ga('send', 'pageview');
     </script>
 
-    <style type="text/css">
-      @import url(https://fonts.googleapis.com/css?family=Open+Sans:300);
-
-      body {
-        font-family: Open Sans, Arial, sans serif;
-        color: #555;
-      }
-
-      img {
-        max-width: 90%;
-        max-height: 90%;
-      }
-      .remark-slide-content {
-        background: white;
-        padding: 0 3em;
-      }
-      .remark-container {
-        background-color: #EEE;
-      }
-      .remark-code {
-        margin: 0 10em;
-      }
-      .remark-slide-scaler {
-        box-shadow: none;
-      }
-
-      .center {
-        text-align: center;
-      }
-
-      h1, h2, h3 {
-        margin: 1em;
-        margin-bottom: 1em;
-        text-align: center;
-        font-weight: lighter;
-      }
-
-      h1 {
-        color: #F06;
-      }
-
-      a { color: inherit; }
-
-      svg {
-        max-width: 90%;
-        max-height: 520px;
-      }
-
-      li {
-        padding: 0.5em;
-      }
-
-      .naked .foot, .naked .remark-slide-number {
-        display: none;
-      }
-
-      .foot {
-        position: absolute;
-        bottom: 1em;
-        left: 1em;
-      }
-
-      .remark-inline-code {
-        background-color: #EEE;
-        padding: 2px;
-        border-radius: 0.2em;
-      }
-      .centered-code pre{
-        flex: 1;
-        margin: auto;
-      }
-      .centered-code code.hljs {
-        padding: 3em;
-      }
-
-      .box {
-        margin: auto;
-        color: white;
-        background-color: #3e3e3e;
-        border-radius: 5px;
-        padding: 0.5em;
-      }
-
-      .animate-from-bottom {
-        position: absolute;
-        top: 0;
-        left: 0;
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        width: 100%;
-        transform: translateY(100%);
-        transition: transform 1s;
-      }
-      .middled {
-        margin: auto;
-      }
-      .entered .animate-from-bottom {
-        transform: translateY(0);
-      }
-
-      img[alt="thomas belin"] {
-        border-radius: 100px;
-        border: solid 5px white;
-      }
-      blockquote {
-        text-align: center;
-        background: white;
-        color: #444;
-        border-radius: 5px;
-        padding: 0.5em 1em;
-        font-size: 2em;
-        position: relative;
-        border: 1px solid #CCC;
-      }
-      blockquote::before, blockquote::after {
-        position: absolute;
-        content: "✶";
-      }
-      blockquote::before {
-        top: 0.25em;
-        left: 0.25em;
-      }
-      blockquote::after {
-        bottom: 0.25em;
-        right: 0.25em;
-      }
-
-      svg .hidden {
-        opacity: 0;
-      }
-      .hljs-monokai .hljs-comment {
-          color: #ffd800;
-      }
-
-    </style>
   </body>
 </html>
