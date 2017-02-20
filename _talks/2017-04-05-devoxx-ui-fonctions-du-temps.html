@@ -108,6 +108,15 @@ extra: "Devoxx 2017"
       .middled {
         margin: auto;
       }
+      .banner {
+        font-size: 3em;
+        border-radius: 5px;
+        background-color: #DDD;
+        color: #666;
+        font-weight: bold;
+        padding: 1em;
+        box-shadow: 3px 3px 6px grey;
+      }
       .entered .animate-from-bottom {
         transform: translateY(0);
       }
@@ -217,11 +226,8 @@ function main() {
 }
 ```
 
----
-## 3 instructions, 3 effets de bord !!
-
 --
-### Bravo Thomas !
+## 3 instructions, 3 effets de bord !!
 
 --
 ### Mais ce n'est pas ce dont je veux vous parler
@@ -327,7 +333,7 @@ function main() {
 ```
 
 --
-## Pas mieux !!
+.animate-from-bottom[.middled.banner[Pas mieux !!]]
 
 ---
 # `main.react.js`
@@ -348,7 +354,7 @@ function main() {
 ```
 
 --
-## Pas mieux !!
+.animate-from-bottom[.middled.banner[Pas mieux !!]]
 
 ---
 # `main.vue.js`
@@ -369,7 +375,7 @@ function main() {
 ```
 
 --
-## Toujours pas mieux !!
+.animate-from-bottom[.middled.banner[Toujours pas mieux !!]]
 
 ---
 class: center
@@ -385,6 +391,7 @@ class: middle
 # Et puis il y a Cycle.js
 
 ---
+layout: true
 # `main.cycle.js`
 
 ```javascript
@@ -397,7 +404,12 @@ function main({ time }) {
       .map(render)
   }
 }
+```
 
+---
+
+---
+```javascript
 run(main, {
   DOM: makeDOMDriver("#main"),
   time: timeDriver
@@ -405,6 +417,7 @@ run(main, {
 ```
 
 ---
+layout: false
 class: center
 name: aftercycle
 # Temps injecté
@@ -417,8 +430,9 @@ name: aftercycle
 class: middle
 # Nous subissons le temps ...
 
---
-## Pourquoi pas nos applications ?
+---
+class: middle
+# ... Pourquoi pas nos applications ?
 
 ---
 layout: true
@@ -683,6 +697,93 @@ function main({ time, DOM }) {
 ```
 
 ---
+class: middle
+# Testing ?
+
+---
+# Testing
+
+Notre application :
+- ne dépend que des signaux en entrée ;
+- retourne les effets de bords à exécuter ;
+- n'exécute aucun effet de bord elle même.
+
+--
+Dit autrement, on a à faire à des fonctions pures :)
+
+---
+# Testing
+
+## Ca devrait être facile à tester, non ?
+
+---
+# Testing
+
+## Oh que oui :)
+
+---
+# Testing
+
+```javascript
+const sideEffects = main(sources)
+```
+
+---
+# Testing
+
+Test 1 : L'application sort bien du `DOM` quand on lui envoie des `animationFrames` ?
+
+```javascript
+const sources = {
+  time: { animationFrames: xs.of(1) },
+  DOM: xs.empty()
+}
+
+const { DOM } = main(sources)
+
+DOM
+  .addListener({
+    next: function (vdom) {
+      // on peut faire des asserts sur le vdom rendu
+    }
+  })
+```
+
+---
+# Testing
+
+Test 2 : L'application de rend pas de DOM quand elle est en pause
+
+```javascript
+const time = mockTimeSource()
+
+const raf$   = time.diagram("1-1|")
+const pause$ = time.diagram("-x-|")
+
+const domSource = mockDOMSource({
+  "document": {
+    keyup: pause$
+  }
+})
+
+const sources = {
+  time: { animationFrames: raf$ },
+  DOM: domSource
+}
+
+const { DOM } = main(sources);
+
+DOM
+  .fold(counter => counter + 1, 0)
+  .last()
+  .addListener({
+    next: function (counter) {
+      // on regarde que le counter n'a pas été incrémenté qu'une seule fois
+    }
+  })
+```
+
+---
 name:reactarch
 class: center
 # Architecture React
@@ -692,7 +793,7 @@ class: center
 </div>
 
 --
-.animate-from-bottom[.middled[`app = function ()`]]
+.animate-from-bottom[.middled.banner[`app = function ()`]]
 
 ---
 name:reduxarch
@@ -704,7 +805,7 @@ class: center
 </div>
 
 --
-.animate-from-bottom[.middled[`app = function (state)`]]
+.animate-from-bottom[.middled.banner[`app = function (state)`]]
 
 ---
 name:cyclearch
@@ -725,27 +826,44 @@ class: center
 </div>
 
 --
-.animate-from-bottom[.middled[`app = function (signals)`]]
+.animate-from-bottom[.middled.banner[`app = function (signals)`]]
 
 ---
+layout: true
+class: center, huge-code
 # Cycle.js
 
+---
 ```javascript
-app = function (signals)
+sideEffects = application(signals)
 ```
 
 ---
-# Cycle.js
-
 ```javascript
-sideEffects = function (signals)
+sinks = application(sources)
 ```
 
 ---
+```javascript
+sinks = application(time)
+```
+
+---
+layout: false
 # Cycle.js
 
 ```javascript
-sideEffects = function (time)
+function main(sources) {
+            // ^ les signaux en entrée
+
+  /*...*/
+
+  return {
+    DOM: DOMOutput, // les effets que je veux dans le DOM
+    HTTP: HTTPOutput, // les requêtes ajax que je veux faire
+    /*...*/
+  }
+}
 ```
 
     </textarea>
