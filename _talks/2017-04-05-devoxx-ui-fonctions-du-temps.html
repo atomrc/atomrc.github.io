@@ -148,9 +148,6 @@ extra: "Devoxx 2017"
         right: 0.25em;
       }
 
-      svg .hidden {
-        opacity: 0;
-      }
       .hljs-github .hljs-comment {
           color: #0040f8;
       }
@@ -164,6 +161,33 @@ extra: "Devoxx 2017"
       .check {
         font-size: 3em;
         color: green;
+      }
+
+      svg .hidden {
+        opacity: 0;
+      }
+      svg .stream {
+        stroke-width: 10 !important;
+        stroke-linecap: round !important;
+        stroke-dasharray: 0px, 15 !important;
+      }
+
+      svg .stream.lf {
+        stroke-dasharray: 0px, 50 !important;
+      }
+
+      svg .stream.vlf {
+        stroke-dasharray: 0px, 200 !important;
+      }
+
+      #slide-test2 svg .raf-stream {
+        stroke-dasharray: 0px, 120px !important;
+      }
+      #slide-test2 svg .dom-stream {
+        stroke-dasharray: 0px, 120px !important;
+      }
+      #slide-test2 svg .out-stream {
+        stroke-dasharray: 0px, 120px !important;
       }
 
     </style>
@@ -708,8 +732,17 @@ Notre application :
 - retourne les effets de bords à exécuter ;
 - n'exécute aucun effet de bord elle même.
 
---
-Dit autrement, on a à faire à des fonctions pures :)
+---
+# Testing
+
+```javascript
+const sideEffects = main(sources)
+```
+
+---
+# Testing
+
+## Autrement dit : on a à faire à des fonctions pures :)
 
 ---
 # Testing
@@ -724,18 +757,23 @@ Dit autrement, on a à faire à des fonctions pures :)
 ---
 # Testing
 
-```javascript
-const sideEffects = main(sources)
-```
+## Test 1 : on a du vDOM quand on envoie des `animationFrames`
+
+---
+name: test1
+class: center
+# Testing
+
+<div>
+  {% include devoxx/test-1.svg %}
+</div>
 
 ---
 # Testing
 
-Test 1 : L'application sort bien du `DOM` quand on lui envoie des `animationFrames` ?
-
 ```javascript
 const sources = {
-  time: { animationFrames: xs.of(1) },
+  time: { animationFrames: () => xs.of(1) },
   DOM: xs.empty()
 }
 
@@ -749,6 +787,14 @@ DOM
   })
 ```
 
+---
+name: test2
+class: center
+# Testing
+
+<div>
+  {% include devoxx/test-2.svg %}
+</div>
 ---
 # Testing
 
@@ -917,8 +963,7 @@ var animations = {
 
     var min = slide.querySelectorAll(".time-min");
     var hour = slide.querySelectorAll(".time-hour");
-    var ev = slide.querySelectorAll(".event");
-    var sideef = slide.querySelectorAll(".side-effect");
+    var ev = slide.querySelectorAll(".stream");
 
     minTimeline
       .to(min, 1, { rotation: 360, transformOrigin: "left bottom", ease: Power0.easeNone })
@@ -929,10 +974,7 @@ var animations = {
       .repeat(-1)
 
     eventTimeline
-      .to(ev, 1, { x: 75, opacity: 1 })
-      .to(ev, .3, { opacity: 0, ease: Power0.easeNone })
-      .to(sideef, 1, { x: 75 })
-      .repeatDelay(2)
+      .to(ev, 10, { strokeDashoffset:-200, ease: Power0.easeNone })
       .repeat(-1)
 
       return timeline;
@@ -946,8 +988,7 @@ var animations = {
 
     var min = slide.querySelectorAll(".time-min");
     var hour = slide.querySelectorAll(".time-hour");
-    var ev = slide.querySelectorAll(".event");
-    var sideef = slide.querySelectorAll(".side-effect");
+    var ev = slide.querySelectorAll(".stream");
 
     minTimeline
       .to(min, 1, { rotation: 360, transformOrigin: "left bottom", ease: Power0.easeNone })
@@ -958,10 +999,7 @@ var animations = {
       .repeat(-1)
 
     eventTimeline
-      .to(ev, 1, { x: 150, opacity: 1 })
-      .to(ev, .3, { opacity: 0, ease: Power0.easeNone })
-      .to(sideef, 1, { x: 75 })
-      .repeatDelay(2)
+      .to(ev, 10, { strokeDashoffset:-200, ease: Power0.easeNone })
       .repeat(-1)
 
       return timeline;
@@ -1011,7 +1049,7 @@ var animations = {
     var out = slide.querySelectorAll(".out-stream");
 
     domTl
-      .to(dom, 3, { strokeDashoffset:-50, ease: Power0.easeNone })
+      .to(dom, 3, { strokeDashoffset:-36, ease: Power0.easeNone })
       .repeat(-1)
 
     outTl
@@ -1025,6 +1063,42 @@ var animations = {
       .repeat(-1)
 
     return timeline;
+  }),
+
+  test1: once(function init(slide) {
+    var timeline = new TimelineMax();
+
+    var ev = slide.querySelectorAll(".stream");
+    var check = slide.querySelectorAll(".check");
+
+    timeline
+      .to(ev, 2, { strokeDashoffset:-170, ease: Power0.easeNone })
+      .to(check, 1, { opacity: 1 })
+      .repeat(-1)
+
+      return timeline;
+  }),
+
+  test2: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var rafTl = new TimelineMax();
+    var domTl = new TimelineMax();
+
+    var raf = slide.querySelectorAll(".raf-stream");
+    var dom = slide.querySelectorAll(".dom-stream");
+    var out = slide.querySelectorAll(".out-stream");
+    var check = slide.querySelectorAll(".check");
+
+    timeline
+      .to(raf, 2, { strokeDashoffset:-120, ease: Power0.easeNone })
+      .to(out, 0, { opacity: 1 })
+      .to(out, 1, { strokeDashoffset:-60, ease: Power0.easeNone })
+      .to(dom, 2, { strokeDashoffset:-120, ease: Power0.easeNone })
+      .to(raf, 2, { strokeDashoffset:-240, ease: Power0.easeNone })
+      .to(check, 1, { opacity: 1 })
+      .repeat(-1)
+
+      return timeline;
   }),
 
   reactarch: once(function init(slide) {
