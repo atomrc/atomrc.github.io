@@ -19,6 +19,16 @@ extra: "Devoxx 2017"
         color: #555;
       }
 
+      .remark-slide-content::after {
+          content: "@atomrc | Devoxx 2017";
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          padding: 1em;
+          font-size: 1em;
+          color: #F06;
+      }
+
       img {
         max-width: 90%;
         max-height: 90%;
@@ -50,6 +60,12 @@ extra: "Devoxx 2017"
 
       h1 {
         color: #F06;
+      }
+      .semi-condensed h1 {
+          margin: 0.5em;
+      }
+      .condensed h1 {
+          margin: 0.3em;
       }
 
       a { color: inherit; }
@@ -169,17 +185,20 @@ extra: "Devoxx 2017"
       svg .stream {
         stroke-width: 10 !important;
         stroke-linecap: round !important;
-        stroke-dasharray: 0px, 15 !important;
+        stroke-dasharray: 0px, 20 !important;
       }
 
       svg .stream.lf {
-        stroke-dasharray: 0px, 50 !important;
+        stroke-dasharray: 0px, 40 !important;
       }
 
       svg .stream.vlf {
-        stroke-dasharray: 0px, 200 !important;
+        stroke-dasharray: 0px, 160 !important;
       }
 
+      #slide-test1 svg .stream {
+        stroke-dasharray: 0px, 200 !important;
+      }
       #slide-test2 svg .raf-stream {
         stroke-dasharray: 0px, 120px !important;
       }
@@ -188,6 +207,14 @@ extra: "Devoxx 2017"
       }
       #slide-test2 svg .out-stream {
         stroke-dasharray: 0px, 120px !important;
+      }
+
+      #slide-pausev3 svg .raf-stream,
+      #slide-pausev3 svg .out-stream {
+        stroke-dasharray: 0px, 15px !important;
+      }
+      #slide-pausev3 svg .dom-stream {
+        stroke-dasharray: 0px, 50px !important;
       }
 
     </style>
@@ -308,8 +335,6 @@ Visiblement, l'application peut alterer son temps
 
 ```javascript
 function run() {
-  // code
-  // code
   if (!paused) {
     // code
     // code
@@ -323,11 +348,9 @@ function run() {
     // code
     // code
     // code
+    // code
+    // code
   }
-  // code
-  // code
-  // code
-  // code
 }
 ```
 
@@ -757,11 +780,11 @@ const sideEffects = main(sources)
 ---
 # Testing
 
-## Test 1 : on a du vDOM quand on envoie des `animationFrames`
+## Test 1 : on a du `vDOM` quand on envoie des `animationFrames`
 
 ---
 name: test1
-class: center
+class: center, semi-condensed
 # Testing
 
 <div>
@@ -783,32 +806,40 @@ DOM
   .addListener({
     next: function (vdom) {
       // on peut faire des asserts sur le vdom rendu
-    }
+    },
+    complete: done
   })
 ```
 
 ---
+# Testing
+
+## Test 2 : L'application de rend pas de `vDOM` quand elle est en pause
+
+---
 name: test2
-class: center
+class: center, semi-condensed
 # Testing
 
 <div>
   {% include devoxx/test-2.svg %}
 </div>
+
 ---
+class: condensed
+
 # Testing
 
-Test 2 : L'application de rend pas de DOM quand elle est en pause
-
 ```javascript
-const time = mockTimeSource()
+const raf$   = time.diagram("-1|")
+const pause$ = time.diagram("1-|")
+```
 
-const raf$   = time.diagram("1-1|")
-const pause$ = time.diagram("-x-|")
-
+--
+```javascript
 const domSource = mockDOMSource({
   "document": {
-    keyup: pause$
+    keyup: pause$.map(toSpaceKeyup)
   }
 })
 
@@ -816,17 +847,19 @@ const sources = {
   time: { animationFrames: raf$ },
   DOM: domSource
 }
+```
 
+--
+
+```javascript
 const { DOM } = main(sources);
 
-DOM
-  .fold(counter => counter + 1, 0)
-  .last()
-  .addListener({
-    next: function (counter) {
-      // on regarde que le counter n'a pas été incrémenté qu'une seule fois
-    }
-  })
+DOM.addListener({
+  next: function (vdom) {
+    // erreur on ne doit rien emettre
+  },
+  complete: done
+})
 ```
 
 ---
@@ -933,9 +966,7 @@ function functionAnimation(elm) {
   var timeline = new TimelineMax();
 
   timeline
-    .to(elm, 0.1, { opacity: 1 })
-    .to(elm, 0.75, { rotation: "+=360", transformOrigin: "center center" })
-    .to(elm, 0.1, { opacity: 0 })
+    .to(elm, 1, { rotation: "-=360", transformOrigin: "center center"})
 
     return timeline;
 }
@@ -953,6 +984,12 @@ function vibrate(elm) {
 
     return timeline;
 }
+
+var streamConf = {
+  nf: 20,
+  lf: 40,
+  vlf: 160
+};
 
 var animations = {
   beforecycle: once(function init(slide) {
@@ -974,7 +1011,7 @@ var animations = {
       .repeat(-1)
 
     eventTimeline
-      .to(ev, 10, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .to(ev, 1, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
       .repeat(-1)
 
       return timeline;
@@ -999,7 +1036,7 @@ var animations = {
       .repeat(-1)
 
     eventTimeline
-      .to(ev, 10, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .to(ev, 1, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
       .repeat(-1)
 
       return timeline;
@@ -1011,7 +1048,7 @@ var animations = {
     var raf = slide.querySelectorAll(".raf-stream");
 
     timeline
-      .to(raf, 10, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .to(raf, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
       .repeat(-1)
 
     return timeline;
@@ -1028,11 +1065,11 @@ var animations = {
     domTl = new TimelineMax();
 
     domTl
-      .to(dom, 3, { strokeDashoffset:-50, ease: Power0.easeNone })
+      .to(dom, 1, { strokeDashoffset:-streamConf.lf, ease: Power0.easeNone })
       .repeat(-1)
 
     rafTl
-      .to(raf, 10, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .to(raf, .5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
       .repeat(-1)
 
     return timeline;
@@ -1049,17 +1086,17 @@ var animations = {
     var out = slide.querySelectorAll(".out-stream");
 
     domTl
-      .to(dom, 3, { strokeDashoffset:-36, ease: Power0.easeNone })
+      .to(dom, 1.5, { strokeDashoffset:-36, ease: Power0.easeNone })
       .repeat(-1)
 
     outTl
-      .to(out, 3, { strokeDashoffset:-50, ease: Power0.easeNone })
+      .to(out, 1.5, { strokeDashoffset:-50, ease: Power0.easeNone })
       .to(out, 0, { opacity: 0 })
-      .repeatDelay(3)
+      .repeatDelay(1.5)
       .repeat(-1)
 
     rafTl
-      .to(raf, 10, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .to(raf, 5, { strokeDashoffset:-200, ease: Power0.easeNone })
       .repeat(-1)
 
     return timeline;
@@ -1086,15 +1123,11 @@ var animations = {
 
     var raf = slide.querySelectorAll(".raf-stream");
     var dom = slide.querySelectorAll(".dom-stream");
-    var out = slide.querySelectorAll(".out-stream");
     var check = slide.querySelectorAll(".check");
 
     timeline
-      .to(raf, 2, { strokeDashoffset:-120, ease: Power0.easeNone })
-      .to(out, 0, { opacity: 1 })
-      .to(out, 1, { strokeDashoffset:-60, ease: Power0.easeNone })
-      .to(dom, 2, { strokeDashoffset:-120, ease: Power0.easeNone })
-      .to(raf, 2, { strokeDashoffset:-240, ease: Power0.easeNone })
+      .to(dom, 1, { strokeDashoffset:-120, ease: Power0.easeNone })
+      .to(raf, 1, { strokeDashoffset:-120, ease: Power0.easeNone })
       .to(check, 1, { opacity: 1 })
       .repeat(-1)
 
@@ -1104,27 +1137,10 @@ var animations = {
   reactarch: once(function init(slide) {
     var timeline = new TimelineMax();
 
-    var e1 = slide.querySelectorAll(".event-1");
-    var e2 = slide.querySelectorAll(".event-2");
-    var out = slide.querySelectorAll(".output-vdom");
+    var stream = slide.querySelectorAll(".stream");
 
     timeline
-      .to(e1, 0.3, { opacity: 1 })
-      .add(vibrate(e1))
-      .to(e1, 0.3, { opacity: 0 })
-
-      .to(out, 2, { x: 75 })
-      .to(out, .3, { opacity: 0 })
-      .to(out, 0, { x: 0 })
-
-      .to(e2, 0.3, { opacity: 1 })
-      .to(e2, 1, { y: -40 })
-
-      .to(out, 0, { opacity: 1 })
-      .to(out, 2, { x: 75 })
-      .to(out, .3, { opacity: 0 })
-      .to(out, 0, { x: 0 })
-
+      .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
       .repeat(-1);
 
     return timeline;
@@ -1133,24 +1149,10 @@ var animations = {
   reduxarch: once(function init(slide) {
     var timeline = new TimelineMax();
 
-    var e = slide.querySelectorAll(".event");
-    var state = slide.querySelectorAll(".state");
-    var out = slide.querySelectorAll(".output-vdom");
+    var stream = slide.querySelectorAll(".stream");
 
     timeline
-      .to(e, 0.3, { opacity: 1 })
-      .to(e, 2, { x: -150 })
-      .to(e, 0.3, { opacity: 0 })
-
-      .to(state, 0.3, { opacity: 1 })
-      .to(state, 2, { x: 125 })
-      .to(state, 0.3, { opacity: 0 })
-
-      .to(out, 0, { opacity: 1 })
-      .to(out, 2, { x: 60 })
-      .to(out, .3, { opacity: 0 })
-      .to(out, 0, { x: 0 })
-
+      .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
       .repeat(-1);
 
     return timeline;
@@ -1158,25 +1160,17 @@ var animations = {
 
   cyclearch: once(function init(slide) {
     var timeline = new TimelineMax();
+    var functionTl = new TimelineMax();
 
-    var e = slide.querySelectorAll(".event");
-    var out = slide.querySelectorAll(".output-vdom");
-    var f1 = slide.querySelectorAll(".function-1");
-    var f2 = slide.querySelectorAll(".function-2");
-    var f3 = slide.querySelectorAll(".function-3");
+    var stream = slide.querySelectorAll(".stream");
+    var func = slide.querySelectorAll(".function");
+
+    functionTl
+      .add(functionAnimation(func))
+      .repeat(-1)
 
     timeline
-      .to(e, 0.3, { opacity: 1 })
-      .to(e, 1, { x: 60, ease: Power0.easeNone  })
-      .to(e, 0.3, { opacity: 0 })
-
-      .add(functionAnimation(f1))
-      .add(functionAnimation(f2))
-      .add(functionAnimation(f3))
-
-      .to(out, 2, { x: 70 })
-      .to(out, .3, { opacity: 0 })
-
+      .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
       .repeat(-1);
 
     return timeline;
@@ -1185,68 +1179,10 @@ var animations = {
   cyclearchext: once(function init(slide) {
     var timeline = new TimelineMax();
 
-    var e = slide.querySelectorAll(".event");
-
-    var outev = slide.querySelectorAll(".out-ev");
-    var outhttp = slide.querySelectorAll(".out-http");
-    var outws = slide.querySelectorAll(".out-ws");
-
-    var inev = slide.querySelectorAll(".in-ev");
-    var inhttp = slide.querySelectorAll(".in-http");
-    var inws = slide.querySelectorAll(".in-ws");
-
-    var fev1 = slide.querySelectorAll(".function-ev-1");
-    var fev2 = slide.querySelectorAll(".function-ev-2");
-    var fev3 = slide.querySelectorAll(".function-ev-3");
-    var fev4 = slide.querySelectorAll(".function-ev-4");
-
-    var fhttp1 = slide.querySelectorAll(".function-http-1");
-    var fhttp2 = slide.querySelectorAll(".function-http-2");
-    var fhttp3 = slide.querySelectorAll(".function-http-3");
-    var fhttp4 = slide.querySelectorAll(".function-http-4");
-
-    var fws1 = slide.querySelectorAll(".function-ws-1");
-    var fws2 = slide.querySelectorAll(".function-ws-2");
-    var fws3 = slide.querySelectorAll(".function-ws-3");
-    var fws4 = slide.querySelectorAll(".function-ws-4");
+    var stream = slide.querySelectorAll(".stream");
 
     timeline
-      .to(inev, 0.3, { opacity: 1 })
-      .to(inev, 1, { x: 60, ease: Power0.easeNone  })
-      .to(inev, 0.3, { opacity: 0 })
-      .add(functionAnimation(fev1))
-      .add(functionAnimation(fev2))
-      .add(functionAnimation(fev3))
-      .add(functionAnimation(fev4))
-      .to(outev, 0, { opacity: 1 })
-      .to(outev, 2, { x: 70 })
-      .to(outev, .3, { opacity: 0 })
-      .to(outev, 0, { x: 0 })
-
-      .to(inhttp, 0.3, { opacity: 1 })
-      .to(inhttp, 1, { x: 60, ease: Power0.easeNone  })
-      .to(inhttp, 0.3, { opacity: 0 })
-      .add(functionAnimation(fhttp1))
-      .add(functionAnimation(fhttp2))
-      .add(functionAnimation(fhttp3))
-      .add(functionAnimation(fhttp4))
-      .to(outhttp, 0, { opacity: 1 })
-      .to(outhttp, 2, { x: 70 })
-      .to(outhttp, .3, { opacity: 0 })
-      .to(outhttp, 0, { x: 0 })
-
-      .to(inws, 0.3, { opacity: 1 })
-      .to(inws, 1, { x: 60, ease: Power0.easeNone  })
-      .to(inws, 0.3, { opacity: 0 })
-      .add(functionAnimation(fws1))
-      .add(functionAnimation(fws2))
-      .add(functionAnimation(fws3))
-      .add(functionAnimation(fws4))
-      .to(outws, 0, { opacity: 1 })
-      .to(outws, 2, { x: 70 })
-      .to(outws, .3, { opacity: 0 })
-      .to(outws, 0, { x: 0 })
-
+      .to(stream, 4, { strokeDashoffset:-streamConf.vlf, ease: Power0.easeNone })
       .repeat(-1);
 
     return timeline;
