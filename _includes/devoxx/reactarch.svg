@@ -1,1 +1,195 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 508.00001 285.74999" id="svg8"><style id="style4586">.appland{stroke-width:1;fill:#287df2;fill-opacity:1}.fwland{stroke-opacity:1;fill-opacity:1;stroke:none;fill:#dedede}.component{stroke-dasharray:7,7;stroke-dashoffset:0;stroke-width:1.5;stroke-linecap:butt;stroke:#001e47;fill:#a3caff}</style><g transform="translate(0 -11.25)" id="layer1"><rect id="rect4660" width="451.908" height="238.125" x="28.046" y="11.25" ry="1.323" class="fwland" fill="#dedede"/><g id="g7085" class="output-vdom"><rect id="rect5870-6-5" width="47.604" height="21.693" x="330.11" y="116.828" ry="1.323" class="side-effect" fill="#287df2" stroke-width="1.323" stroke-linecap="square" stroke-linejoin="round" paint-order="stroke fill markers"/><text id="text5864-6" y="131.27" x="339.031" style="line-height:6.61458302px" font-weight="400" font-size="10.583" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="#fff" stroke-width="1.323" stroke-linecap="square" paint-order="stroke fill markers"><tspan style="line-height:1.71979165px" y="131.27" x="339.031" id="tspan5862-2" font-size="9.878" paint-order="stroke fill markers">VDOM</tspan></text></g><rect class="appland" ry="1.323" id="rect4666" width="250.61" height="175.357" x="128.695" y="42.634" fill="#287df2"/><text id="text4911" y="26.165" x="218.52" style="line-height:6.61458302px" font-weight="400" font-size="10.583" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="#f06" stroke-width=".265"><tspan y="26.165" x="218.52" id="tspan4909" font-size="12.7">React Land</tspan></text><text style="line-height:6.61458302px" x="224.613" y="58.019" id="text4915" font-weight="400" font-size="10.583" font-family="sans-serif" letter-spacing="0" word-spacing="0" stroke-width=".265"><tspan id="tspan4913" x="224.613" y="58.019" font-size="12.7" fill="#fff">App Land</tspan></text><g id="g7063" transform="translate(-126.542 -183.788)"><rect class="component" id="rect4593" width="76.696" height="29.4" x="217.093" y="87.151" ry="1.049" fill="#a3caff" stroke="#001e47" stroke-width="1.5" stroke-dasharray="7,7"/><text style="line-height:6.61458302px" x="224.536" y="105.047" id="text4597" font-weight="400" font-size="10.583" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="#1a1a1a" stroke-width=".265"><tspan id="tspan4595" x="224.536" y="105.047">Component</tspan></text></g><path id="path4981" class="input-device" d="M66.022-92.09l-5.747 15.404 4.688-1.639-3.251 12.373 7.486-17.044-4.915 2.213z" fill="#fdf400" fill-rule="evenodd" stroke="#20201c" stroke-width=".475"/><g id="g7088" class="event-2 hidden"><use height="100%" width="100%" transform="translate(175.352 218.737)" id="use7056" xlink:href="#path4981"/></g><use xlink:href="#path4981" id="use7058" width="100%" class="event-1 hidden" transform="translate(282.3 218.737)" height="100%"/><g transform="translate(-126.542 -183.788)" id="g7071"><rect ry="1.049" y="87.151" x="217.093" height="29.4" width="76.696" id="rect7065" class="component" fill="#a3caff" stroke="#001e47" stroke-width="1.5" stroke-dasharray="7,7"/><text id="text7069" y="105.047" x="224.536" style="line-height:6.61458302px" font-weight="400" font-size="10.583" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="#1a1a1a" stroke-width=".265"><tspan y="105.047" x="224.536" id="tspan7067">Component</tspan></text></g><use xlink:href="#g7071" id="use7073" transform="translate(125.101 182.582)" width="100%" height="100%"/><use xlink:href="#g7071" id="use7075" transform="translate(68.38 238.688)" width="100%" height="100%"/><use xlink:href="#g7071" id="use7077" width="100%" height="100%" transform="translate(175.328 238.688)"/></g><style id="style4585"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1920"
+   height="1080"
+   viewBox="0 0 508.00001 285.74999"
+   id="svg8"
+   version="1.1"
+   sodipodi:docname="reactarch.svg"
+   inkscape:version="0.92.1 r">
+  <metadata
+     id="metadata4518">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs4516">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient6329">
+      <stop
+         style="stop-color:#ff7f2a;stop-opacity:1"
+         offset="0"
+         id="stop6325" />
+      <stop
+         style="stop-color:#287df2;stop-opacity:1"
+         offset="1"
+         id="stop6327" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient6329"
+       id="linearGradient6331"
+       x1="168.62123"
+       y1="130.80698"
+       x2="440.14661"
+       y2="130.08539"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1916"
+     inkscape:window-height="1058"
+     id="namedview4514"
+     showgrid="false"
+     inkscape:zoom="0.73333333"
+     inkscape:cx="962.72727"
+     inkscape:cy="758.18182"
+     inkscape:window-x="0"
+     inkscape:window-y="20"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <style
+     id="style4586">.appland{stroke-width:1;fill:#287df2;fill-opacity:1}.fwland{stroke-opacity:1;fill-opacity:1;stroke:none;fill:#dedede}.component{stroke-dasharray:7,7;stroke-dashoffset:0;stroke-width:1.5;stroke-linecap:butt;stroke:#001e47;fill:#a3caff}</style>
+  <g
+     transform="translate(0 -11.25)"
+     id="layer1">
+    <rect
+       id="rect4660"
+       width="451.908"
+       height="238.125"
+       x="28.046"
+       y="11.25"
+       ry="1.323"
+       class="fwland"
+       fill="#dedede" />
+    <rect
+       class="appland"
+       ry="1.323"
+       id="rect4666"
+       width="250.61"
+       height="175.357"
+       x="128.695"
+       y="42.634"
+       fill="#287df2" />
+    <text
+       id="text4911"
+       y="26.165"
+       x="218.52"
+       style="line-height:6.61458302px"
+       font-weight="400"
+       font-size="10.583"
+       font-family="sans-serif"
+       letter-spacing="0"
+       word-spacing="0"
+       fill="#f06"
+       stroke-width=".265">
+      <tspan
+         y="26.165"
+         x="218.52"
+         id="tspan4909"
+         font-size="12.7">React Land</tspan>
+    </text>
+    <text
+       style="line-height:6.61458302px"
+       x="224.613"
+       y="58.019"
+       id="text4915"
+       font-weight="400"
+       font-size="10.583"
+       font-family="sans-serif"
+       letter-spacing="0"
+       word-spacing="0"
+       stroke-width=".265">
+      <tspan
+         id="tspan4913"
+         x="224.613"
+         y="58.019"
+         font-size="12.7"
+         fill="#fff">App Land</tspan>
+    </text>
+    <g
+       style="stroke:#ffffff;stroke-width:3.9690001;stroke-linecap:round;stroke-opacity:1"
+       transform="matrix(0.51299169,0,0,0.51299169,182.21452,58.844549)"
+       id="g4505">
+      <circle
+         style="fill:none;stroke:#ffffff;stroke-opacity:1;paint-order:stroke fill markers"
+         r="21.694"
+         cy="139.31599"
+         cx="139.935"
+         id="circle4499" />
+      <path
+         style="fill:none;stroke:#ffffff;stroke-opacity:1"
+         inkscape:connector-curvature="0"
+         class="time-min"
+         d="m 139.935,139.316 10.419,-11.564"
+         id="path4501" />
+      <path
+         style="fill:none;stroke:#ffffff;stroke-opacity:1"
+         inkscape:connector-curvature="0"
+         class="time-hour"
+         d="m 140.269,139.316 -7.941,-6.844"
+         id="path4503" />
+    </g>
+    <g
+       id="g7085"
+       class="output-vdom"
+       transform="translate(59.266666)">
+      <rect
+         id="rect5870-6-5"
+         width="47.604"
+         height="21.693001"
+         x="330.10999"
+         y="116.828"
+         ry="1.323"
+         class="side-effect"
+         style="fill:#287df2;stroke-width:1.32299995;stroke-linecap:square;stroke-linejoin:round;paint-order:stroke fill markers" />
+      <text
+         id="text5864-6"
+         y="131.27"
+         x="339.03101"
+         style="font-weight:400;font-size:10.58300018px;line-height:6.61458302px;font-family:sans-serif;letter-spacing:0;word-spacing:0;fill:#ffffff;stroke-width:1.32299995;stroke-linecap:square;paint-order:stroke fill markers"
+         font-weight="400"
+         font-size="10.583"
+         letter-spacing="0"
+         word-spacing="0">
+        <tspan
+           style="font-size:9.87800026px;line-height:1.71979165px;paint-order:stroke fill markers"
+           y="131.27"
+           x="339.03101"
+           id="tspan5862-2"
+           font-size="9.878">VDOM</tspan>
+      </text>
+    </g>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:url(#linearGradient6331);stroke-width:0.48657739px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 267.02885,138.5088 c 2.23974,6.8502 -10.98582,11.28044 -21.32094,10.84463 -18.4871,-0.77954 -28.94886,-12.00395 -25.99403,-21.73113 4.33635,-14.27502 30.98604,-22.03205 54.47063,-18.96762 31.30125,4.08439 47.97013,23.55293 40.15932,40.74062 -9.82912,21.62897 -51.17457,33.0069 -87.62033,27.09064 -44.14069,-7.16537 -67.17046,-35.14338 -54.32459,-59.75014 15.13842,-28.998196 103.87163,-61.356467 211.32966,9.525"
+       id="path6322"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccsssssc"
+       class="stream" />
+  </g>
+  <style
+     id="style4585" />
+</svg>
