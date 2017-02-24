@@ -291,11 +291,11 @@ function main() {
   function run() {
     cvController.step();
     requestAnimationFrame(run);
-    // ^ le temps est une dépendance de l'application
+    // ↑ le temps est une dépendance de l'application
   }
 
   requestAnimationFrame(run);
-  // ^ là aussi
+  // ↑ là aussi
 }
 ```
 
@@ -303,15 +303,15 @@ function main() {
 
 ```javascript
 function main() {
-          // ^ pourquoi ça n'est pas une dépendance explicite ?
+          // ↑ pourquoi ça n'est pas une dépendance explicite ?
   function run() {
     cvController.step();
     requestAnimationFrame(run);
-    // ^ le temps est une dépendance de l'application
+    // ↑ le temps est une dépendance de l'application
   }
 
   requestAnimationFrame(run);
-  // ^ là aussi
+  // ↑ là aussi
 }
 ```
 
@@ -443,7 +443,7 @@ layout: true
 
 ```javascript
 function main({ time }) {
-             // ^ Hello you!
+             // ↑ Hello you!
   return {
     DOM: time
       .animationFrames()
@@ -572,18 +572,32 @@ input.addEventListener("keyup", function (event) {
 ```
 
 ---
+# Plutôt que de se débarrasser du temps le plus vite possible ...
+
+```javascript
+input.addEventListener("keyup", function (event) {
+  if (event.key === "Enter") {
+    // ↑↓ relation spatiale entre ces 2 lignes
+    var name = event.target.value;
+    user.name = name;
+  }
+})
+```
+
+
+---
 # Rendons tout dépendant du temps
 
 ```javascript
 const user$ = fromEvent("keyup", input)
 
-  // fonction(événements)
+  // ↓ fonction(événements)
   .filter(event => event.key === "Enter")
 
-  // fonction(événements filtrés)
+  // ↓ fonction(événements filtrés)
   .map(event => event.target.value)
 
-  // fonction(valeurs des événements filtrés)
+  // ↓ fonction(valeurs des événements filtrés)
   .fold((user, name) => ({ ...user, name }), {})
 ```
 
@@ -593,13 +607,13 @@ const user$ = fromEvent("keyup", input)
 ```javascript
 const user$ = fromEvent("keyup", input)
 
-  // fonction(tps)
+  // ↓ fonction(tps)
   .filter(event => event.key === "Enter")
 
-  // fonction(tps)
+  // ↓ fonction(tps)
   .map(event => event.target.value)
 
-  // fonction(tps)
+  // ↓ fonction(tps)
   .fold((user, name) => ({ ...user, name }), {})
 ```
 
@@ -611,13 +625,13 @@ Merci Transitivité
 ```javascript
 const user$ = fromEvent("keyup", input)
 
-  // observable
+  // ↓ observable
   .filter(event => event.key === "Enter")
 
-  // observable
+  // ↓ observable
   .map(event => event.target.value)
 
-  // observable
+  // ↓ observable
   .fold((user, name) => ({ ...user, name }), {})
 ```
 
@@ -627,13 +641,13 @@ const user$ = fromEvent("keyup", input)
 ```javascript
 const user$ = fromEvent("keyup", input)
 
-  // pas besoin de l'implémentation ici
+  // ↓ pas besoin de l'implémentation ici
   .filter(isEnterKey)
 
-  // pas besoin de l'implémentation ici
+  // ↓ pas besoin de l'implémentation ici
   .map(getValue)
 
-  // pas besoin de l'implémentation ici
+  // ↓ pas besoin de l'implémentation ici
   .fold(userReducer, initialUser)
 ```
 
@@ -643,13 +657,13 @@ const user$ = fromEvent("keyup", input)
 ```javascript
 const keyup$ = fromEvent("keyup", input)
 
-//
+
 const enter$ = keyup$.filter(isEnterKey)
 
-//
+
 const name$ = enter$.map(getValue)
 
-//
+
 const user$ = name$.fold(userReducer, initialUser)
 ```
 
@@ -933,7 +947,7 @@ layout: false
 
 ```javascript
 function main(sources) {
-            // ^ les signaux en entrée
+            // ↑ les signaux en entrée
 
   /*...*/
 
@@ -1136,24 +1150,38 @@ var animations = {
 
   reactarch: once(function init(slide) {
     var timeline = new TimelineMax();
+    var outTl = new TimelineMax();
 
     var stream = slide.querySelectorAll(".stream");
+    var out = slide.querySelectorAll(".output");
 
     timeline
       .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
       .repeat(-1);
+
+    outTl
+      .to(out, 2, { x: 70, opacity: 1 })
+      .repeat(-1)
 
     return timeline;
   }),
 
   reduxarch: once(function init(slide) {
     var timeline = new TimelineMax();
+    var outTl = new TimelineMax();
 
     var stream = slide.querySelectorAll(".stream");
+    var state = slide.querySelectorAll(".state");
+    var out = slide.querySelectorAll(".output");
 
     timeline
       .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
       .repeat(-1);
+
+    outTl
+      .to(state, 2, { x: 90, opacity: 1 })
+      .to(out, 2, { x: 90, opacity: 1 })
+      .repeat(-1)
 
     return timeline;
   }),
