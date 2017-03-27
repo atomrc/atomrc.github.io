@@ -181,6 +181,9 @@ extra: "Devoxx 2017"
       svg .hidden {
         opacity: 0;
       }
+      svg .appland {
+        fill: #edaf1f;
+      }
       svg .stream {
         stroke-width: 10 !important;
         stroke-linecap: round !important;
@@ -872,6 +875,18 @@ DOM.addListener({
 ```
 
 ---
+name:resumearch
+class: center
+# Architecture de mon CV
+
+<div>
+  {% include devoxx/resumearch.svg %}
+</div>
+
+--
+.animate-from-bottom[.middled.banner[`app()`]]
+
+---
 name:reactarch
 class: center
 # Architecture React
@@ -881,7 +896,7 @@ class: center
 </div>
 
 --
-.animate-from-bottom[.middled.banner[`app = function ()`]]
+.animate-from-bottom[.middled.banner[`const vdom = app()`]]
 
 ---
 name:reduxarch
@@ -893,7 +908,7 @@ class: center
 </div>
 
 --
-.animate-from-bottom[.middled.banner[`app = function (state)`]]
+.animate-from-bottom[.middled.banner[`const vdom = app(state)`]]
 
 ---
 name:cyclearch
@@ -914,7 +929,7 @@ class: center
 </div>
 
 --
-.animate-from-bottom[.middled.banner[`app = function (signals)`]]
+.animate-from-bottom[.middled.banner[`const sideEffects = app(signals)`]]
 
 ---
 layout: true
@@ -923,17 +938,17 @@ class: center, huge-code
 
 ---
 ```javascript
-sideEffects = application(signals)
+const sideEffects = application(signals)
 ```
 
 ---
 ```javascript
-sinks = application(sources)
+const sinks = application(sources)
 ```
 
 ---
 ```javascript
-sinks = application(time)
+const sinks = application(time)
 ```
 
 ---
@@ -1143,6 +1158,31 @@ var animations = {
       return timeline;
   }),
 
+  resumearch: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var outTl = new TimelineMax();
+
+    var stream = slide.querySelectorAll(".stream");
+    var out1 = slide.querySelectorAll(".sideeffect-1");
+    var out2 = slide.querySelectorAll(".sideeffect-2");
+    var out3 = slide.querySelectorAll(".sideeffect-3");
+
+    timeline
+      .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1);
+
+    outTl
+      .to(out1, 0.75, { scale: 1.2, x: 40, opacity: 1, rotation: 360, transformOrigin: "center center" })
+      .to(out1, 0, { opacity: 0})
+      .to(out2, 0.75, { scale: 1.2, y: -20, x: 20, opacity: 1, rotation: 360, transformOrigin: "center center" }, 0.5)
+      .to(out2, 0, { opacity: 0})
+      .to(out3, 0.75, { scale: 1.2, y: 20, x: 20, opacity: 1, rotation: 360, transformOrigin: "center center" }, 1)
+      .to(out3, 0, { opacity: 0})
+      .repeat(-1)
+
+    return timeline;
+  }),
+
   reactarch: once(function init(slide) {
     var timeline = new TimelineMax();
     var outTl = new TimelineMax();
@@ -1155,7 +1195,7 @@ var animations = {
       .repeat(-1);
 
     outTl
-      .to(out, 2, { x: 70, opacity: 1 })
+      .to(out, 3, { x: 100, opacity: 1 })
       .repeat(-1)
 
     return timeline;
