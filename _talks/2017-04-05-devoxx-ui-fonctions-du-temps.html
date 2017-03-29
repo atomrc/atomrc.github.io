@@ -20,7 +20,7 @@ extra: "Devoxx 2017"
         color: #fff;
       }
 
-      .remark-slide-content::after {
+      .remark-slide-content:not(.naked)::after {
           content: "@atomrc | #DevoxxFR";
           position: absolute;
           bottom: 0;
@@ -50,6 +50,9 @@ extra: "Devoxx 2017"
 
       .center {
         text-align: center;
+      }
+      .left-align h2 {
+        text-align: left;
       }
 
       h1, h2, h3 {
@@ -90,6 +93,7 @@ extra: "Devoxx 2017"
 
       .remark-inline-code {
         background-color: #03002E;
+        color: white;
         padding: 2px;
         border-radius: 0.2em;
       }
@@ -124,7 +128,7 @@ extra: "Devoxx 2017"
         margin: auto;
       }
       .banner {
-        font-size: 3em;
+        font-size: 2.5em;
         border-radius: 5px;
         background-color: #DDD;
         color: #666;
@@ -217,6 +221,10 @@ extra: "Devoxx 2017"
       }
       #slide-pausev3 svg .dom-stream {
         stroke-dasharray: 0px, 50px !important;
+      }
+
+      #slide-me {
+          font-size: 2em;
       }
 
     </style>
@@ -480,18 +488,27 @@ class: middle
 # ... Pourquoi pas nos applications ?
 
 ---
-layout: true
-# App = function(time)
+class: middle
+# app = function (time) ?
 
 ---
-## Qu'est-ce qu'un événement ?
+class: middle
+# Qu'est-ce qu'une interface ?
 
---
+---
+class: middle
+> Une fonction des événements qui s'y produisent
+
+---
+class: middle
+# Qu'est-ce qu'un événement ?
+
+---
+class: middle
 > Quelque chose qui se produit à un point précis du temps
 
 ---
-## Qu'est-ce qu'un événement ?
-
+class: middle
 > Une fonction du temps
 
 ```javascript
@@ -499,21 +516,26 @@ function raf(timestamp) {
   return timestamp % 16 === 0;
 }
 ```
----
-## Qu'est qu'une interface ?
-
-> Une fonction des événements qui s'y produisent
 
 ---
-## Qu'est qu'une interface ?
+class: left-align
+# app = function (time) ?
 
-> Une fonction du temps
+--
+## app = function (events)
 
-Merci Transitivité ;)
+--
+## app = function (function (time))
+
+--
+## app = function (time)
+
+Merci transitivité 👍 
 
 ---
+class: middle
 
-> A partir de maintenant on ne va plus parler d'événements mais de signaux
+> événements != signaux
 
 ---
 layout: false
@@ -589,13 +611,13 @@ input.addEventListener("keyup", function (event) {
 ```javascript
 const user$ = fromEvent("keyup", input)
 
-  // ↓ fonction(événements)
+  // ↓ function(events)
   .filter(event => event.key === "Enter")
 
-  // ↓ fonction(événements filtrés)
+  // ↓ function(filtered events)
   .map(event => event.target.value)
 
-  // ↓ fonction(valeurs des événements filtrés)
+  // ↓ function(filtered events' values)
   .fold((user, name) => ({ ...user, name }), {})
 ```
 
@@ -605,17 +627,17 @@ const user$ = fromEvent("keyup", input)
 ```javascript
 const user$ = fromEvent("keyup", input)
 
-  // ↓ fonction(tps)
+  // ↓ function(time)
   .filter(event => event.key === "Enter")
 
-  // ↓ fonction(tps)
+  // ↓ function(time)
   .map(event => event.target.value)
 
-  // ↓ fonction(tps)
+  // ↓ function(time)
   .fold((user, name) => ({ ...user, name }), {})
 ```
 
-Merci Transitivité
+Merci transitivité 👍 
 
 ---
 # Rendons tout observable
@@ -766,13 +788,6 @@ Notre application :
 - ne dépend que des signaux en entrée ;
 - retourne les effets de bords à exécuter ;
 - n'exécute aucun effet de bord elle même.
-
----
-# Testing
-
-```javascript
-const sideEffects = main(sources)
-```
 
 ---
 # Testing
@@ -968,6 +983,29 @@ function main(sources) {
   }
 }
 ```
+
+---
+# A vous !
+
+```bash
+$ npm install -g create-cycle-app
+$ create-cycle-app cycle-rocks
+```
+
+---
+name: me
+class: center, middle, naked
+![thomas belin](http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=150)  
+Thomas Belin  
+Front-end developer @ <s>Mozilla</s> doyoubuzz  
+<i class="ion-social-twitter"></i>
+[@atomrc](https://twitter.com/atomrc) | [thomasbelin.fr](http://blog.thomasbelin.fr)
+
+---
+class: middle naked
+
+# Thanks :)
+## U 🤘
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -1263,6 +1301,7 @@ var animations = {
 
       slideshow.on("beforeHideSlide", function (slide) {
         var currentSlide = document.querySelector(".remark-slide-container.entered");
+        if (!currentSlide) { return; }
         currentSlide.classList.remove("entered");
       });
 
