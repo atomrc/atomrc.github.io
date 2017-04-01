@@ -171,7 +171,7 @@ extra: "Devoxx 2017"
           color: #0040f8;
       }
       .remark-code-line-highlighted {
-          background-color: rgba(0, 237, 255, 0.5);
+          background-color: #F2D279;
       }
 
       .huge-code .remark-code {
@@ -799,15 +799,13 @@ Notre application :
 
 ## Ca devrait être facile à tester, non ?
 
----
-# Testing
-
+--
 ## Oh que oui :)
 
 ---
 # Testing
 
-## Test 1 : on a du `vDOM` quand on envoie des `animationFrames`
+## Test 1 : l'application retourne du `vDOM` quand on envoie des `animationFrames`
 
 ---
 name: test1
@@ -824,7 +822,7 @@ class: center, semi-condensed
 ```javascript
 const sources = {
   time: { animationFrames: () => xs.of(1) },
-  DOM: xs.empty()
+  DOM: mockDOMSource()
 }
 
 const { DOM } = main(sources)
@@ -841,7 +839,7 @@ DOM
 ---
 # Testing
 
-## Test 2 : L'application de rend pas de `vDOM` quand elle est en pause
+## Test 2 : L'application ne retourne pas de `vDOM` quand elle est en pause
 
 ---
 name: test2
