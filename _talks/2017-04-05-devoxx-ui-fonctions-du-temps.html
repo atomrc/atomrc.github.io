@@ -182,11 +182,23 @@ extra: "Devoxx 2017"
         color: lime;
       }
 
+      #slide-intro svg {
+        height: 200px;
+      }
+
+      #slide-intro svg .stream {
+        stroke-width: 5 !important;
+        stroke-linecap: round !important;
+        stroke-dasharray: 0px, 15 !important;
+      }
+
       svg .hidden {
         opacity: 0;
       }
       svg .appland {
-        fill: #edaf1f;
+        fill: none;
+        stroke: #edaf1f;
+        stroke-width: 5;
       }
       svg .stream {
         stroke-width: 10 !important;
@@ -199,7 +211,7 @@ extra: "Devoxx 2017"
       }
 
       svg .stream.vlf {
-        stroke-dasharray: 0px, 160 !important;
+        stroke-dasharray: 0px, 80 !important;
       }
 
       #slide-test1 svg .stream {
@@ -231,8 +243,11 @@ extra: "Devoxx 2017"
   </head>
   <body class="dark">
     <textarea id="source">
-class: middle
+class: middle center
+name: intro
 # Les Interfaces Utilisateur comme Fonctions Pures du Temps
+
+{% include devoxx/darksideofthecycle.svg %}
 
 ---
 class: middle
@@ -888,6 +903,10 @@ DOM.addListener({
 ```
 
 ---
+class: middle
+
+# Les différentes Architectures d'applications
+---
 name:resumearch
 class: center
 # Architecture de mon CV
@@ -1052,6 +1071,31 @@ var streamConf = {
 };
 
 var animations = {
+  intro: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var minTimeline = new TimelineMax();
+    var hourTimeline = new TimelineMax();
+    var eventTimeline = new TimelineMax();
+
+    var min = slide.querySelectorAll(".time-min");
+    var hour = slide.querySelectorAll(".time-hour");
+    var streams = slide.querySelectorAll(".stream");
+
+    minTimeline
+      .to(min, 2, { rotation: 360, transformOrigin: "left bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    hourTimeline
+      .to(hour, 20, { rotation: 360, transformOrigin: "right bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    eventTimeline
+      .to(streams, .75, { strokeDashoffset:-15, ease: Power0.easeNone })
+      .repeat(-1)
+
+      return timeline;
+  }),
+
   beforecycle: once(function init(slide) {
     var timeline = new TimelineMax();
     var minTimeline = new TimelineMax();
@@ -1278,7 +1322,21 @@ var animations = {
   cyclearchext: once(function init(slide) {
     var timeline = new TimelineMax();
 
+    var hourTimeline = new TimelineMax();
+    var minTimeline = new TimelineMax();
+
+    var min = slide.querySelectorAll(".time-min");
+    var hour = slide.querySelectorAll(".time-hour");
+
     var stream = slide.querySelectorAll(".stream");
+
+    minTimeline
+      .to(min, 2, { rotation: 360, transformOrigin: "left bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    hourTimeline
+      .to(hour, 20, { rotation: 360, transformOrigin: "right bottom", ease: Power0.easeNone })
+      .repeat(-1)
 
     timeline
       .to(stream, 4, { strokeDashoffset:-streamConf.vlf, ease: Power0.easeNone })
