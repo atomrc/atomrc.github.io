@@ -186,6 +186,10 @@ extra: "Devoxx 2017"
         height: 200px;
       }
 
+      #slide-cycle-intro svg {
+        height: 200px;
+      }
+
       #slide-intro svg .stream {
         stroke-width: 5 !important;
         stroke-linecap: round !important;
@@ -268,7 +272,7 @@ class: middle
 
 ---
 class: middle
-# Sûrement en commençant par `(main|app|application|index).js`
+# Sûrement en commençant par `(main|application|index).js`
 
 ---
 layout: true
@@ -460,11 +464,13 @@ name: beforecycle
 </div>
 
 ---
-class: middle
+name: cycle-intro
+class: middle center
 # Et puis il y a Cycle.js
 
+{%include devoxx/cyclejs.svg %}
+
 ---
-layout: true
 # `main.cycle.js`
 
 ```javascript
@@ -479,9 +485,7 @@ function main({ time }) {
 }
 ```
 
----
-
----
+--
 ```javascript
 run(main, {
   DOM: makeDOMDriver("#main"),
@@ -490,7 +494,6 @@ run(main, {
 ```
 
 ---
-layout: false
 class: center
 name: aftercycle
 # Temps injecté
@@ -1007,6 +1010,7 @@ function main(sources) {
 ```
 
 ---
+class: huge-code
 # A vous !
 
 ```bash
