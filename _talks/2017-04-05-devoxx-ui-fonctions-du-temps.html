@@ -130,11 +130,11 @@ extra: "Devoxx 2017"
       .banner {
         font-size: 2.5em;
         border-radius: 5px;
-        background-color: #DDD;
-        color: #666;
+        background-color: #EEE;
+        color: #555;
         font-weight: bold;
         padding: 1em;
-        box-shadow: 3px 3px 6px grey;
+        box-shadow: 5px 5px 10px #666;
       }
       .entered .animate-from-bottom {
         transform: translateY(0);
@@ -214,6 +214,10 @@ extra: "Devoxx 2017"
         stroke-dasharray: 0px, 80 !important;
       }
 
+      .toggled svg .stream {
+        display: none;
+      }
+
       #slide-test1 svg .stream {
         stroke-dasharray: 0px, 200 !important;
       }
@@ -252,6 +256,7 @@ name: intro
 ---
 class: middle
 ## « Il faut que j'apprenne JavaScript »
+.right[— @atomrc, 2011]
 
 ---
 class: center
@@ -263,7 +268,7 @@ class: middle
 
 ---
 class: middle
-# Sûrement en commençant par `main.js`
+# Sûrement en commençant par `(main|app|application|index).js`
 
 ---
 layout: true
@@ -1376,6 +1381,13 @@ var animations = {
           element.classList.add("entered");
           return animations[slide.properties.name] ? animations[slide.properties.name](element) : null;
       }
+
+      document.addEventListener("keyup", function (ev) {
+        if (ev.keyCode === 84) {
+          var currentSlide = document.querySelector(".remark-slide-container.entered");
+          currentSlide.classList.toggle("toggled");
+        }
+      });
 
     </script>
 
