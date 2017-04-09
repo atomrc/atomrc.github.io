@@ -1104,7 +1104,12 @@ var animations = {
       .to(streams, .75, { strokeDashoffset:-15, ease: Power0.easeNone })
       .repeat(-1)
 
-      return timeline;
+    timeline
+      .add(minTimeline, "0")
+      .add(hourTimeline, "0")
+      .add(eventTimeline, "0")
+
+    return timeline;
   }),
 
   beforecycle: once(function init(slide) {
@@ -1129,7 +1134,12 @@ var animations = {
       .to(ev, .5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
       .repeat(-1)
 
-      return timeline;
+    timeline
+      .add(minTimeline, "0")
+      .add(hourTimeline, "0")
+      .add(eventTimeline, "0")
+
+    return timeline;
   }),
 
   aftercycle: once(function init(slide) {
@@ -1153,6 +1163,11 @@ var animations = {
     eventTimeline
       .to(ev, .5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
       .repeat(-1)
+
+    timeline
+      .add(minTimeline, "0")
+      .add(hourTimeline, "0")
+      .add(eventTimeline, "0")
 
       return timeline;
   }),
@@ -1187,6 +1202,10 @@ var animations = {
       .to(raf, .5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
       .repeat(-1)
 
+    timeline
+      .add(domTl, "0")
+      .add(rafTl, "0")
+
     return timeline;
   }),
 
@@ -1213,6 +1232,11 @@ var animations = {
     rafTl
       .to(raf, 5, { strokeDashoffset:-200, ease: Power0.easeNone })
       .repeat(-1)
+
+    timeline
+      .add(domTl, "0")
+      .add(rafTl, "0")
+      .add(outTl, "0")
 
     return timeline;
   }),
@@ -1252,13 +1276,14 @@ var animations = {
   resumearch: once(function init(slide) {
     var timeline = new TimelineMax();
     var outTl = new TimelineMax();
+    var timeTl = new TimelineMax();
 
     var stream = slide.querySelectorAll(".stream");
     var out1 = slide.querySelectorAll(".sideeffect-1");
     var out2 = slide.querySelectorAll(".sideeffect-2");
     var out3 = slide.querySelectorAll(".sideeffect-3");
 
-    timeline
+    timeTl
       .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
       .repeat(-1);
 
@@ -1271,17 +1296,22 @@ var animations = {
       .to(out3, 0, { opacity: 0})
       .repeat(-1)
 
+    timeline
+      .add(timeTl, "0")
+      .add(outTl, "0")
+
     return timeline;
   }),
 
   reactarch: once(function init(slide) {
     var timeline = new TimelineMax();
     var outTl = new TimelineMax();
+    var timeTl = new TimelineMax();
 
     var stream = slide.querySelectorAll(".stream");
     var out = slide.querySelectorAll(".output");
 
-    timeline
+    timeTl
       .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
       .repeat(-1);
 
@@ -1289,18 +1319,23 @@ var animations = {
       .to(out, 3, { x: 100, opacity: 1 })
       .repeat(-1)
 
+    timeline
+      .add(timeTl, "0")
+      .add(outTl, "0")
+
     return timeline;
   }),
 
   reduxarch: once(function init(slide) {
     var timeline = new TimelineMax();
     var outTl = new TimelineMax();
+    var timeTl = new TimelineMax();
 
     var stream = slide.querySelectorAll(".stream");
     var state = slide.querySelectorAll(".state");
     var out = slide.querySelectorAll(".output");
 
-    timeline
+    timeTl
       .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
       .repeat(-1);
 
@@ -1309,12 +1344,17 @@ var animations = {
       .to(out, 2, { x: 90, opacity: 1 })
       .repeat(-1)
 
+    timeline
+      .add(timeTl, "0")
+      .add(outTl, "0")
+
     return timeline;
   }),
 
   cyclearch: once(function init(slide) {
     var timeline = new TimelineMax();
     var functionTl = new TimelineMax();
+    var timeTl = new TimelineMax();
 
     var stream = slide.querySelectorAll(".stream");
     var func = slide.querySelectorAll(".function");
@@ -1323,9 +1363,13 @@ var animations = {
       .add(functionAnimation(func))
       .repeat(-1)
 
-    timeline
+    timeTl
       .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
       .repeat(-1);
+
+    timeline
+      .add(timeTl, "0")
+      .add(functionTl, "0")
 
     return timeline;
   }),
@@ -1335,6 +1379,7 @@ var animations = {
 
     var hourTimeline = new TimelineMax();
     var minTimeline = new TimelineMax();
+    var timeTl = new TimelineMax();
 
     var min = slide.querySelectorAll(".time-min");
     var hour = slide.querySelectorAll(".time-hour");
@@ -1349,9 +1394,14 @@ var animations = {
       .to(hour, 20, { rotation: 360, transformOrigin: "right bottom", ease: Power0.easeNone })
       .repeat(-1)
 
-    timeline
+    timeTl
       .to(stream, 4, { strokeDashoffset:-streamConf.vlf, ease: Power0.easeNone })
       .repeat(-1);
+
+    timeline
+      .add(hourTimeline, "0")
+      .add(minTimeline, "0")
+      .add(timeTl, "0")
 
     return timeline;
   })
@@ -1368,6 +1418,10 @@ var animations = {
 
       slideshow.on("beforeHideSlide", function (slide) {
         var currentSlide = document.querySelector(".remark-slide-container.entered");
+        var animation = animations[slide.properties.name] ? animations[slide.properties.name](currentSlide) : null;
+        if (animation) {
+          animation.pause();
+        }
         if (!currentSlide) { return; }
         currentSlide.classList.remove("entered");
       });
@@ -1385,7 +1439,11 @@ var animations = {
       function launchAnimations(slide) {
           var element = document.querySelector(".remark-visible");
           element.classList.add("entered");
-          return animations[slide.properties.name] ? animations[slide.properties.name](element) : null;
+          var animation = animations[slide.properties.name] ? animations[slide.properties.name](element) : null;
+          if (animation) {
+            animation.play();
+          }
+          return animation
       }
 
       document.addEventListener("keyup", function (ev) {
