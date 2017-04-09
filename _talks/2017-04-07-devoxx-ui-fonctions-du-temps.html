@@ -1,0 +1,1413 @@
+---
+title: "Les Interfaces Utilisateur comme Fonctions Pures du Temps"
+description: "Et si le temps devenait un paramètre explicite de nos applications ..."
+categories: [javascript, reactive, cyclejs]
+lang: fr
+extra: "Devoxx 2017"
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Les Interfaces Utilisateur comme Fonctions Pures du Temps</title>
+    <meta name="robots" content="noindex">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans:400);
+      @import url(https://fonts.googleapis.com/css?family=Montserrat:400);
+
+      body {
+        font-family: Open Sans, Arial, sans serif;
+        color: #fff;
+      }
+
+      .remark-slide-content:not(.naked)::after {
+          content: "@atomrc | #DevoxxFR";
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          padding: 1em;
+          font-size: 1em;
+      }
+
+      img {
+        max-width: 90%;
+        max-height: 90%;
+      }
+      .remark-slide-content {
+        /*background: white;*/
+        background-color: #057FFA;
+        padding: 0 3em;
+      }
+      .remark-container {
+        background-color: #EEE;
+      }
+      .remark-code {
+        padding: 0 10em;
+      }
+      .remark-slide-scaler {
+        box-shadow: none;
+      }
+
+      .center {
+        text-align: center;
+      }
+      .left-align h2 {
+        text-align: left;
+      }
+
+      h1, h2, h3 {
+        margin: 1em;
+        margin-bottom: 1em;
+        text-align: center;
+        font-weight: lighter;
+        font-family: Montserrat;
+      }
+
+      .semi-condensed h1 {
+          margin: 0.5em;
+      }
+      .condensed h1 {
+          margin: 0.3em;
+      }
+
+      a { color: inherit; }
+
+      svg {
+        max-width: 90%;
+        max-height: 520px;
+      }
+
+      li {
+        padding: 0.5em;
+      }
+
+      .naked .foot, .naked .remark-slide-number {
+        display: none;
+      }
+
+      .foot {
+        position: absolute;
+        bottom: 1em;
+        left: 1em;
+      }
+
+      .remark-inline-code {
+        background-color: #03002E;
+        color: white;
+        padding: 2px;
+        border-radius: 0.2em;
+      }
+      .centered-code pre{
+        flex: 1;
+        margin: auto;
+      }
+      .centered-code code.hljs {
+        padding: 3em;
+      }
+
+      .box {
+        margin: auto;
+        color: white;
+        background-color: #3e3e3e;
+        border-radius: 5px;
+        padding: 0.5em;
+      }
+
+      .animate-from-bottom {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        transform: translateY(100%);
+        transition: transform 1s;
+      }
+      .middled {
+        margin: auto;
+      }
+      .banner {
+        font-size: 2.5em;
+        border-radius: 5px;
+        background-color: #EEE;
+        color: #555;
+        font-weight: bold;
+        padding: 1em;
+        box-shadow: 5px 5px 10px #666;
+      }
+      .entered .animate-from-bottom {
+        transform: translateY(0);
+      }
+
+      img[alt="thomas belin"] {
+        border-radius: 100px;
+        border: solid 5px white;
+      }
+      blockquote {
+        text-align: center;
+        background: white;
+        color: #444;
+        border-radius: 5px;
+        padding: 0.5em 1em;
+        font-size: 2em;
+        position: relative;
+        border: 1px solid #CCC;
+      }
+      blockquote::before, blockquote::after {
+        position: absolute;
+        content: "✶";
+      }
+      blockquote::before {
+        top: 0.25em;
+        left: 0.25em;
+      }
+      blockquote::after {
+        bottom: 0.25em;
+        right: 0.25em;
+      }
+
+      .hljs-github .hljs-comment {
+          color: #0040f8;
+      }
+      .remark-code-line-highlighted {
+          background-color: #F2D279;
+      }
+
+      .huge-code .remark-code {
+        font-size: 2em;
+      }
+      .check {
+        font-size: 3em;
+        color: lime;
+      }
+
+      #slide-intro svg {
+        height: 200px;
+      }
+
+      #slide-cycle-intro svg {
+        height: 200px;
+      }
+
+      #slide-intro svg .stream {
+        stroke-width: 5 !important;
+        stroke-linecap: round !important;
+        stroke-dasharray: 0px, 15 !important;
+      }
+
+      svg .hidden {
+        opacity: 0;
+      }
+      svg .appland {
+        fill: none;
+        stroke: #edaf1f;
+        stroke-width: 5;
+      }
+      svg .stream {
+        stroke-width: 10 !important;
+        stroke-linecap: round !important;
+        stroke-dasharray: 0px, 20 !important;
+      }
+
+      svg .stream.lf {
+        stroke-dasharray: 0px, 40 !important;
+      }
+
+      svg .stream.vlf {
+        stroke-dasharray: 0px, 80 !important;
+      }
+
+      .toggled svg .stream {
+        display: none;
+      }
+
+      #slide-test1 svg .stream {
+        stroke-dasharray: 0px, 200 !important;
+      }
+      #slide-test2 svg .raf-stream {
+        stroke-dasharray: 0px, 120px !important;
+      }
+      #slide-test2 svg .dom-stream {
+        stroke-dasharray: 0px, 120px !important;
+      }
+      #slide-test2 svg .out-stream {
+        stroke-dasharray: 0px, 120px !important;
+      }
+
+      #slide-pausev3 svg .raf-stream,
+      #slide-pausev3 svg .out-stream {
+        stroke-dasharray: 0px, 15px !important;
+      }
+      #slide-pausev3 svg .dom-stream {
+        stroke-dasharray: 0px, 50px !important;
+      }
+
+      #slide-me {
+          font-size: 2em;
+      }
+
+    </style>
+  </head>
+  <body class="dark">
+    <textarea id="source">
+class: middle center
+name: intro
+# Les Interfaces Utilisateur comme Fonctions Pures du Temps
+
+{% include devoxx/darksideofthecycle.svg %}
+
+---
+class: middle
+## « Il faut que j'apprenne JavaScript »
+.right[— @atomrc, 2011]
+
+---
+class: center
+![html5 resume](https://cloud.githubusercontent.com/assets/1090716/21966622/0273c282-db77-11e6-886a-1ddee2ec3187.gif)
+
+---
+class: middle
+# Comment liriez vous ce code ?
+
+---
+class: middle
+# Sûrement en commençant par `(main|application|index).js`
+
+---
+layout: true
+# Anatomie de `main.js`
+
+---
+```javascript
+function main() {
+
+  function run() {
+    cvController.step();
+    requestAnimationFrame(run);
+  }
+
+  requestAnimationFrame(run);
+}
+```
+
+---
+## Je vois plein de problèmes avec ce bout de code
+
+---
+```javascript
+function main() {
+
+  function run() {
+    cvController.step();        // Side effects
+    requestAnimationFrame(run); // Side effects
+  }
+
+  requestAnimationFrame(run);   // Side effects
+}
+```
+
+--
+## 3 instructions, 3 effets de bord !!
+
+--
+### Mais ce n'est pas ce dont je veux vous parler
+
+---
+
+```javascript
+function main() {
+
+  function run() {
+    cvController.step();
+    requestAnimationFrame(run);
+    // ↑ le temps est une dépendance de l'application
+  }
+
+  requestAnimationFrame(run);
+  // ↑ là aussi
+}
+```
+
+---
+
+```javascript
+function main() {
+          // ↑ pourquoi ça n'est pas une dépendance explicite ?
+  function run() {
+    cvController.step();
+    requestAnimationFrame(run);
+    // ↑ le temps est une dépendance de l'application
+  }
+
+  requestAnimationFrame(run);
+  // ↑ là aussi
+}
+```
+
+---
+layout: false
+# Vous en voulez plus ?
+
+```javascript
+function run() {
+  cvController.step();
+* if (!paused) {
+    requestAnimationFrame(run);
+* }
+}
+```
+
+Visiblement, l'application peut alterer son temps
+
+---
+# Maintenant imaginez ce cas de figure
+
+```javascript
+function run() {
+  if (!paused) {
+    // code
+    // code
+    // code
+    // code
+    // code
+    // code
+    // code
+    requestAnimationFrame(run)
+    // code
+    // code
+    // code
+    // code
+    // code
+    // code
+  }
+}
+```
+
+---
+class: middle
+layout: false
+# Est-ce la techno utilisée ?
+## Essayons avec d'autres ...
+
+---
+# `main.ng.js`
+
+```javascript
+function main() {
+  const app = angular.module("cv", ["cvModule"])
+
+  app.run(function ($scope, cvController) {
+    function update() {
+      $scope.$apply(cvController.step.bind(cvController));
+      raf(update)
+    }
+    raf(update)
+  })
+
+  angular.bootstrap(AppContainer, [app.name])
+}
+```
+
+--
+.animate-from-bottom[.middled.banner[Pas mieux !!]]
+
+---
+# `main.react.js`
+
+```javascript
+function main() {
+  function run() {
+    state = update(state)
+    ReactDOM.render(
+      <Cv data={state}/>,
+      AppContainer
+    )
+    raf(run)
+  }
+
+  raf(run)
+}
+```
+
+--
+.animate-from-bottom[.middled.banner[Pas mieux !!]]
+
+---
+# `main.vue.js`
+
+```javascript
+function main() {
+  const cv = new Vue({
+    el: "#main",
+    data: { state }
+  })
+
+  function run() {
+    update(state)
+    raf(run)
+  }
+  raf(run)
+}
+```
+
+--
+.animate-from-bottom[.middled.banner[Toujours pas mieux !!]]
+
+---
+class: center
+name: beforecycle
+# Temps embarqué
+
+<div>
+  {% include devoxx/before-cycle.svg %}
+</div>
+
+---
+name: cycle-intro
+class: middle center
+# Et puis il y a Cycle.js
+
+{%include devoxx/cyclejs.svg %}
+
+---
+# `main.cycle.js`
+
+```javascript
+function main({ time }) {
+             // ↑ Hello you!
+  return {
+    DOM: time
+      .animationFrames()
+      .fold(update, initialState)
+      .map(render)
+  }
+}
+```
+
+--
+```javascript
+run(main, {
+  DOM: makeDOMDriver("#main"),
+  time: timeDriver
+})
+```
+
+---
+class: center
+name: aftercycle
+# Temps injecté
+
+<div>
+  {% include devoxx/after-cycle.svg %}
+</div>
+
+---
+class: middle
+# Nous subissons le temps ...
+
+---
+class: middle
+# ... Pourquoi pas nos applications ?
+
+---
+class: middle
+# app = function (time) ?
+
+---
+class: middle
+# Qu'est-ce qu'une interface ?
+
+---
+class: middle
+> Une fonction des événements qui s'y produisent
+
+---
+class: middle
+# Qu'est-ce qu'un événement ?
+
+---
+class: middle
+> Quelque chose qui se produit à un point précis du temps
+
+---
+class: middle
+> Une fonction du temps
+
+```javascript
+function raf(timestamp) {
+  return timestamp % 16 === 0;
+}
+```
+
+---
+class: left-align
+# app = function (time) ?
+
+--
+## app = function (events)
+
+--
+## app = function (function (time))
+
+--
+## app = function (time)
+
+Merci transitivité 👍 
+
+---
+class: middle
+
+> événements != signaux
+
+---
+layout: false
+class: middle
+# Tout est signal ? Vraiment ?
+
+---
+class: center, huge-code
+# Messages Hardware ?
+
+```
+raf ---x---x---x---x---x---x--->
+
+geo ---48.8;2.2---48.8;2.3----->
+```
+
+--
+.check[✓]
+
+---
+class: center, huge-code
+# Réponse serveur ?
+
+```
+server ----200-----404--------->
+```
+
+--
+.check[✓]
+
+---
+class: center, huge-code
+# Actions utilisateur ?
+
+```
+keyup ---------x---------x----->
+
+click ----x----------x--------->
+```
+
+--
+.check[✓]
+
+---
+# Plutôt que de se débarrasser du temps le plus vite possible ...
+
+```javascript
+input.addEventListener("keyup", function (event) {
+  if (event.key === "Enter") {
+    var name = event.target.value;
+    user.name = name;
+  }
+})
+```
+
+---
+# Plutôt que de se débarrasser du temps le plus vite possible ...
+
+```javascript
+input.addEventListener("keyup", function (event) {
+  if (event.key === "Enter") {
+    // ↑↓ relation spatiale entre ces 2 lignes
+    var name = event.target.value;
+    user.name = name;
+  }
+})
+```
+
+
+---
+# Rendons tout dépendant du temps
+
+```javascript
+const user$ = fromEvent("keyup", input)
+
+  // ↓ function(events)
+  .filter(event => event.key === "Enter")
+
+  // ↓ function(filtered events)
+  .map(event => event.target.value)
+
+  // ↓ function(filtered events' values)
+  .fold((user, name) => ({ ...user, name }), {})
+```
+
+---
+# Rendons tout dépendant du temps
+
+```javascript
+const user$ = fromEvent("keyup", input)
+
+  // ↓ function(time)
+  .filter(event => event.key === "Enter")
+
+  // ↓ function(time)
+  .map(event => event.target.value)
+
+  // ↓ function(time)
+  .fold((user, name) => ({ ...user, name }), {})
+```
+
+Merci transitivité 👍 
+
+---
+# Rendons tout observable
+
+```javascript
+const user$ = fromEvent("keyup", input)
+
+  // ↓ observable
+  .filter(event => event.key === "Enter")
+
+  // ↓ observable
+  .map(event => event.target.value)
+
+  // ↓ observable
+  .fold((user, name) => ({ ...user, name }), {})
+```
+
+---
+# Rendons tout déclaratif
+
+```javascript
+const user$ = fromEvent("keyup", input)
+
+  // ↓ pas besoin de l'implémentation ici
+  .filter(isEnterKey)
+
+  // ↓ pas besoin de l'implémentation ici
+  .map(getValue)
+
+  // ↓ pas besoin de l'implémentation ici
+  .fold(userReducer, initialUser)
+```
+
+---
+# Rendons tout exportable
+
+```javascript
+const keyup$ = fromEvent("keyup", input)
+
+
+const enter$ = keyup$.filter(isEnterKey)
+
+
+const name$ = enter$.map(getValue)
+
+
+const user$ = name$.fold(userReducer, initialUser)
+```
+
+--
+# Reactive Programming FTW!
+
+---
+class: middle
+# Pensons en DataFlow
+## Plutôt qu'en instructions
+
+---
+class: middle
+# Implémentons la pause
+
+---
+class: middle
+name: pausev1
+
+<div style="float: right">
+  {% include devoxx/pause-v1.svg %}
+</div>
+
+```javascript
+function main({ time }) {
+
+  const raf$ = time.animationFrames()
+
+  return {
+    DOM: raf$
+      .fold(update, initialState)
+      .map(render)
+  }
+}
+```
+
+---
+name: pausev2
+class: middle
+
+<div style="float: right">
+  {% include devoxx/pause-v2.svg %}
+</div>
+
+
+```javascript
+function main({ time, DOM }) {
+
+  const raf$ = time.animationFrames()
+
+  const paused$ = DOM.select("document")
+    .events("keyup")
+    .filter(ev => ev.keyCode === 32)
+    .fold(acc => !acc, false)
+
+  return {
+    DOM: time
+      .animationFrames()
+      .fold(update, initialState)
+      .map(render)
+  }
+}
+```
+
+---
+name: pausev3
+class: middle
+
+<div style="float: right">
+  {% include devoxx/pause-v3.svg %}
+</div>
+
+```javascript
+function main({ time, DOM }) {
+
+  const raf$ = time.animationFrames()
+
+  const paused$ = DOM.select("document")
+    .events("keyup")
+    .filter(ev => ev.keyCode === 32)
+    .fold(acc => !acc, false)
+
+  return {
+    DOM: time
+      .animationFrames()
+      .combine(sampleCombine(pause$))
+      .filter(([_, paused]) => !paused)
+      .fold(update, initialState)
+      .map(render)
+  }
+}
+```
+
+---
+class: middle
+# Testing ?
+
+---
+# Testing
+
+Notre application :
+- ne dépend que des signaux en entrée ;
+- retourne les effets de bords à exécuter ;
+- n'exécute aucun effet de bord elle même.
+
+---
+# Testing
+
+## Autrement dit : on a à faire à des fonctions pures :)
+
+---
+# Testing
+
+## Ca devrait être facile à tester, non ?
+
+--
+## Oh que oui :)
+
+---
+# Testing
+
+## Test 1 : l'application retourne du `vDOM` quand on envoie des `animationFrames`
+
+---
+name: test1
+class: center, semi-condensed
+# Testing
+
+<div>
+  {% include devoxx/test-1.svg %}
+</div>
+
+---
+# Testing
+
+```javascript
+const sources = {
+  time: { animationFrames: () => xs.of(1) },
+  DOM: mockDOMSource()
+}
+
+const { DOM } = main(sources)
+
+DOM
+  .addListener({
+    next: function (vdom) {
+      // on peut faire des asserts sur le vdom rendu
+    },
+    complete: done
+  })
+```
+
+---
+# Testing
+
+## Test 2 : L'application ne retourne pas de `vDOM` quand elle est en pause
+
+---
+name: test2
+class: center, semi-condensed
+# Testing
+
+<div>
+  {% include devoxx/test-2.svg %}
+</div>
+
+---
+class: condensed
+
+# Testing
+
+```javascript
+const raf$   = time.diagram("-1|")
+const pause$ = time.diagram("1-|")
+```
+
+--
+```javascript
+const domSource = mockDOMSource({
+  "document": {
+    keyup: pause$.map(toSpaceKeyup)
+  }
+})
+
+const sources = {
+  time: { animationFrames: raf$ },
+  DOM: domSource
+}
+```
+
+--
+
+```javascript
+const { DOM } = main(sources);
+
+DOM.addListener({
+  next: function (vdom) {
+    // erreur on ne doit rien emettre
+  },
+  complete: done
+})
+```
+
+---
+class: middle
+
+# Les différentes Architectures d'applications
+---
+name:resumearch
+class: center
+# Architecture de mon CV
+
+<div>
+  {% include devoxx/resumearch.svg %}
+</div>
+
+--
+.animate-from-bottom[.middled.banner[`app()`]]
+
+---
+name:reactarch
+class: center
+# Architecture React
+
+<div>
+  {% include devoxx/reactarch.svg %}
+</div>
+
+--
+.animate-from-bottom[.middled.banner[`const vdom = app()`]]
+
+---
+name:reduxarch
+class: center
+# Architecture React + Redux
+
+<div>
+  {% include devoxx/reduxarch.svg %}
+</div>
+
+--
+.animate-from-bottom[.middled.banner[`const vdom = app(state)`]]
+
+---
+name:cyclearch
+class: center
+# Architecture Cycle.js
+
+<div>
+  {% include devoxx/cyclearch.svg %}
+</div>
+
+---
+name:cyclearchext
+class: center
+# Architecture Cycle.js (fixed)
+
+<div>
+  {% include devoxx/cyclearch-ext.svg %}
+</div>
+
+--
+.animate-from-bottom[.middled.banner[`const sideEffects = app(signals)`]]
+
+---
+layout: true
+class: center, huge-code
+# Cycle.js
+
+---
+```javascript
+const sideEffects = application(signals)
+```
+
+--
+```javascript
+const writes = application(reads)
+```
+
+--
+```javascript
+const sinks = application(sources)
+```
+
+--
+```javascript
+const sinks = application(time)
+```
+
+---
+layout: false
+# Cycle.js
+
+```javascript
+function main(sources) {
+            // ↑ les signaux en entrée
+
+  /*...*/
+
+  return {
+    DOM: DOMOutput, // les effets que je veux dans le DOM
+    HTTP: HTTPOutput, // les requêtes ajax que je veux faire
+    /*...*/
+  }
+}
+```
+
+---
+class: huge-code
+# A vous !
+
+```bash
+$ npm install -g create-cycle-app
+$ create-cycle-app cycle-rocks
+```
+
+---
+name: me
+class: center, middle, naked
+![thomas belin](http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=150)  
+Thomas Belin  
+Front-end developer @ <s>Mozilla</s> doyoubuzz  
+<i class="ion-social-twitter"></i>
+[@atomrc](https://twitter.com/atomrc) | [thomasbelin.fr](http://blog.thomasbelin.fr)
+
+---
+class: middle naked
+
+# Thanks :)
+## U 🤘
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TimelineMax.min.js"></script>
+    <script>
+function once(initFn) {
+  var output = null;
+  return function init(slide) {
+    if (output) {
+      return output;
+    }
+    output = initFn(slide);
+    return output;
+  };
+
+}
+
+function functionAnimation(elm) {
+  var timeline = new TimelineMax();
+
+  timeline
+    .to(elm, 1, { rotation: "-=360", transformOrigin: "center center"})
+
+    return timeline;
+}
+
+function vibrate(elm) {
+  var timeline = new TimelineMax();
+
+  timeline
+    .to(elm, .1, { rotation: "+=20", transformOrigin: "center center" })
+    .to(elm, .1, { rotation: "-=40", transformOrigin: "center center" })
+    .to(elm, .1, { rotation: "+=40", transformOrigin: "center center" })
+    .to(elm, .1, { rotation: "-=40", transformOrigin: "center center" })
+    .to(elm, .1, { rotation: "+=40", transformOrigin: "center center" })
+    .to(elm, .1, { rotation: "-=20", transformOrigin: "center center" })
+
+    return timeline;
+}
+
+var streamConf = {
+  nf: 20,
+  lf: 40,
+  vlf: 160
+};
+
+var animations = {
+  intro: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var minTimeline = new TimelineMax();
+    var hourTimeline = new TimelineMax();
+    var eventTimeline = new TimelineMax();
+
+    var min = slide.querySelectorAll(".time-min");
+    var hour = slide.querySelectorAll(".time-hour");
+    var streams = slide.querySelectorAll(".stream");
+
+    minTimeline
+      .to(min, 2, { rotation: 360, transformOrigin: "left bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    hourTimeline
+      .to(hour, 20, { rotation: 360, transformOrigin: "right bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    eventTimeline
+      .to(streams, .75, { strokeDashoffset:-15, ease: Power0.easeNone })
+      .repeat(-1)
+
+      return timeline;
+  }),
+
+  beforecycle: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var minTimeline = new TimelineMax();
+    var hourTimeline = new TimelineMax();
+    var eventTimeline = new TimelineMax();
+
+    var min = slide.querySelectorAll(".time-min");
+    var hour = slide.querySelectorAll(".time-hour");
+    var ev = slide.querySelectorAll(".stream");
+
+    minTimeline
+      .to(min, 1, { rotation: 360, transformOrigin: "left bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    hourTimeline
+      .to(hour, 10, { rotation: 360, transformOrigin: "right bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    eventTimeline
+      .to(ev, .5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1)
+
+      return timeline;
+  }),
+
+  aftercycle: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var minTimeline = new TimelineMax();
+    var hourTimeline = new TimelineMax();
+    var eventTimeline = new TimelineMax();
+
+    var min = slide.querySelectorAll(".time-min");
+    var hour = slide.querySelectorAll(".time-hour");
+    var ev = slide.querySelectorAll(".stream");
+
+    minTimeline
+      .to(min, 1, { rotation: 360, transformOrigin: "left bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    hourTimeline
+      .to(hour, 10, { rotation: 360, transformOrigin: "right bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    eventTimeline
+      .to(ev, .5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1)
+
+      return timeline;
+  }),
+
+  pausev1: once(function init(slide) {
+    var timeline = new TimelineMax();
+
+    var raf = slide.querySelectorAll(".raf-stream");
+
+    timeline
+      .to(raf, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1)
+
+    return timeline;
+  }),
+
+  pausev2: once(function init(slide) {
+    var timeline = new TimelineMax();
+
+    var raf = slide.querySelectorAll(".raf-stream");
+    var dom = slide.querySelectorAll(".dom-stream");
+
+    var rafTl = new TimelineMax();
+
+    domTl = new TimelineMax();
+
+    domTl
+      .to(dom, 1, { strokeDashoffset:-streamConf.lf, ease: Power0.easeNone })
+      .repeat(-1)
+
+    rafTl
+      .to(raf, .5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1)
+
+    return timeline;
+  }),
+
+  pausev3: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var rafTl = new TimelineMax();
+    var domTl = new TimelineMax();
+    var outTl = new TimelineMax();
+
+    var raf = slide.querySelectorAll(".raf-stream");
+    var dom = slide.querySelectorAll(".dom-stream");
+    var out = slide.querySelectorAll(".out-stream");
+
+    domTl
+      .to(dom, 1.5, { strokeDashoffset:-36, ease: Power0.easeNone })
+      .repeat(-1)
+
+    outTl
+      .to(out, 1.5, { strokeDashoffset:-50, ease: Power0.easeNone })
+      .to(out, 0, { opacity: 0 })
+      .repeatDelay(1.5)
+      .repeat(-1)
+
+    rafTl
+      .to(raf, 5, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .repeat(-1)
+
+    return timeline;
+  }),
+
+  test1: once(function init(slide) {
+    var timeline = new TimelineMax();
+
+    var ev = slide.querySelectorAll(".stream");
+    var check = slide.querySelectorAll(".check");
+
+    timeline
+      .to(ev, 2, { strokeDashoffset:-170, ease: Power0.easeNone })
+      .to(check, 1, { opacity: 1 })
+      .repeat(-1)
+
+      return timeline;
+  }),
+
+  test2: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var rafTl = new TimelineMax();
+    var domTl = new TimelineMax();
+
+    var raf = slide.querySelectorAll(".raf-stream");
+    var dom = slide.querySelectorAll(".dom-stream");
+    var check = slide.querySelectorAll(".check");
+
+    timeline
+      .to(dom, 1, { strokeDashoffset:-120, ease: Power0.easeNone })
+      .to(raf, 1, { strokeDashoffset:-120, ease: Power0.easeNone })
+      .to(check, 1, { opacity: 1 })
+      .repeat(-1)
+
+      return timeline;
+  }),
+
+  resumearch: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var outTl = new TimelineMax();
+
+    var stream = slide.querySelectorAll(".stream");
+    var out1 = slide.querySelectorAll(".sideeffect-1");
+    var out2 = slide.querySelectorAll(".sideeffect-2");
+    var out3 = slide.querySelectorAll(".sideeffect-3");
+
+    timeline
+      .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1);
+
+    outTl
+      .to(out1, 0.75, { scale: 1.2, x: 40, opacity: 1, rotation: 360, transformOrigin: "center center" })
+      .to(out1, 0, { opacity: 0})
+      .to(out2, 0.75, { scale: 1.2, y: -20, x: 20, opacity: 1, rotation: 360, transformOrigin: "center center" }, 0.5)
+      .to(out2, 0, { opacity: 0})
+      .to(out3, 0.75, { scale: 1.2, y: 20, x: 20, opacity: 1, rotation: 360, transformOrigin: "center center" }, 1)
+      .to(out3, 0, { opacity: 0})
+      .repeat(-1)
+
+    return timeline;
+  }),
+
+  reactarch: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var outTl = new TimelineMax();
+
+    var stream = slide.querySelectorAll(".stream");
+    var out = slide.querySelectorAll(".output");
+
+    timeline
+      .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1);
+
+    outTl
+      .to(out, 3, { x: 100, opacity: 1 })
+      .repeat(-1)
+
+    return timeline;
+  }),
+
+  reduxarch: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var outTl = new TimelineMax();
+
+    var stream = slide.querySelectorAll(".stream");
+    var state = slide.querySelectorAll(".state");
+    var out = slide.querySelectorAll(".output");
+
+    timeline
+      .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1);
+
+    outTl
+      .to(state, 2, { x: 90, opacity: 1 })
+      .to(out, 2, { x: 90, opacity: 1 })
+      .repeat(-1)
+
+    return timeline;
+  }),
+
+  cyclearch: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var functionTl = new TimelineMax();
+
+    var stream = slide.querySelectorAll(".stream");
+    var func = slide.querySelectorAll(".function");
+
+    functionTl
+      .add(functionAnimation(func))
+      .repeat(-1)
+
+    timeline
+      .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1);
+
+    return timeline;
+  }),
+
+  cyclearchext: once(function init(slide) {
+    var timeline = new TimelineMax();
+
+    var hourTimeline = new TimelineMax();
+    var minTimeline = new TimelineMax();
+
+    var min = slide.querySelectorAll(".time-min");
+    var hour = slide.querySelectorAll(".time-hour");
+
+    var stream = slide.querySelectorAll(".stream");
+
+    minTimeline
+      .to(min, 2, { rotation: 360, transformOrigin: "left bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    hourTimeline
+      .to(hour, 20, { rotation: 360, transformOrigin: "right bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    timeline
+      .to(stream, 4, { strokeDashoffset:-streamConf.vlf, ease: Power0.easeNone })
+      .repeat(-1);
+
+    return timeline;
+  })
+};
+    </script>
+    <script>
+      //init remarkjs
+      var timeout = window.setTimeout;
+      var slideshow = remark.create({
+        highlightStyle: 'github',
+        highlightLines: true,
+        ratio: "16:9"
+      });
+
+      slideshow.on("beforeHideSlide", function (slide) {
+        var currentSlide = document.querySelector(".remark-slide-container.entered");
+        if (!currentSlide) { return; }
+        currentSlide.classList.remove("entered");
+      });
+
+      slideshow.on("afterShowSlide", function (slide) {
+        timeout(launchAnimations, 50, slide);
+      });
+
+      timeout(
+        launchAnimations,
+        50,
+        slideshow.getSlides()[slideshow.getCurrentSlideIndex()]
+      );
+
+      function launchAnimations(slide) {
+          var element = document.querySelector(".remark-visible");
+          element.classList.add("entered");
+          return animations[slide.properties.name] ? animations[slide.properties.name](element) : null;
+      }
+
+      document.addEventListener("keyup", function (ev) {
+        if (ev.keyCode === 84) {
+          var currentSlide = document.querySelector(".remark-slide-container.entered");
+          currentSlide.classList.toggle("toggled");
+        }
+      });
+
+    </script>
+
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-34218773-1', { siteSpeedSampleRate: 100 });
+ga('send', 'pageview');
+    </script>
+
+  </body>
+</html>
