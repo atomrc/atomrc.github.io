@@ -1,6 +1,6 @@
 ---
 title: "Les Interfaces Utilisateur comme Fonctions Pures du Temps"
-description: ""
+description: "Et si le temps devenait un paramètre explicite de nos applications ..."
 categories: [javascript, reactive, cyclejs]
 lang: fr
 extra: "Devoxx 2017"
@@ -981,12 +981,17 @@ class: center, huge-code
 const sideEffects = application(signals)
 ```
 
----
+--
+```javascript
+const writes = application(reads)
+```
+
+--
 ```javascript
 const sinks = application(sources)
 ```
 
----
+--
 ```javascript
 const sinks = application(time)
 ```
