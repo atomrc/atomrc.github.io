@@ -171,10 +171,17 @@ extra: "CycleConf 2017"
       .hljs-github .hljs-comment {
           color: #0040f8;
       }
+      .highlighted .remark-code-line:not(.remark-code-line-highlighted) {
+        opacity: 0.4;
+      }
       .remark-code-line-highlighted {
-          background-color: #F2D279;
+        background-color: inherit;
+        font-weight: bold;
       }
 
+      .big-code .remark-code {
+        font-size: 1.5em;
+      }
       .huge-code .remark-code {
         font-size: 2em;
       }
@@ -223,6 +230,10 @@ extra: "CycleConf 2017"
         display: none;
       }
 
+      .hidden {
+        opacity: 0;
+      }
+
       #slide-test1 svg .stream {
         stroke-dasharray: 0px, 200 !important;
       }
@@ -248,20 +259,75 @@ extra: "CycleConf 2017"
           font-size: 2em;
       }
 
+      #slide-medev #mozilla svg {
+        height: 15em;
+      }
+
+      #slide-medev #poketom svg {
+        height: 12em;
+      }
+
+      #slide-medev #poketom {
+        transform: translateX(1500px);
+        transition: all 2s;
+      }
+      .entered #slide-medev #poketom {
+        transform: translateX(0);
+      }
+
+      #slide-medev #mozilla {
+        transform: translateX(-1500px);
+        transition: all 2s;
+      }
+      .toggled #slide-medev #mozilla {
+        transform: translateX(0);
+      }
+
+      #mozescape svg {
+        height: 5em;
+        overflow: visible;
+      }
+
     </style>
   </head>
   <body class="dark">
     <textarea id="source">
-class: middle center
+class: middle center naked
 name: intro
 # UI as Pure Functions of Time
 
 {% include devoxx/darksideofthecycle.svg %}
 
+#### CycleConf 2017 | @atomrc
+
 ---
-class: middle
-## « I want to be a frontend developer! »
+class: middle naked
+## « I wanna be a frontend developer! »
+.right[— you, some time ago]
+
+---
+name: medev
+class: middle naked
+## « I wanna be a frontend developer! »
 .right[— @atomrc, 2011]
+<div id="poketom" class="poke" style="position: absolute; bottom: 1em; left: 1em">
+{% include cycleconf/tom.svg %}
+</div>
+<div id="mozilla" class="poke" style="position: absolute; top: 1em; right: 1em">
+{% include cycleconf/mozilla.svg %}
+</div>
+
+---
+class: center
+![html5 resume](https://cloud.githubusercontent.com/assets/1090716/21966622/0273c282-db77-11e6-886a-1ddee2ec3187.gif)
+
+---
+name: mozescape
+class: naked center middle
+
+<div id="mozescape">
+{% include cycleconf/mozescape.svg %}
+</div>
 
 ---
 class: center
@@ -269,11 +335,8 @@ class: center
 
 ---
 class: middle
-# How would you read that code?
 
----
-class: middle
-# `(main|application|index).js`
+# How would you read that code?
 
 ---
 layout: true
@@ -292,23 +355,25 @@ function main() {
 }
 ```
 
----
-## I see many problems with that code
+--
+## I see many problems with that piece of code
 
 ---
+
+.highlighted[
 ```javascript
 function main() {
 
   function run() {
-    cvController.step();        // Side effects
-    requestAnimationFrame(run); // Side effects
+*   cvController.step();
+*   requestAnimationFrame(run);
   }
 
-  requestAnimationFrame(run);   // Side effects
+* requestAnimationFrame(run);
 }
 ```
+]
 
---
 ## 3 instructions, 3 side effects!!
 
 --
@@ -316,39 +381,57 @@ function main() {
 
 ---
 
+.highlighted[
 ```javascript
 function main() {
 
   function run() {
     cvController.step();
-    requestAnimationFrame(run);
-    // ↑ Time is a dependency of the app
+*   requestAnimationFrame(run); // ◀ Time is a dependency of our app
   }
 
-  requestAnimationFrame(run);
+* requestAnimationFrame(run);
 }
 ```
+]
 
 ---
 
+.highlighted[
 ```javascript
-function main() {
-          // ↑ why is it not an explicit parameter?
+*function main() {// ◀ why is it not an explicit parameter?
+
   function run() {
     cvController.step();
     requestAnimationFrame(run);
-    // ↑ Time is a dependency of the app
-  }
   }
 
   requestAnimationFrame(run);
 }
 ```
+]
 
 ---
 layout: false
 # You want more?
 
+.hidden[
+```javascript
+var paused = false;
+```
+]
+
+.hidden[
+```javascript
+document.addEventListener("keyup", function (ev) {
+  if (ev.keyCode === 32) {
+    paused = !paused;
+  }
+})
+```
+]
+
+.highlighted[
 ```javascript
 function run() {
   cvController.step();
@@ -357,38 +440,69 @@ function run() {
 * }
 }
 ```
-
-The app can alter the way it feels Time
+]
 
 ---
 # You want more?
 
 ```javascript
-function run() {
-  if (!paused) {
-    // code
-    // code
-    // code
-    // code
-    // code
-    // code
-    // code
-    requestAnimationFrame(run)
-    // code
-    // code
-    // code
-    // code
-    // code
-    // code
+var paused = false;
+```
+
+.hidden[
+```javascript
+document.addEventListener("keyup", function (ev) {
+  if (ev.keyCode === 32) {
+    paused = !paused;
   }
+})
+```
+]
+
+.highlighted[
+```javascript
+function run() {
+  cvController.step();
+* if (!paused) {
+    requestAnimationFrame(run);
+* }
 }
 ```
+]
+
+---
+# You want more?
+
+```javascript
+var paused = false;
+```
+
+```javascript
+document.addEventListener("keyup", function (ev) {
+  if (ev.keyCode === 32) {
+    paused = !paused;
+  }
+})
+```
+
+.highlighted[
+```javascript
+function run() {
+  cvController.step();
+* if (!paused) {
+    requestAnimationFrame(run);
+* }
+}
+```
+]
 
 ---
 class: middle
-layout: false
-# Is it the tech we are using?
-## Let's try with other frameworks/libs ...
+# Is VanillaJS the problem?
+
+---
+class: middle
+# Let's try something else
 
 ---
 # `main.ng.js`
@@ -409,8 +523,26 @@ function main() {
 }
 ```
 
---
-.animate-from-bottom[.middled.banner[Nope!]]
+---
+# `main.ng.js`
+
+.highlighted[
+```javascript
+function main() {
+  const app = angular.module("cv", ["cvModule"])
+
+  app.run(function ($scope, cvController) {
+    function update() {
+      $scope.$apply(cvController.step.bind(cvController));
+*     raf(update)
+    }
+*   raf(update)
+  })
+
+  angular.bootstrap(AppContainer, [app.name])
+}
+```
+]
 
 ---
 # `main.react.js`
@@ -430,8 +562,26 @@ function main() {
 }
 ```
 
---
-.animate-from-bottom[.middled.banner[Nope!]]
+---
+# `main.react.js`
+
+.highlighted[
+```javascript
+function main() {
+  function run() {
+    state = update(state)
+    ReactDOM.render(
+      <Cv data={state}/>,
+      AppContainer
+    )
+*   raf(run)
+  }
+
+* raf(run)
+}
+```
+]
+
 
 ---
 # `main.vue.js`
@@ -451,8 +601,25 @@ function main() {
 }
 ```
 
---
-.animate-from-bottom[.middled.banner[Nope!]]
+---
+# `main.vue.js`
+
+.highlighted[
+```javascript
+function main() {
+  const cv = new Vue({
+    el: "#main",
+    data: { state }
+  })
+
+  function run() {
+    update(state)
+*   raf(run)
+  }
+* raf(run)
+}
+```
+]
 
 ---
 class: center
@@ -475,7 +642,6 @@ class: middle center
 
 ```javascript
 function main({ time }) {
-             // ↑ Hello you!
   return {
     DOM: time
       .animationFrames()
@@ -484,6 +650,22 @@ function main({ time }) {
   }
 }
 ```
+
+---
+# `main.cycle.js`
+
+.highlighted[
+```javascript
+*function main({ time }) { // ◀ hello you
+  return {
+    DOM: time
+      .animationFrames()
+      .fold(update, initialState)
+      .map(render)
+  }
+}
+```
+]
 
 --
 ```javascript
@@ -520,7 +702,7 @@ class: middle
 
 ---
 class: middle
-> A function of events it listens to
+> A function of the events it listens to
 
 ---
 class: middle
@@ -541,8 +723,7 @@ function raf(timestamp) {
 ```
 
 ---
-class: left-align
-# app = function (time) ?
+class: left-align middle
 
 --
 ## app = function (events)
@@ -553,6 +734,7 @@ class: left-align
 --
 ## app = function (time)
 
+--
 ### Thanks transitivity 👍 
 
 ---
@@ -563,48 +745,37 @@ class: middle
 ---
 layout: false
 class: middle
-# All is signal? Really?
+# Everything is a signal!
 
 ---
-class: center, huge-code
-# Hardware messages?
+class: center big-code middle
 
 ```
 raf ---x---x---x---x---x---x--->
-
+```
+--
+```
 geo ---48.8;2.2---48.8;2.3----->
 ```
-
 --
-.check[✓]
-
----
-class: center, huge-code
-# Server reponses?
-
 ```
 server ----200-----404--------->
 ```
-
 --
-.check[✓]
-
----
-class: center, huge-code
-# User interactions?
-
 ```
 keyup ---------x---------x----->
-
+```
+--
+```
 click ----x----------x--------->
 ```
 
---
-.check[✓]
+---
+class: middle
+# Instead of getting rid of Time...
 
 ---
-# Instead of getting rid of Time the sooner possible ...
-
+class: middle
 ```javascript
 input.addEventListener("keyup", function (event) {
   if (event.key === "Enter") {
@@ -615,116 +786,119 @@ input.addEventListener("keyup", function (event) {
 ```
 
 ---
-# Instead of getting rid of Time the sooner possible ...
-
+class: middle
+.highlighted[
 ```javascript
-input.addEventListener("keyup", function (event) {
+*input.addEventListener("keyup", function (event) { // Time-dependent
   if (event.key === "Enter") {
-    // ↑↓ relation spatiale entre ces 2 lignes
     var name = event.target.value;
     user.name = name;
   }
+*})
+```
+]
+
+
+---
+class: middle
+.highlighted[
+```javascript
+input.addEventListener("keyup", function (event) {
+* if (event.key === "Enter") { // Space-dependent
+*   var name = event.target.value;
+*   user.name = name;
+* }
 })
 ```
-
+]
 
 ---
-# ... Let's make everything time-dependent
+class: middle
+
+## ... Let's make everything time-dependent
+
+---
+class: middle
 
 ```javascript
 const user$ = fromEvent("keyup", input)
 
-  // ↓ function(events)
   .filter(event => event.key === "Enter")
 
-  // ↓ function(filtered events)
   .map(event => event.target.value)
 
-  // ↓ function(filtered events' values)
   .fold((user, name) => ({ ...user, name }), {})
 ```
 
 ---
-# ... Let's make everything time-dependent
+class: middle
 
-```javascript
-const user$ = fromEvent("keyup", input)
-
-  // ↓ function(time)
-  .filter(event => event.key === "Enter")
-
-  // ↓ function(time)
-  .map(event => event.target.value)
-
-  // ↓ function(time)
-  .fold((user, name) => ({ ...user, name }), {})
-```
-
-### Thanks transitivity 👍 
-
----
 # ... Let's make everything observable
 
+---
+class: middle
+
 ```javascript
 const user$ = fromEvent("keyup", input)
 
-  // ↓ observable
-  .filter(event => event.key === "Enter")
+  .filter(event => event.key === "Enter")        // observable
 
-  // ↓ observable
-  .map(event => event.target.value)
+  .map(event => event.target.value)              // observable
 
-  // ↓ observable
-  .fold((user, name) => ({ ...user, name }), {})
+  .fold((user, name) => ({ ...user, name }), {}) // observable
 ```
 
 ---
+class: middle
+
 # ... Let's make everything declarative
+
+---
+class:middle
 
 ```javascript
 const user$ = fromEvent("keyup", input)
 
-  // ↓ pas besoin de l'implémentation ici
   .filter(isEnterKey)
 
-  // ↓ pas besoin de l'implémentation ici
   .map(getValue)
 
-  // ↓ pas besoin de l'implémentation ici
   .fold(userReducer, initialUser)
 ```
 
 ---
+class: middle
+
 # ... Let's make everything exportable
+
+---
+class: middle
 
 ```javascript
 const keyup$ = fromEvent("keyup", input)
 
-
 const enter$ = keyup$.filter(isEnterKey)
 
-
 const name$ = enter$.map(getValue)
-
 
 const user$ = name$.fold(userReducer, initialUser)
 ```
 
---
-# Reactive Programming FTW!
-
 ---
 class: middle
-# Let's think in DataFlow
-## Instead of instructions
+
+# This is Reactive Programming
 
 ---
 class: middle
 # Thinking in DataFlow
 
+--
+### instead of instructions
+
 ---
 class: middle
-# Implementing the pause
+# Pause
 
 ---
 class: middle
@@ -806,32 +980,30 @@ function main({ time, DOM }) {
 
 ---
 class: middle
-# Testing ?
-
----
 # Testing
 
-Our app :
-- on depends on input signals;
-- returns the side effects to execute;
-- doesn't execute any side effects.
+---
+class: middle
+layout: true
 
 ---
-# Testing
-
-## Said otherwise: we are dealing with pure functions
+## Our app depends only on input signals
 
 ---
-# Testing
-
-## ... And pure functions are easy to test
+## Our app returns the side effects to execute
 
 ---
-# Testing
-
-## Test 1: the app returns some `vDOM` when we feed it `animationFrames`
+## Our app doesn't execute any side effects
 
 ---
+## We are dealing with pure functions
+
+---
+# Test 1
+## the app returns some `vDOM` when we feed it `animationFrames`
+
+---
+layout: false
 name: test1
 class: center, semi-condensed
 # Testing
@@ -841,7 +1013,7 @@ class: center, semi-condensed
 </div>
 
 ---
-# Testing
+# Test 1
 
 ```javascript
 const sources = {
@@ -854,21 +1026,22 @@ const { DOM } = main(sources)
 DOM
   .addListener({
     next: function (vdom) {
-      // on peut faire des asserts sur le vdom rendu
+      // assertion on the vdom
     },
     complete: done
   })
 ```
 
 ---
-# Testing
+class: middle
 
-## Test 2: The app doesn't return any `vDOM` when paused
+# Test 2
+## The app doesn't return any `vDOM` when paused
 
 ---
 name: test2
 class: center, semi-condensed
-# Testing
+# Test 2
 
 <div>
   {% include devoxx/test-2.svg %}
@@ -877,7 +1050,7 @@ class: center, semi-condensed
 ---
 class: condensed
 
-# Testing
+# Test 2
 
 ```javascript
 const raf$   = time.diagram("-1|")
@@ -905,7 +1078,7 @@ const { DOM } = main(sources);
 
 DOM.addListener({
   next: function (vdom) {
-    // erreur on ne doit rien emettre
+    // There must be a mistake, I am paused
   },
   complete: done
 })
@@ -1109,6 +1282,28 @@ var animations = {
       .add(hourTimeline, "0")
       .add(eventTimeline, "0")
 
+    return timeline;
+  }),
+
+  mozescape: once(function (slide) {
+    var timeline = new TimelineMax();
+    var ball = document.querySelector(".pokeball")
+    var moz = document.querySelector(".moz")
+
+    timeline
+      .to(ball, .25, { rotation: 20, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .to(ball, .25, { rotation: -10, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .to(ball, .25, { rotation: 5, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .to(ball, .25, { rotation: 0, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .to(ball, .25, { rotation: 20, transformOrigin: "center bottom", ease: Power0.easeNone }, "+=.5")
+      .to(ball, .25, { rotation: -10, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .to(ball, .25, { rotation: 5, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .to(ball, .25, { rotation: 0, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .add("escape")
+      .to(ball, .5, { scale: 5, opacity: 0 }, "escape")
+      .to(moz, .5, { scale: 6, transformOrigin: "center center" }, "escape")
+      .to(moz, 2, { x: -1000, opacity: 0 }, "+=.5")
+      .repeat(-1)
     return timeline;
   }),
 
