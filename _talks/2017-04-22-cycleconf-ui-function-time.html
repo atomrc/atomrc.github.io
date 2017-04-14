@@ -787,7 +787,7 @@ class: middle
 
 ---
 class: middle
-# ... Why aren't our applications?
+# What about our applications?
 
 ---
 class: middle
@@ -1034,114 +1034,8 @@ function main({ time, DOM }) {
 
 ---
 class: middle
-# Testing
 
----
-class: middle
-layout: true
-
----
-## Our app depends only on input signals
-
----
-## Our app returns the side effects to execute
-
----
-## Our app doesn't execute any side effects
-
----
-## We are dealing with pure functions
-
----
-# Test 1
-## the app returns some `vDOM` when we feed it `animationFrames`
-
----
-layout: false
-name: test1
-class: center, semi-condensed
-# Testing
-
-<div>
-  {% include devoxx/test-1.svg %}
-</div>
-
----
-# Test 1
-
-```javascript
-const sources = {
-  time: { animationFrames: () => xs.of(1) },
-  DOM: mockDOMSource()
-}
-
-const { DOM } = main(sources)
-
-DOM
-  .addListener({
-    next: function (vdom) {
-      // assertion on the vdom
-    },
-    complete: done
-  })
-```
-
----
-class: middle
-
-# Test 2
-## The app doesn't return any `vDOM` when paused
-
----
-name: test2
-class: center, semi-condensed
-# Test 2
-
-<div>
-  {% include devoxx/test-2.svg %}
-</div>
-
----
-class: condensed
-
-# Test 2
-
-```javascript
-const raf$   = time.diagram("-1|")
-const pause$ = time.diagram("1-|")
-```
-
---
-```javascript
-const domSource = mockDOMSource({
-  "document": {
-    keyup: pause$.map(toSpaceKeyup)
-  }
-})
-
-const sources = {
-  time: { animationFrames: raf$ },
-  DOM: domSource
-}
-```
-
---
-
-```javascript
-const { DOM } = main(sources);
-
-DOM.addListener({
-  next: function (vdom) {
-    // There must be a mistake, I am paused
-  },
-  complete: done
-})
-```
-
----
-class: middle
-
-# Applications' Architectures
+# Temporal Architectures
 
 ---
 name:resumearch
