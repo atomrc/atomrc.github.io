@@ -259,12 +259,16 @@ extra: "CycleConf 2017"
           font-size: 2em;
       }
 
-      #slide-medev #mozilla svg {
+      #mozilla svg {
         height: 15em;
       }
 
-      #slide-medev #poketom svg {
+      #poketom svg {
         height: 12em;
+      }
+
+      #slide-medev #mozilla {
+        display: none;
       }
 
       #slide-medev #poketom {
@@ -275,11 +279,11 @@ extra: "CycleConf 2017"
         transform: translateX(0);
       }
 
-      #slide-medev #mozilla {
+      #slide-medev-moz #mozilla {
         transform: translateX(-1500px);
         transition: all 2s;
       }
-      .toggled #slide-medev #mozilla {
+      .entered #slide-medev-moz #mozilla {
         transform: translateX(0);
       }
 
@@ -300,13 +304,25 @@ name: intro
 
 #### CycleConf 2017 | @atomrc
 
+???
+Do you remember the first time you said to yourself :
+- I want to learn JavaScript
+- I want to know how to code for the browser
+- I wanna be a frontend developer
+?
+
 ---
 class: middle naked
 ## « I wanna be a frontend developer! »
 .right[— you, some time ago]
 
+???
+I do remember it! Very well actually.
+
+At that time, we are in 2011,
+
 ---
-name: medev
+layout: true
 class: middle naked
 ## « I wanna be a frontend developer! »
 .right[— @atomrc, 2011]
@@ -318,8 +334,37 @@ class: middle naked
 </div>
 
 ---
+name: medev
+???
+I am in second year of engineering school and I have a dream.  
+I want to work for
+
+---
+name: medev-moz
+
+???
+Mozilla  
+I want to make the Web a better place for everyone,  
+I want to contribute to Open Source,  
+
+To achieve that dream, I have a very precise plan ... In 2 steps: 
+- first step is to get an intership at Mozilla
+- second step is being so awesome at my intership that they have no choice but to hire me!
+
+This plan requires 2 things:
+- a nice resume (of course)
+- some pretty solid skills in a tech that they use at Mozilla.
+
+For the tech, you've guessed it, I chose JavaScript and for the resume and the skills, I decided to merge both requirements in a single project ... And I made this.
+
+
+---
+layout: false
 class: center
 ![html5 resume](https://cloud.githubusercontent.com/assets/1090716/21966622/0273c282-db77-11e6-886a-1ddee2ec3187.gif)
+
+???
+It worth what it worth, but that was the first project I actually released and I was really excited about this. I felt like a JavaScript God and I though all the doors would be opened for me, including the doors of Mozilla !
 
 ---
 name: mozescape
@@ -329,20 +374,34 @@ class: naked center middle
 {% include cycleconf/mozescape.svg %}
 </div>
 
+???
+Aaaaannd guess what .... It didn't work. I didn't get the intership nor the job.
+
+But I am not here to talk about my past carrer dreams, so back to our subject.
+
+---
+class: naked center middle
+![focused](https://media.giphy.com/media/MIY4jpusckRmU/giphy.gif)
+
+???
+Now picture this scenario: you are at work, highly focused on your current task and, in fact, you are so focused that, somehow, you've landed on my resume.
+
 ---
 class: center
 ![html5 resume](https://cloud.githubusercontent.com/assets/1090716/21966622/0273c282-db77-11e6-886a-1ddee2ec3187.gif)
 
+???
+Now you are getting curious, "How did he made it?" you say. So you scroll down the page and notice a github link to the project. You click on it and land on the source code.  
+
+So my question to you is: "How would you read that code?", "where would you start?"
+
 ---
 class: middle
-
-# How would you read that code?
-
----
-layout: true
 # Anatomy of a `main.js`
 
 ---
+class: middle
+
 ```javascript
 function main() {
 
@@ -355,17 +414,15 @@ function main() {
 }
 ```
 
---
-## I see many problems with that piece of code
-
 ---
+class: middle
 
 .highlighted[
 ```javascript
 function main() {
 
   function run() {
-*   cvController.step();
+*   cvController.step(); // ◀ 3 instructions, 3 side effects
 *   requestAnimationFrame(run);
   }
 
@@ -374,12 +431,13 @@ function main() {
 ```
 ]
 
-## 3 instructions, 3 side effects!!
+---
+class: middle
 
---
-### But that's not really the subject here
+## There is something else
 
 ---
+class: middle
 
 .highlighted[
 ```javascript
@@ -396,6 +454,7 @@ function main() {
 ]
 
 ---
+class: middle
 
 .highlighted[
 ```javascript
@@ -415,36 +474,6 @@ function main() {
 layout: false
 # You want more?
 
-.hidden[
-```javascript
-var paused = false;
-```
-]
-
-.hidden[
-```javascript
-document.addEventListener("keyup", function (ev) {
-  if (ev.keyCode === 32) {
-    paused = !paused;
-  }
-})
-```
-]
-
-.highlighted[
-```javascript
-function run() {
-  cvController.step();
-* if (!paused) {
-    requestAnimationFrame(run);
-* }
-}
-```
-]
-
----
-# You want more?
-
 ```javascript
 var paused = false;
 ```
@@ -459,13 +488,13 @@ document.addEventListener("keyup", function (ev) {
 ```
 ]
 
-.highlighted[
+.hidden[
 ```javascript
 function run() {
-  cvController.step();
-* if (!paused) {
-    requestAnimationFrame(run);
-* }
+  if (!paused) {
+    cvController.step();
+  }
+  requestAnimationFrame(run);
 }
 ```
 ]
@@ -485,13 +514,65 @@ document.addEventListener("keyup", function (ev) {
 })
 ```
 
+.hidden[
+```javascript
+function run() {
+  if (!paused) {
+    cvController.step();
+  }
+  requestAnimationFrame(run);
+}
+```
+]
+
+---
+# You want more?
+
+```javascript
+var paused = false;
+```
+
+```javascript
+document.addEventListener("keyup", function (ev) {
+  if (ev.keyCode === 32) {
+    paused = !paused;
+  }
+})
+```
+
+```javascript
+function run() {
+  if (!paused) {
+    cvController.step();
+  }
+  requestAnimationFrame(run);
+}
+```
+
+---
+# You want more?
+
+```javascript
+*var paused = false; // 'global' variable
+```
+
+.highlighted[
+```javascript
+document.addEventListener("keyup", function (ev) {
+  if (ev.keyCode === 32) {
+*   paused = !paused; // side effect
+  }
+})
+```
+]
+
 .highlighted[
 ```javascript
 function run() {
-  cvController.step();
-* if (!paused) {
-    requestAnimationFrame(run);
-* }
+* if (!paused) { // out of scope variable
+    cvController.step();
+  }
+  requestAnimationFrame(run);
 }
 ```
 ]
@@ -499,10 +580,6 @@ function run() {
 ---
 class: middle
 # Is VanillaJS the problem?
-
----
-class: middle
-# Let's try something else
 
 ---
 # `main.ng.js`
@@ -642,12 +719,13 @@ class: middle center
 
 ```javascript
 function main({ time }) {
-  return {
-    DOM: time
-      .animationFrames()
-      .fold(update, initialState)
-      .map(render)
-  }
+
+  const vnodes$ = time
+    .animationFrames()
+    .fold(update, initialState)
+    .map(render)
+
+  return { DOM: vnodes$ }
 }
 ```
 
@@ -657,17 +735,36 @@ function main({ time }) {
 .highlighted[
 ```javascript
 *function main({ time }) { // ◀ hello you
-  return {
-    DOM: time
-      .animationFrames()
-      .fold(update, initialState)
-      .map(render)
-  }
+
+  const vnodes$ = time
+    .animationFrames()
+    .fold(update, initialState)
+    .map(render)
+
+  return { DOM: vnodes$ }
+}
+```
+]
+
+---
+# `main.cycle.js`
+
+.highlighted[
+```javascript
+function main({ time }) {
+
+  const vnodes$ = time
+    .animationFrames()
+    .fold(update, initialState)
+    .map(render)
+
+* return { DOM: vnodes$ } // ◀ hello you
 }
 ```
 ]
 
 --
+
 ```javascript
 run(main, {
   DOM: makeDOMDriver("#main"),
@@ -695,6 +792,9 @@ class: middle
 ---
 class: middle
 # app = function (time) ?
+
+???
+At this point of the talk, you might be thinking : "Well Thomas, for an app that renders at 60 frames per seconds , its pretty obvious that it is a function of time. Even the description says it : an app that renders at 60 frames per second. But what about the kind of apps I develop with clicks, keyups and so on?
 
 ---
 class: middle
@@ -725,7 +825,6 @@ function raf(timestamp) {
 ---
 class: left-align middle
 
---
 ## app = function (events)
 
 --
@@ -736,39 +835,6 @@ class: left-align middle
 
 --
 ### Thanks transitivity 👍 
-
----
-class: middle
-
-> events != signals
-
----
-layout: false
-class: middle
-# Everything is a signal!
-
----
-class: center big-code middle
-
-```
-raf ---x---x---x---x---x---x--->
-```
---
-```
-geo ---48.8;2.2---48.8;2.3----->
-```
---
-```
-server ----200-----404--------->
-```
---
-```
-keyup ---------x---------x----->
-```
---
-```
-click ----x----------x--------->
-```
 
 ---
 class: middle
@@ -815,10 +881,12 @@ input.addEventListener("keyup", function (event) {
 ---
 class: middle
 
-## ... Let's make everything time-dependent
+## ... Let's make everything:
 
 ---
 class: middle
+
+# Time-dependent
 
 ```javascript
 const user$ = fromEvent("keyup", input)
@@ -832,11 +900,7 @@ const user$ = fromEvent("keyup", input)
 
 ---
 class: middle
-
-# ... Let's make everything observable
-
----
-class: middle
+# Observable
 
 ```javascript
 const user$ = fromEvent("keyup", input)
@@ -850,11 +914,7 @@ const user$ = fromEvent("keyup", input)
 
 ---
 class: middle
-
-# ... Let's make everything declarative
-
----
-class:middle
+# Declarative
 
 ```javascript
 const user$ = fromEvent("keyup", input)
@@ -869,10 +929,7 @@ const user$ = fromEvent("keyup", input)
 ---
 class: middle
 
-# ... Let's make everything exportable
-
----
-class: middle
+# Exportable
 
 ```javascript
 const keyup$ = fromEvent("keyup", input)
@@ -887,14 +944,11 @@ const user$ = name$.fold(userReducer, initialUser)
 ---
 class: middle
 
-# This is Reactive Programming
+# Reactive Programming
 
 ---
 class: middle
-# Thinking in DataFlow
-
---
-### instead of instructions
+# DataFlow vs. Instructions
 
 ---
 class: middle
@@ -1148,12 +1202,17 @@ class: center
 
 ---
 layout: true
-class: center, huge-code
+class: center middle huge-code
 # Cycle.js
 
 ---
 ```javascript
 const sideEffects = application(signals)
+```
+
+---
+```javascript
+const writes = application(reads)
 ```
 
 ---
@@ -1168,29 +1227,20 @@ const sinks = application(time)
 
 ---
 layout: false
+class: middle
 # Cycle.js
 
 ```javascript
 function main(sources) {
             // ↑ input signals
 
-  /*...*/
-
+  // ...
   return {
     DOM: DOMOutput, // DOM's side effects I want to execute
     HTTP: HTTPOutput, // HTTP requests I want to execute
-    /*...*/
+    // ...
   }
 }
-```
-
----
-class: huge-code
-# A vous !
-
-```bash
-$ npm install -g create-cycle-app
-$ create-cycle-app cycle-rocks
 ```
 
 ---
