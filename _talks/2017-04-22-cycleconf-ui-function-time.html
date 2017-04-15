@@ -943,13 +943,11 @@ name: pausev1
 ```javascript
 function main({ time }) {
 
-  const raf$ = time.animationFrames()
+  const vtree$ = time.animationFrames()
+    .fold(update, initialState)
+    .map(render)
 
-  return {
-    DOM: raf$
-      .fold(update, initialState)
-      .map(render)
-  }
+  return { DOM: vtree$ }
 }
 ```
 
@@ -965,19 +963,16 @@ class: middle
 ```javascript
 function main({ time, DOM }) {
 
-  const raf$ = time.animationFrames()
-
   const paused$ = DOM.select("document")
     .events("keyup")
     .filter(ev => ev.keyCode === 32)
     .fold(acc => !acc, false)
 
-  return {
-    DOM: time
-      .animationFrames()
-      .fold(update, initialState)
-      .map(render)
-  }
+  const vtree$ = time.animationFrames()
+    .fold(update, initialState)
+    .map(render)
+
+  return { DOM: vtree$ }
 }
 ```
 
@@ -992,21 +987,18 @@ class: middle
 ```javascript
 function main({ time, DOM }) {
 
-  const raf$ = time.animationFrames()
-
   const paused$ = DOM.select("document")
     .events("keyup")
     .filter(ev => ev.keyCode === 32)
     .fold(acc => !acc, false)
 
-  return {
-    DOM: time
-      .animationFrames()
-      .combine(sampleCombine(pause$))
-      .filter(([_, paused]) => !paused)
-      .fold(update, initialState)
-      .map(render)
-  }
+  const vtree$ = time.animationFrames()
+    .combine(sampleCombine(pause$))
+    .filter(([_, paused]) => !paused)
+    .fold(update, initialState)
+    .map(render)
+
+  return { DOM: vtree$ }
 }
 ```
 
