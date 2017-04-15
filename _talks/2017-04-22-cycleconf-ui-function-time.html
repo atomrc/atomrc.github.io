@@ -237,20 +237,7 @@ extra: "CycleConf 2017"
       #slide-test1 svg .stream {
         stroke-dasharray: 0px, 200 !important;
       }
-      #slide-test2 svg .raf-stream {
-        stroke-dasharray: 0px, 120px !important;
-      }
-      #slide-test2 svg .dom-stream {
-        stroke-dasharray: 0px, 120px !important;
-      }
-      #slide-test2 svg .out-stream {
-        stroke-dasharray: 0px, 120px !important;
-      }
 
-      #slide-pausev3 svg .raf-stream,
-      #slide-pausev3 svg .out-stream {
-        stroke-dasharray: 0px, 15px !important;
-      }
       #slide-pausev3 svg .dom-stream {
         stroke-dasharray: 0px, 50px !important;
       }
@@ -458,7 +445,7 @@ class: middle
 
 .highlighted[
 ```javascript
-*function main() {// ◀ why is it not an explicit parameter?
+*function main() { // ◀ could it be injected?
 
   function run() {
     cvController.step();
@@ -474,9 +461,11 @@ class: middle
 layout: false
 # You want more?
 
+.hidden[
 ```javascript
 var paused = false;
 ```
+]
 
 .hidden[
 ```javascript
@@ -488,7 +477,6 @@ document.addEventListener("keyup", function (ev) {
 ```
 ]
 
-.hidden[
 ```javascript
 function run() {
   if (!paused) {
@@ -497,7 +485,6 @@ function run() {
   requestAnimationFrame(run);
 }
 ```
-]
 
 ---
 # You want more?
@@ -506,6 +493,7 @@ function run() {
 var paused = false;
 ```
 
+.hidden[
 ```javascript
 document.addEventListener("keyup", function (ev) {
   if (ev.keyCode === 32) {
@@ -513,8 +501,8 @@ document.addEventListener("keyup", function (ev) {
   }
 })
 ```
+]
 
-.hidden[
 ```javascript
 function run() {
   if (!paused) {
@@ -523,7 +511,6 @@ function run() {
   requestAnimationFrame(run);
 }
 ```
-]
 
 ---
 # You want more?
@@ -720,12 +707,12 @@ class: middle center
 ```javascript
 function main({ time }) {
 
-  const vnodes$ = time
+  const vtree$ = time
     .animationFrames()
     .fold(update, initialState)
     .map(render)
 
-  return { DOM: vnodes$ }
+  return { DOM: vtree$ }
 }
 ```
 
@@ -736,12 +723,12 @@ function main({ time }) {
 ```javascript
 *function main({ time }) { // ◀ hello you
 
-  const vnodes$ = time
+  const vtree$ = time
     .animationFrames()
     .fold(update, initialState)
     .map(render)
 
-  return { DOM: vnodes$ }
+  return { DOM: vtree$ }
 }
 ```
 ]
@@ -753,24 +740,15 @@ function main({ time }) {
 ```javascript
 function main({ time }) {
 
-  const vnodes$ = time
+  const vtree$ = time
     .animationFrames()
     .fold(update, initialState)
     .map(render)
 
-* return { DOM: vnodes$ } // ◀ hello you
+* return { DOM: vtree$ } // ◀ hello you
 }
 ```
 ]
-
---
-
-```javascript
-run(main, {
-  DOM: makeDOMDriver("#main"),
-  time: timeDriver
-})
-```
 
 ---
 class: center
