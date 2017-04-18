@@ -226,8 +226,44 @@ extra: "CycleConf 2017"
         stroke-dasharray: 0px, 80 !important;
       }
 
+      svg .stream.teststream {
+        stroke-dasharray: 0px, 500 !important;
+        stroke-dashoffset: 10px;
+      }
+
       .toggled svg .stream {
-        display: none;
+        /*display: none;*/
+      }
+
+      #slide-cyclearchext .testenv {
+        opacity: 0;
+      }
+      #slide-cyclearchext .testenv,
+      #slide-cyclearchext .prodenv {
+        transition: opacity 1s, transform 1s;
+      }
+      .toggled #slide-cyclearchext .testenv,
+      .toggled #slide-cyclearchext .prodenv {
+        opacity: 1;
+        transform: translateY(180px);
+      }
+      .toggled #slide-cyclearchext .prodenv {
+        opacity: 0;
+      }
+      .toggled #slide-cyclearchext .testenv {
+        opacity: 1;
+      }
+
+      #slide-cyclearchext {
+        transition: background-color 1s;
+      }
+      .toggled #slide-cyclearchext {
+        /*background-color: #469e30; green*/
+        background-color: #06455a;
+      }
+
+      .toggled #slide-cyclearchext .testenv {
+        opacity: 1;
       }
 
       .hidden {
@@ -1017,7 +1053,7 @@ class: center
 </div>
 
 --
-.animate-from-bottom[.middled.banner[`app()`]]
+.animate-from-bottom[.middled.banner[`main()`]]
 
 ---
 name:reactarch
@@ -1029,7 +1065,7 @@ class: center
 </div>
 
 --
-.animate-from-bottom[.middled.banner[`const vdom = app()`]]
+.animate-from-bottom[.middled.banner[`const vdom = main()`]]
 
 ---
 name:reduxarch
@@ -1041,7 +1077,7 @@ class: center
 </div>
 
 --
-.animate-from-bottom[.middled.banner[`const vdom = app(state)`]]
+.animate-from-bottom[.middled.banner[`const vdom = main(state)`]]
 
 ---
 name:cyclearch
@@ -1058,11 +1094,11 @@ class: center
 # Cycle.js (fixed)
 
 <div>
-  {% include devoxx/cyclearch-ext.svg %}
+  {% include cycleconf/cycleenvs.svg %}
 </div>
 
 --
-.animate-from-bottom[.middled.banner[`const sideEffects = app(signals)`]]
+.animate-from-bottom[.middled.banner[`const sideEffects = main(signals)`]]
 
 ---
 layout: true
@@ -1107,6 +1143,10 @@ function main(sources) {
 }
 ```
 
+---
+class: naked center middle
+
+![cycle trail](https://lh3.googleusercontent.com/20dJ_L6qwfdm0XCIgZuBU9mTB2G6ZtD-2c9LxVTgFUcT9NjYwrsf_Pyaf8fkUq2GJ4DS_ipCG8r4p_5r9G6-rUXMaJvkoO6ZOjgQhczd9unKNQoXl_193lMscXvbMou_fyhtzKNb0O-R75b5tT2FQhpLwH8IHRnZXqINPk8yWqG7-T0pZFUVNsChpEl_0YsczOs_gJmtILRr9nzANuRt2Q0XmoXwhgc2VC9hCIkVorrjnLd5_2eD1WLJcdzYArSj4jZo3rlZ5pCdP30CKNvVVHjAuz7Ug8uKRAmGLhxizAOwWPPDqQMnIiSlQUA7Z3PNMcn3X9ZuL6NqZcw0xGZW_EMCvKrNwW8hhLIroAJES2tdKIpZWnU80lGAg1bDgXvcms9x7SVwxaMyANtgg5jJNgDGx4gmgDHZzH2WsnWKkoIsxT6MKa6Qx13SDEJkydL-WGZJLpsPXYn363hrmq72rVk9t5wtynXRQL36urx4lWDDhpN7RJOXuW8wnrqAT5vpYtKR7H3DyBNrZrw_Y9P-_QMxJjdDycFgI57-Wk4T352htXIlEBSwxftBK8IZ-hCo2Zx8kDuav-HriqkUQ4PLQIPNXOPoxDKmsSM-YIvZduVVsoYBManusno0gJesgBupoWn1fq8PQMeHrJFzN8solVP-RIwjeYOF1vp8_VoWx34=w1316-h987-no)
 ---
 name: me
 class: center, middle, naked
@@ -1489,11 +1529,14 @@ var animations = {
     var hourTimeline = new TimelineMax();
     var minTimeline = new TimelineMax();
     var timeTl = new TimelineMax();
+    var testTl = new TimelineMax();
 
     var min = slide.querySelectorAll(".time-min");
     var hour = slide.querySelectorAll(".time-hour");
 
-    var stream = slide.querySelectorAll(".stream");
+    var stream = slide.querySelectorAll(".stream:not(.teststream)");
+    var tstream = slide.querySelectorAll(".stream.teststream");
+    var ok = slide.querySelectorAll(".ok");
 
     minTimeline
       .to(min, 2, { rotation: 360, transformOrigin: "left bottom", ease: Power0.easeNone })
@@ -1504,7 +1547,27 @@ var animations = {
       .repeat(-1)
 
     timeTl
-      .to(stream, 4, { strokeDashoffset:-streamConf.vlf, ease: Power0.easeNone })
+      .to(stream, .5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1);
+
+    testTl
+      .to(tstream.filter(e => e.classList.contains("in1")), 2, { strokeDashoffset:-150, ease: Power0.easeNone })
+      .to(tstream.filter(e => e.classList.contains("out1")), 2, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .to(ok, .7, { x: 50 })
+      .to(ok, .7, { opacity: 0 })
+      .to(ok, 0, { x: 0, opacity: 1 })
+      .to(tstream, 0, { strokeDashoffset:10, ease: Power0.easeNone })
+      .to(tstream.filter(e => e.classList.contains("in2")), 2, { strokeDashoffset:-150, ease: Power0.easeNone })
+      .to(tstream.filter(e => e.classList.contains("out2")), 2, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .to(ok, .7, { x: 50 })
+      .to(ok, .7, { opacity: 0 })
+      .to(ok, 0, { x: 0, opacity: 1 })
+      .to(tstream, 0, { strokeDashoffset:10, ease: Power0.easeNone })
+      .to(tstream.filter(e => e.classList.contains("in3")), 2, { strokeDashoffset:-150, ease: Power0.easeNone })
+      .to(tstream.filter(e => e.classList.contains("out3")), 2, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .to(ok, .7, { x: 50 })
+      .to(ok, .7, { opacity: 0 })
+      .to(ok, 0, { x: 0, opacity: 1 })
       .repeat(-1);
 
     timeline
