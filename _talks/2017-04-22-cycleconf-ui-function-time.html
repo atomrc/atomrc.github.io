@@ -180,6 +180,12 @@ extra: "CycleConf 2017"
         font-weight: bold;
       }
 
+      .huge h2 {
+        font-size: 4em;
+      }
+      .huge h1 {
+        font-size: 5em;
+      }
       .big-code .remark-code {
         font-size: 1.5em;
       }
@@ -909,7 +915,7 @@ class: middle
 ---
 class: middle
 
-## ... Let's make everything:
+# ... Let's make everything:
 
 ---
 class: middle
@@ -1145,22 +1151,18 @@ class: middle
 # Cycle.js
 
 ```javascript
-function main(sources) {
+function main({ DOM, HTTP, Websocket, /*...*/ }) {
             // ↑ input signals
 
-  // ...
   return {
-    DOM: DOMOutput, // DOM's side effects I want to execute
-    HTTP: HTTPOutput, // HTTP requests I want to execute
+    DOM: vtree$, // DOM's side effects I want to execute
+    HTTP: request$, // HTTP requests I want to execute
+    Canvas: draw$, // Things I want to draw on a canvas
     // ...
   }
 }
 ```
 
----
-class: naked center middle
-
-![cycle trail](https://lh3.googleusercontent.com/20dJ_L6qwfdm0XCIgZuBU9mTB2G6ZtD-2c9LxVTgFUcT9NjYwrsf_Pyaf8fkUq2GJ4DS_ipCG8r4p_5r9G6-rUXMaJvkoO6ZOjgQhczd9unKNQoXl_193lMscXvbMou_fyhtzKNb0O-R75b5tT2FQhpLwH8IHRnZXqINPk8yWqG7-T0pZFUVNsChpEl_0YsczOs_gJmtILRr9nzANuRt2Q0XmoXwhgc2VC9hCIkVorrjnLd5_2eD1WLJcdzYArSj4jZo3rlZ5pCdP30CKNvVVHjAuz7Ug8uKRAmGLhxizAOwWPPDqQMnIiSlQUA7Z3PNMcn3X9ZuL6NqZcw0xGZW_EMCvKrNwW8hhLIroAJES2tdKIpZWnU80lGAg1bDgXvcms9x7SVwxaMyANtgg5jJNgDGx4gmgDHZzH2WsnWKkoIsxT6MKa6Qx13SDEJkydL-WGZJLpsPXYn363hrmq72rVk9t5wtynXRQL36urx4lWDDhpN7RJOXuW8wnrqAT5vpYtKR7H3DyBNrZrw_Y9P-_QMxJjdDycFgI57-Wk4T352htXIlEBSwxftBK8IZ-hCo2Zx8kDuav-HriqkUQ4PLQIPNXOPoxDKmsSM-YIvZduVVsoYBManusno0gJesgBupoWn1fq8PQMeHrJFzN8solVP-RIwjeYOF1vp8_VoWx34=w1316-h987-no)
 ---
 name: me
 class: center, middle, naked
@@ -1171,10 +1173,13 @@ Front-end developer @ <s>Mozilla</s> doyoubuzz
 [@atomrc](https://twitter.com/atomrc) | [thomasbelin.fr](http://blog.thomasbelin.fr)
 
 ---
+background-image: url(https://lh3.googleusercontent.com/20dJ_L6qwfdm0XCIgZuBU9mTB2G6ZtD-2c9LxVTgFUcT9NjYwrsf_Pyaf8fkUq2GJ4DS_ipCG8r4p_5r9G6-rUXMaJvkoO6ZOjgQhczd9unKNQoXl_193lMscXvbMou_fyhtzKNb0O-R75b5tT2FQhpLwH8IHRnZXqINPk8yWqG7-T0pZFUVNsChpEl_0YsczOs_gJmtILRr9nzANuRt2Q0XmoXwhgc2VC9hCIkVorrjnLd5_2eD1WLJcdzYArSj4jZo3rlZ5pCdP30CKNvVVHjAuz7Ug8uKRAmGLhxizAOwWPPDqQMnIiSlQUA7Z3PNMcn3X9ZuL6NqZcw0xGZW_EMCvKrNwW8hhLIroAJES2tdKIpZWnU80lGAg1bDgXvcms9x7SVwxaMyANtgg5jJNgDGx4gmgDHZzH2WsnWKkoIsxT6MKa6Qx13SDEJkydL-WGZJLpsPXYn363hrmq72rVk9t5wtynXRQL36urx4lWDDhpN7RJOXuW8wnrqAT5vpYtKR7H3DyBNrZrw_Y9P-_QMxJjdDycFgI57-Wk4T352htXIlEBSwxftBK8IZ-hCo2Zx8kDuav-HriqkUQ4PLQIPNXOPoxDKmsSM-YIvZduVVsoYBManusno0gJesgBupoWn1fq8PQMeHrJFzN8solVP-RIwjeYOF1vp8_VoWx34=w1316-h987-no)
 class: middle naked
 
+---
+class: middle naked huge
 # Thanks :)
-## U 🤘
+## 🚲 🤘
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
