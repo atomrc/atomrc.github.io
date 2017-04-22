@@ -55,6 +55,9 @@ extra: "CycleConf 2017"
       .left-align h2 {
         text-align: left;
       }
+      .shadow {
+        text-shadow: 1px 1px 10px black, -1px -1px 10px black;
+      }
 
       h1, h2, h3 {
         margin: 1em;
@@ -128,6 +131,12 @@ extra: "CycleConf 2017"
       .entered .animate-from-bottom:not(.toggleable),
       .toggled .animate-from-bottom.toggleable {
         transform: translateY(0);
+      }
+      .sub-toggleable {
+        opacity: 0;
+      }
+      .toggled.sub-toggled .sub-toggleable {
+        opacity: 1;
       }
       .middled {
         margin: auto;
@@ -414,20 +423,26 @@ class: naked center middle
 ![focused](https://media.giphy.com/media/MIY4jpusckRmU/giphy.gif)
 
 ???
-Now picture this scenario: you are at work, highly focused on your current task and, in fact, you are so focused that, somehow, you've landed on my resume.
+Now consider this scenario: you are at work, highly focused on your current task and, in fact, you are so focused that, somehow, you've landed on my resume.
 
 ---
 class: center
 ![html5 resume](https://cloud.githubusercontent.com/assets/1090716/21966622/0273c282-db77-11e6-886a-1ddee2ec3187.gif)
 
 ???
-Now you are getting curious, "How did he made it?" you say. So you scroll down the page and notice a github link to the project. You click on it and land on the source code.  
+Now you are getting curious, "How did he made it?, How did he manage to have such poor performance with such a simple animation?" you say. So you scroll down the page and notice a github link to the project. You click on it and land on the source code.  
 
 So my question to you is: "How would you read that code?", "where would you start?"
+
 
 ---
 class: middle
 # Anatomy of a `main.js`
+
+???
+If you are like me, you would probably start by reading the "main.js" or "application.js" or "index.js" or whatever file is the entry point of the application.
+
+And that's what you would have found if you did this on my resume
 
 ---
 class: middle
@@ -444,6 +459,11 @@ function main() {
 }
 ```
 
+???
+So, this is a pretty basic code, nothing really fancy about it. You can easily understand what is happening before your eyes. I have simplified a bit the code of the main, but the idea stays exactly the same.
+
+We have our main function that declares a run function that seems to be computing a single frame of the animation.
+There is also this CvController that seems to handle all the state of the application and seems also to be responsible for updating the DOM according to that state. Finally there is this requestAnimationFrame that calls the run function at the right time.
 ---
 class: middle
 
@@ -452,19 +472,20 @@ class: middle
 function main() {
 
   function run() {
-*   cvController.step(); // ◀ 3 instructions, 3 side effects
+*   cvController.step(); // ◀ 3 statements, 3 side effects
 *   requestAnimationFrame(run);
   }
 
 * requestAnimationFrame(run);
 }
 ```
+
 ]
-
----
-class: middle
-
-## There is something else
+.animate-from-bottom.toggleable[
+.center.middle[
+![side effects](http://www.impawards.com/2013/posters/side_effects_ver9.jpg)
+]
+]
 
 ---
 class: middle
@@ -502,7 +523,7 @@ class: middle
 
 ---
 layout: false
-# You want more?
+# What's that?
 
 .hidden[
 ```javascript
@@ -530,7 +551,7 @@ function run() {
 ```
 
 ---
-# You want more?
+# What's that?
 
 ```javascript
 var paused = false;
@@ -556,7 +577,7 @@ function run() {
 ```
 
 ---
-# You want more?
+# What's that?
 
 ```javascript
 var paused = false;
@@ -580,7 +601,7 @@ function run() {
 ```
 
 ---
-# You want more?
+# What's that?
 
 ```javascript
 *var paused = false; // 'global' variable
@@ -843,6 +864,13 @@ function raf(timestamp) {
 }
 ```
 
+.center.big-code[
+```
+raf ----x----x----x----x---->
+```
+]
+
+
 ---
 class: left-align middle
 
@@ -854,7 +882,6 @@ class: left-align middle
 --
 ## app = function (time)
 
---
 ### Thanks transitivity 👍 
 
 ---
@@ -903,7 +930,7 @@ input.addEventListener("keyup", function (event) {
 .animate-from-bottom.toggleable[
 .center.middle[
 ![french](http://1.bp.blogspot.com/-HRNnnaiwmVA/Th4zwBegCXI/AAAAAAAAAGc/MNI90LKWWt8/w1200-h630-p-k-no-nu/french-stereotype+copy.jpg)
-###Spacial vs. Special
+###`s/special/spacial`
 ]
 ]
 
@@ -923,7 +950,9 @@ class: middle
 # Time-dependent
 
 ```javascript
-const user$ = fromEvent("keyup", input)
+const user$ = DOM.select(".username")
+
+  .events("keyup")
 
   .filter(event => event.key === "Enter")
 
@@ -937,7 +966,9 @@ class: middle
 # Observable
 
 ```javascript
-const user$ = fromEvent("keyup", input)
+const user$ = DOM.select(".username")
+
+  .events("keyup")                               // observable
 
   .filter(event => event.key === "Enter")        // observable
 
@@ -951,13 +982,15 @@ class: middle
 # Declarative
 
 ```javascript
-const user$ = fromEvent("keyup", input)
+const user$ = DOM.select(".username")
+
+  .events("keyup")
 
   .filter(isEnterKey)
 
   .map(getValue)
 
-  .fold(userReducer, initialUser)
+  .fold(userReducer, {})
 ```
 
 ---
@@ -966,13 +999,13 @@ class: middle
 # Exportable
 
 ```javascript
-const keyup$ = fromEvent("keyup", input)
+const keyup$ = DOM.select(".username").events("keyup")
 
 const enter$ = keyup$.filter(isEnterKey)
 
 const name$ = enter$.map(getValue)
 
-const user$ = name$.fold(userReducer, initialUser)
+const user$ = name$.fold(userReducer, {})
 ```
 
 ---
@@ -982,7 +1015,7 @@ class: middle
 
 ---
 class: middle
-# DataFlow vs. Instructions
+# DataFlow vs. Statements
 
 ---
 class: middle
@@ -1032,6 +1065,19 @@ function main({ time, DOM }) {
 }
 ```
 
+.animate-from-bottom.toggleable[
+.center.middle.shadow[
+<br>
+<br>
+<br>
+<br>
+.sub-toggleable[
+![straw simulator](http://i.imgur.com/xrX4VV0.gif)
+]
+# Straw Simulator 2017
+]
+]
+
 ---
 name: pausev3
 class: middle
@@ -1061,7 +1107,7 @@ function main({ time, DOM }) {
 ---
 class: middle
 
-# Temporal Architectures
+# App Architectures
 
 ---
 name:resumearch
@@ -1164,6 +1210,17 @@ function main({ DOM, HTTP, Websocket, /*...*/ }) {
 ```
 
 ---
+class: center, middle
+
+![state as integration of time](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/cycleconf-function-time/staltz.png)
+
+---
+class: center, middle
+
+## « 2016, the year we realised Time was a side effect. »
+.right[— Nick, 20/04/2017]
+
+---
 name: me
 class: center, middle, naked
 ![thomas belin](http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=150)  
@@ -1173,9 +1230,7 @@ Front-end developer @ <s>Mozilla</s> doyoubuzz
 [@atomrc](https://twitter.com/atomrc) | [thomasbelin.fr](http://blog.thomasbelin.fr)
 
 ---
-background-image: url(https://lh3.googleusercontent.com/20dJ_L6qwfdm0XCIgZuBU9mTB2G6ZtD-2c9LxVTgFUcT9NjYwrsf_Pyaf8fkUq2GJ4DS_ipCG8r4p_5r9G6-rUXMaJvkoO6ZOjgQhczd9unKNQoXl_193lMscXvbMou_fyhtzKNb0O-R75b5tT2FQhpLwH8IHRnZXqINPk8yWqG7-T0pZFUVNsChpEl_0YsczOs_gJmtILRr9nzANuRt2Q0XmoXwhgc2VC9hCIkVorrjnLd5_2eD1WLJcdzYArSj4jZo3rlZ5pCdP30CKNvVVHjAuz7Ug8uKRAmGLhxizAOwWPPDqQMnIiSlQUA7Z3PNMcn3X9ZuL6NqZcw0xGZW_EMCvKrNwW8hhLIroAJES2tdKIpZWnU80lGAg1bDgXvcms9x7SVwxaMyANtgg5jJNgDGx4gmgDHZzH2WsnWKkoIsxT6MKa6Qx13SDEJkydL-WGZJLpsPXYn363hrmq72rVk9t5wtynXRQL36urx4lWDDhpN7RJOXuW8wnrqAT5vpYtKR7H3DyBNrZrw_Y9P-_QMxJjdDycFgI57-Wk4T352htXIlEBSwxftBK8IZ-hCo2Zx8kDuav-HriqkUQ4PLQIPNXOPoxDKmsSM-YIvZduVVsoYBManusno0gJesgBupoWn1fq8PQMeHrJFzN8solVP-RIwjeYOF1vp8_VoWx34=w1316-h987-no)
-class: middle naked
-
+<iframe src="http://www.thomas-belin.com/" height=630 width="100%"></iframe>
 ---
 class: middle naked huge
 # Thanks :)
@@ -1638,9 +1693,16 @@ var animations = {
       }
 
       document.addEventListener("keyup", function (ev) {
-        if (ev.keyCode === 84) {
-          var currentSlide = document.querySelector(".remark-slide-container.entered");
-          currentSlide.classList.toggle("toggled");
+        switch(ev.keyCode) {
+          case 84:
+            var currentSlide = document.querySelector(".remark-slide-container.entered");
+            currentSlide.classList.toggle("toggled");
+            break;
+
+          case 82:
+            var currentSlide = document.querySelector(".remark-slide-container.entered");
+            currentSlide.classList.toggle("sub-toggled");
+            break;
         }
       });
 
