@@ -1,0 +1,1721 @@
+---
+title: "UI as Pure Functions of Time"
+description: "What if we considered Time as a fundamental input of our applications?"
+categories: [javascript, reactive, cyclejs]
+lang: fr
+extra: "CycleConf 2017"
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>UI as Pure Functions of Time</title>
+    <meta name="robots" content="noindex">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans:400);
+      @import url(https://fonts.googleapis.com/css?family=Montserrat:400);
+
+      body {
+        font-family: Open Sans, Arial, sans serif;
+        color: #fff;
+      }
+
+      .remark-slide-content:not(.naked)::after {
+          content: "@atomrc | CycleConf 2017";
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          padding: 1em;
+          font-size: 1em;
+      }
+
+      img {
+        max-width: 90%;
+        max-height: 90%;
+      }
+
+      .remark-slide-content {
+        /*background: white;*/
+        background-color: #057FFA;
+        padding: 0 3em;
+      }
+      .remark-container {
+        background-color: #EEE;
+      }
+      .remark-code {
+        padding: 0 10em;
+      }
+      .remark-slide-scaler {
+        box-shadow: none;
+      }
+
+      .center {
+        text-align: center;
+      }
+      .left-align h2 {
+        text-align: left;
+      }
+      .shadow {
+        text-shadow: 1px 1px 10px black, -1px -1px 10px black;
+      }
+
+      h1, h2, h3 {
+        margin: 1em;
+        margin-bottom: 1em;
+        text-align: center;
+        font-weight: lighter;
+        font-family: Montserrat;
+      }
+
+      .semi-condensed h1 {
+          margin: 0.5em;
+      }
+      .condensed h1 {
+          margin: 0.3em;
+      }
+
+      a { color: inherit; }
+
+      svg {
+        max-width: 90%;
+        max-height: 520px;
+      }
+
+      li {
+        padding: 0.5em;
+      }
+
+      .naked .foot, .naked .remark-slide-number {
+        display: none;
+      }
+
+      .foot {
+        position: absolute;
+        bottom: 1em;
+        left: 1em;
+      }
+
+      .remark-inline-code {
+        background-color: #03002E;
+        color: white;
+        padding: 2px;
+        border-radius: 0.2em;
+      }
+      .centered-code pre{
+        flex: 1;
+        margin: auto;
+      }
+      .centered-code code.hljs {
+        padding: 3em;
+      }
+
+      .box {
+        margin: auto;
+        color: white;
+        background-color: #3e3e3e;
+        border-radius: 5px;
+        padding: 0.5em;
+      }
+
+      .animate-from-bottom {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        transform: translateY(100%);
+        transition: transform 1s;
+      }
+      .entered .animate-from-bottom:not(.toggleable),
+      .toggled .animate-from-bottom.toggleable {
+        transform: translateY(0);
+      }
+      .sub-toggleable {
+        opacity: 0;
+      }
+      .toggled.sub-toggled .sub-toggleable {
+        opacity: 1;
+      }
+      .middled {
+        margin: auto;
+      }
+      .banner {
+        font-size: 2.5em;
+        border-radius: 5px;
+        background-color: #EEE;
+        color: #555;
+        font-weight: bold;
+        padding: 1em;
+        box-shadow: 5px 5px 10px #666;
+      }
+
+      img[alt="thomas belin"] {
+        border-radius: 100px;
+        border: solid 5px white;
+      }
+      blockquote {
+        text-align: center;
+        background: white;
+        color: #444;
+        border-radius: 5px;
+        padding: 0.5em 1em;
+        font-size: 2em;
+        position: relative;
+        border: 1px solid #CCC;
+      }
+      blockquote::before, blockquote::after {
+        position: absolute;
+        content: "✶";
+      }
+      blockquote::before {
+        top: 0.25em;
+        left: 0.25em;
+      }
+      blockquote::after {
+        bottom: 0.25em;
+        right: 0.25em;
+      }
+
+      .hljs-github .hljs-comment {
+          color: #0040f8;
+      }
+      .highlighted .remark-code-line:not(.remark-code-line-highlighted) {
+        opacity: 0.4;
+      }
+      .remark-code-line-highlighted {
+        background-color: inherit;
+        font-weight: bold;
+      }
+
+      .huge h2 {
+        font-size: 4em;
+      }
+      .huge h1 {
+        font-size: 5em;
+      }
+      .big-code .remark-code {
+        font-size: 1.5em;
+      }
+      .huge-code .remark-code {
+        font-size: 2em;
+      }
+      .check {
+        font-size: 3em;
+        color: lime;
+      }
+
+      #slide-intro svg {
+        height: 200px;
+      }
+
+      #slide-cycle-intro svg {
+        height: 200px;
+      }
+
+      #slide-intro svg .stream {
+        stroke-width: 5 !important;
+        stroke-linecap: round !important;
+        stroke-dasharray: 0px, 15 !important;
+      }
+
+      svg .hidden {
+        opacity: 0;
+      }
+      svg .appland {
+        fill: none;
+        stroke: #edaf1f;
+        stroke-width: 5;
+      }
+      svg .stream {
+        stroke-width: 10 !important;
+        stroke-linecap: round !important;
+        stroke-dasharray: 0px, 20 !important;
+      }
+
+      svg .stream.lf {
+        stroke-dasharray: 0px, 40 !important;
+      }
+
+      svg .stream.vlf {
+        stroke-dasharray: 0px, 80 !important;
+      }
+
+      svg .stream.teststream {
+        stroke-dasharray: 0px, 500 !important;
+        stroke-dashoffset: 10px;
+      }
+
+      .toggled svg .stream {
+        /*display: none;*/
+      }
+
+      #slide-cyclearchext .testenv {
+        opacity: 0;
+      }
+      #slide-cyclearchext .testenv,
+      #slide-cyclearchext .prodenv {
+        transition: opacity 1s, transform 1s;
+      }
+      .toggled #slide-cyclearchext .testenv,
+      .toggled #slide-cyclearchext .prodenv {
+        opacity: 1;
+        transform: translateY(180px);
+      }
+      .toggled #slide-cyclearchext .prodenv {
+        opacity: 0;
+      }
+      .toggled #slide-cyclearchext .testenv {
+        opacity: 1;
+      }
+
+      #slide-cyclearchext {
+        transition: background-color 1s;
+      }
+      .toggled #slide-cyclearchext {
+        /*background-color: #469e30; green*/
+        background-color: #06455a;
+      }
+
+      .toggled #slide-cyclearchext .testenv {
+        opacity: 1;
+      }
+
+      .hidden {
+        opacity: 0;
+      }
+
+      #slide-test1 svg .stream {
+        stroke-dasharray: 0px, 200 !important;
+      }
+
+      #slide-pausev3 svg .dom-stream {
+        stroke-dasharray: 0px, 50px !important;
+      }
+
+      #slide-me {
+          font-size: 2em;
+      }
+
+      #mozilla svg {
+        height: 15em;
+      }
+
+      #poketom svg {
+        height: 12em;
+      }
+
+      #slide-medev #mozilla {
+        display: none;
+      }
+
+      #slide-medev #poketom {
+        transform: translateX(1500px);
+        transition: all 2s;
+      }
+      .entered #slide-medev #poketom {
+        transform: translateX(0);
+      }
+
+      #slide-medev-moz #mozilla {
+        transform: translateX(-1500px);
+        transition: all 2s;
+      }
+      .entered #slide-medev-moz #mozilla {
+        transform: translateX(0);
+      }
+
+      #mozescape svg {
+        height: 5em;
+        overflow: visible;
+      }
+
+    </style>
+  </head>
+  <body class="dark">
+    <textarea id="source">
+class: middle center naked
+name: intro
+# UI as Pure Functions of Time
+
+{% include devoxx/darksideofthecycle.svg %}
+
+#### CycleConf 2017 | @atomrc
+
+???
+Do you remember the first time you said to yourself :
+- I want to learn JavaScript
+- I want to know how to code for the browser
+- I wanna be a frontend developer
+?
+
+---
+class: middle naked
+## « I wanna be a frontend developer! »
+.right[— you, some time ago]
+
+???
+I do remember it! Very well actually.
+
+At that time, we are in 2011,
+
+---
+layout: true
+class: middle naked
+## « I wanna be a frontend developer! »
+.right[— @atomrc, 2011]
+<div id="poketom" class="poke" style="position: absolute; bottom: 1em; left: 1em">
+{% include cycleconf/tom.svg %}
+</div>
+<div id="mozilla" class="poke" style="position: absolute; top: 1em; right: 1em">
+{% include cycleconf/mozilla.svg %}
+</div>
+
+---
+name: medev
+???
+I am in second year of engineering school and I have a dream.  
+I want to work for
+
+---
+name: medev-moz
+
+???
+Mozilla  
+I want to make the Web a better place for everyone,  
+I want to contribute to Open Source,  
+
+To achieve that dream, I have a very precise plan ... In 2 steps: 
+- first step is to get an intership at Mozilla
+- second step is being so awesome at my intership that they have no choice but to hire me!
+
+This plan requires 2 things:
+- a nice resume (of course)
+- some pretty solid skills in a tech that they use at Mozilla.
+
+For the tech, you've guessed it, I chose JavaScript and for the resume and the skills, I decided to merge both requirements in a single project ... And I made this.
+
+
+---
+layout: false
+class: center
+![html5 resume](https://cloud.githubusercontent.com/assets/1090716/21966622/0273c282-db77-11e6-886a-1ddee2ec3187.gif)
+
+???
+It worth what it worth, but that was the first project I actually released and I was really excited about this. I felt like a JavaScript God and I though all the doors would be opened for me, including the doors of Mozilla !
+
+---
+name: mozescape
+class: naked center middle
+
+<div id="mozescape">
+{% include cycleconf/mozescape.svg %}
+</div>
+
+???
+Aaaaannd guess what .... It didn't work. I didn't get the intership nor the job.
+
+But I am not here to talk about my past carrer dreams, so back to our subject.
+
+---
+class: naked center middle
+![focused](https://media.giphy.com/media/MIY4jpusckRmU/giphy.gif)
+
+???
+Now consider this scenario: you are at work, highly focused on your current task and, in fact, you are so focused that, somehow, you've landed on my resume.
+
+---
+class: center
+![html5 resume](https://cloud.githubusercontent.com/assets/1090716/21966622/0273c282-db77-11e6-886a-1ddee2ec3187.gif)
+
+???
+Now you are getting curious, "How did he made it?, How did he manage to have such poor performance with such a simple animation?" you say. So you scroll down the page and notice a github link to the project. You click on it and land on the source code.  
+
+So my question to you is: "How would you read that code?", "where would you start?"
+
+
+---
+class: middle
+# Anatomy of a `main.js`
+
+???
+If you are like me, you would probably start by reading the "main.js" or "application.js" or "index.js" or whatever file is the entry point of the application.
+
+And that's what you would have found if you did this on my resume
+
+---
+class: middle
+
+```javascript
+function main() {
+
+  function run() {
+    cvController.step();
+    requestAnimationFrame(run);
+  }
+
+  requestAnimationFrame(run);
+}
+```
+
+???
+So, this is a pretty basic code, nothing really fancy about it. You can easily understand what is happening before your eyes. I have simplified a bit the code of the main, but the idea stays exactly the same.
+
+We have our main function that declares a run function that seems to be computing a single frame of the animation.
+There is also this CvController that seems to handle all the state of the application and seems also to be responsible for updating the DOM according to that state. Finally there is this requestAnimationFrame that calls the run function at the right time.
+---
+class: middle
+
+.highlighted[
+```javascript
+function main() {
+
+  function run() {
+*   cvController.step(); // ◀ 3 statements, 3 side effects
+*   requestAnimationFrame(run);
+  }
+
+* requestAnimationFrame(run);
+}
+```
+
+]
+.animate-from-bottom.toggleable[
+.center.middle[
+![side effects](http://www.impawards.com/2013/posters/side_effects_ver9.jpg)
+]
+]
+
+---
+class: middle
+
+.highlighted[
+```javascript
+function main() {
+
+  function run() {
+    cvController.step();
+*   requestAnimationFrame(run); // ◀ Time is a dependency of our app
+  }
+
+* requestAnimationFrame(run);
+}
+```
+]
+
+---
+class: middle
+
+.highlighted[
+```javascript
+*function main() { // ◀ could it be injected?
+
+  function run() {
+    cvController.step();
+    requestAnimationFrame(run);
+  }
+
+  requestAnimationFrame(run);
+}
+```
+]
+
+---
+layout: false
+# What's that?
+
+.hidden[
+```javascript
+var paused = false;
+```
+]
+
+.hidden[
+```javascript
+document.addEventListener("keyup", function (ev) {
+  if (ev.keyCode === 32) {
+    paused = !paused;
+  }
+})
+```
+]
+
+```javascript
+function run() {
+  if (!paused) {
+    cvController.step();
+  }
+  requestAnimationFrame(run);
+}
+```
+
+---
+# What's that?
+
+```javascript
+var paused = false;
+```
+
+.hidden[
+```javascript
+document.addEventListener("keyup", function (ev) {
+  if (ev.keyCode === 32) {
+    paused = !paused;
+  }
+})
+```
+]
+
+```javascript
+function run() {
+  if (!paused) {
+    cvController.step();
+  }
+  requestAnimationFrame(run);
+}
+```
+
+---
+# What's that?
+
+```javascript
+var paused = false;
+```
+
+```javascript
+document.addEventListener("keyup", function (ev) {
+  if (ev.keyCode === 32) {
+    paused = !paused;
+  }
+})
+```
+
+```javascript
+function run() {
+  if (!paused) {
+    cvController.step();
+  }
+  requestAnimationFrame(run);
+}
+```
+
+---
+# What's that?
+
+```javascript
+*var paused = false; // 'global' variable
+```
+
+.highlighted[
+```javascript
+document.addEventListener("keyup", function (ev) {
+  if (ev.keyCode === 32) {
+*   paused = !paused; // side effect
+  }
+})
+```
+]
+
+.highlighted[
+```javascript
+function run() {
+* if (!paused) { // out of scope variable
+    cvController.step();
+  }
+  requestAnimationFrame(run);
+}
+```
+]
+
+---
+class: middle
+# Is VanillaJS the problem?
+
+---
+# `main.ng.js`
+
+```javascript
+function main() {
+  const app = angular.module("cv", ["cvModule"])
+
+  app.run(function ($scope, cvController) {
+    function update() {
+      $scope.$apply(cvController.step.bind(cvController));
+      raf(update)
+    }
+    raf(update)
+  })
+
+  angular.bootstrap(AppContainer, [app.name])
+}
+```
+
+---
+# `main.ng.js`
+
+.highlighted[
+```javascript
+function main() {
+  const app = angular.module("cv", ["cvModule"])
+
+  app.run(function ($scope, cvController) {
+    function update() {
+      $scope.$apply(cvController.step.bind(cvController));
+*     raf(update)
+    }
+*   raf(update)
+  })
+
+  angular.bootstrap(AppContainer, [app.name])
+}
+```
+]
+
+---
+# `main.react.js`
+
+```javascript
+function main() {
+  function run() {
+    state = update(state)
+    ReactDOM.render(
+      <Cv data={state}/>,
+      AppContainer
+    )
+    raf(run)
+  }
+
+  raf(run)
+}
+```
+
+---
+# `main.react.js`
+
+.highlighted[
+```javascript
+function main() {
+  function run() {
+    state = update(state)
+    ReactDOM.render(
+      <Cv data={state}/>,
+      AppContainer
+    )
+*   raf(run)
+  }
+
+* raf(run)
+}
+```
+]
+
+
+---
+# `main.vue.js`
+
+```javascript
+function main() {
+  const cv = new Vue({
+    el: "#main",
+    data: { state }
+  })
+
+  function run() {
+    update(state)
+    raf(run)
+  }
+  raf(run)
+}
+```
+
+---
+# `main.vue.js`
+
+.highlighted[
+```javascript
+function main() {
+  const cv = new Vue({
+    el: "#main",
+    data: { state }
+  })
+
+  function run() {
+    update(state)
+*   raf(run)
+  }
+* raf(run)
+}
+```
+]
+
+---
+class: center
+name: beforecycle
+# Embed Time
+
+<div>
+  {% include devoxx/before-cycle.svg %}
+</div>
+
+---
+name: cycle-intro
+class: middle center
+# And there is Cycle.js
+
+{%include devoxx/cyclejs.svg %}
+
+---
+# `main.cycle.js`
+
+```javascript
+function main({ time }) {
+
+  const vtree$ = time
+    .animationFrames()
+    .fold(update, initialState)
+    .map(render)
+
+  return { DOM: vtree$ }
+}
+```
+
+---
+# `main.cycle.js`
+
+.highlighted[
+```javascript
+*function main({ time }) { // ◀ hello you
+
+  const vtree$ = time
+    .animationFrames()
+    .fold(update, initialState)
+    .map(render)
+
+  return { DOM: vtree$ }
+}
+```
+]
+
+---
+# `main.cycle.js`
+
+.highlighted[
+```javascript
+function main({ time }) {
+
+  const vtree$ = time
+    .animationFrames()
+    .fold(update, initialState)
+    .map(render)
+
+* return { DOM: vtree$ } // ◀ hello you
+}
+```
+]
+
+---
+class: center
+name: aftercycle
+# Injected Time
+
+<div>
+  {% include devoxx/after-cycle.svg %}
+</div>
+
+---
+class: middle
+# We are functions of Time
+
+---
+class: middle
+# What about our applications?
+
+---
+class: middle
+# app = function (time) ?
+
+???
+At this point of the talk, you might be thinking : "Well Thomas, for an app that renders at 60 frames per seconds , its pretty obvious that it is a function of time. Even the description says it : an app that renders at 60 frames per second. But what about the kind of apps I develop with clicks, keyups and so on?
+
+---
+class: middle
+# What is a UI?
+
+---
+class: middle
+> A function of the events it listens to
+
+---
+class: middle
+# What is an event?
+
+---
+class: middle
+> Something that happens at a very specific point in time
+
+---
+class: middle
+> A function of Time
+
+```javascript
+function raf(timestamp) {
+  return timestamp % 16 === 0;
+}
+```
+
+.center.big-code[
+```
+raf ----x----x----x----x---->
+```
+]
+
+
+---
+class: left-align middle
+
+## app = function (events)
+
+--
+## app = function (function (time))
+
+--
+## app = function (time)
+
+### Thanks transitivity 👍 
+
+---
+class: middle
+
+# We are used to getting rid of Time
+
+---
+class: middle
+```javascript
+input.addEventListener("keyup", function (event) {
+  if (event.key === "Enter") {
+    var name = event.target.value;
+    user.name = name;
+  }
+})
+```
+
+---
+class: middle
+.highlighted[
+```javascript
+*input.addEventListener("keyup", function (event) { // Time-dependent
+  if (event.key === "Enter") {
+    var name = event.target.value;
+    user.name = name;
+  }
+*})
+```
+]
+
+
+---
+class: middle
+.highlighted[
+```javascript
+input.addEventListener("keyup", function (event) {
+* if (event.key === "Enter") { // Space-dependent
+*   var name = event.target.value;
+*   user.name = name;
+* }
+})
+```
+]
+
+.animate-from-bottom.toggleable[
+.center.middle[
+![french](http://1.bp.blogspot.com/-HRNnnaiwmVA/Th4zwBegCXI/AAAAAAAAAGc/MNI90LKWWt8/w1200-h630-p-k-no-nu/french-stereotype+copy.jpg)
+###`s/special/spacial`
+]
+]
+
+---
+class: middle
+
+# Instead of getting rid of Time ...
+
+---
+class: middle
+
+# ... Let's make everything:
+
+---
+class: middle
+
+# Time-dependent
+
+```javascript
+const user$ = DOM.select(".username")
+
+  .events("keyup")
+
+  .filter(event => event.key === "Enter")
+
+  .map(event => event.target.value)
+
+  .fold((user, name) => ({ ...user, name }), {})
+```
+
+---
+class: middle
+# Observable
+
+```javascript
+const user$ = DOM.select(".username")
+
+  .events("keyup")                               // observable
+
+  .filter(event => event.key === "Enter")        // observable
+
+  .map(event => event.target.value)              // observable
+
+  .fold((user, name) => ({ ...user, name }), {}) // observable
+```
+
+---
+class: middle
+# Declarative
+
+```javascript
+const user$ = DOM.select(".username")
+
+  .events("keyup")
+
+  .filter(isEnterKey)
+
+  .map(getValue)
+
+  .fold(userReducer, {})
+```
+
+---
+class: middle
+
+# Exportable
+
+```javascript
+const keyup$ = DOM.select(".username").events("keyup")
+
+const enter$ = keyup$.filter(isEnterKey)
+
+const name$ = enter$.map(getValue)
+
+const user$ = name$.fold(userReducer, {})
+```
+
+---
+class: middle
+
+# Reactive Programming
+
+---
+class: middle
+# DataFlow vs. Statements
+
+---
+class: middle
+# Pause
+
+---
+class: middle
+name: pausev1
+
+<div style="float: right">
+  {% include devoxx/pause-v1.svg %}
+</div>
+
+```javascript
+function main({ time }) {
+
+  const vtree$ = time.animationFrames()
+    .fold(update, initialState)
+    .map(render)
+
+  return { DOM: vtree$ }
+}
+```
+
+---
+name: pausev2
+class: middle
+
+<div style="float: right">
+  {% include devoxx/pause-v2.svg %}
+</div>
+
+
+```javascript
+function main({ time, DOM }) {
+
+  const paused$ = DOM.select("document")
+    .events("keyup")
+    .filter(ev => ev.keyCode === 32)
+    .fold(acc => !acc, false)
+
+  const vtree$ = time.animationFrames()
+    .fold(update, initialState)
+    .map(render)
+
+  return { DOM: vtree$ }
+}
+```
+
+.animate-from-bottom.toggleable[
+.center.middle.shadow[
+<br>
+<br>
+<br>
+<br>
+.sub-toggleable[
+![straw simulator](http://i.imgur.com/xrX4VV0.gif)
+]
+# Straw Simulator 2017
+]
+]
+
+---
+name: pausev3
+class: middle
+
+<div style="float: right">
+  {% include devoxx/pause-v3.svg %}
+</div>
+
+```javascript
+function main({ time, DOM }) {
+
+  const paused$ = DOM.select("document")
+    .events("keyup")
+    .filter(ev => ev.keyCode === 32)
+    .fold(acc => !acc, false)
+
+  const vtree$ = time.animationFrames()
+    .combine(sampleCombine(pause$))
+    .filter(([_, paused]) => !paused)
+    .fold(update, initialState)
+    .map(render)
+
+  return { DOM: vtree$ }
+}
+```
+
+---
+class: middle
+
+# App Architectures
+
+---
+name:resumearch
+class: center
+# My resume
+
+<div>
+  {% include devoxx/resumearch.svg %}
+</div>
+
+--
+.animate-from-bottom[.middled.banner[`main()`]]
+
+---
+name:reactarch
+class: center
+# React
+
+<div>
+  {% include devoxx/reactarch.svg %}
+</div>
+
+--
+.animate-from-bottom[.middled.banner[`const vdom = main()`]]
+
+---
+name:reduxarch
+class: center
+# React + Redux
+
+<div>
+  {% include devoxx/reduxarch.svg %}
+</div>
+
+--
+.animate-from-bottom[.middled.banner[`const vdom = main(state)`]]
+
+---
+name:cyclearch
+class: center
+# Cycle.js
+
+<div>
+  {% include devoxx/cyclearch.svg %}
+</div>
+
+---
+name:cyclearchext
+class: center
+# Cycle.js (fixed)
+
+<div>
+  {% include cycleconf/cycleenvs.svg %}
+</div>
+
+--
+.animate-from-bottom[.middled.banner[`const sideEffects = main(signals)`]]
+
+---
+layout: true
+class: center middle huge-code
+# Cycle.js
+
+---
+```javascript
+const sideEffects = application(signals)
+```
+
+---
+```javascript
+const writes = application(reads)
+```
+
+---
+```javascript
+const sinks = application(sources)
+```
+
+---
+```javascript
+const sinks = application(time)
+```
+
+---
+layout: false
+class: middle
+# Cycle.js
+
+```javascript
+function main({ DOM, HTTP, Websocket, /*...*/ }) {
+            // ↑ input signals
+
+  return {
+    DOM: vtree$, // DOM's side effects I want to execute
+    HTTP: request$, // HTTP requests I want to execute
+    Canvas: draw$, // Things I want to draw on a canvas
+    // ...
+  }
+}
+```
+
+---
+class: center, middle
+
+![state as integration of time](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/cycleconf-function-time/staltz.png)
+
+---
+class: center, middle
+
+## « 2016, the year we realised Time was a side effect. »
+.right[— Nick, 20/04/2017]
+
+---
+name: me
+class: center, middle, naked
+![thomas belin](http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=150)  
+Thomas Belin  
+Front-end developer @ <s>Mozilla</s> doyoubuzz  
+<i class="ion-social-twitter"></i>
+[@atomrc](https://twitter.com/atomrc) | [thomasbelin.fr](http://blog.thomasbelin.fr)
+
+---
+<iframe src="http://www.thomas-belin.com/" height=630 width="100%"></iframe>
+---
+class: middle naked huge
+# Thanks :)
+## 🚲 🤘
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TimelineMax.min.js"></script>
+    <script>
+function once(initFn) {
+  var output = null;
+  return function init(slide) {
+    if (output) {
+      return output;
+    }
+    output = initFn(slide);
+    return output;
+  };
+
+}
+
+function functionAnimation(elm) {
+  var timeline = new TimelineMax();
+
+  timeline
+    .to(elm, 1, { rotation: "-=360", transformOrigin: "center center"})
+
+    return timeline;
+}
+
+function vibrate(elm) {
+  var timeline = new TimelineMax();
+
+  timeline
+    .to(elm, .1, { rotation: "+=20", transformOrigin: "center center" })
+    .to(elm, .1, { rotation: "-=40", transformOrigin: "center center" })
+    .to(elm, .1, { rotation: "+=40", transformOrigin: "center center" })
+    .to(elm, .1, { rotation: "-=40", transformOrigin: "center center" })
+    .to(elm, .1, { rotation: "+=40", transformOrigin: "center center" })
+    .to(elm, .1, { rotation: "-=20", transformOrigin: "center center" })
+
+    return timeline;
+}
+
+var streamConf = {
+  nf: 20,
+  lf: 40,
+  vlf: 160
+};
+
+var animations = {
+  intro: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var minTimeline = new TimelineMax();
+    var hourTimeline = new TimelineMax();
+    var eventTimeline = new TimelineMax();
+
+    var min = slide.querySelectorAll(".time-min");
+    var hour = slide.querySelectorAll(".time-hour");
+    var streams = slide.querySelectorAll(".stream");
+
+    minTimeline
+      .to(min, 2, { rotation: 360, transformOrigin: "left bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    hourTimeline
+      .to(hour, 20, { rotation: 360, transformOrigin: "right bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    eventTimeline
+      .to(streams, .75, { strokeDashoffset:-15, ease: Power0.easeNone })
+      .repeat(-1)
+
+    timeline
+      .add(minTimeline, "0")
+      .add(hourTimeline, "0")
+      .add(eventTimeline, "0")
+
+    return timeline;
+  }),
+
+  mozescape: once(function (slide) {
+    var timeline = new TimelineMax();
+    var ball = document.querySelector(".pokeball")
+    var moz = document.querySelector(".moz")
+
+    timeline
+      .to(ball, .25, { rotation: 20, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .to(ball, .25, { rotation: -10, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .to(ball, .25, { rotation: 5, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .to(ball, .25, { rotation: 0, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .to(ball, .25, { rotation: 20, transformOrigin: "center bottom", ease: Power0.easeNone }, "+=.5")
+      .to(ball, .25, { rotation: -10, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .to(ball, .25, { rotation: 5, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .to(ball, .25, { rotation: 0, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .add("escape")
+      .to(ball, .5, { scale: 5, opacity: 0 }, "escape")
+      .to(moz, .5, { scale: 8, transformOrigin: "center center" }, "escape")
+      .to(moz, 2, { x: -1000, opacity: 0 }, "+=.5")
+      .repeat(-1)
+    return timeline;
+  }),
+
+  beforecycle: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var minTimeline = new TimelineMax();
+    var hourTimeline = new TimelineMax();
+    var eventTimeline = new TimelineMax();
+
+    var min = slide.querySelectorAll(".time-min");
+    var hour = slide.querySelectorAll(".time-hour");
+    var ev = slide.querySelectorAll(".stream");
+
+    minTimeline
+      .to(min, 1, { rotation: 360, transformOrigin: "left bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    hourTimeline
+      .to(hour, 10, { rotation: 360, transformOrigin: "right bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    eventTimeline
+      .to(ev, .5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1)
+
+    timeline
+      .add(minTimeline, "0")
+      .add(hourTimeline, "0")
+      .add(eventTimeline, "0")
+
+    return timeline;
+  }),
+
+  aftercycle: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var minTimeline = new TimelineMax();
+    var hourTimeline = new TimelineMax();
+    var eventTimeline = new TimelineMax();
+
+    var min = slide.querySelectorAll(".time-min");
+    var hour = slide.querySelectorAll(".time-hour");
+    var ev = slide.querySelectorAll(".stream");
+
+    minTimeline
+      .to(min, 1, { rotation: 360, transformOrigin: "left bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    hourTimeline
+      .to(hour, 10, { rotation: 360, transformOrigin: "right bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    eventTimeline
+      .to(ev, .5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1)
+
+    timeline
+      .add(minTimeline, "0")
+      .add(hourTimeline, "0")
+      .add(eventTimeline, "0")
+
+      return timeline;
+  }),
+
+  pausev1: once(function init(slide) {
+    var timeline = new TimelineMax();
+
+    var raf = slide.querySelectorAll(".raf-stream");
+
+    timeline
+      .to(raf, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1)
+
+    return timeline;
+  }),
+
+  pausev2: once(function init(slide) {
+    var timeline = new TimelineMax();
+
+    var raf = slide.querySelectorAll(".raf-stream");
+    var dom = slide.querySelectorAll(".dom-stream");
+
+    var rafTl = new TimelineMax();
+
+    domTl = new TimelineMax();
+
+    domTl
+      .to(dom, 1, { strokeDashoffset:-streamConf.lf, ease: Power0.easeNone })
+      .repeat(-1)
+
+    rafTl
+      .to(raf, .5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1)
+
+    timeline
+      .add(domTl, "0")
+      .add(rafTl, "0")
+
+    return timeline;
+  }),
+
+  pausev3: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var rafTl = new TimelineMax();
+    var domTl = new TimelineMax();
+    var outTl = new TimelineMax();
+
+    var raf = slide.querySelectorAll(".raf-stream");
+    var dom = slide.querySelectorAll(".dom-stream");
+    var out = slide.querySelectorAll(".out-stream");
+
+    domTl
+      .to(dom, 1.5, { strokeDashoffset:-36, ease: Power0.easeNone })
+      .repeat(-1)
+
+    outTl
+      .to(out, 1.5, { strokeDashoffset:-50, ease: Power0.easeNone })
+      .to(out, 0, { opacity: 0 })
+      .repeatDelay(1.5)
+      .repeat(-1)
+
+    rafTl
+      .to(raf, 5, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .repeat(-1)
+
+    timeline
+      .add(domTl, "0")
+      .add(rafTl, "0")
+      .add(outTl, "0")
+
+    return timeline;
+  }),
+
+  test1: once(function init(slide) {
+    var timeline = new TimelineMax();
+
+    var ev = slide.querySelectorAll(".stream");
+    var check = slide.querySelectorAll(".check");
+
+    timeline
+      .to(ev, 2, { strokeDashoffset:-170, ease: Power0.easeNone })
+      .to(check, 1, { opacity: 1 })
+      .repeat(-1)
+
+      return timeline;
+  }),
+
+  test2: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var rafTl = new TimelineMax();
+    var domTl = new TimelineMax();
+
+    var raf = slide.querySelectorAll(".raf-stream");
+    var dom = slide.querySelectorAll(".dom-stream");
+    var check = slide.querySelectorAll(".check");
+
+    timeline
+      .to(dom, 1, { strokeDashoffset:-120, ease: Power0.easeNone })
+      .to(raf, 1, { strokeDashoffset:-120, ease: Power0.easeNone })
+      .to(check, 1, { opacity: 1 })
+      .repeat(-1)
+
+      return timeline;
+  }),
+
+  resumearch: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var outTl = new TimelineMax();
+    var timeTl = new TimelineMax();
+
+    var stream = slide.querySelectorAll(".stream");
+    var out1 = slide.querySelectorAll(".sideeffect-1");
+    var out2 = slide.querySelectorAll(".sideeffect-2");
+    var out3 = slide.querySelectorAll(".sideeffect-3");
+
+    timeTl
+      .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1);
+
+    outTl
+      .to(out1, 0.75, { scale: 1.2, x: 40, opacity: 1, rotation: 360, transformOrigin: "center center" })
+      .to(out1, 0, { opacity: 0})
+      .to(out2, 0.75, { scale: 1.2, y: -20, x: 20, opacity: 1, rotation: 360, transformOrigin: "center center" }, 0.5)
+      .to(out2, 0, { opacity: 0})
+      .to(out3, 0.75, { scale: 1.2, y: 20, x: 20, opacity: 1, rotation: 360, transformOrigin: "center center" }, 1)
+      .to(out3, 0, { opacity: 0})
+      .repeat(-1)
+
+    timeline
+      .add(timeTl, "0")
+      .add(outTl, "0")
+
+    return timeline;
+  }),
+
+  reactarch: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var outTl = new TimelineMax();
+    var timeTl = new TimelineMax();
+
+    var stream = slide.querySelectorAll(".stream");
+    var out = slide.querySelectorAll(".output");
+
+    timeTl
+      .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1);
+
+    outTl
+      .to(out, 3, { x: 100, opacity: 1 })
+      .repeat(-1)
+
+    timeline
+      .add(timeTl, "0")
+      .add(outTl, "0")
+
+    return timeline;
+  }),
+
+  reduxarch: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var outTl = new TimelineMax();
+    var timeTl = new TimelineMax();
+
+    var stream = slide.querySelectorAll(".stream");
+    var state = slide.querySelectorAll(".state");
+    var out = slide.querySelectorAll(".output");
+
+    timeTl
+      .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1);
+
+    outTl
+      .to(state, 2, { x: 90, opacity: 1 })
+      .to(out, 2, { x: 90, opacity: 1 })
+      .repeat(-1)
+
+    timeline
+      .add(timeTl, "0")
+      .add(outTl, "0")
+
+    return timeline;
+  }),
+
+  cyclearch: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var functionTl = new TimelineMax();
+    var timeTl = new TimelineMax();
+
+    var stream = slide.querySelectorAll(".stream");
+    var func = slide.querySelectorAll(".function");
+
+    functionTl
+      .add(functionAnimation(func))
+      .repeat(-1)
+
+    timeTl
+      .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1);
+
+    timeline
+      .add(timeTl, "0")
+      .add(functionTl, "0")
+
+    return timeline;
+  }),
+
+  cyclearchext: once(function init(slide) {
+    var timeline = new TimelineMax();
+
+    var hourTimeline = new TimelineMax();
+    var minTimeline = new TimelineMax();
+    var timeTl = new TimelineMax();
+    var testTl = new TimelineMax();
+
+    var min = slide.querySelectorAll(".time-min");
+    var hour = slide.querySelectorAll(".time-hour");
+
+    var stream = slide.querySelectorAll(".stream:not(.teststream)");
+    var tstream = slide.querySelectorAll(".stream.teststream");
+    var ok = slide.querySelectorAll(".ok");
+
+    minTimeline
+      .to(min, 2, { rotation: 360, transformOrigin: "left bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    hourTimeline
+      .to(hour, 20, { rotation: 360, transformOrigin: "right bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    timeTl
+      .to(stream, .5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1);
+
+    testTl
+      .to(tstream.filter(e => e.classList.contains("in1")), 2, { strokeDashoffset:-150, ease: Power0.easeNone })
+      .to(tstream.filter(e => e.classList.contains("out1")), 2, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .to(ok, .7, { x: 50 })
+      .to(ok, .7, { opacity: 0 })
+      .to(ok, 0, { x: 0, opacity: 1 })
+      .to(tstream, 0, { strokeDashoffset:10, ease: Power0.easeNone })
+      .to(tstream.filter(e => e.classList.contains("in2")), 2, { strokeDashoffset:-150, ease: Power0.easeNone })
+      .to(tstream.filter(e => e.classList.contains("out2")), 2, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .to(ok, .7, { x: 50 })
+      .to(ok, .7, { opacity: 0 })
+      .to(ok, 0, { x: 0, opacity: 1 })
+      .to(tstream, 0, { strokeDashoffset:10, ease: Power0.easeNone })
+      .to(tstream.filter(e => e.classList.contains("in3")), 2, { strokeDashoffset:-150, ease: Power0.easeNone })
+      .to(tstream.filter(e => e.classList.contains("out3")), 2, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .to(ok, .7, { x: 50 })
+      .to(ok, .7, { opacity: 0 })
+      .to(ok, 0, { x: 0, opacity: 1 })
+      .repeat(-1);
+
+    timeline
+      .add(hourTimeline, "0")
+      .add(minTimeline, "0")
+      .add(timeTl, "0")
+
+    return timeline;
+  })
+};
+    </script>
+    <script>
+      //init remarkjs
+      var timeout = window.setTimeout;
+      var slideshow = remark.create({
+        highlightStyle: 'github',
+        highlightLines: true,
+        ratio: "16:9"
+      });
+
+      slideshow.on("beforeHideSlide", function (slide) {
+        var currentSlide = document.querySelector(".remark-slide-container.entered");
+        var animation = animations[slide.properties.name] ? animations[slide.properties.name](currentSlide) : null;
+        if (animation) {
+          animation.pause();
+        }
+        if (!currentSlide) { return; }
+        currentSlide.classList.remove("entered");
+      });
+
+      slideshow.on("afterShowSlide", function (slide) {
+        timeout(launchAnimations, 50, slide);
+      });
+
+      timeout(
+        launchAnimations,
+        50,
+        slideshow.getSlides()[slideshow.getCurrentSlideIndex()]
+      );
+
+      function launchAnimations(slide) {
+          var element = document.querySelector(".remark-visible");
+          element.classList.add("entered");
+          var animation = animations[slide.properties.name] ? animations[slide.properties.name](element) : null;
+          if (animation) {
+            animation.play();
+          }
+          return animation
+      }
+
+      document.addEventListener("keyup", function (ev) {
+        switch(ev.keyCode) {
+          case 84:
+            var currentSlide = document.querySelector(".remark-slide-container.entered");
+            currentSlide.classList.toggle("toggled");
+            break;
+
+          case 82:
+            var currentSlide = document.querySelector(".remark-slide-container.entered");
+            currentSlide.classList.toggle("sub-toggled");
+            break;
+        }
+      });
+
+    </script>
+
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-34218773-1', { siteSpeedSampleRate: 100 });
+ga('send', 'pageview');
+    </script>
+
+  </body>
+</html>
