@@ -1,9 +1,82 @@
 ---
-title: "You don't need this"
+title: "You might not need this"
 categories: [javascript, this]
-description: "`this`, the least understood keyword of the JavaScript language. What if I told you that you don't need it?"
+description: "`this`, the least understood keyword of the JavaScript language. What if I told you that you might not need it?"
 lang: en
 ---
+
+What can you deduce from this piece of code?
+
+```javascript
+function compute() {
+  const a = 1
+  return a + 1
+}
+```
+
+Looking at it, it's pretty safe to say that it will always return the same value (`2` in our case). I can replace any occurences of `compute` in my program by `2` and everything will work as expected.
+
+Now, what can you deduce from this piece of code?
+
+```javascript
+function compute() {
+  return a + 1
+}
+```
+
+We are not able to deduce anything from this piece of code!! Will it crash? Will it return a `Number`? Will it return a `String`? ... We don't know anything!
+
+Let's do the same exercide a third time:
+
+```javascript
+function compute() {
+  return this.val + 1
+}
+```
+
+Just like in the previous example, we cannot deduce anything from those 3 lines! We need to look elswhere to resolve this issue
+
+```javascript
+function main() {
+  const a = { val: 1 }
+
+  function compute() {
+    return this.val + 1
+  }
+
+  const computeA = compute.bind(a) // bind the `this` of compute
+  computeA() // -> 2
+}
+```
+
+This scenario is easy to read and we didn't had to dig too much to know that the function call returns `2`. But consider this other scenario:
+
+```javascript
+function main() {
+  var a = { val: 1 };
+
+  function compute() {
+    return this.val + 1
+  }
+
+  const computeA = compute.bind(a) // bind the `this` of compute
+
+  // tons of lines of code that can mutate a.val
+
+  computeA() // -> ???
+}
+```
+
+## It's all about explicitness
+
+Ok our three functions do not do the same thing. The first one returns always the same value, while the others two return a value according to some external variable. That's true, but if you look at the three functions signature, it's in all cases: `function compute() {}`.  
+And that's exactly the problem: from the outside **you cannot tell that those functions depend on an external value**.
+
+and the version with `this` can seem twisted. But due to the fact that functions are first class citizens in JavaScript, this is a totally valid way of declaring and using a function.
+
+
+
+=================================================
 
 Let's consider the following beauty:
 
@@ -80,7 +153,7 @@ boundFct() // 2
 
 ## Predictability is key
 
-In the first exemple I showed you, you didn't need anything else than the function's signature to tell the function always returns the same value. Well, because we are talking about JavaScript and that you have no way to ensure that functions are pure, you also need to read the body of the function to have the guarantee that it is actually pure. But that's all, you don't need to read anything else to know what the function does.
+In the first example I showed you, you didn't need anything else than the function's signature to tell the function always returns the same value. Well, because we are talking about JavaScript and that you have no way to ensure that functions are pure, you also need to read the body of the function to have the guarantee that it is actually pure. But that's all, you don't need to read anything else to know what the function does.
 
 In the other exemples, you need to know the execution context of the function to understand what it will return. Said otherwise: you need to track down every single mutation that is applied to the variable (either `this` or `parentVar`) to be able to predict what the function will return.  
 Tracking down every mutation can be pretty hard depending on how many scopes the variable is accessible from.
