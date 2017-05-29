@@ -1,267 +1,160 @@
 ---
 title: "You might not need this"
 categories: [javascript, this]
-description: "`this`, the least understood keyword of the JavaScript language. What if I told you that you might not need it?"
+description: "`this`, the least understood concept of the JavaScript language. What if I told you that you might not need it?"
 lang: en
 ---
 
-What can you deduce from this piece of code?
+Consider the following beauty:
 
 ```javascript
 function compute() {
-  const a = 1
-  return a + 1
+  //
 }
 ```
 
-It's pretty safe to say that it will always return the same value (`2` in our case). I can replace any occurences of `compute` in my program by `2` and everything will work as expected.
+If I tell you that this function **is pure** (a **pure function**, is a function which return value will always be the same given the same arguments), then you can easily deduce an interesting thing from those 3 lines: the function `compute` will always return the same value.  
+`compute` is, basically, **a constant**.
 
-Now, what can you deduce from that piece?
+In JavaScript, it is very easy to break the purity of a function thus breaking the deduction we made earlier about `compute` being a constant.
+
+One way to break purity, would be reading some external variable:
 
 ```javascript
 function compute() {
-  return this.val + 1
+  return ext.val; // ext is some object defined in a parent scope
 }
 ```
 
-We cannot deduce much, can we?  
-Will it crash? Will it return a `Number`? Will it return a `String`? ... We don't know!
+... And that external variable could be `this`:
 
-Those 3 lines of code are not enought to start deducing!  
-We need to look elswhere to resolve this issue.
+```javascript
+function compute() {
+  return this.val;
+}
+```
+
+We now have a way to change the returned value of `compute` **from outside the function**.
 
 ```javascript
 const a = {
   val: 1,
-  compute: function compute() {
-    return this.val + 1
-  }
+  compute: compute
 }
 
-a.compute() // -> 2
+a.compute() // 1
+a.val = 2
+a.compute() // 2
 ```
 
-This scenario is easy to read and we didn't had to dig too much to know that the function call returns `2`. But consider this other scenario:
+You might be thinking that, at least, with a method call the bound object is never too far from the call making it explicit that the returned value depends on that object!  
+Most of the time, is it true, but it is easy to find a counter example:
 
 ```javascript
-const a = {
-  val: 1,
-  compute: function compute() {
-    return this.val + 1
-  }
-}
+const ext = { val: 1 }
+// create a function bound to `ext`
+const compute = function () { return this.val }.bind(ext)
 
-const computeA = a.compute.bind(a) // bind the `this` of compute
-
-// tons of lines of code that can mutate a.val
-
-computeA() // -> ???
+compute() // 1
+ext.val = 2
+compute() // 2
 ```
 
-## It's all about explicitness
+## The misunderstood `this`
 
-One can argue that the two functions do not do the same thing.  
-That's right, they don't!  
-The first returns always the same value while the other returns a value according to some external variable.
+`this` is probably the most misunderstood concept of the JavaScript language.  
+People coming from classical Object Oriented Programming languages often mistaken `this` for an instance of the class the method is in.
 
-But, the thing is, the two functions have the same **signature** `function () {}`.  
-That's exactly the problem: from the outside **you cannot tell that this function depends on an external value**!
+A better definition of `this` in JavaScript would be:
 
-If we wanted our functions to do the same thing, their signatures should be:
+> `this` represents the object which *owns* the method being called
 
-- `function (a) {}` for the version without external dependencies ;
-- `function () {}` for the version with `this`.
+And, due to the dynamic nature of JavaScript, function ownerships often change at runtime.
 
-You can also argue that the version with `this` is twisted and that we usually call methods with the bound object next to the call (like `a.compute()`). In that case it becomes obvious that the function is tied to an object and that the result depends on it (...maybe).
-
-But that the thing with JavaScript: **it is dynamic**, you can change which object is bound to a function at run time.
-
-## The beauty of functions
-
-Functions are [first class citizen in JavaScript](http://ryanchristiani.com/functions-as-first-class-citizens-in-javascript/), which means you can treat them as any other object, you can pass them around to other functions or return them.
+Functions are [first class citizen in JavaScript](http://ryanchristiani.com/functions-as-first-class-citizens-in-javascript/), which means you can treat them as any other object: passing them around to functions or returning them.
 
 Due to the asynchronous nature of JavaScript, you actually pass functions around a lot.
 
 ```javascript
 fetch("/resource")
   .then(callback) // <- callback is a function
-
-setTimeout(callback, 200) // <- callback is a function
 ```
 
-When functions passed around are actually methods (bound to a `this`), they loose the binding with the object they belong to. To keep that binding, you need to explicitly bind them to the object again.
+When the functions passed around are actually methods, they lose the binding with their initial object:
 
 ```javascript
-setTimeout(a.compute, 200) // will trigger an error because `this` is undefined
+const a = {
+  callback: function () {
+    console.log(this);
+  }
+}
 
-setTimeout(a.compute.bind(a), 200) // `this` is defined again
+fetch("/resource")
+  .then(a.callback) // <- `this` is undefined
 ```
 
-In my opinion, **functions should be building blocks that take some arguments and return a result depending on those arguments**, and only those arguments. This is what functional programming is about (see [Why Functional Programming Matters](https://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf)), and this is where the front-end is heading ([Why Learn Functional Programming in JavaScript? (Composing Software)](https://medium.com/javascript-scene/why-learn-functional-programming-in-javascript-composing-software-ea13afc7a257), [Master the JavaScript Interview: What is Functional Programming?](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0), [Ramda](http://ramdajs.com/), [lodash](https://lodash.com/), [Redux](https://github.com/reactjs/redux) ...)
+To fix this, you need to manually bind the method to its owning object:
 
-## Moving the state away
+```javascript
+fetch("/resource")
+  .then(a.callback.bind(a)) // <- `this` is defined again
+```
+
+`this` is such a mess for newcomers that TypeScript's documentation has an [article dedicated to it](https://github.com/Microsoft/TypeScript/wiki/%27this%27-in-TypeScript).
+
+## Functions are about logic, `this` is about state
 
 So we can ask the question: What does `this` do for us?
 
-Common response: it allows us to write logic close to our models. After all, this is what OOP is about.
+Common response:
 
-The way I see it: it allows us to write **statefull functions**. Functions that can produce different results given the exact same parameters.
+>`this` allows us to write logic close to our models. After all, this is what OOP is about.
 
-If `this` is about state, we should be able to move the state away and bring back our **stateless functions** on the table. Yes, it is pretty much a matter of moving the `this` as an argument of functions.
+The way I see it:
+
+>`this` allows us to write **statefull functions**. It's a way to embed some state into a function
+
+In my opinion, **functions should be building blocks that take some arguments and return a result depending on those arguments, and only those arguments**.  
+This is what functional programming is about (see [Why Functional Programming Matters](https://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf)), and this is where the front-end is heading ([Why Learn Functional Programming in JavaScript? (Composing Software)](https://medium.com/javascript-scene/why-learn-functional-programming-in-javascript-composing-software-ea13afc7a257), [Master the JavaScript Interview: What is Functional Programming?](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0), [Ramda](http://ramdajs.com/), [lodash](https://lodash.com/), [Redux](https://github.com/reactjs/redux) ...)
+
+## The separation of logic and state
+
+Getting rid of `this` is as easy as replacing every occurrences of `this` by a new parameter.
 
 ```javascript
-function () {
-  return this + 1
+function compute() {
+  return this.val + 1
 }
 
 // becomes
 
-function (a) {
-  return a + 1
+function compute(a) {
+  return a.val + 1
 }
 ```
 
-## Some benefits
+The second version of `compute` has some nice benefits:
 
- TypeScript's documentation has an [article dedicated to `this`](https://github.com/Microsoft/TypeScript/wiki/%27this%27-in-TypeScript).
+- it is **pure** (only depends on its inputs);
+- the signature explicitly implies that it depends on some input `a`.
 
-method chainining ([].map().filter().reduce()) impossible without `this`
+Well, to remove `this` from your functions you would also have to change every function calls. Not the funniest part, I agree.
 
-=================================================
+Taking away `this` from your developer's life is a great opportunity for you to leverage the full power of functions and finally start diving into **functional programming**.
 
-Let's consider the following beauty:
+In the process, you will learn how to write very simple functions and compose them together to create fully functional user interfaces.
 
-```javascript
-function fct() {
-  // code
-}
-```
+[Ramda](http://ramdajs.com/) (or [Lodash](https://lodash.com/)) will be powerful allies in this quest.
 
-This is the simplest form of function you can write.
+## Conclusion
 
-Now, if I tell you that this function **is pure** and does not read the `arguments` object then you can deduce an interesting fact about this function: it's basically **a constant**. I can replace every call to `fct` with the value it's returning, my program would still work!
+I personally don't like `this` and try to avoid it as much as I can, but, don't get me wrong, `this` is not evil and most JavaScript developers will know how to deal with it.  
+Sometime you don't really have the luxury of being able to choose to use it or not. If you use React, for example, the first **statefull** component you will write will have to use `this` (which make sense when you have in mind that `this` is about state).
 
-So little code can tell you that this function will **always return the same value**.
+That being said, removing `this` will allow you to:
 
-If you think about this, there is no other way to implement this function but to return a constant value (again under the assumption that the function is pure and not using the `arguments` object)
+- make your function signatures more explicit;
+- isolate your state and model from your logic;
+- avoid any unexpected behavior due to the misunderstanding of the `this` concept.
 
-```javascript
-function fct() {
-  // code that generates `something`
-  return something
-}
-```
-
-`something` is either a `string`, an `object`, an `array` or whatever you like but I can tell you that it's always going to be the same thing.
-
-In fact, in Haskell (a pure functional programming language) a constant (read a value) is simply a function that takes no arguments. Just like our `fct` function.
-
-## What does this have to do with `this`?
-
-In JavaScript, mainly because of the dynamic nature of the language and because it was not designed as a purely functional programming language, there are few ways for a **function with no arguments to return something different** at each call.
-
-Hidden parameters:
-
-```javascript
-function fct() {
-  return arguments[0] * 2
-}
-
-fct(1) // 2
-fct(2) // 4
-```
-
-Parent scope's variable or function:
-
-```javascript
-var parentVar = 1
-
-function fct() {
-  return parentVar
-}
-
-fct() // 1
-parentVar = 2
-fct() // 2
-```
-
-And, of course, `this`:
-
-```javascript
-var data = { val: 1 }
-
-function fct() {
-  return this.val
-}
-const boundFct = fct.bind(data);
-
-boundFct() // 1
-data.val = 2 // modify the bound variable
-boundFct() // 2
-```
-
-*The case of the `arguments` object is a bit peculiar and doesn't break purity of functions at all. I put it here just to show you that you cannot trust JavaScript functions signature. This object actually has some pretty cool use cases and we won't talk about it in the rest of the post*
-
-## Predictability is key
-
-In the first example I showed you, you didn't need anything else than the function's signature to tell the function always returns the same value. Well, because we are talking about JavaScript and that you have no way to ensure that functions are pure, you also need to read the body of the function to have the guarantee that it is actually pure. But that's all, you don't need to read anything else to know what the function does.
-
-In the other exemples, you need to know the execution context of the function to understand what it will return. Said otherwise: you need to track down every single mutation that is applied to the variable (either `this` or `parentVar`) to be able to predict what the function will return.  
-Tracking down every mutation can be pretty hard depending on how many scopes the variable is accessible from.
-
-Worst case:
-
-```javascript
-function main() {
-  var a = { val: 1 } // somewhat global variable
-
-  // ⚠ tons of lines of code that can mutate a
-
-  var boundFct = function () {
-    return this.val
-  }.bind(a)
-
-  // ⚠ tons of lines of code that can mutate a
-
-  boundFct() // ??
-}
-```
-
-Slightly better case:
-
-```javascript
-function main() {
-  // 👍 your a is safe here
-
-  (function () { // < new scope
-    var a = { val: 1 } // less global variable
-
-    var boundFct = function () {
-      return this.val
-    }.bind(a)
-
-    boundFct() // 1
-  }())
-
-  // 👍 your a is safe here
-}
-```
-
-And the next step is, naturally:
-
-```javascript
-function main() {
-  // 👍 your a is safe here
-
-  function fct() {
-    var a = { val: 1 } // local variable
-    return a.val
-  }
-
-  fct() // 1
-
-  // 👍 your a is safe here
-}
-```
-
-**The less code you have to read to understand a function, the more pretictable it is!**
+Also, it's seems like a perfect excuse to finally learn to love functions and to dive into functional programming. That should be an exciting perspective for some of you at least :)
