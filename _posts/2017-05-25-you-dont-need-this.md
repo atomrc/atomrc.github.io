@@ -13,12 +13,12 @@ function compute() {
 }
 ```
 
-If I tell you that this function **is pure** (a **pure function**, is a function which return value will always be the same given the same arguments), then you can easily deduce an interesting thing from those 3 lines: the function `compute` will always return the same value.  
+Under the assumption that `compute` is a **pure function** (a function which will always return the same value given the same arguments. But not only, see [Pure Function on Wikipedia](https://en.wikipedia.org/wiki/Pure_function)), you can easily deduce an interesting thing from those 3 lines: *`compute` will always return the same value*.  
 `compute` is, basically, **a constant**.
 
 In JavaScript, it is very easy to break the purity of a function thus breaking the deduction we made earlier about `compute` being a constant.
 
-One way to break purity, would be reading some external variable:
+One way to break purity, would be to read some external variable:
 
 ```javascript
 function compute() {
@@ -44,11 +44,11 @@ const a = {
 
 a.compute() // 1
 a.val = 2
-a.compute() // 2
+a.compute() // 2 ... so long purity, you will be missed
 ```
 
-You might be thinking that, at least, with a method call the bound object is never too far from the call making it explicit that the returned value depends on that object!  
-Most of the time, is it true, but it is easy to find a counter example:
+You might be thinking that, at least, with a method call the bound object is never too far from the call, making it explicit that the returned value depends on that object (*maybe?*)!  
+Most of the time, is it true. But it is easy to find a counter example:
 
 ```javascript
 const ext = { val: 1 }
@@ -135,26 +135,58 @@ function compute(a) {
 
 The second version of `compute` has some nice benefits:
 
-- it is **pure** (only depends on its inputs);
-- the signature explicitly implies that it depends on some input `a`.
+- it is **pure** (only depends on its inputs)*;
+- its signature explicitly tells that it depends on some input `a`.
 
-Well, to remove `this` from your functions you would also have to change every function calls. Not the funniest part, I agree.
+Of course, to remove `this` from your functions you will also have to change every function calls. Not the funniest part, I agree.
+
+Getting rid of `this` might feel a little scary and you might think you will lose powerful features. One nice feature I can think of is "method chaining".  
+
+```javascript
+const transformed = "test"
+  .replace("t", "")
+  .replace("e", "j")
+  .toUpperCase()
+```
+
+If you remove `this` from those methods they become simple functions, and you need to transform that piece of code to:
+
+```javascript
+const transformed = toUpperCase(replace("e", "j", replace("t", "", "test")))
+```
+
+Definitely not as sexy as method chaining, right? And that's where functional programming concepts come handy and [Ramda](http://ramdajs.com/) (or [Lodash](https://lodash.com/)) are very powerful allies.
+
+```javascript
+const R = require("ramda")
+
+const removeT  = R.curry(replace)("t")("")
+const e2j      = R.curry(replace)("e")("j")
+const testToJS = R.compose(toUpperCase, e2j, removeT)
+//    ^ testToJS is a completly new function created
+// from the composition of the removeT, e2j and toUpperCase functions
+
+const transformed = testToJS("test")
+```
+
+Note how this last example has make very nice and clear separation between logic and data. Only the last line is dealing with data (read "state") while all the other lines of code are here to describe logic. The separation of concerns is perfectly respected :)
+
+\* *not using `this` inside your functions doesn't imply that they are pure at all. You still need to avoid any side effect in order to achieve purity.*
+
+
+## Conclusion
 
 Taking away `this` from your developer's life is a great opportunity for you to leverage the full power of functions and finally start diving into **functional programming**.
 
 In the process, you will learn how to write very simple functions and compose them together to create fully functional user interfaces.
 
-[Ramda](http://ramdajs.com/) (or [Lodash](https://lodash.com/)) will be powerful allies in this quest.
-
-## Conclusion
-
-I personally don't like `this` and try to avoid it as much as I can, but, don't get me wrong, `this` is not evil and most JavaScript developers will know how to deal with it.  
-Sometime you don't really have the luxury of being able to choose to use it or not. If you use React, for example, the first **statefull** component you will write will have to use `this` (which make sense when you have in mind that `this` is about state).
+I personally don't like `this` and try to avoid it as much as I can, but, don't get me wrong, `this` is not evil and most JavaScript developers know how to deal with it.  
+Sometime you don't really have the luxury of being able to choose to use it or not. If you use React, for example, any [**statefull** component](https://facebook.github.io/react/docs/state-and-lifecycle.html#adding-local-state-to-a-class) you will write will have to use `this` (which make sense when you have in mind that `this` is about state).
 
 That being said, removing `this` will allow you to:
 
 - make your function signatures more explicit;
-- isolate your state and model from your logic;
+- isolate your state and models from your logic;
 - avoid any unexpected behavior due to the misunderstanding of the `this` concept.
 
-Also, it's seems like a perfect excuse to finally learn to love functions and to dive into functional programming. That should be an exciting perspective for some of you at least :)
+Also, it's seems like a perfect excuse to finally learn to love functions and to dive into functional programming :)
