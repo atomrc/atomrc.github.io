@@ -22,7 +22,7 @@ One way to break purity, would be to read some external variable:
 
 ```javascript
 function compute() {
-  return ext.val; // ext is some object defined in a parent scope
+  return ext.val // ext is some object defined in a parent scope
 }
 ```
 
@@ -30,7 +30,7 @@ function compute() {
 
 ```javascript
 function compute() {
-  return this.val;
+  return this.val
 }
 ```
 
@@ -85,7 +85,7 @@ When the functions passed around are actually methods, they lose the binding wit
 ```javascript
 const a = {
   callback: function () {
-    console.log(this);
+    console.log(this)
   }
 }
 
@@ -180,7 +180,8 @@ Taking away `this` from your developer's life is a great opportunity for you to 
 
 In the process, you will learn how to write very simple functions and compose them together to create fully functional user interfaces.
 
-I personally don't like `this` and try to avoid it as much as I can, but, don't get me wrong, `this` is not evil and most JavaScript developers know how to deal with it.  
+I personally don't like `this` and try to avoid it as much as I can.  
+But, don't get me wrong, `this` is not evil and most JavaScript developers know how to deal with it.  
 Sometime you don't really have the luxury of being able to choose to use it or not. If you use React, for example, any [**statefull** component](https://facebook.github.io/react/docs/state-and-lifecycle.html#adding-local-state-to-a-class) you will write will have to use `this` (which make sense when you have in mind that `this` is about state).
 
 That being said, removing `this` will allow you to:
