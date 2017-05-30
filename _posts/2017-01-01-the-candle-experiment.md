@@ -48,3 +48,11 @@ From 27 to 3 Feb
 - Finished the practical work for my students (deployed on now and db hosted on aws)
 - polished the slides for my lecture
 - some quick improvements of the Absurde Seance's website
+
+27 to 31 may
+
+wrote an article about `this`. Had to wrote it from scratch 3 times
+
+31 may
+
+- worked on the absurdeseance website
