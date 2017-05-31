@@ -9,6 +9,7 @@ article {
   position: relative;
   h2, h3 {
     position: relative;
+    padding-bottom: .3em;
     .anchor {
       color: #666;
       transition: opacity 0.3s;
@@ -18,6 +19,10 @@ article {
       &:after {
         content: "#";
       }
+    }
+    code {
+      font-size: inherit;
+      padding: 0.1em;
     }
     &:hover {
       .anchor {
@@ -30,7 +35,8 @@ article {
   }
   h2 {
     font-size: 2em;
-    margin: 1em;
+    border-bottom: solid 1px #EEE;
+    margin: 1em 0 .5em;
   }
   h3 {
     font-size: 1.5em;
