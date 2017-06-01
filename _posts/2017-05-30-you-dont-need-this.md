@@ -160,8 +160,8 @@ Definitely not as sexy as method chaining, right? And that's where functional pr
 ```javascript
 const R = require("ramda")
 
-const removeT  = R.curry(replace)("t")("")
-const e2j      = R.curry(replace)("e")("j")
+const removeT  = R.replace("t", "")
+const e2j      = R.replace("e", "j")
 const testToJS = R.compose(toUpperCase, e2j, removeT)
 //    ^ testToJS is a completly new function created
 // from the composition of the removeT, e2j and toUpperCase functions
