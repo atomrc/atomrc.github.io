@@ -112,7 +112,7 @@ Common response:
 
 The way I see it:
 
->`this` allows us to write **statefull functions**. It's a way to embed some state into a function
+>`this` allows us to write **stateful functions**. It's a way to embed some state into a function
 
 In my opinion, **functions should be building blocks that take some arguments and return a result depending on those arguments, and only those arguments**.  
 This is what functional programming is about (see [Why Functional Programming Matters](https://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf)), and this is where the front-end is heading ([Why Learn Functional Programming in JavaScript? (Composing Software)](https://medium.com/javascript-scene/why-learn-functional-programming-in-javascript-composing-software-ea13afc7a257), [Master the JavaScript Interview: What is Functional Programming?](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0), [Ramda](http://ramdajs.com/), [lodash](https://lodash.com/), [Redux](https://github.com/reactjs/redux) ...)
@@ -182,7 +182,7 @@ In the process, you will learn how to write very simple functions and compose th
 
 I personally don't like `this` and try to avoid it as much as I can.  
 But, don't get me wrong, `this` is not evil and most JavaScript developers know how to deal with it.  
-Sometime you don't really have the luxury of being able to choose to use it or not. If you use React, for example, any [**statefull** component](https://facebook.github.io/react/docs/state-and-lifecycle.html#adding-local-state-to-a-class) you will write will have to use `this` (which make sense when you have in mind that `this` is about state).
+Sometime you don't really have the luxury of being able to choose to use it or not. If you use React, for example, any [**stateful** component](https://facebook.github.io/react/docs/state-and-lifecycle.html#adding-local-state-to-a-class) you will write will have to use `this` (which make sense when you have in mind that `this` is about state).
 
 That being said, removing `this` will allow you to:
 
