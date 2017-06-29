@@ -1,0 +1,33 @@
+---
+layout: default
+---
+<link href="/css/home.css" type="text/css" rel="stylesheet">
+<div class="home-container">
+  <h2>CFP</h2>
+  <p>
+  Here are all the talk proposals I have made. It's mainly a place for me to store all of those and to keep a trace of it, but you might also find inspiration in here :). I'll try to update this list every time I make a new submission.
+  </p>
+  <ul class="list centered">
+    {% assign cfps = site.cfp | sort: 'date' | reverse %}
+    {% for cfp in cfps %}
+    <li lang="{{cfp.lang}}">
+      <time
+        datetime="{{cfp.date | date_to_xmlschema}}"
+        pubdate
+        itemprop="datePublished"
+        content="{{cfp.date | date_to_xmlschema}}">
+        {{ cfp.date | date: '%-d&nbsp;%b&nbsp;%y' }}
+      </time>
+      &nbsp;
+      <div>
+        [{{cfp.lang}}]
+        <a class="title" title="{{cfp.description}}" href="{{cfp.url}}">{{cfp.title}}</a>
+        <aside>
+          <a href={{ cfp.site }} target="_blank">{{ cfp.conf }}</a>
+        </aside>
+      </div>
+    </li>
+
+    {% endfor %}
+  </ul>
+</div>
