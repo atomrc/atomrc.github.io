@@ -20,8 +20,10 @@ author:
 twitter:
     username: atomrc
 collections:
-    talks:
-        output: true
+  talks:
+    output: true
+  cfp:
+    output: true
 
 defaults:
     -
