@@ -21,6 +21,13 @@ layout: default
       &nbsp;
       <div>
         [{{cfp.lang}}]
+        {% if cfp.status == "ok" %}
+          ✔
+        {% elsif cfp.status == "ko" %}
+          ✖
+        {% else %}
+          🤞
+        {% endif %}
         <a class="title" title="{{cfp.description}}" href="{{cfp.url}}">{{cfp.title}}</a>
         <aside>
           <a href={{ cfp.site }} target="_blank">{{ cfp.conf }}</a>
