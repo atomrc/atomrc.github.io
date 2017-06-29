@@ -3,6 +3,7 @@ url: "http://blog.thomasbelin.fr"
 description: I ♥ playing with JavaScript. I apply Functional Programming principles to any piece of code I produce. Vim is my one and only editor :)
 title: JS rocks
 permalink: /p/:title/
+future: true
 exclude: [node_modules, package.json, gulpfile.js, vendor]
 sass:
     sass_dir: css/_sass
