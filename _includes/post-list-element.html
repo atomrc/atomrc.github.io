@@ -9,7 +9,7 @@
   </time>
   &nbsp;
   <div>
-    [{{elm.lang}}]
+    {% include flag.html lang=elm.lang %}
     <a class="title" title="{{elm.description}}" href="{{elm.url}}">{{elm.title}}</a>
     {% if elm.extra %}({{ elm.extra }}){% endif %}
     {% if elm.video %}

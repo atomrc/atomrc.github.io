@@ -20,9 +20,7 @@ layout: default
       </time>
       &nbsp;
       <div>
-        <span title="written in {{ cfp.lang }}">
-        {% if cfp.lang == "fr" %}🇫🇷 {% else %}🇺🇸{% endif %}
-        </span>
+        {% include flag.html lang=cfp.lang %}
         {% if cfp.status == "ok" %}
           ✔
         {% elsif cfp.status == "ko" %}
