@@ -1,15 +1,15 @@
 ---
 layout: default
 ---
-<link href="/css/home.css" type="text/css" rel="stylesheet">
-<div class="home-container">
+<link href="/css/list.css" type="text/css" rel="stylesheet">
+<div class="list-container">
   <h2>CFP Submissions</h2>
-  <p>
+  <p class="list-container__headline list-container__content">
   Here are all the talk proposals I have ever made. It's mainly a place for me to store them and to keep a trace of it but you might also very well find inspiration in here :).<br>
   I'll try to update this list every time I make a new submission.<br>
   Some of them ended up being real <a href="/talks">talks I gave</a>.
   </p>
-  <ul class="list centered">
+  <ul class="list-container__list list-container__content">
     {% assign cfps = site.cfp | sort: 'date' | reverse %}
     {% for cfp in cfps %}
     <li lang="{{cfp.lang}}">

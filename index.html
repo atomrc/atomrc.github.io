@@ -3,14 +3,14 @@ layout: default
 title: Welcome
 image: http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=300
 ---
-<link href="/css/home.css" type="text/css" rel="stylesheet">
-<div class="home-container">
-  <h2>About Me</h2>
-  <p class="centered aboutme">
+<link href="/css/list.css" type="text/css" rel="stylesheet">
+<div class="list-container">
+  <h2 class="list-container__title">About Me</h2>
+  <p class="list-container__headline list-container__content">
     {% include signature.html %}
   </p>
-  <h2>Articles</h2>
-  <ul class="list centered">
+  <h2 class="list-container__title">Articles</h2>
+  <ul class="list-container__list list-container__content">
     {% for post in site.posts %}
     {% include post-list-element.html post=post %}
     {% endfor %}

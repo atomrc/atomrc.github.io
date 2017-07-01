@@ -15,13 +15,13 @@
   </head>
   <body class="{% if page.collection == 'posts' %}article{%endif%}">
     <section id="header">
-      <div class="content">
+      <div>
         <a href="/"><img class="avatar" src="http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=200"></a>
         <br>
         <a class="title" href="/"><span rel="author">{{ site.name }}</span></a><br>
       </div>
     </section>
-    <section id="content">
+    <section>
       {{ content }}
     </section>
     <section id="footer">
