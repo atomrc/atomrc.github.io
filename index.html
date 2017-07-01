@@ -15,11 +15,4 @@ image: http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=300
     {% include post-list-element.html post=post %}
     {% endfor %}
   </ul>
-  <h2>Talks</h2>
-  <ul class="list centered">
-    {% assign talks = site.talks | sort: 'date' | reverse %}
-    {% for talk in talks %}
-    {% include post-list-element.html post=talk %}
-    {% endfor %}
-  </ul>
 </div>
