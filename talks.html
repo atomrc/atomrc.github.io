@@ -1,0 +1,17 @@
+---
+layout: default
+---
+<link href="/css/home.css" type="text/css" rel="stylesheet">
+<div class="home-container">
+  <h2>Talks I gave</h2>
+  <p class="headline">
+  I love giving talks and sharing experiences. Here are the talks I gave (slides + video)<br>
+  I have also published all the <a href="/cfp">talk submissions</a> I have ever made.
+  </p>
+  <ul class="list centered">
+    {% assign talks = site.talks | sort: 'date' | reverse %}
+    {% for talk in talks %}
+    {% include post-list-element.html post=talk %}
+    {% endfor %}
+  </ul>
+</div>
