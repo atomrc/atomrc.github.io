@@ -4,6 +4,7 @@ title: "Front-End : Comment on en est arrivé là ?"
 lang: fr
 conf: DevFest Nantes
 site: https://devfest.gdgnantes.com/
+status: ko
 ---
 
 Ce matin, comme tous les matins, j'arrive au boulot sans vraiment savoir si je vais faire du back-end ou du front-end, des requêtes en base de données ou des requêtes AJAX, du PHP ou du JavaScript. Tel est mon quotidien de développeur "full-stack".
