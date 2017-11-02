@@ -4,6 +4,7 @@ title: Vous n'avez pas besoin de this
 lang: fr
 conf: DevFest Nantes
 site: https://devfest.gdgnantes.com/
+status: ko
 ---
 
 `this` est probablement le mot clé le moins compris de tout le langage JavaScript.
