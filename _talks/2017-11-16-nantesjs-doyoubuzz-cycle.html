@@ -1,0 +1,1063 @@
+---
+title: "DoYouBuzz V3 : de la programmation impérative à la programmation réactive"
+description: "Laissez moi vous raconter l'histoire de notre migration d'Angular vers Cycle.js"
+categories: [doyoubuzz, reactive, cyclejs]
+lang: fr
+extra: "NantesJS"
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>DoYouBuzz V3 : de la programmation impérative à la programmation réactive</title>
+    <meta name="robots" content="noindex">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans:400);
+      @import url(https://fonts.googleapis.com/css?family=Montserrat:400);
+
+      body {
+        font-family: Open Sans, Arial, sans serif;
+        color: #fff;
+      }
+
+      .remark-slide-content:not(.naked)::after {
+          content: "@atomrc | NantesJS Novembre 2017";
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          padding: 1em;
+          font-size: 1em;
+      }
+
+      img {
+        max-width: 90%;
+        max-height: 90%;
+      }
+
+      .remark-slide-content {
+        /*background: white;*/
+        /*background-color: #057FFA;*/
+        background-color: #267B72;
+        padding: 0 3em;
+      }
+      .remark-container {
+        background-color: #EEE;
+      }
+      .remark-code {
+        padding: 0 10em;
+      }
+      .remark-slide-scaler {
+        box-shadow: none;
+      }
+
+      .center {
+        text-align: center;
+      }
+      .left-align h2 {
+        text-align: left;
+      }
+      .shadow {
+        text-shadow: 1px 1px 10px black, -1px -1px 10px black;
+      }
+
+      h1, h2, h3 {
+        margin: 1em;
+        margin-bottom: 1em;
+        text-align: center;
+        font-weight: lighter;
+        font-family: Montserrat;
+      }
+
+      table {
+        display: inline-block;
+        color: #666;
+      }
+      table thead {
+        color: white;
+      }
+      table td {
+        padding: 1em;
+        background-color: white;
+        border: 1px solid #EEE;
+      }
+
+      .semi-condensed h1 {
+          margin: 0.5em;
+      }
+      .condensed h1 {
+          margin: 0.3em;
+      }
+
+      a { color: inherit; }
+
+      svg, video, img {
+        max-width: 90%;
+        max-height: 520px;
+      }
+
+      svg .hidden {
+        opacity: 0;
+      }
+
+      li {
+        padding: 0.5em;
+      }
+
+      .naked .foot, .naked .remark-slide-number {
+        display: none;
+      }
+
+      .foot {
+        position: absolute;
+        bottom: 1em;
+        left: 1em;
+      }
+
+      .remark-inline-code {
+        background-color: #03002E;
+        color: white;
+        padding: 2px;
+        border-radius: 0.2em;
+      }
+      .centered-code pre{
+        flex: 1;
+        margin: auto;
+      }
+      .centered-code code.hljs {
+        padding: 3em;
+      }
+
+      .box {
+        margin: auto;
+        color: white;
+        background-color: #3e3e3e;
+        border-radius: 5px;
+        padding: 0.5em;
+      }
+
+      .animate-from-bottom {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        transform: translateY(100%);
+        transition: transform 1s;
+      }
+      .entered .animate-from-bottom:not(.toggleable),
+      .toggled .animate-from-bottom.toggleable {
+        transform: translateY(0);
+      }
+      .sub-toggleable {
+        opacity: 0;
+      }
+      .toggled.sub-toggled .sub-toggleable {
+        opacity: 1;
+      }
+      .middled {
+        margin: auto;
+      }
+      .banner {
+        font-size: 2.5em;
+        border-radius: 5px;
+        background-color: #EEE;
+        color: #555;
+        font-weight: bold;
+        padding: 1em;
+        box-shadow: 5px 5px 10px #666;
+      }
+
+      img[alt="thomas belin"] {
+        border-radius: 100px;
+        border: solid 5px white;
+      }
+      blockquote {
+        text-align: center;
+        background: white;
+        color: #444;
+        border-radius: 5px;
+        padding: 0.5em 1em;
+        font-size: 2em;
+        position: relative;
+        border: 1px solid #CCC;
+      }
+      blockquote::before, blockquote::after {
+        position: absolute;
+        content: "✶";
+      }
+      blockquote::before {
+        top: 0.25em;
+        left: 0.25em;
+      }
+      blockquote::after {
+        bottom: 0.25em;
+        right: 0.25em;
+      }
+
+      .hljs-github .hljs-comment {
+          color: #0040f8;
+      }
+      .highlighted .remark-code-line:not(.remark-code-line-highlighted) {
+        opacity: 0.4;
+      }
+      .remark-code-line-highlighted {
+        background-color: inherit;
+        font-weight: bold;
+      }
+
+      .huge h2 {
+        font-size: 4em;
+      }
+      .huge h1 {
+        font-size: 5em;
+      }
+      .big-code .remark-code {
+        font-size: 1.5em;
+      }
+      .huge-code .remark-code {
+        font-size: 2em;
+      }
+      .check {
+        font-size: 3em;
+        color: lime;
+      }
+
+      .icons img {
+        width: 20%;
+      }
+    </style>
+  </head>
+  <body class="dark">
+  <!--
+  Bonjour, bienvenu au DevFest Nantes Novembre 2013,
+  je suis Thomas Belin et aujourd'hui je vais vous expliqué comment on a remplacé jQuery par Angular sur DoYouBuzz
+  Dis autrement, je vais vous montrer comment on a transformer des bouts de DOM qui bougent en une vraie application front
+
+  <video>
+
+  Bonjour, bienvenu au NantesJS de Novembre 2017,
+  Je suis Thomas Belin et aujourd'hui, je vais vous expliquer comment on est en train de migrer progressivement notre front-end d'Angular à Cycle.js
+
+  -->
+    <textarea id="source">
+
+class: center middle
+# DoYouBuzz V2
+## From jQuery to AngularJS
+
+DevFest Nantes, Novembre 2013
+
+---
+class: middle, center
+
+<video src="/img/dyb-v2.webm" controls></video>
+---
+
+class: center middle
+# DoYouBuzz V3
+## From Imperative to Reactive Programming
+
+NantesJS Nantes, Novembre 2017
+
+---
+class: middle
+# DoYouBuzz
+
+---
+layout: true
+# DoYouBuzz
+
+---
+class: center condensed
+
+![doyoubuzz resume](/img/my-resume.png)
+
+---
+class: center condensed
+
+<video src="/img/dyb-edit.webm" controls autoplay loop></video>
+
+---
+layout: false
+class: middle
+
+# Nos Contraintes
+
+---
+class: middle
+
+> L'**édition** doit être **dynamique**
+
+---
+class: middle
+> La **visualisation** doit être **blazing fast**
+
+---
+class: center condensed
+# Édition
+
+<video src="/img/edit-load.webm" controls autoplay loop></video>
+
+---
+class: center condensed
+# Visualisation
+
+<video src="/img/view-load.webm" controls autoplay loop></video>
+
+---
+layout: false
+class: middle
+# Comment répondre à ces deux contraintes ?
+
+---
+class: middle
+# Comment répondre à ces deux contraintes ? ... En 2013 ?
+
+---
+class: middle
+> ⛔ rendu serveur JS ⛔
+
+---
+class: middle center
+name: ngrender
+
+{% include doyoubuzz-cycle/ng-render.svg %}
+
+---
+class: middle
+```javascript
+<div
+  class="widget <% $widget_name %>"
+  <% if isEditable($widget_name) %>
+    ng-show="shouldDisplay(<% $widget_name %>)"
+  <% endif %>
+  >
+</div>
+```
+
+---
+class: middle
+```javascript
+<% if edit %>
+  <div ng-repeat="element in cv[<% $widget_name %>]">
+    ...
+  </div>
+<% else %>
+  <% for element in cv[$widget_name] %>
+    ...
+  <% endfor %>
+<% endif %>
+```
+
+---
+class: middle
+# Bilan
+
+> 176 designs `twig` + rendu hybride 🤢
+
+---
+layout: false
+class: middle
+# 2017 : DoYouBuzz V3.0
+
+---
+class: center condensed
+# Nouvelle Vision
+
+![dyb pdf](/img/pdf.png)
+
+---
+class: center middle
+
+> Un éditeur de CV PDF
+
+---
+layout: false
+class: middle
+
+# Nouvelle Techno
+
+---
+class: middle center icons
+
+![vue](https://upload.wikimedia.org/wikipedia/commons/f/f1/Vue.png)
+![angular](https://angular.io/assets/images/logos/angular/angular.png)
+![redux](https://raw.githubusercontent.com/reactjs/redux/master/logo/logo.png)
+![cycle.js](https://cdn-images-1.medium.com/max/800/1*en0KY03MHunAXUr8UbqYGw.png)
+
+???
+- vue :
+  - trop de façon de faire les choses (directive / composant)
+  - échanges enfants->parent par évènements (sémantiquement pas tjrs vrai)
+  - trop proche de la philosophie AngularJS (sans le DI/Routing ...)
+  + vuex semble vraiment pas mal pour regrouper le state
+  + les single file components
+- angular4 :
+  - la programmation réactive ... mal faite (getHero => observable)
+
+---
+class: middle center icons
+
+![vue](https://upload.wikimedia.org/wikipedia/commons/f/f1/Vue.png)
+
+---
+class: middle center icons
+
+![angular](https://angular.io/assets/images/logos/angular/angular.png)
+
+---
+class: middle center icons
+![redux](https://raw.githubusercontent.com/reactjs/redux/master/logo/logo.png) VS.
+![cycle.js](https://cdn-images-1.medium.com/max/800/1*en0KY03MHunAXUr8UbqYGw.png)
+
+---
+# Redux 💖
+
+- grosse communauté ;
+- concepts bien connu ;
+- principalement réactif ;
+- state global = easy debug ;
+- devtools 🤘
+
+---
+layout: true
+# Redux 💔
+
+---
+### Archi non fractale
+
+???
+Portée fonctionnelle des composants
+
+---
+### Identifiants d'action
+
+```javascript
+export const ADD_TODO="ADD_TODO";
+export const REMOVE_TODO="REMOVE_TODO";
+export const UPDATE_TODO="UPDATE_TODO";
+
+export const UPDATE_TODO_SUCCESS="UPDATE_TODO_SUCCESS";
+export const UPDATE_TODO_ERROR="UPDATE_TODO_ERROR";
+// ...
+```
+
+???
+Fatiguant à faire
+On aime pas nommer les choses
+
+---
+### Actions chainées
+
+```javascript
+function updateCVAction(cv) {
+
+  return function (dispatch) {
+    dispatch("UPDATE_CV", /*...*/)
+    api.updateCV(cv)
+      .then(repsonse => dispatch("UPDATE_CV_SUCCESS", /*...*/))
+      .then(() => fetchCVCompletionAction(cv)(dispatch))
+  }
+
+}
+```
+
+---
+### Handlers dans la vue
+
+```html
+<input
+  onFocus={ () => dispatch(ACTION_1) }
+  onBlur={ () => dispatch(ACTION_2) }
+  onInput={ () => dispatch(ACTION_3) }
+  />
+```
+
+---
+layout: false
+# Cycle 💖
+
+- une archi plus qu'une tech ;
+- archi fractale ;
+- **que** des fonctions pures ;
+- programmation réactive ;
+- testable sans aucun `mock` ;
+- communauté bienveillante.
+
+---
+layout: true
+# Cycle 💔
+
+---
+### Brain rewiring
+
+- 🤔 Cold Observable ?
+- 🤔 Hot Observable ?
+- 🤔 Subjects ?
+- 🤔 Programmation temporelle ?
+
+---
+class: condensed center
+### Stack Traces costaudes
+
+![cycle stack](/img/cycle-stack.png)
+
+---
+### Selecteurs CSS
+
+```javascript
+const updateAction$ = DOM
+  .select("button.update")
+  .events("click");
+```
+
+---
+### Petite communauté
+
+---
+layout: false
+class: middle center
+# ⚠
+
+> Pas question de réécrire nos 176 designs !
+
+---
+class: middle
+
+## Le rendu des CV ?
+
+### SSR + virtual DOM ?
+
+---
+layout: false
+class: middle
+# PoC Time
+
+---
+class: center condensed
+# V3.0 : PoC
+<video src="/img/jesus-revient.webm" controls></video>
+
+---
+# SSR + virtual DOM : React
+
+```javascript
+class CvViewer extends React.Component {
+  construct(props) {
+    this.state = { view: "" }
+  }
+
+  componentDidMount() {
+    fetch("/render")
+      .then(response => response.raw())
+      .then(view => this.setState({ view })
+  }
+
+  render() {
+    return <div dangerouslySetInnerHTML={ { __html: this.state.view } }></div>
+  }
+}
+```
+
+---
+# SSR + virtual DOM : Cycle
+
+```javascript
+function CvViewer({ HTTP }) {
+
+  const view$ = HTTP
+    .select("render")
+    .flatten()
+    .map(response => response.body)
+    .map(view => div({ props: { innerHTML: view }}))
+
+  return {
+    DOM: view$,
+    HTTP: xs.of({ url: "/render" })
+  }
+}
+```
+
+---
+class: center
+# Fight: Useless Metrics!
+
+|        | Redux      | Cycle      |
+|--------|------------|------------|
+| load   | ~800-900ms | ~800-900ms |
+| size   | 281kB      | 107kB      |
+
+---
+class: center
+# Fight: Feature
+
+![fractality](/img/completion.png)
+
+---
+class: center
+# Fight: F(r)a(c)tality!
+
+![completion cycle](/img/diff-cycle.png)
+![completion react](/img/diff-react.png)
+
+???
+Plus de fichier modifiés. Découpage par `job` plutot que par `function`
+---
+class: middle center
+
+![code orga](/img/code-orga.png)
+
+---
+layout: false
+class: middle
+# DoYouBuzz + Cycle
+
+---
+class: center condensed
+# DoYouBuzz + Cycle
+
+![embed cycle](/img/embed-cycle.png)
+
+---
+# One Last Directive
+
+```html
+<div cv-editor></div>
+```
+
+--
+```javascript
+// ngApp.js
+app.directive("cvEditor", function () {
+  return function ($scope, $element) {
+    launchCvEditor($element);
+  }
+});
+```
+
+--
+```typescript
+// cycleApp.ts
+function launchCvEditor(rootElement: HTMLElement) {
+  run(main, {
+    DOM: makeDOMDriver(rootElement)
+  });
+}
+```
+
+---
+class: middle
+# Cycle ↔ Angular
+
+---
+class: center condensed
+# Cycle ↔ Angular
+![embed cycle](/img/com-bidir.png)
+
+
+---
+class: condensed
+# Angular → Cycle : Props
+
+```html
+<div cv-editor="cv"></div>
+```
+
+--
+
+```diff
+// ngApp.js
+app.directive("cvEditor", function () {
+  return {
++   scope: { cv: "cvEditor" },
+    link: function ($scope, $element) {
++     launchCvEditor($scope.cv, $element);
+    }
+  }
+});
+```
+
+--
+
+```diff
+// cycleApp.ts
+function launchCvEditor(cv: Cv, rootElement: HTMLElement) {
++ const initialState: AppState = { cv };
++ const main = makeMain(initialState);
+
+  run(main, {
+    DOM: makeDOMDriver(rootElement)
+  });
+}
+```
+
+---
+class: condensed
+# Angular → Cycle : Events
+
+```javascript
+// ngApp.js
+function ($scope, $element) {
+  launchCvEditor($scope.cv, $element);
+
+  $scope.$watch("cv", function (cv) {
+    const event = new CustomEvent("cvUpdated", { detail: { cv }});
+    document.dispatchEvent(event);
+  });
+}
+```
+
+--
+```typescript
+// dybMessageDriver.ts
+function dybMessageDriver() {
+  return fromEvent(document, "cvUpdated");
+}
+```
+
+--
+```javascript
+// cvViewer.ts
+function cvViewer({ dybMessages }) {
+  return {
+    HTTP: dybMessages
+      .filter("cvUpdated")
+      .mapTo("/render")
+  }
+}
+```
+
+---
+class: condensed
+# Cycle → Angular : Events
+
+```typescript
+// dybMessageDriver.ts
+function dybMessageDriver(message$: Stream<Message>) {
+
+  message$
+    .addListener({
+      next: function (message: Message) {
+        dispatchEvent(message.event, message.payload)
+      }
+    });
+
+  return fromEvent(document, "cvUpdated");
+}
+```
+
+--
+```typescript
+// cvEditor.ts
+function cvEditor({ DOM }: Sources) {
+  return {
+    dybMessage: DOM
+      .select(".edit-button")
+      .events("click")
+      .mapTo({ event: "editElement", payload: { elementId }})
+  }
+}
+```
+
+---
+class: center condensed
+# Cycle ↔ Angular
+![embed cycle](/img/com-bidir.png)
+
+???
+En somme notre application Cycle devient une sorte de webcomponent indépendant
+
+---
+class: middle
+
+# Rendu de CV
+
+---
+class: condensed center
+# Dafuq is that flash?
+
+<video src="/img/render-flash.webm" controls autoplay loop></video>
+
+---
+class: middle
+# Virtual DOM à la rescousse
+
+---
+class: middle
+```typescript
+const view$: Stream<VNode> = viewStr$
+  .map((view: string) => div("#cv-editor", { props: { innerHTML: view }}))
+```
+
+---
+class: middle
+```diff
+const cvVnode$: Stream<VNode> = viewStr$
++ .map(toVnode)
+- .map((view: string) => div("#cv-editor", { props: { innerHTML: view }}))
++ .map((vnode: VNode) => div("#cv-editor", [vnode]))
+```
+
+---
+class: middle
+
+# Les boutons d'édition
+
+---
+class: center
+# Les boutons d'édition
+
+![no edit](/img/render-no-edit.png)
+
+---
+class: center
+# Les boutons d'édition
+
+![edit](/img/render-edit.png)
+
+---
+# Step 1 : Marqueurs d'éléments
+
+```diff
+<div>
++ <div widget-element="xp-12"></div>
+  <h4>Lead Front End Developer @ DoYouBuzz</h4>
+  <div>...</div>
+</div>
+```
+
+---
+# Step 2 : Extraction des éditeurs
+
+```typescript
+const visibleElements$ = cvVnode$
+  .map((vnode: VNode) => select("[widget-element]", vnode))
+  .map((elements: [VNode]) => createWidgetElements(elements))
+```
+
+---
+# Step 3 : Insertion des éditeurs
+
+```typescript
+const editorVnode$ = xs
+  .combine(cvVnode$, visibleElementVnodes$)
+  .map(insertEditors);
+```
+
+--
+```typescript
+function insertEditors([cvVnode, elementVnodes]) {
+  select("[widget-element]", cvVnode)
+    .forEach((element: VNode) => {
+      element.children = [
+        findElement(elementVnodes, cvVnode),
+        ...element.children
+      ]
+    });
+
+  return cvVnode;
+}
+```
+
+---
+class: center condensed
+name: rendering
+# Rendu de CV
+
+{% include doyoubuzz-cycle/rendering-pipe.svg %}
+
+---
+# Wrap Up
+
+- Premier step d'une migration itérative
+- Cycle embed dans Angular
+- Designs indépendants de la techno d'édition
+
+---
+class: middle
+
+# ... Et pour la suite, j'ai besoin d'aide !
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TimelineMax.min.js"></script>
+    <script>
+function once(initFn) {
+  var output = null;
+  return function init(slide) {
+    if (output) {
+      return output;
+    }
+    output = initFn(slide);
+    return output;
+  };
+
+}
+
+var animations = {
+  ngrender: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var cvViewTl = new TimelineMax();
+    var cvTemplateTl = new TimelineMax();
+    var cvElementsTl = new TimelineMax();
+
+    var cvView = slide.querySelector("#cv-view");
+    var cvTemplate = slide.querySelector("#cv-template");
+
+    var cvElements = slide.querySelector("#cv-elements");
+    var cvElement = slide.querySelectorAll(".cv-element");
+
+    var avatar = slide.querySelector("#avatar");
+    var title = slide.querySelector("#head-title");
+    var subtitle = slide.querySelector("#head-subtitle");
+    var contentLeft = slide.querySelector("#content-left");
+    var contentMiddle = slide.querySelector("#content-middle");
+    var contentRight = slide.querySelector("#content-right");
+
+    cvViewTl
+      .to(cvView, 2, { opacity: 1, scale: 5, x: 650, transformOrigin: "center center" })
+      .add("hide", "+=1")
+      .to(cvView, 1, { opacity: 0 }, "hide")
+
+    cvTemplateTl
+      .to(cvTemplate, 2, { opacity: 1, scale: 5, x: 650, transformOrigin: "center center" })
+      .add("load-elements")
+      .to(cvElements, 1, { opacity: 1, scale: 5, x: 950, y: -85, transformOrigin: "center center" })
+      .to(avatar, 1.5, { x: 40, y: 10 }, "load-elements")
+      .to(title, 1.5, { x: -50, y: -20 }, "load-elements")
+      .to(subtitle, 1.5, { x: -150, y: -10 }, "load-elements")
+      .to(contentLeft, 1.5, { x: 50, y: -20 }, "load-elements")
+      .to(contentMiddle, 1.5, { x: -120, y: 10 }, "load-elements")
+      .to(contentRight, 1.5, { x: 30, y: 10 }, "load-elements")
+      .to(cvElement, 1, { opacity: 1 })
+      .to(cvElement, 1.5, { x: -60, y: 0 })
+      .add("hide", "+=1")
+      .to(cvElements, 1, { opacity: 0 }, "hide")
+      .to(cvTemplate, 1, { opacity: 0 }, "hide")
+
+    timeline
+      .to(slide.querySelector(".view-mode"), 0.5, { opacity: 1 })
+      .add(cvViewTl)
+      .to(slide.querySelector(".view-mode"), 0.5, { opacity: 0 })
+      .to(slide.querySelector(".edit-mode"), 0.5, { opacity: 1 })
+      .add(cvTemplateTl)
+      .to(slide.querySelector(".edit-mode"), 0.5, { opacity: 0 })
+      .repeat(-1);
+
+    return timeline;
+  }),
+
+  rendering: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var htmlTimeline = new TimelineMax();
+    var vnode1Tl = new TimelineMax();
+    var vnode2Tl = new TimelineMax();
+    var elementsTl = new TimelineMax();
+    var finalVnodeTl = new TimelineMax();
+
+    var htmlstring = slide.querySelectorAll("#htmlstring");
+    var vnode1 = slide.querySelector("#vnode-1");
+    var vnode2 = slide.querySelector("#vnode-2");
+    var elements = slide.querySelector("#elements");
+    var finalVnode = slide.querySelector("#final-vnode");
+
+    htmlTimeline
+      .to(htmlstring, 2, { x: 90 , ease: Power0.easeNone })
+
+    vnode1Tl
+      .to(vnode1, 1.5, { y: -68, ease: Power0.easeNone })
+      .to(vnode1, 1.5, { x: 75 , ease: Power0.easeNone });
+
+    vnode2Tl
+      .to(vnode2, 3, { x: 220, ease: Power0.easeNone });
+
+    elementsTl
+      .to(elements, 1.5, { x: 130, ease: Power0.easeNone })
+      .to(elements, 1.5, { y: 110, ease: Power0.easeNone });
+
+    finalVnodeTl
+      .to(finalVnode, 2, { x: 150, ease: Power0.easeNone });
+
+    timeline
+      .add(htmlTimeline)
+      .add(vnode1Tl)
+      .add("combine")
+      .add(vnode2Tl, "combine")
+      .add(elementsTl, "combine")
+      .add(finalVnodeTl)
+      .repeat(-1);
+
+    return timeline;
+  }),
+};
+    </script>
+    <script>
+      //init remarkjs
+      var timeout = window.setTimeout;
+      var slideshow = remark.create({
+        highlightStyle: 'github',
+        highlightLines: true,
+        ratio: "16:9"
+      });
+
+      slideshow.on("beforeHideSlide", function (slide) {
+        var currentSlide = document.querySelector(".remark-slide-container.entered");
+        var animation = animations[slide.properties.name] ? animations[slide.properties.name](currentSlide) : null;
+        if (animation) {
+          animation.pause();
+        }
+        if (!currentSlide) { return; }
+        currentSlide.classList.remove("entered");
+      });
+
+      slideshow.on("afterShowSlide", function (slide) {
+        timeout(launchAnimations, 50, slide);
+      });
+
+      timeout(
+        launchAnimations,
+        50,
+        slideshow.getSlides()[slideshow.getCurrentSlideIndex()]
+      );
+
+      function launchAnimations(slide) {
+          var element = document.querySelector(".remark-visible");
+          element.classList.add("entered");
+          var animation = animations[slide.properties.name] ? animations[slide.properties.name](element) : null;
+          if (animation) {
+            animation.play();
+          }
+          return animation
+      }
+
+      document.addEventListener("keyup", function (ev) {
+        switch(ev.keyCode) {
+          case 84:
+            var currentSlide = document.querySelector(".remark-slide-container.entered");
+            currentSlide.classList.toggle("toggled");
+            break;
+
+          case 82:
+            var currentSlide = document.querySelector(".remark-slide-container.entered");
+            currentSlide.classList.toggle("sub-toggled");
+            break;
+        }
+      });
+
+    </script>
+
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-34218773-1', { siteSpeedSampleRate: 100 });
+ga('send', 'pageview');
+    </script>
+
+  </body>
+</html>
