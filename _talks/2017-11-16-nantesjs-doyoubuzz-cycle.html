@@ -243,19 +243,15 @@ extra: "NantesJS"
   -->
     <textarea id="source">
 
-class: center middle
-# DoYouBuzz V2
-## From jQuery to AngularJS
-
-DevFest Nantes, Novembre 2013
+background-image: url(/img/fake-intro.png)
 
 ---
 class: middle, center
 
-<video src="/img/dyb-v2.webm" controls></video>
+<video src="/img/talk-v2-f.webm" controls autoplay></video>
 ---
 
-class: center middle
+class: center middle naked
 # DoYouBuzz V3
 ## From Imperative to Reactive Programming
 
@@ -447,6 +443,7 @@ export const UPDATE_TODO_ERROR="UPDATE_TODO_ERROR";
 ???
 Fatiguant à faire
 On aime pas nommer les choses
+Comment ça scale ça ?
 
 ---
 ### Actions chainées
@@ -480,10 +477,8 @@ layout: false
 # Cycle 💖
 
 - une archi plus qu'une tech ;
-- archi fractale ;
-- **que** des fonctions pures ;
-- programmation réactive ;
-- testable sans aucun `mock` ;
+- fractal (composant = app cycle) ;
+- fonctions pures 😍  ;
 - communauté bienveillante.
 
 ---
@@ -493,14 +488,13 @@ layout: true
 ---
 ### Brain rewiring
 
-- 🤔 Cold Observable ?
-- 🤔 Hot Observable ?
-- 🤔 Subjects ?
 - 🤔 Programmation temporelle ?
+- 🤔 Property vs. Event ?
+- 🤔 ~ Cold Observable vs. Hot Observable ?
 
 ---
 class: condensed center
-### Stack Traces costaudes
+### Stack Traces 🤢
 
 ![cycle stack](/img/cycle-stack.png)
 
@@ -519,7 +513,6 @@ const updateAction$ = DOM
 ---
 layout: false
 class: middle center
-# ⚠
 
 > Pas question de réécrire nos 176 designs !
 
@@ -656,7 +649,6 @@ class: center condensed
 # Cycle ↔ Angular
 ![embed cycle](/img/com-bidir.png)
 
-
 ---
 class: condensed
 # Angular → Cycle : Props
@@ -782,14 +774,14 @@ class: condensed center
 
 ---
 class: middle
-# Virtual DOM à la rescousse
-
----
-class: middle
 ```typescript
 const view$: Stream<VNode> = viewStr$
   .map((view: string) => div("#cv-editor", { props: { innerHTML: view }}))
 ```
+
+---
+class: middle
+# Virtual DOM à la rescousse
 
 ---
 class: middle
@@ -849,8 +841,10 @@ const editorVnode$ = xs
 --
 ```typescript
 function insertEditors([cvVnode, elementVnodes]) {
-  select("[widget-element]", cvVnode)
-    .forEach((element: VNode) => {
+  const widgetElements = select("[widget-element]", cvVnode);
+
+  widgetElements
+    .forEach(function (element: VNode) {
       element.children = [
         findElement(elementVnodes, cvVnode),
         ...element.children
@@ -864,22 +858,31 @@ function insertEditors([cvVnode, elementVnodes]) {
 ---
 class: center condensed
 name: rendering
-# Rendu de CV
+# Insertion de l'éditeur
 
 {% include doyoubuzz-cycle/rendering-pipe.svg %}
 
 ---
-# Wrap Up
+class: center condensed
+name: cyclerender
+# Insertion de l'éditeur
 
-- Premier step d'une migration itérative
-- Cycle embed dans Angular
-- Designs indépendants de la techno d'édition
+{% include doyoubuzz-cycle/cycle-render.svg %}
+
+---
+class: middle
+
+# Première itération 👍
 
 ---
 class: middle
 
 # ... Et pour la suite, j'ai besoin d'aide !
 
+## 👉 bit.ly/join<span style="color:#ff960d">dyb</span>
+
+---
+background-image: url(/img/moyse.png)
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -993,6 +996,39 @@ var animations = {
       .add(vnode2Tl, "combine")
       .add(elementsTl, "combine")
       .add(finalVnodeTl)
+      .repeat(-1);
+
+    return timeline;
+  }),
+
+  cyclerender: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var cvViewTl = new TimelineMax();
+
+    var cvView = slide.querySelector(".cv-view");
+    var buttons = slide.querySelectorAll(".buttons");
+    var button = slide.querySelectorAll(".button");
+
+    cvViewTl
+      .to(cvView, 0.3, { opacity: 1 })
+      .to(cvView, 1, { scale: 5, x: 75, transformOrigin: "center center" })
+      .add("move")
+      .to(buttons, 0, { opacity: 1 })
+      .to(cvView, 3, { x: 175 }, "move")
+      .staggerTo(buttons, 2, { y: "-=80", ease: Elastic.easeOut.config(1, 0.3) }, 0.2, "move")
+      .to(buttons, 3, { x: 100 }, "move")
+      .to(button, 0, { scale: 0.1, transformOrigin: "center center" })
+      .staggerTo(buttons, 1, { y: 80, ease: Power1.easeIn }, 0.2)
+      .to(button, 0, { opacity: 1 })
+      .staggerTo(button, 1, {
+        scale: 1,
+        transformOrigin: "center center",
+        ease: Elastic.easeOut.config(1.5, 0.3)
+      }, 0.1)
+
+
+    timeline
+      .add(cvViewTl)
       .repeat(-1);
 
     return timeline;
