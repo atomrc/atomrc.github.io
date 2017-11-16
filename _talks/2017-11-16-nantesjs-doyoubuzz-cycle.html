@@ -37,7 +37,14 @@ extra: "NantesJS"
       .remark-slide-content {
         /*background: white;*/
         /*background-color: #057FFA;*/
-        background-color: #267B72;
+        background-color: #1C5A53;
+        /*
+        background: #607b96;
+        background: -webkit-radial-gradient(bottom,#607b96,#2e5c8a);
+        background: -o-radial-gradient(bottom,#607b96,#2e5c8a);
+        background: -moz-radial-gradient(bottom,#607b96,#2e5c8a);
+        background: radial-gradient(to top, #607b96, #2e5c8a);
+        */
         padding: 0 3em;
       }
       .remark-container {
@@ -79,6 +86,10 @@ extra: "NantesJS"
         padding: 1em;
         background-color: white;
         border: 1px solid #EEE;
+      }
+
+      li, table {
+        font-size: 2em;
       }
 
       .semi-condensed h1 {
@@ -227,6 +238,10 @@ extra: "NantesJS"
       .icons img {
         width: 20%;
       }
+
+      #slide-dyb-cycle img {
+        height: 2em;
+      }
     </style>
   </head>
   <body class="dark">
@@ -248,7 +263,7 @@ background-image: url(/img/fake-intro.png)
 ---
 class: middle, center
 
-<video src="/img/talk-v2-f.webm" controls autoplay></video>
+<video src="/img/talk-v2-f.webm" controls autoplay loop></video>
 ---
 
 class: center middle naked
@@ -313,7 +328,7 @@ class: middle
 
 ---
 class: middle
-> ⛔ rendu serveur JS ⛔
+> <span style="color: red">⛔</span> rendu serveur JS <span style="color: red">⛔</span>
 
 ---
 class: middle center
@@ -415,6 +430,7 @@ VS.
 - grosse communauté ;
 - basé sur React, bien connu ;
 - state global = easy debug ;
+- fonction pures (sauf les actions) ;
 - devtools 🤘
 
 ---
@@ -424,6 +440,7 @@ layout: true
 ---
 ### Archi non fractale
 
+![redux non fract](https://tryolabs.com/images/blog/post-images/2016-04-19-understanding-the-redux-paradigm/redux-simple-f8-diagram.png)
 ???
 Portée fonctionnelle des composants
 
@@ -454,7 +471,7 @@ function updateCVAction(cv) {
   return function (dispatch) {
     dispatch("UPDATE_CV", /*...*/)
     api.updateCV(cv)
-      .then(repsonse => dispatch("UPDATE_CV_SUCCESS", /*...*/))
+      .then(response => dispatch("UPDATE_CV_SUCCESS", /*...*/))
       .then(() => fetchCVCompletionAction(cv)(dispatch))
   }
 
@@ -497,18 +514,6 @@ class: condensed center
 ### Stack Traces 🤢
 
 ![cycle stack](/img/cycle-stack.png)
-
----
-### Selecteurs CSS
-
-```javascript
-const updateAction$ = DOM
-  .select("button.update")
-  .events("click");
-```
-
----
-### Petite communauté
 
 ---
 layout: false
@@ -603,9 +608,11 @@ class: middle center
 ![code orga](/img/code-orga.png)
 
 ---
+name: dyb-cycle
 layout: false
 class: middle
-# DoYouBuzz + Cycle
+
+# ![doyoubuzz](http://www.doyoubuzz.com/bundles/dyb/images/Common/doyoubuzz-white-large.png) + ![cycle.js](https://cdn-images-1.medium.com/max/800/1*en0KY03MHunAXUr8UbqYGw.png)
 
 ---
 class: center condensed
@@ -941,7 +948,7 @@ var animations = {
       .to(angular, 0.1, { opacity: 1 })
       .to(angular, 1, { rotation: 720, transformOrigin: "center center" })
       .to(angular, 0.1, { opacity: 0 })
-      .to(cvElement, 1.5, { x: -60, y: 0 })
+      .staggerTo(cvElement, 0.5, { x: -60, y: 0 }, 0.2)
       .add("hide", "+=1")
       .to(cvElements, 1, { opacity: 0 }, "hide")
       .to(cvTemplate, 1, { opacity: 0 }, "hide")
