@@ -1,5 +1,5 @@
 ---
-title: "DoYouBuzz V3 : de la programmation impérative à la programmation réactive"
+title: "DoYouBuzz V3 : de l'impératif au réactif"
 description: "Laissez moi vous raconter l'histoire de notre migration d'Angular vers Cycle.js"
 categories: [doyoubuzz, reactive, cyclejs]
 lang: fr
@@ -8,7 +8,7 @@ extra: "NantesJS"
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>DoYouBuzz V3 : de la programmation impérative à la programmation réactive</title>
+    <title>{{ page.title }}</title>
     <meta name="robots" content="noindex">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <style type="text/css">
@@ -21,7 +21,7 @@ extra: "NantesJS"
       }
 
       .remark-slide-content:not(.naked)::after {
-          content: "@atomrc | NantesJS Novembre 2017";
+          content: "@atomrc | RennesJS Décembre 2017";
           position: absolute;
           bottom: 0;
           left: 0;
@@ -242,26 +242,20 @@ extra: "NantesJS"
       #slide-dyb-cycle img {
         height: 2em;
       }
+
+      #slide-dyb-v2 video {
+        width: 100%;
+      }
     </style>
   </head>
   <body class="dark">
-  <!--
-  Bonjour, bienvenu au DevFest Nantes Novembre 2013,
-  je suis Thomas Belin et aujourd'hui je vais vous expliqué comment on a remplacé jQuery par Angular sur DoYouBuzz
-  Dis autrement, je vais vous montrer comment on a transformer des bouts de DOM qui bougent en une vraie application front
-
-  <video>
-
-  Bonjour, bienvenu au NantesJS de Novembre 2017,
-  Je suis Thomas Belin et aujourd'hui, je vais vous expliquer comment on est en train de migrer progressivement notre front-end d'Angular à Cycle.js
-
-  -->
     <textarea id="source">
 
 background-image: url(/img/fake-intro.png)
 
 ---
-class: middle, center
+name: dyb-v2
+class: middle, center, naked
 
 <video src="/img/talk-v2-f.webm" controls autoplay loop></video>
 ---
@@ -270,23 +264,19 @@ class: center middle naked
 # DoYouBuzz V3
 ## From Imperative to Reactive Programming
 
-NantesJS Nantes, Novembre 2017
+RennesJS, Décembre 2017
 
 ---
 class: middle
 # DoYouBuzz
 
 ---
-layout: true
-# DoYouBuzz
-
----
-class: center condensed
+class: center condensed middle
 
 ![doyoubuzz resume](/img/my-resume.png)
 
 ---
-class: center condensed
+class: center condensed middle
 
 <video src="/img/dyb-edit.webm" controls autoplay loop></video>
 
@@ -297,34 +287,21 @@ class: middle
 # Nos Contraintes
 
 ---
-class: middle
-
-> L'**édition** doit être **dynamique**
-
----
-class: middle
-> La **visualisation** doit être **blazing fast**
-
----
 class: center condensed
-# Édition
+# Édition dynamique
 
 <video src="/img/edit-load.webm" controls autoplay loop></video>
 
 ---
 class: center condensed
-# Visualisation
+# Visualisation blazing fast
 
 <video src="/img/view-load.webm" controls autoplay loop></video>
 
 ---
 layout: false
 class: middle
-# Comment répondre à ces deux contraintes ?
-
----
-class: middle
-# Comment répondre à ces deux contraintes ? ... En 2013 ?
+> 2013
 
 ---
 class: middle
@@ -375,14 +352,9 @@ class: middle
 
 ---
 class: center condensed
-# Nouvelle Vision
+# Nouvelle Vision : le PDF
 
 ![dyb pdf](/img/pdf.png)
-
----
-class: center middle
-
-> Un éditeur de CV PDF
 
 ---
 layout: false
@@ -392,46 +364,31 @@ class: middle
 
 ---
 class: middle center icons
-
-![vue](https://upload.wikimedia.org/wikipedia/commons/f/f1/Vue.png)
-![angular](https://angular.io/assets/images/logos/angular/angular.png)
-![redux](https://raw.githubusercontent.com/reactjs/redux/master/logo/logo.png)
-![cycle.js](https://cdn-images-1.medium.com/max/800/1*en0KY03MHunAXUr8UbqYGw.png)
-
----
-class: middle center icons
-
-![vue](https://upload.wikimedia.org/wikipedia/commons/f/f1/Vue.png)
-
-???
-- trop de façon de faire les choses (directive / composant)
-- échanges enfants->parent par évènements (sémantiquement pas tjrs vrai)
-- trop proche de la philosophie AngularJS (sans le DI/Routing ...)
-+ vuex semble vraiment pas mal pour regrouper le state
-+ les single file components
-
----
-class: middle center icons
-
-![angular](https://angular.io/assets/images/logos/angular/angular.png)
-
-???
-La programmation réactive ... pas assumée
-
----
-class: middle center icons
 ![redux](https://raw.githubusercontent.com/reactjs/redux/master/logo/logo.png)
 VS.
 ![cycle.js](https://cdn-images-1.medium.com/max/800/1*en0KY03MHunAXUr8UbqYGw.png)
 
 ---
+layout: true
 # Redux 💖
 
-- grosse communauté ;
-- basé sur React, bien connu ;
-- state global = easy debug ;
-- fonction pures (sauf les actions) ;
-- devtools 🤘
+---
+class: center
+## Grosse communauté
+
+![redux community](/img/redux-community.png)
+
+---
+## State global => easy debug
+
+---
+## Fonction pures
+
+--
+### (sauf les actions)
+
+---
+## Devtools 🤘
 
 ---
 layout: true
@@ -483,27 +440,80 @@ function updateCVAction(cv) {
 
 ```html
 <input
-  onFocus={ () => dispatch(ACTION_1) }
-  onBlur={ () => dispatch(ACTION_2) }
-  onInput={ () => dispatch(ACTION_3) }
+  onFocus={ /*...*/  }
+  onBlur={ /*...*/ }
+  onInput={ /*...*/ }
   />
 ```
 
 ---
-layout: false
+layout: true
 # Cycle 💖
 
-- une archi plus qu'une tech ;
-- fractal (composant = app cycle) ;
-- fonctions pures 😍  ;
-- communauté bienveillante.
+---
+## Une archi plus qu'une tech
+
+---
+## Fractal (composant = app cycle)
+
+---
+## Fonctions pures 😍
+### => tests  	💯 
+
+---
+## Programmation réactive
+
+### => Lisibilité++
+
+---
+
+```javascript
+function updateCVAction(cv) {
+
+  return function (dispatch) {
+    dispatch("UPDATE_CV", /*...*/)
+    api.updateCV(cv)
+      .then(response => dispatch("UPDATE_CV_SUCCESS", /*...*/))
+      .then(() => fetchCVCompletionAction(cv)(dispatch))
+  }
+
+}
+```
+
+---
+
+```javascript
+function cvEditor({ DOM }) {
+  return {
+    HTTP: DOM.select("form")
+      .events("submit")
+      .mapTo({ url: "/cv/update", category: "cv_update" })
+  }
+}
+```
+
+--
+
+
+```javascript
+function Completion({ HTTP }) {
+  const fetchCompletion$ = HTTP
+    .select("cv_update")      // je selectionne les requêtes de maj du CV
+    .flatten()                // j'attend la réponse
+    .mapTo({ url: "/cv/completion", category: "completion" }) // je créé la requête
+
+  return {
+    HTTP: fetchCompletion$
+  }
+}
+```
 
 ---
 layout: true
 # Cycle 💔
 
 ---
-### Brain rewiring
+## Brain rewiring
 
 - 🤔 Programmation temporelle ?
 - 🤔 Property vs. Event ?
@@ -511,12 +521,37 @@ layout: true
 
 ---
 class: condensed center
-### Stack Traces 🤢
+## Stack Traces 🤢
 
 ![cycle stack](/img/cycle-stack.png)
 
 ---
+class: condensed highlighted
+## Selecteurs
+
+```javascript
+return {
+* HTTP: DOM.select("button.update")
+    .events("click")
+    .mapTo({
+      url: "..",
+*     category: "cv_udpate"
+    })
+}
+
+// ...
+
+*HTTP.select("cv_update")
+
+```
+
+---
+class: middle
 layout: false
+
+# Back to DoYouBuzz
+## Une dernière containte
+---
 class: middle center
 
 > Pas question de réécrire nos 176 designs !
@@ -602,6 +637,19 @@ class: center
 
 ???
 Plus de fichier modifiés. Découpage par `job` plutot que par `function`
+
+---
+class: center condensed small-table
+# Fight: F(r)a(c)tality!
+
+{% include doyoubuzz-cycle/fractality.svg %}
+
+<style>
+.small-table table {
+  text-align: left;
+  font-size: 1em;
+}
+</style>
 ---
 class: middle center
 
