@@ -314,10 +314,10 @@ name: ngrender
 class: middle
 ```javascript
 <div
-  class="widget <% $widget_name %>"
-  <% if isEditable($widget_name) %>
-    ng-show="shouldDisplay(<% $widget_name %>)"
-  <% endif %>
+  class="widget <? $widget_name ?>"
+  <? if isEditable($widget_name) ?>
+  ng-show="shouldDisplay(<? $widget_name ?>
+  <? endif ?>
   >
 </div>
 ```
@@ -325,15 +325,15 @@ class: middle
 ---
 class: middle
 ```javascript
-<% if edit %>
-  <div ng-repeat="element in cv[<% $widget_name %>]">
+<? if edit ?>
+  <div ng-repeat="element in cv[<? $widget_name ?>]">
     ...
   </div>
-<% else %>
-  <% for element in cv[$widget_name] %>
+<? else ?>
+  <? for element in cv[$widget_name] ?>
     ...
-  <% endfor %>
-<% endif %>
+  <? endfor ?>
+<? endif ?>
 ```
 
 ---
@@ -376,7 +376,9 @@ class: center
 ![redux community](/img/redux-community.png)
 
 ---
-## State global => easy debug
+## State global
+
+### => easy debug
 
 ---
 ## Fonction pures
@@ -392,6 +394,7 @@ layout: true
 # Redux 💔
 
 ---
+class: center
 ### Archi non fractale
 
 ![redux non fract](https://tryolabs.com/images/blog/post-images/2016-04-19-understanding-the-redux-paradigm/redux-simple-f8-diagram.png)
@@ -480,7 +483,7 @@ function updateCVAction(cv) {
 ---
 
 ```javascript
-function cvEditor({ DOM }) {
+function CvEditor({ DOM }) {
   return {
     HTTP: DOM.select("form")
       .events("submit")
@@ -786,7 +789,7 @@ function dybMessageDriver() {
 --
 ```javascript
 // cvViewer.ts
-function cvViewer({ dybMessages }) {
+function CvViewer({ dybMessages }) {
   return {
     HTTP: dybMessages
       .filter("cvUpdated")
@@ -817,7 +820,7 @@ function dybMessageDriver(message$: Stream<Message>) {
 --
 ```typescript
 // cvEditor.ts
-function cvEditor({ DOM }: Sources) {
+function CvEditor({ DOM }: Sources) {
   return {
     dybMessage: DOM
       .select(".edit-button")
