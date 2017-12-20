@@ -34,17 +34,13 @@ extra: "NantesJS"
         max-height: 90%;
       }
 
-      .remark-slide-content {
+      .remark-slide-content:not(.no-bg) {
         /*background: white;*/
         /*background-color: #057FFA;*/
-        background-color: #1C5A53;
-        /*
-        background: #607b96;
         background: -webkit-radial-gradient(bottom,#607b96,#2e5c8a);
         background: -o-radial-gradient(bottom,#607b96,#2e5c8a);
         background: -moz-radial-gradient(bottom,#607b96,#2e5c8a);
         background: radial-gradient(to top, #607b96, #2e5c8a);
-        */
         padding: 0 3em;
       }
       .remark-container {
@@ -251,6 +247,7 @@ extra: "NantesJS"
   <body class="dark">
     <textarea id="source">
 
+class: no-bg
 background-image: url(/img/fake-intro.png)
 
 ---
@@ -656,6 +653,28 @@ class: middle center
 ![code orga](/img/code-orga.png)
 
 ---
+class: center condensed small-table
+# Fight: F(r)a(c)tality!
+
+{% include doyoubuzz-cycle/completion-non-fractal.svg %}
+
+<style>
+svg .embed-completion {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.toggled .embed-completion {
+  opacity: 1;
+}
+
+svg .cv-editor-txt {
+  transition: transform 0.5s;
+}
+.toggled .cv-editor-txt {
+  transform: translateY(-8px);
+}
+</style>
+---
 name: dyb-cycle
 layout: false
 class: middle
@@ -932,12 +951,9 @@ class: middle
 ---
 class: middle
 
-# ... Et pour la suite, j'ai besoin d'aide !
+# Merci
 
-## 👉 bit.ly/join<span style="color:#ff960d">dyb</span>
-
----
-background-image: url(/img/moyse.png)
+## Don't fear the migration
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
