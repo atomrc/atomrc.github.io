@@ -426,10 +426,10 @@ Comment ça scale ça ?
 function updateCVAction(cv) {
 
   return function (dispatch) {
-    dispatch("UPDATE_CV", /*...*/)
+    dispatch(updateCvStart(cv))
     api.updateCV(cv)
-      .then(response => dispatch("UPDATE_CV_SUCCESS", /*...*/))
-      .then(() => fetchCVCompletionAction(cv)(dispatch))
+      .then(response => dispatch(updateCvDone(response)))
+      .then(() => dispatch(fetchCVCompletionAction(cv)))
   }
 
 }
@@ -476,10 +476,10 @@ layout: true
 function updateCVAction(cv) {
 
   return function (dispatch) {
-    dispatch("UPDATE_CV", /*...*/)
+    dispatch(updateCvStart(cv))
     api.updateCV(cv)
-      .then(response => dispatch("UPDATE_CV_SUCCESS", /*...*/))
-      .then(() => fetchCVCompletionAction(cv)(dispatch))
+      .then(response => dispatch(updateCvDone(cv)))
+      .then(() => dispatch(fetchCVCompletionAction(cv)))
   }
 
 }
