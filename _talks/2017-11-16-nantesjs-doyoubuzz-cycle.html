@@ -2,14 +2,14 @@
 title: "DoYouBuzz V3 : de l'impératif au réactif"
 description: "Laissez moi vous raconter l'histoire de notre migration d'Angular vers Cycle.js"
 categories: [doyoubuzz, reactive, cyclejs]
+video: https://www.youtube.com/watch?v=c9P7kkqnkuk
 lang: fr
-extra: "NantesJS"
+extra: "RennesJS | NantesJS | LyonJS"
 ---
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <title>{{ page.title }}</title>
-    <meta name="robots" content="noindex">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <style type="text/css">
       @import url(https://fonts.googleapis.com/css?family=Open+Sans:400);
@@ -21,7 +21,7 @@ extra: "NantesJS"
       }
 
       .remark-slide-content:not(.naked)::after {
-          content: "@atomrc | RennesJS Décembre 2017";
+          content: "@atomrc | LyonJS Janvier 2018";
           position: absolute;
           bottom: 0;
           left: 0;
@@ -36,11 +36,7 @@ extra: "NantesJS"
 
       .remark-slide-content:not(.no-bg) {
         /*background: white;*/
-        /*background-color: #057FFA;*/
-        background: -webkit-radial-gradient(bottom,#607b96,#2e5c8a);
-        background: -o-radial-gradient(bottom,#607b96,#2e5c8a);
-        background: -moz-radial-gradient(bottom,#607b96,#2e5c8a);
-        background: radial-gradient(to top, #607b96, #2e5c8a);
+        background-color: #2e5c8a;
         padding: 0 3em;
       }
       .remark-container {
@@ -242,6 +238,9 @@ extra: "NantesJS"
       #slide-dyb-v2 video {
         width: 100%;
       }
+      #slide-me {
+          font-size: 2em;
+      }
     </style>
   </head>
   <body class="dark">
@@ -259,13 +258,13 @@ class: middle, center, naked
 
 class: center middle naked
 # DoYouBuzz V3
-## From Imperative to Reactive Programming
+## De l'impératif au réactif
 
-RennesJS, Décembre 2017
+LyonJS, Janvier 2018
 
 ---
 class: middle
-# DoYouBuzz
+# ![doyoubuzz](http://www.doyoubuzz.com/bundles/dyb/images/Common/doyoubuzz-white-large.png)
 
 ---
 class: center condensed middle
@@ -366,28 +365,23 @@ VS.
 ![cycle.js](https://cdn-images-1.medium.com/max/800/1*en0KY03MHunAXUr8UbqYGw.png)
 
 ---
-layout: true
-# Redux 💖
+class: middle
+# Redux 💖 : State Centralisé
 
 ---
-class: center
-## Grosse communauté
-
-![redux community](/img/redux-community.png)
+class: middle
+# Redux 💖 : Grosse communauté
 
 ---
-## State centralisé
-
-### => easy debug
-
----
-## Fonction pures
+class: middle
+# Redux 💖 : Fonction pures
 
 --
 ### (sauf les actions)
 
 ---
-## Devtools 🤘
+class: middle
+# Redux 💖 : Devtools 🤘
 
 ---
 layout: true
@@ -436,6 +430,22 @@ function updateCVAction(cv) {
 ```
 
 ---
+class: highlighted
+### Actions chainées
+
+```javascript
+function updateCVAction(cv) {
+
+  return function (dispatch) {
+    dispatch(updateCvStart(cv))
+    api.updateCV(cv)
+      .then(response => dispatch(updateCvDone(response)))
+*     .then(() => dispatch(fetchCVCompletionAction(cv))) // SRP fail
+  }
+
+}
+```
+---
 ### Handlers dans la vue
 
 ```html
@@ -447,30 +457,45 @@ function updateCVAction(cv) {
 ```
 
 ---
-layout: true
+layout: false
+class: middle
+# Cycle 💖 : Une archi plus qu'une tech
+
+---
+class: middle
+# Cycle 💖 : Fractal
+### (composant = app cycle)
+
+![cycle fractal](/img/cycle-fractal.svg)
+
+---
+class: middle
+# Cycle 💖 : State centralisé
+### (avec `onionify`)
+
+---
+class: middle
+# Cycle 💖 : Fonctions pures 😍
+### (all the way)
+
+---
+class: middle
+# Cycle 💖 : Programmation Réactive
+
+```javascript
+const a = fromEvent(inputA, "change")
+  .map(ev => ev.target.value);
+
+const b = fromEvent(inputB, "change")
+  .map(ev => ev.target.value);
+
+// c === a + b (over time!!)
+const c = combine(a, b)
+  .map(([a, b] => a + b)
+```
+
+---
 # Cycle 💖
-
----
-## Une archi plus qu'une tech
-
----
-## Fractal (composant = app cycle)
-
----
-## State centralisé (avec `onionify`)
-
-### => easy debug
-
----
-## Fonctions pures 😍
-### => tests  	💯 
-
----
-## Programmation réactive
-
-### => Lisibilité++
-
----
 
 ```javascript
 function updateCVAction(cv) {
@@ -486,6 +511,7 @@ function updateCVAction(cv) {
 ```
 
 ---
+# Cycle 💖
 
 ```javascript
 function CvEditor({ DOM }) {
@@ -503,9 +529,9 @@ function CvEditor({ DOM }) {
 ```javascript
 function Completion({ HTTP }) {
   const fetchCompletion$ = HTTP
-    .select("cv_update")      // je selectionne les requêtes de maj du CV
-    .flatten()                // j'attend la réponse
-    .mapTo({ url: "/cv/completion", category: "completion" }) // je créé la requête
+    .select("cv_update")
+    .flatten()
+    .mapTo({ url: "/cv/completion", category: "completion" })
 
   return {
     HTTP: fetchCompletion$
@@ -551,6 +577,19 @@ return {
 ```
 
 ---
+## Isolation du DOM compliquée
+
+```javascript
+isolate(Component);
+
+isolate(Component, "key");
+
+isolate(Component, { DOM: "key" });
+
+isolate(Component, { DOM: ".key" });
+```
+
+---
 class: middle
 layout: false
 
@@ -576,7 +615,7 @@ class: middle
 ---
 class: center condensed
 # V3.0 : PoC
-<video src="/img/jesus-revient.webm" controls></video>
+<video src="/img/jesus-revient.webm" controls autoplay loop></video>
 
 ---
 # SSR + virtual DOM : React
@@ -957,11 +996,19 @@ class: middle
 # Première itération 👍
 
 ---
+name: me
+class: center, middle, naked
+![thomas belin](http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=150)  
+Thomas Belin  
+Front-end developer @ doyoubuzz  
+<i class="ion-social-twitter"></i>
+[@atomrc](https://twitter.com/atomrc) | [thomasbelin.fr](http://blog.thomasbelin.fr)
+
+---
 class: middle
 
 # Merci
-
-## Don't fear the migration
+### Do not fear the migration!
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
