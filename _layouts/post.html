@@ -1,14 +1,6 @@
 ---
 layout: default
 ---
-<!--
-  <div class="sticky-container">
-  <div data-sticky="" id="sticky-header" class="fixed-header">
-  <a href="/"><img class="avatar falling" src="/images/avatar_s.jpeg"></a>
-  <span class="title">{{ page.title }}</span>
-  </div>
-  </div>
--->
 <link href="/css/article.css" type="text/css" rel="stylesheet">
 <div id="full-article">
   <article lang="{{page.lang}}">
@@ -36,13 +28,9 @@ layout: default
     </div>
 
     <br>
-    <br>
     {% assign url =  page.url | prepend: site.url | cgi_escape %}
     {% assign title =  page.title | cgi_escape %}
     <em>You enjoyed this article? Consider <a target="_blank" href="https://twitter.com/intent/tweet?url={{url}}&text={{title}}&via=atomrc">tweeting it</a> :)</em>
-
-    <div data-reading-probe="{{page.url}}"></div>
-    <br>
   </article>
   <script src="/js/application.js" async></script>
 </div>
