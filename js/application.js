@@ -27,19 +27,6 @@
       element.appendChild(anchor);
     },
 
-    "#disqus_thread": element => {
-      probe(element, () => {
-        var dsq = doc.createElement("script");
-        dsq.type = "text/javascript";
-        dsq.async = true;
-        dsq.src = "//whysocurious.disqus.com/embed.js";
-        (
-          doc.getElementsByTagName("head")[0] ||
-          doc.getElementsByTagName("body")[0]
-        ).appendChild(dsq);
-      });
-    },
-
     "[data-reading-probe]": element => {
       probe(element, element => {
         ga("send", "event", "article", "read", element.dataset.readingProbe);
