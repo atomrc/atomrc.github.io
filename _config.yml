@@ -4,7 +4,6 @@ description: I ♥ playing with JavaScript. I apply Functional Programming princ
 title: Thomas Belin
 permalink: /p/:title/
 future: true
-exclude: [node_modules, package.json]
 sass:
     sass_dir: css/_sass
 gems:

@@ -1,1 +1,59 @@
-!function i(a,c,u){function d(n,e){if(!c[n]){if(!a[n]){var t="function"==typeof require&&require;if(!e&&t)return t(n,!0);if(s)return s(n,!0);var r=new Error("Cannot find module '"+n+"'");throw r.code="MODULE_NOT_FOUND",r}var o=c[n]={exports:{}};a[n][0].call(o.exports,function(e){return d(a[n][1][e]||e)},o,o.exports,i,a,c,u)}return c[n].exports}for(var s="function"==typeof require&&require,e=0;e<u.length;e++)d(u[e]);return d}({1:[function(e,n,t){var r=e("./probe"),o=e("./compiler");!function(t){"use strict";o({"article h2, article h3":function(e){var n=t.createElement("a");n.href="#"+e.id,n.classList.add("anchor"),e.appendChild(n)},"#disqus_thread":function(e){r(e,function(){var e=t.createElement("script");e.type="text/javascript",e.async=!0,e.src="//whysocurious.disqus.com/embed.js",(t.getElementsByTagName("head")[0]||t.getElementsByTagName("body")[0]).appendChild(e)})},"[data-reading-probe]":function(e){r(e,function(e){ga("send","event","article","read",e.dataset.readingProbe)})}}),t.addEventListener("DOMContentLoaded",function(){window.location.hash&&(window.location.hash=window.location.hash)})}(document)},{"./compiler":2,"./probe":3}],2:[function(e,n,t){!function(i){"use strict";n.exports=function(e,n){for(var t in n=n||i,e)for(var r=n.querySelectorAll(t),o=0;o<r.length;o++)e[t](r[o])}}(window.document)},{}],3:[function(e,n,t){!function(o){"use strict";n.exports=function(e,n){var t=o.innerHeight,r=!1;return o.addEventListener("scroll",function(){r||e.getBoundingClientRect().top<=t&&(n(e),r=!0)}),e}}(window)},{}]},{},[1]);
+(function(win, doc) {
+  function compile(directives, rootElement) {
+    Object.entries(directives).forEach(([selector, directive]) => {
+      rootElement
+        .querySelectorAll(selector)
+        .forEach(element => directive(element));
+    });
+  }
+
+  function probe(element, onVisible) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(({ isIntersecting, target }) => {
+        if (isIntersecting) {
+          onVisible(target);
+          observer.unobserve(target);
+        }
+      });
+    });
+    observer.observe(element);
+  }
+
+  var directives = {
+    "article h2, article h3": element => {
+      var anchor = doc.createElement("a");
+      anchor.href = "#" + element.id;
+      anchor.classList.add("anchor");
+      element.appendChild(anchor);
+    },
+
+    "#disqus_thread": element => {
+      probe(element, () => {
+        var dsq = doc.createElement("script");
+        dsq.type = "text/javascript";
+        dsq.async = true;
+        dsq.src = "//whysocurious.disqus.com/embed.js";
+        (
+          doc.getElementsByTagName("head")[0] ||
+          doc.getElementsByTagName("body")[0]
+        ).appendChild(dsq);
+      });
+    },
+
+    "[data-reading-probe]": element => {
+      probe(element, element => {
+        ga("send", "event", "article", "read", element.dataset.readingProbe);
+      });
+    }
+  };
+
+  compile(directives, doc);
+
+  doc.addEventListener("DOMContentLoaded", () => {
+    //hack to force the browser to interpret the
+    //anchor hash when page is loaded
+    if (win.location.hash) {
+      win.location.hash = win.location.hash;
+    }
+  });
+})(window, document);
