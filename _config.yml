@@ -1,10 +1,10 @@
 name: Thomas Belin
 url: "https://blog.atomrc.dev"
 description: I ♥ playing with JavaScript. I apply Functional Programming principles to any piece of code I produce. Vim is my one and only editor :)
-title: JS rocks
+title: Thomas Belin
 permalink: /p/:title/
 future: true
-exclude: [node_modules, package.json, gulpfile.js, vendor]
+exclude: [node_modules, package.json]
 sass:
     sass_dir: css/_sass
 gems:
