@@ -32,11 +32,11 @@ Vous l'aurez compris, pour continuer ce tuto, il va nous falloir un compte Amazo
 
 Une fois qu'on a notre compte, il va falloir générer une clé d'accès à ce compte. Cela permettra à Bamboo de créer/détruire des instances pour lancer vos builds. Pour cela on va se rendre dans la partie identification de votre compte Amazon :
 
-![aws-credentials](http://i.imgur.com/9WV1O5v.png)
+![aws-credentials](//i.imgur.com/9WV1O5v.png)
 
 Ca se passe dans la partie "Access Keys". Là, on va pouvoir générer une paire de clés pour notre serveur bamboo :
 
-![aws-access-key](http://i.imgur.com/zuv28d9.png)
+![aws-access-key](//i.imgur.com/zuv28d9.png)
 
 Il ne faut pas oublier de copier les clés avant de fermer la popup ! Ensuite, on va pouvoir passer à Bamboo.
 
@@ -58,11 +58,11 @@ Ce que j'ai mis du temps à comprendre c'est **qu'on a deux possibilités pour c
 La question qui se pose à ce moment là c'est : Pourquoi je n'avais pas vu qu'il y avait des images configurées pour Bamboo ? Pourtant j'avais été voir dans l'onglet des images dans la configuration de Bamboo, il n'y avait rien !
 La réponse est simple : **on ne voit ces images si, et seulement si, on a configuré la région `US East (Nothern Virginia)` dans les préférences globales de Bamboo** -_-.
 
-![bamboo-config-region](http://i.imgur.com/IAoTahE.png)
+![bamboo-config-region](//i.imgur.com/IAoTahE.png)
 
 Ensuite, si on va dans l'onglet "Image Configuration" sur l'admin Bamboo, on doit voir un certain nombre d'images disponibles :
 
-![bamboo-pre-configured-instances](http://i.imgur.com/B9H4SKq.png)
+![bamboo-pre-configured-instances](//i.imgur.com/B9H4SKq.png)
 
 Il va maintenant falloir nous en choisir une qu'on va customiser comme il se doit.
 
@@ -79,7 +79,7 @@ Allez c'est parti !
 
 Dans la liste des images disponibles, on démarre celle qu'on a choisie. On peut voir, dans l'onglet "Instances" de l'admin Bamboo qu'une instance est en train de démarrer à partir de l'image choisie. Une fois celle-ci démarrée (ça peut prendre un peu de temps hein), on va pouvoir se connecter dessus. On clique sur l'identifiant de l'instance pour accéder à ses informations :
 
-![instance-details](http://i.imgur.com/zj7W6Oy.png)
+![instance-details](//i.imgur.com/zj7W6Oy.png)
 
 Dans la section "SSH access" on va pouvoir télécharger la clé privée qui nous donnera accès à votre instance puis se connecter à cette dernière via une commande qui est donnée.
 
@@ -93,7 +93,7 @@ C'est le moment où on installe tous les paquets dont on a besoin pour lancer le
 
 Une fois les installations finies, il ne reste plus qu'à créer une nouvelle image à partir de l'instance qui tourne sur Amazon :
 
-![create-image-amazon-instance](http://i.imgur.com/X3peG12.png)
+![create-image-amazon-instance](//i.imgur.com/X3peG12.png)
 
 Toujours sur Amazon, on peut aller dans l'onglet `Images > AMIs` et noter l'identifiant de l'image que l'on vient de créer. Ca doit ressembler à `ami-XXXXXXXX`
 

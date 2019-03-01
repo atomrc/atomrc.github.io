@@ -1,5 +1,5 @@
 name: Thomas Belin
-url: "http://blog.thomasbelin.fr"
+url: "https://blog.atomrc.dev"
 description: I ♥ playing with JavaScript. I apply Functional Programming principles to any piece of code I produce. Vim is my one and only editor :)
 title: JS rocks
 permalink: /p/:title/
@@ -20,6 +20,7 @@ author:
     uri: https://twitter.com/atomrc
 twitter:
     username: atomrc
+avatar: //www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=200
 collections:
   talks:
     output: true
@@ -32,7 +33,6 @@ defaults:
             type: posts
         values:
             layout: post
-            image: http://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=200
             lang: fr
     -
         scope:

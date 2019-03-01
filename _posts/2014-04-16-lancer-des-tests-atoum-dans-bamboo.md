@@ -44,7 +44,7 @@ Pour ça, on va configurer notre projet Bamboo pour lui ajouter un nouveau "Stag
 
 C'est ensuite dans un Job qu'on va lancer les tests. Pour ça, on ajoute à notre Job une nouvelle Task de type "script" que l'on peut appeler "Atoum tests" par exemple.
 
-![add-script-task](http://i.imgur.com/ZTJmWyA.png)
+![add-script-task](//i.imgur.com/ZTJmWyA.png)
 
 Voila le contenu du script en question : 
 
@@ -84,7 +84,7 @@ $xunit->addWriter($writer);
 
 Ensuite, dans Bamboo, on va rajouter un parser pour le rapport qui sera généré à chaque exécution des tests Atoum. On va donc ajouter une nouvelle "Task" de type "JUnit Parser" : 
 
-![JUnit parser Bamboo](http://i.imgur.com/IdR8Ieq.png)
+![JUnit parser Bamboo](//i.imgur.com/IdR8Ieq.png)
 
 Le plus simple est de faire un répertoire dans lequel on va mettre tous les rapports de tests de tous nos différents frameworks de test pour que Bamboo les interprètes tous d'un coup. On va donc mettre, dans le champ "Specify custom results directories" `/chemin/vers/le/rapport/*.xunit.xml`
 

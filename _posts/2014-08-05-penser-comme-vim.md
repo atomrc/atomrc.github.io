@@ -14,7 +14,7 @@ Bon soyons franc, je pense que le premier contact avec Vim ça se passe souvent 
 - "Oh bordel, on ne peut pas éditer ! si j'avais voulu lancer `less` j'aurais tapé `less` !" ;
 - et après quelques minutes de rage contenue, le fameux "Putain comment on quitte ce bousin !".
 
-![nothing to do here](http://i.imgur.com/y0TwyKxl.png)
+![nothing to do here](//i.imgur.com/y0TwyKxl.png)
 
 Après cette expérience, il y a deux types de personnes, les `apt-get purge vim` et ceux qui se disent "ça ressemble à un défi pour moi !" (et qui ont un peu de temps devant eux :) ).
 
@@ -85,7 +85,7 @@ Libre à vous de répéter plusieurs fois une commande en ajoutant un nombre dan
 
 Normalement, si vous avez bien compris ça, vous allez être à même de déchiffrer la fameuse cheat sheet de Vim.
 
-![Vim cheat-sheet](http://i.imgur.com/wjPmWGvl.gif)
+![Vim cheat-sheet](//i.imgur.com/wjPmWGvl.gif)
 
 Je vous conseille de la garder près de vous surtout au début.
 

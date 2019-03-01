@@ -13,7 +13,7 @@ Ni une ni deux je parle un peu de ça autour de moi, et notamment à [@GildasQ](
 
 Bref nous voilà donc tous les trois partis dans les Caraïbes pour l'édition 2015 de Hackerbeach.
 
-![Ready to hack !](http://i.imgur.com/LnlgtlOl.jpg)
+![Ready to hack !](//i.imgur.com/LnlgtlOl.jpg)
 
 Cette démarche s'inscrivait aussi parfaitement dans le reboot de DoYouBuzz qu'on a fait récemment (cf. [DoYouBuzz Reboot](https://medium.com/doyoubuzz-open/doyoubuzz-reboot-fr-80dc9ea32a38)). Aussi, quand j'ai parlé aux gars de l'idée de partir là bas, ils trouvaient le concept génial. C'est un bon moyen de mettre à l'épreuve notre capacité à travailler en remote et à valider notre modèle d'entreprise libérée :)
 
@@ -54,5 +54,5 @@ Pour l'instant nous n'avons que trois jours de hack au compteur, donc pas vraime
 
 So stay tuned :)
 
-![La vue de l'un de nos point de hack](http://i.imgur.com/ro8VjmS.jpg)
+![La vue de l'un de nos point de hack](//i.imgur.com/ro8VjmS.jpg)
 

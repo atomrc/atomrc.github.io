@@ -4,7 +4,7 @@ categories: [hackerbeach, experience, remote]
 description: M'organiser pour bosser efficacement en Dominique
 ---
 
-![Hacking sur la plage](http://i.imgur.com/hhN5FuI.jpg)
+![Hacking sur la plage](//i.imgur.com/hhN5FuI.jpg)
 
 Comme expliqué dans mon précédent billet ([Hackerbeach : Coder sur la plage ... en hiver](/p/hackerbeach-inspect-the-dom/)), je suis parti pour (presque) tout le mois de janvier en Dominique pour y travailler.  
 Ce n'est pas vraiment le genre d’environnement de travail auquel je suis habitué et ça serait dommage de ne pas profiter de ce cadre de rêve !  
@@ -17,7 +17,7 @@ N'étant pas vraiment un lève tôt, je vous avoue que ça ne me parait pas faci
 
 ## Travailler n'importe où
 
-![Coding @ home](http://i.imgur.com/v823Or9.jpg)
+![Coding @ home](//i.imgur.com/v823Or9.jpg)
 
 Quitte à partir là bas, je compte bien sortir complètement de mes habitudes vélo / boulot / dodo. Et ça, ça commence par ne pas savoir où je vais bosser en me levant.  
 Pas de bureaux ici, nous sommes en itinérance complète. L'idée c'est vraiment de **bouger le plus possible** : voir plein de lieux, essayer de bosser dans des restaurants ou des bars.  
@@ -48,7 +48,7 @@ Jusque là, je n'ai pas vraiment expérimenté de gros soucis avec la connexion 
 
 ## You are awesome
 
-![Hackerbeach team](http://i.imgur.com/SDGqzdB.jpg)
+![Hackerbeach team](//i.imgur.com/SDGqzdB.jpg)
 Il y a plusieurs choses qui ont rendue l'aventure possible. Je partais complètement à l'aventure en venant en Dominique. Je ne savais pas vraiment comment j'allais pouvoir bosser là bas. Mais j'ai la chance d'avoir une copine en or qui ne m'a jamais freiné dans mon projet, des potes qui étaient motivés pour partir avec moi et surtout une boite qui m'a entièrement soutenue dans mon aventure.
 
 Depuis le Reboot DoYouBuzz, on avait déjà commencé à travailler un peu de chez nous et à des heures un peu décalées. Mais il est vrai qu'on préfère, bien souvent, être tous ensembles à déconner que chez nous ou dans un bar. C'est donc la première vraie aventure dans notre histoire d'entreprise libérée et, franchement, je suis vraiment excité à l'idée d'y participer :)

@@ -21,7 +21,7 @@ Tout semblait bien se passer, les tweets se passaient très bien et les liens ve
 
 ### Google+
 
-Si le compte des tweets était un peu génant, avec Google+ c'était carrément la cata puisque je ne pouvais même pas partager mon article. Lorsque je cliquais sur le bouton, celui-ci se transformait en ![Google plus of death](http://i.imgur.com/EWN9CTU.png) et j'avais le droit à un beau code d'erreur -32099. Pareil que pour Twitter, j'ai essayé avec les urls `#!` et `_escaped_fragment_`, mais rien à y faire, ça ne marchait pas ! Contrairement à Twitter, je n'ai pas trouvé de commentaire d'utilisateur essayant de mettre un bouton Google+ sur un site Ajax. Il y a bien des choses sur l'erreur -32099 mais en réalité ça n'aide pas beaucoup puisque ça dit juste qu'il y a une erreur sur le serveur...
+Si le compte des tweets était un peu génant, avec Google+ c'était carrément la cata puisque je ne pouvais même pas partager mon article. Lorsque je cliquais sur le bouton, celui-ci se transformait en ![Google plus of death](//i.imgur.com/EWN9CTU.png) et j'avais le droit à un beau code d'erreur -32099. Pareil que pour Twitter, j'ai essayé avec les urls `#!` et `_escaped_fragment_`, mais rien à y faire, ça ne marchait pas ! Contrairement à Twitter, je n'ai pas trouvé de commentaire d'utilisateur essayant de mettre un bouton Google+ sur un site Ajax. Il y a bien des choses sur l'erreur -32099 mais en réalité ça n'aide pas beaucoup puisque ça dit juste qu'il y a une erreur sur le serveur...
 
 ### Le référencement
 

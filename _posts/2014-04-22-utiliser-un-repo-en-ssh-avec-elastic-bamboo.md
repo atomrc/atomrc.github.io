@@ -37,7 +37,7 @@ La suite consiste à donner les clés SSH fraichement générées à vos instanc
 
 Et pour ça on va utiliser les scripts de démarrage d'une image disponibles dans l'interface d'admin d'Elastic Bamboo.
 
-![Configuration d'images Elastic Bamboo](http://i.imgur.com/SlYZQK2.png)
+![Configuration d'images Elastic Bamboo](//i.imgur.com/SlYZQK2.png)
 
 Une fois dans le formulaire d'édition de l'image que l'on veut utiliser pour les tests, on va remplir le champ 'Instance startup script'. Je vous propose de mettre le script complet ici et j'explique après ;)
 
