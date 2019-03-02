@@ -19,7 +19,7 @@ author:
     uri: https://twitter.com/atomrc
 twitter:
     username: atomrc
-avatar: //www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=200
+avatar: //www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=100
 collections:
   talks:
     output: true
