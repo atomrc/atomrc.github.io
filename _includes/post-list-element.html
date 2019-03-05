@@ -1,10 +1,6 @@
 {% assign elm = include.post %}
 <li lang="{{elm.lang}}">
-  <time
-    datetime="{{elm.date | date_to_xmlschema}}"
-    pubdate
-    itemprop="datePublished"
-    content="{{elm.date | date_to_xmlschema}}">
+  <time datetime="{{elm.date | date_to_xmlschema}}">
     {{ elm.date | date: '%-d&nbsp;%b&nbsp;%y' }}
   </time>
   &nbsp;
