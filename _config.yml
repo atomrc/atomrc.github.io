@@ -6,7 +6,7 @@ permalink: /p/:title/
 future: true
 sass:
     sass_dir: css/_sass
-gems:
+plugins:
   - jekyll-redirect-from
   - jekyll-gist
   - jekyll-seo-tag
