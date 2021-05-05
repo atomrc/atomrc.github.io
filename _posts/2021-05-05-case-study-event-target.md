@@ -1,12 +1,13 @@
 ---
-title: "A case study for EventTarget"
+title: "Monitoring: A case study for EventTarget"
 categories: [eventtarget, monitoring, architecture]
-description: TODO
+description: Lately, at Deezer, I have been implementing monitoring for a feature I was working on. I took this opportunity to document how I designed the monitoring mechanism to be as non-intrusive as possible
 lang: en
 ---
 
 If you work for a data-driven company chances are you had to implement a tracker at some point.  
-I often see this step being rushed and written straight into the business code. A lot of attention is given to having a clean implementation of the feature but little thoughts are given to how the tracking impacts the implementation.
+I often see this step being rushed and written straight into the business code.   
+A lot of attention is given to having a clean implementation of the feature but little thoughts are given to how the tracking impacts the implementation.
 
 Lately, at Deezer, I have been working on a feature that allows two devices to send messages to each other.  
 I thought this would be a nice opportunity to document my usual approach to monitoring 🧑‍💻
@@ -74,11 +75,11 @@ class Connection {
   }
 ```
 
-That is quite a bit of code that pollutes the actual business logic. The responsibility of the `sendMessage` has been altered. It cannot be described without an "and" in the sentence: It send messages **and** track metrics.
+That is quite a bit of code that pollutes the actual business logic. The responsibility of the `sendMessage` has been altered. It cannot be described without an "and" in the sentence: It sends messages **and** tracks metrics.
 
 **Pros**:
 
-- 👌 easy to implement
+- 👌 easy to implement (almost a no-brainer)
 - 👌 factorised (monitoring is implemented once and work for every message sent)
 
 **Cons**:
@@ -88,7 +89,7 @@ That is quite a bit of code that pollutes the actual business logic. The respons
 
 ## Moving the tracking logic to the parent
 
-The `sendMessage` method returns a `Promise`. This is definitely something we can use.
+The `sendMessage` method returns a `Promise`. This is definitely something we can use!
 
 Along with the value it holds, a `Promise` also carries around:
 
@@ -298,5 +299,12 @@ connection.sendMessage(message);
 
 ## Conclusion
 
-Tracking is an excelent use case for `EventTarget`. It allows for the business code to be very generic and your tracking mechanism to be very distant from your application code. 
+Tracking is an excelent use case for `EventTarget`. It allows for the business code to be very generic and the tracking mechanism to be very distant from your application code.
 
+In general `Events` are tailored for those kind of scenarios: Having something that work in parallel to something else.
+The `DOM` API works this way!  
+The `DOM` itself is made to display things but it allows us to hook into events that happen on the presentational layer. With a few `addEventListener` we can add very complex behaviours on top of the `DOM` but the `DOM` never knows about those.
+
+This is the beauty of it, there is a generic contract (eg. 'I will send a `click` event whenever the user clicks somewhere' or 'I will send a `sendmessage` event every time a message is being sent') that allows us, web developer, to add behavior on top of it.
+
+Word of caution, though, `Events` are great but should not be overused. Keep in mind that they can blur the readability of the codebase if used for core behaviours. In those cases coupling is the way to go 🙂
