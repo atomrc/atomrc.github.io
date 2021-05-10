@@ -299,7 +299,7 @@ connection.sendMessage(message);
 
 ## Conclusion
 
-Tracking is an excelent use case for `EventTarget`. It allows for the business code to be very generic and the tracking mechanism to be very distant from your application code.
+Tracking is an excellent use case for `EventTarget`. It allows for the business code to be very generic and the tracking mechanism to be very distant from your application code.
 
 In general `Events` are tailored for those kind of scenarios: Having something that work in parallel to something else.
 The `DOM` API works this way!  
