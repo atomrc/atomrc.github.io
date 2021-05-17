@@ -5,7 +5,7 @@ title: Thomas Belin
 permalink: /p/:title/
 future: true
 sass:
-    sass_dir: css/_sass
+  sass_dir: css/_sass
 plugins:
   - jekyll-redirect-from
   - jekyll-gist
@@ -14,11 +14,11 @@ plugins:
   - jekyll-sitemap
 
 author:
-    twitter: atomrc
-    name: atomrc
-    uri: https://twitter.com/atomrc
+  twitter: atomrc
+  name: atomrc
+  uri: https://twitter.com/atomrc
 twitter:
-    username: atomrc
+  username: atomrc
 avatar: //www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=100
 collections:
   talks:
@@ -27,19 +27,17 @@ collections:
     output: true
 
 defaults:
-    -   scope:
-            path: ''
-        values:
-            image: https://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=300
-    -
-        scope:
-            type: posts
-        values:
-            layout: post
-            lang: fr
-    -
-        scope:
-            type: talks
-        values:
-            permalink: /talks/:title/
-            lang: fr
+  - scope:
+      path: ""
+    values:
+      image: https://www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=300
+  - scope:
+      type: posts
+    values:
+      layout: post
+      lang: fr
+  - scope:
+      type: talks
+    values:
+      permalink: /talks/:title/
+      lang: fr
