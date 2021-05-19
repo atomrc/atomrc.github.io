@@ -37,7 +37,12 @@ defaults:
       layout: post
       lang: fr
   - scope:
+      type: cfp
+    values:
+      sitemap: false
+  - scope:
       type: talks
     values:
+      sitemap: false
       permalink: /talks/:title/
       lang: fr
