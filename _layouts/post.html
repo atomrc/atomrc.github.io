@@ -30,7 +30,7 @@ layout: default
     <br>
     {% assign url =  page.url | prepend: site.url | cgi_escape %}
     {% assign title =  page.title | cgi_escape %}
-    <em>You enjoyed this article? Consider <a target="_blank" href="https://twitter.com/intent/tweet?url={{url}}&text={{title}}&via=atomrc">tweeting it</a> :)</em>
+    <em>You enjoyed this article? Consider <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/intent/tweet?url={{url}}&text={{title}}&via=atomrc">tweeting it</a> :)</em>
   </article>
   <script src="/js/application.js" async></script>
 </div>
