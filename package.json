@@ -1,0 +1,25 @@
+{
+  "name": "atomrc.github.io",
+  "version": "1.0.0",
+  "description": "atomrc's blog",
+  "main": "index.html",
+  "scripts": {
+    "start": "eleventy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atomrc/atomrc.github.io.git"
+  },
+  "keywords": [
+    "blog"
+  ],
+  "author": "atomrc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/atomrc/atomrc.github.io/issues"
+  },
+  "homepage": "https://github.com/atomrc/atomrc.github.io#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^0.12.1"
+  }
+}
