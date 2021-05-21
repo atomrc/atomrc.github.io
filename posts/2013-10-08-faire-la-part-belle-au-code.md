@@ -2,6 +2,7 @@
 title: Faire la part belle au code
 description: Quelque soit le language dans lequel vous codez, votre code est une part de vous ... faites lui donc la part belle.
 categories: [réflexion, code]
+lang: fr
 redirect_from:
     - /posts/faire-la-part-belle-au-code/
 ---

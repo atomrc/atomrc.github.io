@@ -2,6 +2,7 @@
 title: "Penser comme Vim"
 categories: [vim, code]
 description: Comprendre la philosophie de Vim pour penser comme lui
+lang: fr
 ---
 
 Ca fait maintenant 3 ans que je n'utilise plus que Vim comme éditeur de textes. Ca fait aussi longtemps que je pensais écrire un article dessus et, allez, aujourd'hui, je me lance :)

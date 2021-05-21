@@ -4,6 +4,7 @@ description: Utiliser AngularJS comme un module AMD avec RequireJS
 redirect_from:
     - /posts/Single-Page-App-Blog-combiner-la-puissance-dAngularJS-avec-la-modularisation-de-RequireJS/
 categories: [angularjs, requirejs, amd]
+lang: fr
 ---
 Lorsque j'ai commencé à utilisé [AngularJS](http://angularjs.org/) pour faire le blog que vous lisez actuellement, j'étais plus que convaincu par les avantages de [RequireJS](http://requirejs.org/). Maintenant je ne peux plus m'en passer et mon premier réflexe quand je commence un projet Javascript est d'importer RequireJS. Seulement, AngularJS n'étant pas défini comme un module et disposant d'un système propre pour définir des modules, j'avais peur de me trouver face à des conflits entre les deux systèmes ou de ne carrément pas réussir à charger AngularJS via RequireJS.
 Heureusement RequireJS a tout prévu et l'intégration des deux s'est finalement passé sans problème grâce à deux astuces de RequireJS : shim et deps

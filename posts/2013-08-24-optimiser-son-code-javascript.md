@@ -2,6 +2,7 @@
 title: Soigner son code Javascript
 categories: [JavaScript, Code, Bonnes Pratiques]
 description: "Javascript a été prévu pour être un langage très simple d'accès au détriment de ses performances. C'est donc a vous de faire quelques efforts pour avoir un code optimisé"
+lang: fr
 redirect_from:
     - /posts/optimiser-son-code-javascript/
 ---
@@ -45,18 +46,6 @@ Le `"use strict"`; va vous permettre de ne pas faire d'erreurs classiques et nor
 
 
 Pour vraiment tout savoir sur le `"use strict"`, je vous suggère de lire absolument l'article "[strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode)" du Mozilla Developer Network sur le sujet !
-
-## Le point-virgule !
-
-Voila une habitude qu'il faut prendre très vite quand on fait du Javascript : mettre un point-virgule à la fin de chaque instruction !
-
-### Pourquoi c'est (très) important ?
-
-Javascript est tellement permissif, qu'il permet de ne pas mettre les ';'. Seulement, lorsque votre code n'a pas de ';', le moteur Javascript n'a aucun moyen de distinguer les différentes instructions ! Seulement il y arrive tout de même, alors comment fait-il ? En réalité, la solution est simple : quand il détecte une erreur de compilation, il ajoute des points virgules un peu partout jusqu'à ce qu'il trouve des instructions valides (aie). S'il ne trouve pas d'instruction js valide alors il lance une exception.
-
-Je pense que vous voyez le gouffre à performances que cette fonctionnalité engendre. C'est un peu comme si je vous donnais un livre sans aucune ponctuation !
-
-Bien sur le moteur JS est assez intelligent pour ne pas tester toutes les combinaisons possibles de placement de ';' et utilise des heuristiques pour essayer de deviner où pourraient être les points virgules (comme vous feriez en lisant mon cadeau empoisonné).
 
 ## On laisse l'objet global window tranquille 
 
@@ -184,7 +173,6 @@ De façon générale, je vous suggère d'aller systématiquement faire un tour s
 En bref les quelques bonne habitudes à prendre quand vous développez en Javascript :
 
 - utiliser le mode strict (`'use strict'`) ;
-- ajouter des points-virgules à la fin de chaque instruction ;
 - ne mettre que l’essentiel dans l'objet window ;
 - injecter sois même les objets dont le code a besoin ;
 - utiliser le langage dans son intégralité.

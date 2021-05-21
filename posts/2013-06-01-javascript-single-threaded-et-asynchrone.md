@@ -2,6 +2,7 @@
 title: "Javascript : Single-threaded et asynchrone"
 categories: [JavaScript, Internals]
 description: Comment Javascript fait pour être à la fois single-threaded et asynchrone.
+lang: fr
 redirect_from:
     - /posts/javascript-single-threaded-et-asynchrone/
 ---

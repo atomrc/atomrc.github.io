@@ -2,6 +2,7 @@
 title: Configuration d'une instance Amazon EC2 pour Elastic Bamboo
 categories: [bamboo, aws, integration continue]
 description: Tutoriel d'installation d'une instance EC2 pour faire de l'intégration continue avec Bamboo
+lang: fr
 ---
 
 Lors de la mise en place de Bamboo comme serveur d'[intégration continue à DoYouBuzz](/p/integration-continue-avec-bamboo/), la phase qui m'a semblé la plus obscure a été la phase de configuration de mon instance AWS EC2. La [documentation d'Altassian sur Elastic Bamboo](https://confluence.atlassian.com/display/BAMBOO/Configuring+Elastic+Bamboo) est vraiment très fournie et même surement un peu trop, la rendant parfois confuse. Voici donc un petit tutoriel qui devrait vous permettre d'avoir un petit serveur d'intégration continue rapidement.

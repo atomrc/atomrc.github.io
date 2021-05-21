@@ -2,6 +2,7 @@
 title: "Hackerbeach : Organiser mon temps"
 categories: [hackerbeach, experience, remote]
 description: M'organiser pour bosser efficacement en Dominique
+lang: fr
 ---
 
 ![Hacking sur la plage](//i.imgur.com/hhN5FuI.jpg)

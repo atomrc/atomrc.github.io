@@ -2,6 +2,7 @@
 title: Utiliser un repo SSH avec Atlassian Elastic Bamboo
 categories: [bamboo, integration continue]
 description: Donner des accès SSH à votre instance EC2 pour Elastic Bamboo
+lang: fr
 ---
 
 Quand vous faites de l'intégration continue avec un repository, vous avez plusieurs possibilités :

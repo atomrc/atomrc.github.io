@@ -2,6 +2,7 @@
 title: "Le guide que j'aurais aimé avoir quand j'ai commencé Flux"
 categories: [ReactJS, Flux]
 description: Commencer Flux avec la doc officielle n'est pas forcement facile, voila une petite synthèse des grandes idées et concepts de Flux
+lang: fr
 ---
 
 En commençant [Flux](https://facebook.github.io/flux/docs/overview.html#content), j'avoue avoir eu beaucoup de moments de confusion et questions inutiles qui me sont venus à l'esprit. La majorité des questions que je me posais venaient de la confusion qu'il est facile de faire entre la [présentation de Flux](https://facebook.github.io/flux/docs/overview.html#content) et le [Github de Flux](https://github.com/facebook/flux).
