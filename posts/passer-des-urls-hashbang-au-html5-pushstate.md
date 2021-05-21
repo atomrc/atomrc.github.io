@@ -2,9 +2,8 @@
 title: "Passer des urls hashbang (#!) au HTML5 pushState"
 description: "Après avoir fait tout mon blog avec des urls hashbang, pourquoi et comment je suis passé à des urls HTML5."
 lang: fr
-redirect_from:
-    - /posts/single-page-app-blog-passer-des-urls-hashbang-au-html5-pushstate/
-categories: [seo, ajax]
+tags: [seo, ajax]
+date: 2013-05-30
 ---
 Mon dernier article sur le [référencement d'une application Ajax](/p/le-referencement-d-une-application-ajax/) s'appuyait entièrement sur les recommandations de Google pour l'indexation d'une application Javascript et notamment le hack du hashbang. Seulement, peu de temps après avoir écrit cet article, je me suis rendu compte que le hasbang n'était pas optimal du tout et entraînait bon nombre de complications (boutons de réseaux sociaux, référencement, lisibilité du code serveur ...). Je vais donc vous présenter ici les raisons pour lesquelles j'ai décidé de revoir complétement mes urls et surtout tout ce que cela implique.
 

@@ -19,7 +19,13 @@
     "url": "https://github.com/atomrc/atomrc.github.io/issues"
   },
   "homepage": "https://github.com/atomrc/atomrc.github.io#readme",
-  "devDependencies": {
-    "@11ty/eleventy": "^0.12.1"
+  "dependencies": {
+    "@11ty/eleventy": "^0.12.1",
+    "@11ty/eleventy-plugin-rss": "^1.1.1",
+    "@quasibit/eleventy-plugin-schema": "^1.0.0",
+    "@quasibit/eleventy-plugin-sitemap": "^2.1.4",
+    "eleventy-plugin-sass": "^1.2.0",
+    "eleventy-plugin-seo": "^0.5.1",
+    "html-minifier": "^4.0.0"
   }
 }

@@ -1,8 +1,9 @@
 ---
 title: "Hackerbeach : Coder sur la plage ... en hiver"
-categories: [hackerbeach, experience, remote]
+tags: [hackerbeach, experience, remote]
 description: Je suis parti bosser en Dominique :)
 lang: fr
+date: 2015-01-14
 ---
 
 Nous sommes en Octobre, j'avais déjà entendu parler de Hackerbeach par [@XioNoXfr](https://twitter.com/XioNoXfr) (qui avait déjà fait l'édition 2014 et qui était motivé pour la 2015) et là je tombe sur ce tweet :

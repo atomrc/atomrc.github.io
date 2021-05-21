@@ -1,6 +1,6 @@
 <li lang="{{element.data.lang}}">
   <time datetime="{{element.date | date_to_xmlschema}}">
-    {{ element.date | date: '%-d&nbsp;%b&nbsp;%y' }}
+    {{ element.date | date: '%d&nbsp;%b&nbsp;%y' }}
   </time>
   &nbsp;
   <div>
@@ -11,7 +11,7 @@
     <a href="{{ element.data.video }}" target="_blank">video</a>
     {% endif %}
     <aside>
-      {% for tag in element.data.categories %}
+      {% for tag in element.data.tags %}
       <span class="tag">{{ tag }}</span>&nbsp;
       {% endfor %}
     </aside>

@@ -1,8 +1,9 @@
 ---
 title: Bamboo et les tests Atoum
-categories: [php, atoum, bamboo, integration continue]
+tags: [php, atoum, bamboo, integration continue]
 description: Configurer votre serveur Bamboo pour jouer et interpréter vos tests Atoum
 lang: fr
+date: 2014-04-16
 ---
 
 Chez [DoYouBuzz](http://www.doyoubuzz.com) nous utilisons [Atoum](http://docs.atoum.org/fr/) pour tous nos tests unitaires PHP. Je pense qu'il n'est pas nécessaire de vous rappeler l'interêts des tests unitaires. 

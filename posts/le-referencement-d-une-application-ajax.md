@@ -1,10 +1,9 @@
 ---
 title: "Le référencement d'une application Ajax"
 description: Donnez aux moteurs de recherche le moyen de crawler votre application ajax
-categories: [ajax, seo]
+tags: [ajax, seo]
 lang: fr
-redirect_from:
-    - /posts/Single-Page-App-Blog-le-referencement-dune-application-ajax/
+date: 2013-03-15
 notices: [
     "Depuis cet article, je suis complétement revenu sur les urls en hashbang au profit des urls HTML5. Aujourd'hui, je ne vous conseille pas d'utiliser les hashbang. Pour comprendre pourquoi je vous invite à lire l'article [passer des url hashbang aux urls HTML5](/p/passer-des-urls-hashbang-au-html5-pushstate/).",
     "Le blog que vous consultez aujourd'hui n'utilise plus du tout d'AJAX pour charger son contenu."

@@ -3,15 +3,15 @@ layout: layouts/default
 ---
 <link href="/css/article.css" type="text/css" rel="stylesheet">
 <div id="full-article">
-  <article lang="{{page.lang}}">
+  <article lang="{{lang}}">
     <header>
-      <h1 class="title">{{page.title}}</h1>
+      <h1>{{title}}</h1>
       <aside>
         <time class="folded-paper" datetime="{{page.date}}" pubdate itemprop="datePublished" content="{{page.date}}">
-          {{ page.date | date: '%-d <span class="month">%b</span> %Y' }}
+          {{ page.date | date: '%d <span class="month">%b</span> %Y' }}
         </time>
         <br>
-        {% for tag in page.categories %}
+        {% for tag in tags %}
         <span class="tag">{{ tag }}</span>&nbsp;
         {% endfor %}
       </aside>
@@ -28,9 +28,10 @@ layout: layouts/default
     </div>
 
     <br>
-    {% assign url =  page.url | prepend: site.url | cgi_escape %}
-    {% assign title =  page.title | cgi_escape %}
+    {% assign url = page.url | prepend: config.url | cgi_escape %}
+    {% assign title = title | cgi_escape %}
     <em>You enjoyed this article? Consider <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/intent/tweet?url={{url}}&text={{title}}&via=atomrc">tweeting it</a> :)</em>
   </article>
   <script src="/js/application.js" async></script>
+  {% jsonLdScript meta, type, tags %}
 </div>

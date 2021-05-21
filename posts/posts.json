@@ -1,7 +1,0 @@
-{
-  "layout": "layouts/post",
-  "tags": [
-    "posts"
-  ],
-  "permalink": "/p/{{page.fileSlug}}/"
-}

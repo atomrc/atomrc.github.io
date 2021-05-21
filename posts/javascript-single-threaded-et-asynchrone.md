@@ -1,10 +1,9 @@
 ---
 title: "Javascript : Single-threaded et asynchrone"
-categories: [JavaScript, Internals]
+tags: [JavaScript, Internals]
 description: Comment Javascript fait pour être à la fois single-threaded et asynchrone.
 lang: fr
-redirect_from:
-    - /posts/javascript-single-threaded-et-asynchrone/
+date: 2013-06-01
 ---
 
 Javascript est single-threaded, c'est quelque chose qui est rentré dans la tête de la plupart des développeurs front-end. Cependant ce à quoi on ne réfléchit pas assez c'est : comment est-il possible d'être à la fois single-threaded et de gérer du code asynchrone.

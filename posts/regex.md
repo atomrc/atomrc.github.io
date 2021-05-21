@@ -1,8 +1,9 @@
 ---
 title: "Regex : tips and tricks"
-categories: [regex]
+tags: [regex]
 description: Petites astuces utiles avec les regex
 lang: fr
+date: 2014-09-05
 ---
 
 Allez comme je sais que vous adorez les Expressions Régulières, voila quelques tricks sympas :).  

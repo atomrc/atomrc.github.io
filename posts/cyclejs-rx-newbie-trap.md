@@ -1,8 +1,9 @@
 ---
 title: "Cycle.js, RxJS and cold observables"
-categories: [Cycle.js, RxJS]
+tags: [Cycle.js, RxJS]
 description: "Lesson learned the hard way: never dive into Cycle.js (+RxJS) without understanding cold/hot observables"
 lang: en
+date: 2016-05-05
 ---
 
 Lately, I fell into a pretty tough [RxJS](https://github.com/Reactive-Extensions/RxJS) beginner trap while playing around with [Cycle.js](http://cycle.js.org/).
