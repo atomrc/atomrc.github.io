@@ -9,7 +9,6 @@ Pas de notions de scopes ni rien de bien funky ici, mais simplement une méthode
 
 Voila le code et je vous explique l'idée juste après ;) 
 
-{% gist atomrc/983d008ff59ff4b7b94c %}
 
 Comme vous pouvez voir le code est vraiment tout petit mais permet de factoriser le code par la suite.  
 L'idée est surtout de bien séparer le code qui va initialiser vos directives du code qui va s'occuper de récupérer vos éléments HTML correspondants.

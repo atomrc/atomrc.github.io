@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: layouts/default
 title: Welcome
 ---
 <link href="/css/list.css" type="text/css" rel="stylesheet">
@@ -10,8 +10,8 @@ title: Welcome
   </p>
   <h2 class="list-container__title">Articles</h2>
   <ul class="list-container__list list-container__content">
-    {% for post in site.posts %}
-    {% include post-list-element.html post=post %}
+    {% for post in collections.posts %}
+      <ul>{{post.url}}</ul>
     {% endfor %}
   </ul>
 </div>
