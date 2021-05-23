@@ -22,9 +22,9 @@ ul {
 }
 
 .avatar {
-  height: 2em;
-  width: 2em;
-  border-radius: 1em;
+  height: 100px;
+  width: 100px;
+  border-radius: 50px;
 }
 
 .title {
@@ -42,13 +42,10 @@ ul {
   font-size: 1.95em;
   padding: 1em;
 }
-#header .avatar {
-  font-size: 1.5em;
-}
 #header .title {
   text-shadow: 1px 1px 0px #fff;
   color: inherit;
-  font-weight: bold;
+  font-weight: 200;
 }
 
 #footer {
