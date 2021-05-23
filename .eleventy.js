@@ -4,19 +4,31 @@ const sitemap = require("@quasibit/eleventy-plugin-sitemap");
 const config = require("./_data/config");
 const pluginRss = require("@11ty/eleventy-plugin-rss");
 const htmlmin = require("html-minifier");
-const pluginSass = require("eleventy-plugin-sass");
+const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
+const markdownIt = require("markdown-it");
+const markdownItAnchor = require("markdown-it-anchor");
+const CleanCSS = require("clean-css");
 
 module.exports = function (eleventyConfig) {
+  const markdownLib = markdownIt({ html: true }).use(markdownItAnchor);
+  eleventyConfig.setLibrary("md", markdownLib);
+
   eleventyConfig.addPassthroughCopy({ "_root/*": "/" });
+  eleventyConfig.addPassthroughCopy("css/**/*.css");
+  eleventyConfig.addPassthroughCopy("js/**/*.js");
   eleventyConfig.addPlugin(pluginSEO, require("./_data/seo"));
   eleventyConfig.addPlugin(schema);
   eleventyConfig.setDataDeepMerge(true);
   eleventyConfig.addPlugin(pluginRss);
-  eleventyConfig.addPlugin(pluginSass);
+  eleventyConfig.addPlugin(syntaxHighlight);
   eleventyConfig.addPlugin(sitemap, {
     sitemap: {
       hostname: config.url,
     },
+  });
+
+  eleventyConfig.addFilter("cssmin", function (code) {
+    return new CleanCSS({}).minify(code).styles;
   });
 
   eleventyConfig.addTransform("htmlmin", function (content, outputPath) {

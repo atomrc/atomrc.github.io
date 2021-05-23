@@ -1,37 +1,38 @@
 ---
 layout: layouts/default
 ---
-<link href="/css/article.css" type="text/css" rel="stylesheet">
-<div id="full-article">
-  <article lang="{{lang}}">
-    <header>
-      <h1>{{title}}</h1>
-      <aside>
-        <time class="folded-paper" datetime="{{page.date}}" pubdate itemprop="datePublished" content="{{page.date}}">
-          {{ page.date | date: '%d <span class="month">%b</span> %Y' }}
-        </time>
-        <br>
-        {% for tag in tags %}
-        <span class="tag">{{ tag }}</span>&nbsp;
-        {% endfor %}
-      </aside>
-    </header>
-    <div class="article-body">
-      {% if page.notices %}
-      {% for notice in page.notices %}
-      <div class="notice">
-        {{ notice | markdownify }}
-      </div>
+{% capture css %} {% include article.css %} {% endcapture %}
+<link href="/css/article.css" rel="stylesheet" async defer />
+<link href="/css/syntax.css" rel="stylesheet" async defer />
+<style>{{ css | cssmin }}</style>
+<article lang="{{lang}}">
+  <header>
+    <h1 class="title">{{title}}</h1>
+    <aside>
+      <time class="folded-paper" datetime="{{page.date}}" pubdate itemprop="datePublished" content="{{page.date}}">
+        {{ page.date | date: '%d <span class="month">%b</span> %Y' }}
+      </time>
+      <br>
+      {% for tag in tags %}
+      <span class="tag">{{ tag }}</span>&nbsp;
       {% endfor %}
-      {% endif %}
-      {{ content }}
+    </aside>
+  </header>
+  <div class="article-body">
+    {% if page.notices %}
+    {% for notice in page.notices %}
+    <div class="notice">
+      {{ notice | markdownify }}
     </div>
+    {% endfor %}
+    {% endif %}
+    {{ content }}
+  </div>
 
-    <br>
-    {% assign url = page.url | prepend: config.url | cgi_escape %}
-    {% assign title = title | cgi_escape %}
-    <em>You enjoyed this article? Consider <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/intent/tweet?url={{url}}&text={{title}}&via=atomrc">tweeting it</a> :)</em>
-  </article>
-  <script src="/js/application.js" async></script>
-  {% jsonLdScript meta, type, tags %}
-</div>
+  <br>
+  {% assign url = page.url | prepend: config.url | cgi_escape %}
+  {% assign title = title | cgi_escape %}
+  <em>You enjoyed this article? Consider <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/intent/tweet?url={{url}}&text={{title}}&via=atomrc">tweeting it</a> :)</em>
+</article>
+<script src="/js/application.js" async></script>
+{% jsonLdScript meta, type, tags %}

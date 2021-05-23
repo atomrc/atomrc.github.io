@@ -9,10 +9,11 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     {% seo %}
     <meta name="theme-color" content="#ffffff">
-    <link href="/css/main.css" type="text/css" rel="stylesheet">
+    {% capture css %} {% include main.css %} {% endcapture %}
+    <style>{{ css | cssmin }}</style>
     <script async defer data-domain="atomrc.dev" src="https://plausible.io/js/plausible.js"></script>
   </head>
-  <body class="{% if page.collection == 'posts' %}article{%endif%}">
+  <body>
     <div id="header">
       <div>
         <a href="/"><img class="avatar" src="{{config.avatar}}?s=200" alt="Avatar"></a>

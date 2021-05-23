@@ -22,10 +22,12 @@
   "dependencies": {
     "@11ty/eleventy": "^0.12.1",
     "@11ty/eleventy-plugin-rss": "^1.1.1",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^3.1.0",
     "@quasibit/eleventy-plugin-schema": "^1.0.0",
     "@quasibit/eleventy-plugin-sitemap": "^2.1.4",
-    "eleventy-plugin-sass": "^1.2.0",
+    "clean-css": "^4.2.3",
     "eleventy-plugin-seo": "^0.5.1",
-    "html-minifier": "^4.0.0"
+    "html-minifier": "^4.0.0",
+    "markdown-it-anchor": "^7.1.0"
   }
 }
