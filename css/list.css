@@ -20,6 +20,7 @@
 
 .list-container__list li {
   display: flex;
+  padding-bottom: .5em;
 }
 .list-container__list time {
   text-align: right;
