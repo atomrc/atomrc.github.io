@@ -4,6 +4,7 @@
   "description": "atomrc's blog",
   "main": "index.html",
   "scripts": {
+    "build": "eleventy",
     "start": "eleventy --serve"
   },
   "repository": {
