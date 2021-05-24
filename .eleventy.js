@@ -31,6 +31,11 @@ module.exports = function (eleventyConfig) {
     return new CleanCSS({}).minify(code).styles;
   });
 
+  eleventyConfig.addFilter("sitemapCleanup", function (elements) {
+    return elements.filter(element => !element.data.nositemap);
+  });
+
+
   eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
     // Eleventy 1.0+: use this.inputPath and this.outputPath instead
     if (outputPath && outputPath.endsWith(".html")) {

@@ -1,0 +1,583 @@
+---
+layout: layouts/remarkjs
+title: "Les doigts dans le Flux"
+date: 2015-11-19
+excerpt: "Présentation sur l'architecture Flux pour le NantesJS"
+tags: [react, flux]
+video: https://www.youtube.com/watch?v=hDsTxwjrY80
+extra: "NantesJS"
+---
+
+<style>
+    img[alt="pure functions"] {
+        position: absolute;
+        top: 25%;
+        left: 20%;
+    }
+
+    #fb-solution-react, #fb-solution-flux {
+        position: absolute;
+        color: #666;
+        transition: top 1s;
+        transform: rotate(-20deg);
+        padding: 1em;
+        background-color: #EEE;
+        font-size: 1.5em;
+        top: -25%;
+    }
+    #fb-solution-react {
+        left: 13%;
+    }
+    .remark-visible.entered #fb-solution-react {
+        top: 45%;
+    }
+    #fb-solution-flux {
+        right: 13%;
+    }
+    .remark-visible.entered #fb-solution-flux {
+        top: 45%;
+    }
+
+    #slide-intro h1, #slide-outro h1 {
+        margin: 0;
+        font-size: 5em;
+        line-height: 1em;
+    }
+
+    #slide-intro h2, #slide-outro h2 {
+        font-size: 1em;
+        margin: 0;
+    }
+    #slide-intro p {
+        margin: 0;
+    }
+
+    #slide-me {
+        font-size: 1.5em;
+    }
+</style>
+
+<textarea id="source">
+
+layout: true
+
+.foot[<i class="ion-social-twitter"></i> @atomrc]
+
+---
+class: center, middle, naked
+name: intro
+
+![flux](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-logo.png)
+# Flux
+## Les doigts dans le Flux !
+
+???
+Demander combien de personnes connaissent | pratiquent flux ?
+
+---
+name: me
+class: center, middle, naked
+![thomas belin](//www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=150)  
+Thomas Belin  
+Front-end developer @ doyoubuzz  
+<i class="ion-social-twitter"></i>
+[@atomrc](https://twitter.com/atomrc) | [thomasbelin.fr](//blog.thomasbelin.fr)
+
+???
+Pourquoi je suis venu parler de Flux : Side-project
+
+---
+# Popularité
+![google trends](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-google-trends-1.png)
+
+???
+Ok ça c'est une courbe qui monte vite
+
+Mais ça veut rien dire du tout (pas d'échelle)
+
+---
+# Popularité
+
+![google trends flux vs camembert](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-google-trends-2.png)
+
+???
+Complétement non repésentatif
+Le seul apprentissage de cette slide : pic de recherche de "camembert" en décembre
+
+---
+# Popularité
+
+![Which Flux Implementation Should I Use](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-trends.png)
+
+???
+- Flux n'est pas du code c'est un concept
+- Beaucoup d'implémentations : 12
+- Flux by Facebook 160k dl
+- Redux 150k dl
+---
+# Quel problème résout Flux ?
+
+![fb chat panel](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/fb-chat-1.png)
+
+--
+class: code-overlay
+```javascript
+function onMessage(message) {
+    var chatPanel = getChatPanel(message.thread);
+    chatPanel.append(message);
+}
+```
+
+---
+# Quel problème résout Flux ?
+
+![fb chat panel](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/fb-chat-2.png)
+
+--
+class: code-overlay
+```javascript
+function onMessage(message) {
+    var chatPanel = getChatPanel(message.thread);
+    chatPanel.append(message);
+    chatNotif.increase(1);
+
+    if (chatPanel.hasFocus()) {
+        //si le chat a le focus, on peut décrémenter la notif
+        chatNotif.decrease(1);
+    }
+}
+```
+
+---
+# Quel problème résout Flux ?
+
+![fb chat panel](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/fb-chat-3.png)
+
+--
+class: code-overlay
+```javascript
+function onMessage(message) {
+    var chatPanel = getChatPanel(message.thread);
+    chatPanel.append(message);
+    chatNotif.increase(1);
+    if (chatPage.currentThread === message.thread) {
+        //si la page de chat est ouverte sur la conversation
+        //on ajoute le message
+        chatPage.append(message);
+    }
+
+    if (chatPanel.hasFocus()
+        || chatPage.currentThread === message.thread) {
+        chatNotif.decrease(1);
+    }
+}
+```
+
+???
+PB de fond du MVC : un contrôleur peut être relié à plusieurs vues
+---
+class: center
+# MVC
+
+![facebook chat MVC](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/fb-chat-mvc.png)
+
+???
+ça ne scale pas du tout. 
+
+Les soucis : 
+
+- controllers responsables de plusieurs vues
+- plusieurs controllers qui peuvent être responsable d'une vue
+- plusieurs modèles qui peuvent être modifiés par un controller
+
+---
+class: center
+# La réponse de Facebook
+
+![react+flux](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/react-plus-flux.png)
+
+--
+<div id="fb-solution-react">View-Controllers</div>
+
+--
+<div id="fb-solution-flux">Architecture d'application</div>
+
+---
+# Parlons un peu de la doc ...
+
+![Flux doc](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-doc-naked.png)
+
+---
+# Parlons un peu de la doc ...
+
+![Flux doc](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-doc-concept.png)
+
+???
+ici on réimplémente Flux from scratch (excellente idée)
+
+---
+# Parlons un peu de la doc ...
+
+![Flux doc](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-doc-code.png)
+
+---
+# Parlons un peu de la doc ...
+
+![Flux doc](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-doc-code-2.png)
+---
+# Parlons un peu de la doc ...
+
+.text-content[
+Un store d'un côté va s'écrire : 
+
+```javascript
+var Store = assign({}, EventEmitter.prototype, {...});
+```
+
+Et de l'autre :
+
+```javascript
+class Store extends FluxStore { ... }
+```
+]
+
+???
+Pour la suite, je vais parler du concept de flux
+
+---
+class: middle
+# Et si on pensait nos applications autrement ?
+
+---
+class: middle
+# Flux
+
+![Flux illustrated](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux.png)
+
+???
+Flux ça n'est pas du code mais un concept
+
+Et on va même le réimplémenter ensemble
+
+tellement simple à implémenter que pas + de 13 lignes de code dans mes slides
+
+---
+# Actions
+
+.text-content[
+**Tout ce que votre application peut faire !**
+
+- actions (`string`) -> décrivent ce qu'il se passe sur l'appli
+- créateurs d'actions (`function`) -> dispatchent les actions
+]
+---
+# Actions
+
+.centered-code[
+```javascript
+const actions = {
+    RECEIVED_TODOS: "RECEIVED_TODOS",
+    TODO_ADDED: "TODO_ADDED",
+    TODOS_SAVED: "TODOS_SAVED",
+    USER_LOGIN: "USER_LOGIN",
+    //[...] plein d'autres évènements que nous ne traiterons pas ici
+};
+```
+]
+
+---
+# Créateurs d'action
+
+.centered-code[
+```javascript
+var todosActions = {
+    addTodo: (todo) => {
+        appDispatcher.dispatch({
+            actionType: actions.TODO_ADDED,
+            todo: todo
+        });
+    }
+};
+```
+]
+
+---
+# Créateurs d'action
+
+.centered-code[
+```javascript
+var todoForm = React.createClass({
+    addTodo: () => todosActions.addTodo({ title: "empty" }),
+
+    render: () => (
+        <button onClick={this.addTodo}>Add</button>
+    )
+});
+```
+]
+
+???
+aussi communication avec API / services externes
+---
+# Dispatcher
+
+.text-content[
+**Hub central de l'application**
+
+- toutes les actions passent par lui
+- crie à **tous** les stores "hey les gars, il vient de se passer ça, faites en ce que vous voulez" ;
+]
+
+---
+# Dispatcher
+
+.centered-code[
+```javascript
+var callbacks = [];
+
+var appDispatcher = {
+
+    register: (callback) => callbacks.push(callback),
+
+    dispatch: (payload) => {
+        callbacks.forEach((callback) => callback(payload));
+    }
+};
+```
+]
+
+???
+si on implémentait un dispatcher hyper basique
+
+---
+# Stores
+
+.text-content[
+**là où vivent tous vos modèles**
+- modèle observable (`getters` et `addListener`) sans `setters`
+- écoutent avec attention le dispatcher
+- représentent l'état de l'application à un instant `t`
+- complétement **synchrones**
+]
+
+???
+aussi eux qui contiennent la logique  
+ne contiennent que des données brutes, pas calculées
+
+Explication de pourquoi ils **doivent être synchrones** (par l'absurde avec l'exemple de l'ajax)
+---
+# Stores
+
+.centered-code[
+```javascript
+var todos = [];
+var todosStore = {
+    get: () => todos,
+
+    //[addListener, removeListener, emitChange]
+});
+//...
+```
+]
+
+???
+bon ok je vous ai menti, il y aurait + que 13 lignes ici
+
+---
+# Stores
+
+.centered-code[
+```javascript
+//...
+appDispatcher.register((payload) => {
+    switch (payload.actionType) {
+        case "RECEIVED_TODOS":
+            todos = payload.todos;
+            this.emitChange();
+            break;
+
+        case "TODO_ADDED":
+            todos.push(payload.todo);
+            this.emitChange();
+            break;
+    }
+});
+```
+]
+
+???
+elles sont ici nos 13 lignes de code
+
+---
+# Vues
+
+.text-content[
+**Ce que voit l'utilisateur**
+
+- deux types de vues :
+    - containers (statefull) : reliées à un (ou plusieurs) store(s)
+    - vues pures (stateless) : ne font qu'afficher des props
+- déclenchent des `actions`
+]
+
+---
+# Vues (container)
+
+.centered-code[
+```javascript
+var TodoList = React.createClass({
+
+    componentWillMount: () => todosStore.addListener(this.onChange),
+
+    onChange: () => this.setState({ todos: todosStore.get() }),
+
+    render: () => (
+        <ul id="todos-list">
+            {this.state.todos.map((todo) => (<Todo todo={todo} />)) }
+        </ul>
+    )
+});
+```
+]
+
+???
+Ici on a un container relié à un store
+
+---
+# Vues (pure)
+
+.centered-code[
+```javascript
+var Todo = function ({ todo }) => (<li>{ todo.title }</li>);
+```
+]
+
+???
+syntaxe introduite par React0.14  
+vue complétement stateless
+
+---
+# Schéma global
+
+![Flux illustrated](https://raw.githubusercontent.com/facebook/flux/master/docs/img/flux-diagram-white-background.png)
+
+---
+class: middle
+# Tiens ça me rappelle quelque chose !
+
+---
+# Flux vu autrement
+
+![Flux illustrated](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux.png)
+
+---
+# Flux vu autrement
+![Flux as server](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-backend.png)
+
+---
+# Flux vu ~~autrement~~ par les mecs du back
+![Flux as server](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/flux-backend-2.png)
+
+???
+ATTENTION : ce n'est pas une comparaison one to one  
+juste le principe qui est le même.  
+Et là vous vous dites : mais oui les serveurs n'ont pas ce problème !!
+
+
+---
+class: middle
+# Et si on allait plus loin
+
+???
+En parcourant Stackoverflow, j'ai eu une illumination
+
+---
+class: middle
+# `app(s1, action) => s2`
+
+???
+cette formulation m'a beaucoup parlée  
+Malheureusement jamais retrouvé la discussion
+
+---
+# app(s1, action) => s2
+
+.centered-code[
+```javascript
+var reducers = [
+    function todos(state, action) {
+        // switch (action.actionType)
+        //retourne le nouvel état
+    },
+    //...
+];
+
+function update(state, action) {
+    return reducers.reduce(function (previousState, reducer) {
+        return reducer(previousState, action);
+    }, state);
+}
+```
+]
+
+---
+name: pure-functions
+# app(s1, action) => s2
+
+.centered-code[
+```javascript
+function onAction(action) {
+    var newState = update(state, action);
+    return (<RootView state={newState} />);
+}
+```
+]
+
+---
+template: pure-functions
+![pure functions](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/flux/pure-functions.jpg)
+
+---
+class: middle
+# app(s1, action) => s2
+
+## undo/redo anyone ?
+
+---
+name: undo-redo
+# app(s1, action) => s2
+
+.centered-code[
+```javascript
+var allStates = [],
+    currentState = 0;
+
+function onAction(action) {
+    allStates.push(update(state, action)); //on garde tous les états
+    currentState = allStates.length - 1;
+    return (<RootView state={allStates[currentState]} />);
+}
+
+function undo() {
+    currentState--;
+    return (<RootView state={allStates[currentState]} />);
+}
+```
+]
+
+---
+template: undo-redo
+
+<p class="warning">
+Ne faites pas ça comme ça ...
+<br>
+Utilisez plutôt redux + redux-undo ;) (<a href=//rackt.org/redux/>//rackt.org/redux/</a>)
+</p>
+
+---
+class: middle
+name: outro
+# Merci
+## On se sort les doigts du Flux
+
+</textarea>

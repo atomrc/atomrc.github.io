@@ -1,0 +1,397 @@
+---
+layout: layouts/remarkjs
+title: "The JS Vegan Guide"
+excerpt: "Et si je vous disais que JavaScript était vegan ?"
+tags: [javascript]
+extra: "Human Talks"
+date: 2016-04-12
+---
+
+<style>
+    img[alt="pure functions"] {
+        position: absolute;
+        top: 25%;
+        left: 20%;
+    }
+
+    #slide-intro h1, #slide-outro h1 {
+        margin: 0;
+        font-size: 5em;
+        line-height: 1em;
+    }
+
+    #slide-intro h2, #slide-outro h2 {
+        font-size: 1em;
+        margin: 0;
+    }
+    #slide-intro p {
+        margin: 0;
+    }
+
+    #slide-me {
+        font-size: 1.5em;
+    }
+
+    .recipe {
+        position: absolute;
+        top: 25%;
+        left: 25%;
+        background-color: rgba(255, 255, 255, 0.9);
+        font-weight: bold;
+        color: rgb(61, 184, 67);
+        border-radius: 5px;
+        padding: 2em;
+    }
+    .recipe .missing {
+        text-decoration: line-through;
+        color: red;
+    }
+</style>
+<textarea id="source">
+    layout: true
+
+    .foot[<i class="ion-social-twitter"></i> @atomrc]
+
+    ---
+    class: center, middle, naked
+    name: intro
+
+    # The JS Vegan Guide
+
+    ---
+    class: center
+    # Qu'est-ce ?
+    ![Oeufs Brouillés](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/veganjs/scrambledeggs.jpg)
+
+    --
+    <div class="recipe">
+        Oeufs Brouillés :
+
+        <ul>
+            <li>Oeufs</li>
+            <li>Sel, poivre</li>
+            <li>Lait/crème</li>
+            <li>...</li>
+        </ul>
+    </div>
+
+    ---
+    class: center
+    # Qu'est-ce ?
+    ![Oeufs Brouillés vegan](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/veganjs/vscrambledeggs.jpg)
+
+    --
+    <div class="recipe">
+        Oeufs Brouillés Vegan :
+        <ul>
+            <li>Tofu</li>
+            <li>Sel, poivre</li>
+            <li>...</li>
+            <li class="missing">Oeufs</li>
+        </ul>
+    </div>
+
+    ---
+    class: center
+    # Qu'est-ce ?
+    ![steak](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/veganjs/steak.jpg)
+
+    --
+    <div class="recipe">
+        Steak Haché
+        <ul>
+            <li>Steak</li>
+        </ul>
+    </div>
+
+    ---
+    class: center
+    # Qu'est-ce ?
+    ![steak vegan](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/veganjs/vsteak.jpg)
+
+    --
+    <div class="recipe">
+        Steak Haché Vegan
+        <ul>
+            <li>Lentilles (ou autre legumineuse)</li>
+            <li class="missing">Steak</li>
+        </ul>
+    </div>
+
+    ???
+    Très Omnivore Friendly
+
+    ---
+    # Qu'est-ce ?
+    ```python
+    class Food:
+        def __init__(self, type):
+            self.type = type;
+
+        def isVegan(self):
+            return self.type == "vegan"
+    ```
+
+    --
+    <div class="recipe">
+        Class (python)
+        <ul>
+            <li>Class</li>
+        </ul>
+    </div>
+
+    ---
+    # Qu'est-ce ?
+    ```javascript
+    class Food {
+        constructor(type) {
+            this.type = type;
+        }
+
+        isVegan() {
+            return this.type === "vegan";
+        }
+    }
+    ```
+
+    --
+    <div class="recipe">
+        Class (JavaScript)
+        <ul>
+            <li>Function</li>
+            <li class="missing">Class</li>
+        </ul>
+    </div>
+
+    ---
+    # La vraie nature des classes
+
+    ````javascript
+    class Food {
+        constructor(type) {
+            this.type = type;
+        }
+
+        isVegan() {
+            return this.type === "vegan";
+        }
+    }
+    ```
+
+    `===`
+
+    ```javascript
+    function Food(type) {
+        this.type = type;
+    }
+
+    Food.prototype.isVegan = function () {
+        return this.type === "vegan";
+    };
+    ```
+
+    ---
+    class:center, middle
+
+    ![Deal With It](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/veganjs/googlerequest-scrambledeggs.png)
+
+        ≈
+
+    ![Deal With It](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/veganjs/googlerequest-classisjs.png)
+
+    ???
+    parce que oui, comme il n'y a pas d'oeufs en cuisine vegan,
+    il n'y a pas de classes en JavaScript
+
+    ---
+    class:center
+    ##Pas de classes en JavaScript
+
+    ![Deal With It](https://media.giphy.com/media/zux4k4hAIdS8w/giphy.gif)
+
+    ---
+    class:center, middle
+
+    ![Deal With It](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/veganjs/googlerequest-scrambledtofu.png)
+
+        ≈
+
+    ![Deal With It](//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/veganjs/googlerequest-jsprototypal.png)
+
+
+    ![LikeABoss](https://media.giphy.com/media/vGDNMIUN07UXK/giphy.gif)
+
+    ???
+    les vegan savent directement rechercher les recettes qu'ils veulent faire
+
+    ---
+    class:center
+    ##JavaScript est <span style="text-decoration: line-through">vegan</span> orienté prototype
+
+    <video width="650px" controls>
+        <source src="//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/veganjs/prototypalInheritance.webm" type="video/webm">
+    </video>
+
+    ???
+    la particularité de la cuisine végane est qu'elle n'a pas de produits issus d'animaux
+
+    la particularité de JS est qu'il est orienté prototype (pas en opposition à Orienté Objet)
+
+    ---
+    ##En JavaScript TOUT est `Object`
+
+    <video width="750px" controls>
+        <source src="//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/veganjs/allisobj.webm" type="video/webm">
+    </video>
+
+    ???
+    On peut dire que JS respecte à la lettre le Orienté Objet puisque TT est objet
+
+    ---
+    #instanceof
+    ##ne veut pas dire grand chose
+
+    ```javascript
+    String instanceof Function //true
+    ```
+
+    ---
+    #instanceof
+    ##n'est pas vraiment fiable
+
+    ```javascript
+    let strLitteral = "test",
+        strObj = new String("test");
+
+    Object.getPrototypeOf(strLitteral) === Object.getPrototypeOf(strObj);
+    //true
+
+    strLitteral instanceof String
+    //false
+
+    strObj instanceof String
+    //true
+    ```
+
+    ---
+    #typeof
+    ##n'est pas mieux
+
+    ```javascript
+    typeof "test"
+    //string
+
+    typeof new String("test")
+    //object
+    ```
+
+    ???
+
+    pour savoir si vous avez vraiment à faire à un String : typeof s === "string" || s instanceof String
+
+    ---
+    class: center
+    #instanceof
+
+    <video width="750px" controls>
+        <source src="//s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/veganjs/prototypeChangeLive.webm" type="video/webm">
+    </video>
+
+    ---
+    #Le Vegan JS
+
+    ```javascript
+    class Food {
+        constructor(type, weight) {
+            this.__type = type; //privacy fail
+            this.__weight = weight; //privacy fail
+        }
+
+        getWeigth() {
+            return this.__weight;
+        }
+
+        getType() {
+            return this.__type;
+        }
+    }
+
+    const steak = new Food("steak", 120);
+    ```
+
+    ---
+    #Le Vegan JS
+
+    ```javascript
+    function createFood(type, weigth) {
+        return {
+            getWeight: () => weight,
+            getType: () => type
+        };
+    }
+
+    const steak = createFood("steak", 120);
+    ```
+
+    ???
+    on utilise : 
+
+    - les closures ;
+    - les factories ;
+
+    et du coup on limite les mots clés utilisé pour une approche plus fonctionnelle :
+
+    - pas de `this`
+    - pas de `new`
+    - pas de `class`
+
+    ---
+    #Le Vegan JS
+
+    ```javascript
+    function canGoInsideBurger(food) {
+        return food instanceof Steak || food instanceof VeganSteak;
+    }
+    ```
+
+    ---
+    #Le Vegan JS
+
+    ```javascript
+    function canGoInsideBurger(food) {
+        return food.shape === "circle" && food.type === "salty";
+    }
+    ```
+
+    ---
+    #Le Vegan JS : en résumé
+
+    - pas de `class` ;
+    - pas de `new` (factories et `Object.create`) ;
+    - pas de `instanceof` || `typeof` (duck typing, pattern matching) ;
+    - pas de `this` (functional programming style, tout est explicite).
+
+    ???
+
+    limitation : si une lib vous force à utiliser le `new` ou les class es6 (React et alternative preact)
+    --
+
+    <div style="text-align: center">
+        <img src="https://media.giphy.com/media/DvMHwFYLVHlZe/giphy.gif" alt="bye OO">
+    </div>
+    ---
+    name: me
+    class: center, middle, naked
+    ![thomas belin](//www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=150)  
+    Thomas Belin  
+    Front-end developer @ doyoubuzz  
+    <i class="ion-social-twitter"></i>
+    [@atomrc](https://twitter.com/atomrc) | [thomasbelin.fr](//blog.thomasbelin.fr)
+
+
+    ---
+    class: middle, center
+    name: outro
+    # Merci
+    Cadeau ;) : [//bit.ly/veganjs](//bit.ly/veganjs)
+</textarea>

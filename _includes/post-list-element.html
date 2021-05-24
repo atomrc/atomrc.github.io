@@ -12,7 +12,9 @@
     {% endif %}
     <aside>
       {% for tag in element.data.tags %}
+      {% if tag != type %}
       <span class="tag">{{ tag }}</span>&nbsp;
+      {% endif %}
       {% endfor %}
     </aside>
   </div>
