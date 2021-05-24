@@ -1,0 +1,34 @@
+{
+  "name": "atomrc.github.io",
+  "version": "1.0.0",
+  "description": "atomrc's blog",
+  "main": "index.html",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atomrc/atomrc.github.io.git"
+  },
+  "keywords": [
+    "blog"
+  ],
+  "author": "atomrc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/atomrc/atomrc.github.io/issues"
+  },
+  "homepage": "https://github.com/atomrc/atomrc.github.io#readme",
+  "dependencies": {
+    "@11ty/eleventy": "^0.12.1",
+    "@11ty/eleventy-plugin-rss": "^1.1.1",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^3.1.0",
+    "@quasibit/eleventy-plugin-schema": "^1.0.0",
+    "@quasibit/eleventy-plugin-sitemap": "^2.1.4",
+    "clean-css": "^4.2.3",
+    "eleventy-plugin-seo": "^0.5.1",
+    "html-minifier": "^4.0.0",
+    "markdown-it-anchor": "^7.1.0"
+  }
+}

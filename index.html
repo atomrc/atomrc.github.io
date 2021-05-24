@@ -1,8 +1,8 @@
 ---
-layout: default
+layout: layouts/default
 title: Welcome
 ---
-<link href="/css/list.css" type="text/css" rel="stylesheet">
+<link href="/css/list.css" type="text/css" rel="stylesheet" />
 <div class="list-container">
   <h2 class="list-container__title">About Me</h2>
   <p class="list-container__headline list-container__content">
@@ -10,8 +10,8 @@ title: Welcome
   </p>
   <h2 class="list-container__title">Articles</h2>
   <ul class="list-container__list list-container__content">
-    {% for post in site.posts %}
-    {% include post-list-element.html post=post %}
+    {% for post in collections.posts reversed %}
+    {% include post-list-element.html, element:post %}
     {% endfor %}
   </ul>
 </div>

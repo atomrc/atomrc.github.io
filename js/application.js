@@ -1,5 +1,5 @@
-(function(win, doc) {
-  doc.querySelectorAll("article h2, article h3").forEach(element => {
+(function (win, doc) {
+  doc.querySelectorAll("article h2, article h3").forEach((element) => {
     var anchor = doc.createElement("a");
     anchor.href = "#" + element.id;
     anchor.classList.add("anchor");

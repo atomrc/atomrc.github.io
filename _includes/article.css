@@ -1,0 +1,33 @@
+article {
+  max-width: 800px;
+  margin: auto;
+  padding: 0 1em;
+  position: relative;
+}
+article h1 {
+  font-size: 2em;
+  font-weight: 300;
+}
+article h2, article h3 {
+  position: relative;
+  padding-bottom: 0.3em;
+  font-weight: 500;
+}
+article h2 {
+  font-size: 2em;
+  border-bottom: solid 1px #EEE;
+  margin: 1em 0 0.5em;
+}
+article h3 {
+  font-size: 1.5em;
+  margin: 1em 2em;
+}
+article p {
+  line-height: 1.6em;
+}
+article img {
+  border: solid 1px grey;
+  display: block;
+  max-width: 90%;
+  margin: auto;
+}
