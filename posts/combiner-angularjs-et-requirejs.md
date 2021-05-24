@@ -1,6 +1,6 @@
 ---
 title: "Chargement asynchrone d'AngularJS avec RequireJS"
-description: Utiliser AngularJS comme un module AMD avec RequireJS
+excerpt: Utiliser AngularJS comme un module AMD avec RequireJS
 tags: [angularjs, requirejs, amd]
 lang: fr
 date: 2013-03-10

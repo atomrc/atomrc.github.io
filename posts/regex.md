@@ -1,7 +1,7 @@
 ---
 title: "Regex : tips and tricks"
 tags: [regex]
-description: Petites astuces utiles avec les regex
+excerpt: Petites astuces utiles avec les regex
 lang: fr
 date: 2014-09-05
 ---

@@ -5,7 +5,7 @@
   &nbsp;
   <div>
     {% include flag.html, lang: element.data.lang %}&nbsp;
-    <a class="title" title="{{element.data.description}}" href="{{element.url}}">{{element.data.title}}</a>
+    <a class="title" title="{{element.data.excerpt}}" href="{{element.url}}">{{element.data.title}}</a>
     {% if element.data.extra %}({{ element.data.extra }}){% endif %}
     {% if element.data.video %}
     <a href="{{ element.data.video }}" target="_blank">video</a>

@@ -1,6 +1,6 @@
 ---
 title: "RequireJS n'est pas idéal pour AngularJS"
-description: "Utiliser RequireJS plus intelligemment afin de ne pas brider AngularJS"
+excerpt: "Utiliser RequireJS plus intelligemment afin de ne pas brider AngularJS"
 lang: fr
 tags: [javascript, angularjs, requirejs, amd]
 date: 2013-04-14

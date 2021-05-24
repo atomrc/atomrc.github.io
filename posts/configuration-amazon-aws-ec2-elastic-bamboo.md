@@ -1,7 +1,7 @@
 ---
 title: Configuration d'une instance Amazon EC2 pour Elastic Bamboo
 tags: [bamboo, aws, integration continue]
-description: Tutoriel d'installation d'une instance EC2 pour faire de l'intégration continue avec Bamboo
+excerpt: Tutoriel d'installation d'une instance EC2 pour faire de l'intégration continue avec Bamboo
 lang: fr
 date: 2014-04-11
 ---

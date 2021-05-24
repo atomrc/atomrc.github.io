@@ -1,7 +1,7 @@
 ---
 title: "Hackerbeach : Organiser mon temps"
 tags: [hackerbeach, experience, remote]
-description: M'organiser pour bosser efficacement en Dominique
+excerpt: M'organiser pour bosser efficacement en Dominique
 lang: fr
 date: 2015-01-18
 ---

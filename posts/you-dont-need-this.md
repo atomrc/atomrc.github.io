@@ -1,7 +1,7 @@
 ---
 title: "You might not need this"
 tags: [javascript, this]
-description: "`this`, the least understood concept of the JavaScript language. What if I told you that you might not need it?"
+excerpt: "`this`, the least understood concept of the JavaScript language. What if I told you that you might not need it?"
 lang: en
 date: 2017-05-30
 ---

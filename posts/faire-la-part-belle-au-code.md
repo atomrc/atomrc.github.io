@@ -1,6 +1,6 @@
 ---
 title: Faire la part belle au code
-description: Quelque soit le language dans lequel vous codez, votre code est une part de vous ... faites lui donc la part belle.
+excerpt: Quelque soit le language dans lequel vous codez, votre code est une part de vous ... faites lui donc la part belle.
 tags: [réflexion, code]
 lang: fr
 date: 2013-10-08

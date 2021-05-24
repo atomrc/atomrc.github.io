@@ -1,7 +1,7 @@
 ---
 title: "Monitoring: A case study for EventTarget"
 tags: [eventtarget, monitoring, architecture]
-description: Lately, at Deezer, I have been implementing monitoring for a feature I was working on. I took this opportunity to document how I designed the monitoring mechanism to be as non-intrusive as possible
+excerpt: Lately, at Deezer, I have been implementing monitoring for a feature I was working on. I took this opportunity to document how I designed the monitoring mechanism to be as non-intrusive as possible
 lang: en
 date: 2021-05-05
 ---

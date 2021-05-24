@@ -8,7 +8,7 @@ module.exports = {
       language: (post) => post.lang,
       url: (post) => post.meta.site.url + post.page.url,
       title: (post) => post.title,
-      description: (post) => post.description,
+      description: (post) => post.excerpt,
       published: (post) => post.date,
       author: "Thomas Belin",
     },

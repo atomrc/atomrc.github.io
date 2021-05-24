@@ -1,7 +1,7 @@
 ---
 title: Bamboo et les tests Atoum
 tags: [php, atoum, bamboo, integration continue]
-description: Configurer votre serveur Bamboo pour jouer et interpréter vos tests Atoum
+excerpt: Configurer votre serveur Bamboo pour jouer et interpréter vos tests Atoum
 lang: fr
 date: 2014-04-16
 ---

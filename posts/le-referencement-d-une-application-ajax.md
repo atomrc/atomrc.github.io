@@ -1,6 +1,6 @@
 ---
 title: "Le référencement d'une application Ajax"
-description: Donnez aux moteurs de recherche le moyen de crawler votre application ajax
+excerpt: Donnez aux moteurs de recherche le moyen de crawler votre application ajax
 tags: [ajax, seo]
 lang: fr
 date: 2013-03-15

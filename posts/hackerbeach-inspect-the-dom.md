@@ -1,7 +1,7 @@
 ---
 title: "Hackerbeach : Coder sur la plage ... en hiver"
 tags: [hackerbeach, experience, remote]
-description: Je suis parti bosser en Dominique :)
+excerpt: Je suis parti bosser en Dominique :)
 lang: fr
 date: 2015-01-14
 ---

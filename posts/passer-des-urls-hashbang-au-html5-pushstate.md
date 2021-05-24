@@ -1,6 +1,6 @@
 ---
 title: "Passer des urls hashbang (#!) au HTML5 pushState"
-description: "Après avoir fait tout mon blog avec des urls hashbang, pourquoi et comment je suis passé à des urls HTML5."
+excerpt: "Après avoir fait tout mon blog avec des urls hashbang, pourquoi et comment je suis passé à des urls HTML5."
 lang: fr
 tags: [seo, ajax]
 date: 2013-05-30

@@ -1,7 +1,7 @@
 ---
 title: La notion de classe en Javascript
 tags: [javascript, internals]
-description: JavaScript est un langage orienté objet mais ne dispose pas de classes. Comment donc faire de l'objet sans classes ?
+excerpt: JavaScript est un langage orienté objet mais ne dispose pas de classes. Comment donc faire de l'objet sans classes ?
 lang: fr
 date: 2014-01-29
 ---

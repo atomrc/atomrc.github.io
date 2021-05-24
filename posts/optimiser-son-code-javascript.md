@@ -1,7 +1,7 @@
 ---
 title: Soigner son code Javascript
 tags: [JavaScript, Code, Bonnes Pratiques]
-description: "Javascript a été prévu pour être un langage très simple d'accès au détriment de ses performances. C'est donc a vous de faire quelques efforts pour avoir un code optimisé"
+excerpt: "Javascript a été prévu pour être un langage très simple d'accès au détriment de ses performances. C'est donc a vous de faire quelques efforts pour avoir un code optimisé"
 lang: fr
 date: 2013-08-24
 ---

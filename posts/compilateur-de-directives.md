@@ -1,7 +1,7 @@
 ---
 title: "Un micro compilateur de directives"
 tags: [JavaScript]
-description: Un compilateur ultra light pour compiler des directives
+excerpt: Un compilateur ultra light pour compiler des directives
 lang: fr
 date: 2014-12-09
 ---

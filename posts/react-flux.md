@@ -1,7 +1,7 @@
 ---
 title: "Le guide que j'aurais aimé avoir quand j'ai commencé Flux"
 tags: [ReactJS, Flux]
-description: Commencer Flux avec la doc officielle n'est pas forcement facile, voila une petite synthèse des grandes idées et concepts de Flux
+excerpt: Commencer Flux avec la doc officielle n'est pas forcement facile, voila une petite synthèse des grandes idées et concepts de Flux
 lang: fr
 date: 2015-10-19
 ---

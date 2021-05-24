@@ -1,7 +1,7 @@
 ---
 title: "Penser comme Vim"
 tags: [vim, code]
-description: Comprendre la philosophie de Vim pour penser comme lui
+excerpt: Comprendre la philosophie de Vim pour penser comme lui
 lang: fr
 date: 2014-08-05
 ---

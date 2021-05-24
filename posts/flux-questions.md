@@ -1,7 +1,7 @@
 ---
 title: "Quelques questions courantes avec Flux"
 tags: [ReactJS, Flux]
-description: Les quelques questions que je me suis posé en utilisant Flux
+excerpt: Les quelques questions que je me suis posé en utilisant Flux
 lang: fr
 date: 2015-11-08
 ---
