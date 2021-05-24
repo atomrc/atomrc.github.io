@@ -1,0 +1,37 @@
+.list-container {
+  max-width: 50%;
+  margin: auto;
+  text-align: center;
+}
+@media screen and (max-width: 1000px) {
+  .list-container {
+    max-width: 75%;
+  }
+}
+@media screen and (max-width: 650px) {
+  .list-container {
+    max-width: 80%;
+  }
+}
+
+.list-container__title {
+  text-align: center;
+}
+
+.list-container__list li {
+  display: flex;
+  padding-bottom: .5em;
+}
+.list-container__list time {
+  text-align: right;
+  min-width: 90px;
+}
+
+.list-container__headline {
+  max-width: 500px;
+}
+
+.list-container__content {
+  display: inline-block;
+  text-align: left;
+}
