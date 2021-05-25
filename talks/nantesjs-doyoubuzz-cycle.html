@@ -323,10 +323,10 @@ name: ngrender
 class: middle
 ```javascript
 <div
-  class="widget <? $widget_name ?>"
-  <? if isEditable($widget_name) ?>
-  ng-show="shouldDisplay(<? $widget_name ?>
-  <? endif ?>
+  class="widget &lt;? $widget_name ?>"
+  &lt;? if isEditable($widget_name) ?>
+  ng-show="shouldDisplay(&lt;? $widget_name ?>
+  &lt;? endif ?>
   >
 </div>
 ```
@@ -334,15 +334,15 @@ class: middle
 ---
 class: middle
 ```javascript
-<? if edit ?>
-  <div ng-repeat="element in cv[<? $widget_name ?>]">
+&lt;? if edit ?>
+  <div ng-repeat="element in cv[&lt;? $widget_name ?>]">
     ...
   </div>
-<? else ?>
-  <? for element in cv[$widget_name] ?>
+&lt;? else ?>
+  &lt;? for element in cv[$widget_name] ?>
     ...
-  <? endfor ?>
-<? endif ?>
+  &lt;? endfor ?>
+&lt;? endif ?>
 ```
 
 ---
@@ -459,7 +459,7 @@ function updateCVAction(cv) {
 ### Handlers dans la vue
 
 ```html
-<input
+&lt;input
   onFocus={ /*...*/  }
   onBlur={ /*...*/ }
   onInput={ /*...*/ }
