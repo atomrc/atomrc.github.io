@@ -1,0 +1,536 @@
+---
+title: "User Interfaces as Pure Functions of Time"
+excerpt: "Functional Reactive Programming adds time as a fundamental and explicit input of our programs, so let's start building UI as pure functions of time."
+tags: [javascript, reactive, cyclejs]
+lang: en
+extra: "dotjs 2016"
+video: https://www.youtube.com/watch?v=9BG0Y3C6WqM
+date: 2016-12-05
+---
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>User Interfaces as Pure Functions of Time</title>
+        <meta name="robots" content="noindex">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <style type="text/css">
+            @import url(https://fonts.googleapis.com/css?family=Open+Sans:300);
+            @import url(//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
+
+            body {
+                font-family: Open Sans, Arial, sans serif;
+                color: #555;
+            }
+
+            body.dark {
+                color: #EEE;
+            }
+
+            body.dark svg .function {
+                fill: white;
+            }
+
+            body.dark svg .negative,
+            body.dark svg .negative * {
+                stroke: white !important;
+            }
+
+            body.dark svg .negative-fill,
+            body.dark svg .negative-fill * {
+                fill: white !important;
+            }
+
+            body.dark svg .positive {
+                fill: black !important;
+            }
+
+            body.dark .remark-slide-content {
+                background: black;
+            }
+
+
+            .remark-slide-content {
+                background: white;
+                padding: 0 3em;
+            }
+            .remark-container {
+                background-color: #EEE;
+            }
+            .remark-slide-scaler {
+                box-shadow: none;
+            }
+
+            .center {
+                text-align: center;
+            }
+
+            h1, h2, h3 {
+                margin: 0.1em;
+                margin-bottom: 1em;
+                text-align: center;
+                font-weight: lighter;
+            }
+
+            h1 {
+                color: #F06;
+                margin-bottom: 0;
+            }
+
+            a { color: inherit; }
+
+            svg {
+                max-width: 90%;
+                max-height: 520px;
+            }
+
+            li {
+                padding: 0.5em;
+            }
+
+            .naked .foot, .naked .remark-slide-number {
+                display: none;
+            }
+
+            .foot {
+                position: absolute;
+                bottom: 1em;
+                left: 1em;
+            }
+
+            .remark-inline-code {
+                background-color: #EEE;
+                padding: 2px;
+                border-radius: 0.2em;
+            }
+            .centered-code pre{
+                flex: 1;
+                margin: auto;
+            }
+            .centered-code code.hljs {
+                padding: 3em;
+            }
+
+            .box {
+                margin: auto;
+                color: white;
+                background-color: #3e3e3e;
+                border-radius: 5px;
+                padding: 0.5em;
+            }
+
+            .animate-from-bottom {
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                width: 100%;
+                transform: translateY(100%);
+                transition: transform 1s;
+            }
+            .middled {
+                margin: auto;
+            }
+            .entered .animate-from-bottom {
+                transform: translateY(0);
+            }
+
+            img[alt="thomas belin"] {
+                border-radius: 100px;
+                border: solid 5px white;
+            }
+            blockquote {
+                text-align: center;
+                background: white;
+                color: #444;
+                border-radius: 5px;
+                padding: 0.5em 1em;
+                font-size: 2em;
+                position: relative;
+                border: 1px solid #CCC;
+            }
+            blockquote::before, blockquote::after {
+                position: absolute;
+                content: "✶";
+            }
+            blockquote::before {
+                top: 0.25em;
+                left: 0.25em;
+            }
+            blockquote::after {
+                bottom: 0.25em;
+                right: 0.25em;
+            }
+
+
+            svg .function {
+                opacity: 0;
+            }
+
+        </style>
+    </head>
+    <body class="dark">
+<textarea id="source">
+layout: true
+
+.foot[<i class="ion-social-twitter"></i> @atomrc | dotJS 2016]
+
+---
+name: intro
+class: middle, center, naked
+# UI as Pure Functions of Time
+### @atomrc
+#### dotjs 2016
+
+???
+Let's take a minute to think about what is happening here, at this very moment in this very room.  
+And because we are developers and we love to model reality, let's try to model a Lightning talk.
+
+To do that, we'll have to forget we are humans for a moment and consider we are programs.  
+I am a program, you are programs and we are supposed to work together.
+
+---
+class: center
+name: me
+# Me
+
+{% include _assets/dotjs/me.svg %}
+
+???
+Now I, as a speaker, am a function of time.  
+Depending on time, I produce audio and video.  
+The audio is, of course, the words I say and the video is the moves I make.
+
+---
+class: center
+name: you
+# You
+
+{% include _assets/dotjs/you.svg %}
+
+???
+You are functions too.  
+You are not functions of time directly but rather functions of what I produce.  
+You are "subscribing" to what I say and "observing" what I do.  
+
+So here I am, on stage, emitting sounds, that form words that end up forming sentences and here you are receiving (or not at all) this raw data.
+
+---
+class: center
+name: inner
+# You
+
+{% include _assets/dotjs/eyes-ears.svg %}
+
+???
+But what exactly is this entity called "you"? How are "you" receiving what I am sending?  
+Well actually, you are composed of many other functions.  
+Their job is to convert raw data into another type of data.  
+Your ears and eyes, for example, are receiving waves and light from me and transforming them into electrical impulses that go right to your brain.  
+They are independent, functional parts of a bigger function that defines "you".
+
+---
+class: center
+name: meuser
+# I am the User, You are the UI
+
+{% include _assets/dotjs/me-user.svg %}
+
+???
+In this metaphor, I am the user and you are the interface.  
+If I product a joke for instance, I expect you to laugh.  
+Just like when your user clicks, he expects the interface to change.
+
+You depend on what I do ... but not only.
+
+---
+class: center
+name: youinterface
+# You are the UI
+
+{% include _assets/dotjs/you-interface.svg %}
+
+???
+You are also receiving a lot of data that comes from all directions: the slides I am showing, the person speaking next to you, your cellphone ringing ... And so on
+
+---
+class: center
+name: interface
+# You are the UI
+
+{% include _assets/dotjs/interface.svg %}
+
+???
+Just like you, user interfaces do not only depend on what the user is doing.  
+They also react to server responses, websocket events, timers ending, hardware messages...
+
+And that's the challenge we, as front-end developers, have to face when we build a web interface: handling streams of data that come from multiple sources.  
+And that's also exactly the problem that Functional Reactive Programming is addressing.
+
+---
+class: center
+name: time
+# Time
+
+{% include _assets/dotjs/time.svg %}
+
+???
+If you pay close attention to the nature of the signals your program receives, there is one common denominator between them: Time.
+
+Time is a key component of our modern web apps.
+
+Time rules everything.  
+Without time, I produce nothing and you receive nothing either.  
+Without time, a server does not receive any request from a client.  
+Without time, an interface does not receive any event from a user.
+
+---
+class: center
+name: functionoftime
+# UI as a Function of Time
+
+{% include _assets/dotjs/function-of-time.svg %}
+
+???
+Functional Reactive Programming adds time as a fundamental input of computer programs.
+And this changes everything!
+
+You don't need to worry anymore about which parts of your code are asynchronous which parts are not.  
+You just need to declare a data flow that will convert any input signal into pieces of virtual-dom, http requests, hardware queries... In a word: Side effects.
+
+Now, with that in mind, and probably a little help from Cycle.js, you can start building interfaces as Pure Functions of Time.
+
+---
+name: me
+class: center, middle, naked
+![thomas belin](//www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=150)  
+Thomas Belin  
+Front-end developer @ doyoubuzz  
+<i class="ion-social-twitter"></i>
+[@atomrc](https://twitter.com/atomrc) | [thomasbelin.fr](//blog.thomasbelin.fr)
+
+---
+class: middle, center
+# Thanks
+[@atomrc](https://twitter.com/atomrc)
+
+</textarea>
+        <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TimelineMax.min.js"></script>
+        <script>
+            function once(initFn) {
+                var output = null;
+                return function init(slide) {
+                    if (output) {
+                        return output;
+                    }
+                    output = initFn(slide);
+                    return output;
+                };
+
+            }
+
+            function functionAnimation(elm) {
+                var timeline = new TimelineMax();
+
+                timeline
+                    .to(elm, 0.3, { opacity: 1 })
+                    .to(elm, 1, { rotation: "+=360", transformOrigin: "center center" })
+                    .to(elm, 0.3, { opacity: 0 })
+
+                return timeline;
+            }
+
+            var animations = {
+                me: once(function init(slide) {
+                    var timeline = new TimelineMax();
+                    timeline
+                        .to(slide.querySelectorAll(".input-stream"), 2, { x: 550, opacity: 1 })
+                        .add(functionAnimation(slide.querySelectorAll(".function")))
+                        .to(slide.querySelectorAll(".output-stream"), 2, { x: 800 })
+                        .repeat(-1);
+
+                    return timeline;
+                }),
+
+                you: once(function init(slide) {
+                    var timeline = new TimelineMax();
+                    timeline
+                        .to(slide.querySelectorAll(".input-stream"), 2, { x: 510, opacity: 1 })
+                        .add(functionAnimation(slide.querySelectorAll(".function")))
+                        .repeat(-1);
+
+                    return timeline;
+                }),
+
+                inner: once(function init(slide) {
+                    var timeline = new TimelineMax();
+                    timeline
+                        .to(slide.querySelectorAll(".input-stream"), 2, { x: 300 })
+                        .to(slide.querySelectorAll(".input-stream"), 0.3, { opacity: 0 }, 1.7)
+                        .add(functionAnimation(slide.querySelectorAll(".function-first")))
+                        .add("elec")
+                        .to(slide.querySelectorAll(".elec-impulse-eye"), 2, { x: 350, y: 150 }, "elec")
+                        .to(slide.querySelectorAll(".elec-impulse-ear"), 2, { x: 350, y: -150 }, "elec")
+                        .add(functionAnimation(slide.querySelectorAll(".function-second")))
+                        .repeat(-1);
+
+                    return timeline;
+                }),
+
+                meuser: once(function init(slide) {
+                    var timeline = new TimelineMax();
+                    timeline
+                        .to(slide.querySelectorAll(".input"), 2, { y: 400 })
+                        .add(functionAnimation(slide.querySelectorAll(".function")))
+                        .to(slide.querySelectorAll(".output"), 2, { y: -250 })
+                        .repeat(-1);
+
+                    return timeline;
+                }),
+
+                youinterface: once(function init(slide) {
+                    var timeline = new TimelineMax();
+                    var functions = slide.querySelectorAll(".function"),
+                        slides = slide.querySelectorAll(".input-slides"),
+                        speaker = slide.querySelectorAll(".input-speaker"),
+                        notif = slide.querySelectorAll(".input-notif");
+
+                    timeline
+                        .to(slides, 2, { y: 470, x: 330 })
+                        .add(functionAnimation(functions))
+                        .to(speaker, 2, { y: 400 })
+                        .add(functionAnimation(functions))
+                        .to(notif, 2, { y: 470, x: -330 })
+                        .add(functionAnimation(functions))
+                        .repeat(-1);
+
+                    return timeline;
+                }),
+
+                interface: once(function init(slide) {
+                    var timeline = new TimelineMax();
+                    var functions = slide.querySelectorAll(".function"),
+                        server = slide.querySelectorAll(".input-server"),
+                        user = slide.querySelectorAll(".input-user"),
+                        device = slide.querySelectorAll(".input-device");
+
+                    timeline
+                        .to(server, 2, { y: 450, x: 300 })
+                        .add(functionAnimation(functions))
+                        .to(user, 2, { y: 400 })
+                        .add(functionAnimation(functions))
+                        .to(device, 2, { y: 400, x: -300 })
+                        .add(functionAnimation(functions))
+                        .repeat(-1);
+
+                    return timeline;
+                }),
+
+                time: once(function init(slide) {
+                    var timeline = new TimelineMax();
+
+                    var speakerTimeline = new TimelineMax();
+                    speakerTimeline
+                        .to(slide.querySelectorAll(".time-speaker"), 2, { y: 300, opacity: 1 })
+                        .to(slide.querySelectorAll(".output-speaker"), 2, { y: 200, opacity: 1 })
+                        .repeatDelay(1)
+                        .repeat(-1);
+
+                    var serverTimeline = new TimelineMax();
+                    serverTimeline
+                        .add("server", 0.5)
+                        .to(slide.querySelectorAll(".time-server"), 2, { y: 300, opacity: 1 }, "server")
+                        .to(slide.querySelectorAll(".output-server"), 2, { y: 200, opacity: 1 })
+                        .repeatDelay(0.5)
+                        .repeat(-1);
+
+                    var userTimeline = new TimelineMax();
+                    userTimeline
+                        .add("user", 1)
+                        .to(slide.querySelectorAll(".time-user"), 2, { y: 300, opacity: 1 }, "user")
+                        .to(slide.querySelectorAll(".output-user"), 2, { y: 200, opacity: 1 })
+                        .repeat(-1);
+
+
+                    return timeline;
+                }),
+
+                functionoftime: once(function init(slide) {
+                    var timeline = new TimelineMax();
+                    var serverTime = slide.querySelectorAll(".time-server"),
+                        serverInput = slide.querySelectorAll(".input-server"),
+                        serverFunction = slide.querySelectorAll(".function-server"),
+                        serverOutput = slide.querySelectorAll(".output-server");
+
+                    var userTime = slide.querySelectorAll(".time-user"),
+                        userInput = slide.querySelectorAll(".input-user"),
+                        userFunction = slide.querySelectorAll(".function-user"),
+                        userOutput = slide.querySelectorAll(".output-user");
+
+                    var deviceTime = slide.querySelectorAll(".time-device"),
+                        deviceInput = slide.querySelectorAll(".input-device"),
+                        deviceFunction = slide.querySelectorAll(".function-device"),
+                        deviceOutput = slide.querySelectorAll(".output-device");
+
+                    var functionActiveAnim = { fill: "#1DB800" };
+                    var functionInactiveAnim = { fill: "#000000" };
+
+                    timeline
+                        .to(serverTime, 1.5, { x: 180, opacity: 1 })
+                        .to(serverInput, 1.5, { x: 200 })
+                        .add(functionAnimation(serverFunction))
+                        .to(serverOutput, 1.5, { x: 200 })
+                        .to(serverOutput, 0, { x: 0 })
+
+                        .to(userTime, 1.5, { x: 180, opacity: 1 })
+                        .to(userInput, 1.5, { x: 200 })
+                        .add(functionAnimation(userFunction))
+                        .to(userOutput, 1.5, { x: 200 })
+                        .to(userOutput, 0, { x: 0 })
+
+                        .to(deviceTime, 1.5, { x: 180, opacity: 1 })
+                        .to(deviceInput, 1.5, { x: 200 })
+                        .add(functionAnimation(deviceFunction))
+                        .to(deviceOutput, 1.5, { x: 200 })
+                        .to(deviceOutput, 0, { x: 0 })
+
+                        .repeat(-1);
+
+                    return timeline;
+                }),
+            };
+        </script>
+        <script>
+            //init remarkjs
+            var slideshow = remark.create({
+                highlightStyle: 'monokai',
+                highlightLines: true,
+                ratio: "16:9"
+            });
+            slideshow.on("afterShowSlide", function (slide) {
+                var enteredSlide = document.querySelector(".remark-slide-container.entered");
+                if (enteredSlide) {
+                    enteredSlide.classList.remove("entered");
+                }
+                window.setTimeout(function () {
+                    var slideElm = document.querySelector(".remark-visible");
+                    slideElm.classList.add("entered");
+                    return animations[slide.properties.name] ? animations[slide.properties.name](slideElm) : null;
+                }, 100);
+            });
+        </script>
+
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-34218773-1', { siteSpeedSampleRate: 100 });
+            ga('send', 'pageview');
+        </script>
+
+    </body>
+</html>

@@ -1,1 +1,2 @@
 Sitemap: https://blog.atomrc.dev/sitemap.xml
+Disallow: /talks/

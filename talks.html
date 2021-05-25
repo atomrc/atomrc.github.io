@@ -1,17 +1,17 @@
 ---
 layout: layouts/default
-title: Welcome
+title: Talks
+excerpt: I love giving talks and sharing experiences. Here are the talks I gave (slides + video)
 ---
 <link href="/css/list.css" type="text/css" rel="stylesheet" />
 <div class="list-container">
-  <h2 class="list-container__title">About Me</h2>
+  <h2>Talks I gave</h2>
   <p class="list-container__headline list-container__content">
-    {% include signature.html %}
+    {{ excerpt }}
   </p>
-  <h2 class="list-container__title">Articles</h2>
   <ul class="list-container__list list-container__content">
-    {% for post in collections.posts reversed %}
-    {% include post-list-element.html, element:post, type: "posts" %}
+    {% for talk in collections.talks reversed %}
+    {% include post-list-element.html, element:talk, type: "talks" %}
     {% endfor %}
   </ul>
 </div>
