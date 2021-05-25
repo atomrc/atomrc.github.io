@@ -1,0 +1,1349 @@
+<!doctype html><html lang=""><head><title></title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">@import url(https://fonts.googleapis.com/css?family=Open+Sans:300);
+            @import url(//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
+
+            body {
+                font-family: Open Sans, Arial, sans serif;
+                color: #555;
+            }
+
+            .remark-slide-content {
+                background: white;
+                padding: 0 3em;
+            }
+            .remark-container {
+                background-color: #EEE;
+            }
+            .remark-slide-scaler {
+                box-shadow: none;
+            }
+
+            .center {
+                text-align: center;
+            }
+
+            h1, h2, h3 {
+                margin: 0.1em;
+                margin-bottom: 1em;
+                text-align: center;
+                font-weight: lighter;
+            }
+
+            a { color: inherit; }
+
+            img {
+                max-width: 90%;
+                max-height: 520px;
+            }
+
+            li {
+                padding: 0.5em;
+            }
+
+            .naked .foot, .naked .remark-slide-number {
+                display: none;
+            }
+
+            .foot {
+                position: absolute;
+                bottom: 1em;
+                left: 1em;
+            }
+
+            .remark-inline-code {
+                background-color: #EEE;
+                padding: 2px;
+                border-radius: 0.2em;
+            }
+            .text-content {
+                font-size: 1.2em;
+                background-color: white;
+                width: 100%;
+                height: 65%;
+                position: absolute;
+                left: 0px;
+                color: #333;
+                padding: 1em 2em;
+                box-sizing: border-box;
+            }
+            .text-content::after {
+                content: "";
+                background-color: white;
+                position: absolute;
+                bottom: -20px;
+                left: 3em;
+                width: 40px;
+                height: 40px;
+                transform: rotate(45deg);
+            }
+            .centered-code pre{
+                flex: 1;
+                margin: auto;
+            }
+            .centered-code code.hljs {
+                padding: 3em;
+            }
+
+            .box {
+                margin: auto;
+                color: white;
+                background-color: #3e3e3e;
+                border-radius: 5px;
+                padding: 0.5em;
+            }
+
+            ul.pro-cons {
+                list-style-type: none;
+                text-align: left;
+            }
+            li.ok:before {
+                color: green;
+                content: "\2713";
+            }
+            li.ko:before {
+                color: red;
+                content: "\00D7";
+            }
+            .animate-from-bottom {
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                width: 100%;
+                transform: translateY(100%);
+                transition: transform 1s;
+            }
+            .middled {
+                margin: auto;
+            }
+            .entered .animate-from-bottom {
+                transform: translateY(0);
+            }
+
+            .question {
+                margin: auto;
+                background-color: #ffe100;
+                padding: 1em;
+                transform: rotate(-20deg);
+                color: black;
+                font-size: 2em;
+            }
+
+            img[alt="thomas belin"] {
+                border-radius: 100px;
+                border: solid 5px white;
+            }
+
+            h1 {
+                color: #F06;
+            }
+
+            blockquote {
+                text-align: center;
+                background: white;
+                color: #444;
+                border-radius: 5px;
+                padding: 0.5em 1em;
+                font-size: 2em;
+                position: relative;
+                border: 1px solid #CCC;
+            }
+            blockquote::before, blockquote::after {
+                position: absolute;
+                content: "✶";
+            }
+            blockquote::before {
+                top: 0.25em;
+                left: 0.25em;
+            }
+            blockquote::after {
+                bottom: 0.25em;
+                right: 0.25em;
+            }</style></head><body><textarea id="source">
+layout: true
+
+.foot[<i class="ion-social-twitter"></i> @atomrc | DevFest Nantes 2016]
+
+---
+class: center, middle, naked
+name: intro
+
+# Reactive programming
+### A journey from Interactive to Reactive
+
+@atomrc
+
+DevFest Nantes 2016
+
+---
+name: me
+class: center, middle, naked
+![thomas belin](//www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=150)  
+Thomas Belin  
+Front-end developer @ doyoubuzz  
+<i class="ion-social-twitter"></i>
+[@atomrc](https://twitter.com/atomrc) | [thomasbelin.fr](//blog.thomasbelin.fr)
+
+---
+class: middle
+# You may have heard of
+
+---
+class: middle
+# You may have heard of
+
+### Declarative Programming
+
+---
+class: middle
+# You may have heard of
+
+### DataFlows
+
+---
+class: middle
+# You may have heard of
+
+### FRP (Functional Reactive Programming)
+
+---
+class: middle
+# /!\ Boring definition ahead /!\
+
+---
+# Reactive Programming
+### From Wikipedia
+
+> In computing, reactive programming is a programming paradigm oriented around data flows and the propagation of change.
+
+---
+# Reactive Programming
+### My definition
+
+> Declaring reactions to input signals
+
+---
+# Reactive Programming
+### Signals
+
+> Whatever is happening in your application
+
+user interactions, server responses, model changing over time, ...
+
+---
+class: obs-steroid, center
+# Obsever pattern
+
+![observer](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/observer.svg)
+![observable](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/observable.svg)
+
+.obs[Observer]
+.obs[Observable]
+
+---
+class: obs-steroid, trioimg, center
+# Observer Pattern generalized
+
+![hybrid-obs](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/hybrid-observer.svg)
+![hybrid-obs](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/hybrid-observer.svg)
+![observable](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/observable.svg)
+
+.obs[Observer/Observable]
+.obs[Observer/Observable]
+.obs[Observable]
+
+---
+class: center, middle
+
+# Time to dive in!
+### let our journey begins
+
+---
+class: center, middle
+# Let's code a spreadsheet
+
+<div data-key-eater>
+    <table id="spreadsheet">
+        <thead>
+            <tr>
+                <td>A</td>
+                <td>B</td>
+                <td>C = A + B</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input id="a1" type=""></td>
+                <td><input id="b1" type=""></td>
+                <td><input id="c1" type=""></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+---
+class: middle, center
+
+# Attempt #1
+## The over-interactive way
+
+---
+# The over-interactive way
+
+```html
+<input id="a" onkeyup="computeAndRender">
+<input id="b" onkeyup="computeAndRender">
+<input id="c">
+```
+
+```javascript
+var inputValues = {}
+
+function computeAndRender(event) {
+    var target = event.target;
+    inputValues[target.id] = target.value;
+
+    var c = compute(inputValues.a, inputValues.b);
+
+    render(c);
+}
+
+function compute(a, b) {
+    return a + b;
+}
+
+function render(c) {
+    $("#c").val(c);
+}
+```
+
+--
+.animate-from-bottom[.question[**What should happen when** user types in, for `#c` to be up-to-date?]]
+
+---
+class: center
+# The over-interactive way
+
+![over interactive diagram](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/over-interactive.png)
+
+--
+<div class="animate-from-bottom">
+    <div class="box">
+        <ul class="pro-cons">
+            <li class="ko"> input #a and #b are responsible for calling computeAndRender</li>
+            <li class="ko"> computeAndRender is responsible for computing c</li>
+            <li class="ko"> computeAndRender is responsible for updating #c</li>
+        </ul>
+    </div>
+</div>
+
+---
+class: middle, center
+## Over Interactive Inc.
+### « We make t-shirts and we make 'em good »
+
+---
+class: overinteractive-inc, center
+# Over Interactive Inc.
+
+![phone](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/phone.svg)
+![machine](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/machine.svg)
+![truck](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/truck.svg)
+
+![tshirt](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/tshirt.svg)
+![worker](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/worker.svg)
+
+--
+class: animated
+???
+
+Description de poste :
+- vous allez devoir faire tout dans la boite
+
+---
+class: middle, center
+
+# Attempt #2
+## the event-driven way
+
+---
+# the event-driven way
+
+```html
+<input id="a">
+<input id="b">
+<input id="c">
+```
+
+```javascript
+$("#a, #b").on("keyup", function storeValues(event) {
+    inputValues[event.target.id] = event.target.value;
+    $(document).trigger("valueChange", inputValues);
+});
+```
+
+--
+```javascript
+$(document).on("valueChange", function computeC(event, values) {
+    var c = values.a + values.b;
+    $(document).trigger("cChange", c);
+});
+```
+
+--
+```javascript
+$(document).on("cChange", function render(event, c) {
+    $("#c").val(c);
+});
+```
+
+---
+# the event-driven way v2
+
+```javascript
+$("#a, #b").on("keyup", storeValues)
+$(document).on("valuesChange", computeC);
+$(document).on("cChange", render);
+
+function storeValues(event) { /*...*/ }
+
+function computeC(event, values) { /*...*/ }
+
+function render(event, c) { /*...*/ }
+```
+
+--
+.animate-from-bottom[.question[
+**What should I do when** user types in?  
+**What should I do when** values are updated?  
+**What should I do when** a new value of `c` is computed?
+]]
+
+---
+class: center
+# the event-driven way
+![event driven diagram](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/event-driven.png)
+
+--
+<div class="animate-from-bottom">
+    <div class="box">
+        <ul class="pro-cons">
+            <li class="ok"> input "a" and "b" are independent</li>
+            <li class="ok"> "storeValues" is only responsible for keeping values in memory</li>
+            <li class="ok"> "computeC" only computes the new value of "c"</li>
+            <li class="ok"> "render" only render the given "c" on the DOM</li>
+            <li class="ko"> The level of decoupling is too damn high!</li>
+            <li class="ko"> Semantically wrong: value changing over time !== event</li>
+        </ul>
+    </div>
+</div>
+
+---
+class: center
+# the event-driven way (fixed)
+![event driven diagram](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/event-driven-fixed.png)
+
+---
+class: middle, center
+## Event Driven Inc.
+### « We make the world a better place, one t-shirt at a time »
+
+---
+layout: true
+class: eventdriven-inc, center
+# Event Driven Inc.
+
+![phone](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/phone.svg)
+![machine](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/machine.svg)
+![truck](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/truck.svg)
+
+![worker](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/worker.svg)
+![worker](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/worker.svg)
+![worker](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/worker.svg)
+
+---
+name: eventdriven-inc-1
+
+---
+name: eventdriven-inc-2
+.bubble[
+NEW ORDER GUYS!
+![order](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/order.svg)
+]
+
+---
+name: eventdriven-inc-3
+.bubble.center[
+T-SHIRT DONE!
+![tshirt](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/tshirt.svg)
+]
+
+---
+name: eventdriven-inc-4
+
+???
+
+Description de poste :
+- quand vous entendez "NEW ORDER!" vous faites un t-shirt
+
+
+---
+layout: false
+class: middle, center
+
+# Attempt #3
+## the reactive way
+
+---
+class: middle, center
+# Let's think the other way around
+
+~~**What should I do when ...?**~~
+
+--
+## What data do I depend on to play my part?
+
+---
+class: middle
+# Time to go reactive!
+
+---
+# Time to go reactive!
+
+### I am `#c`, what data do I need to render?
+
+--
+
+The latest value of `c`
+
+```javascript
+c$.subscribe(function render(c) {
+    $("#c").val(c);
+});
+```
+
+---
+# Time to go reactive!
+
+### I am `c$`, what data do I need to compute my value?
+
+--
+
+The latest value of `a` and `b`
+
+```javascript
+var c$ = Rx.Observable
+    .combineLatest(
+        a$,
+        b$,
+        function computeC(a, b) {
+            return a + b
+        }
+    );
+```
+
+---
+# Time to go reactive!
+
+### We are `a$` and `b$`, what data do we need to know our values?
+
+--
+
+The event emitted by `#a` and `#b`
+
+```javascript
+var a$ = Rx.Observable
+    .fromEvent(aInput, "keyup")
+    .map(function getValue(event) {
+        return event.target.value;
+    });
+
+var b$ = Rx.Observable
+    .fromEvent(bInput, "keyup")
+    .map(function getValue(event) {
+        return event.target.value;
+    });
+```
+
+---
+# Wrapping up
+
+```javascript
+var O = Rx.Observable;
+
+var a$ = O
+    .fromEvent($("#a"), "keyup")
+    .map(getValue);
+
+var b$ = O
+    .fromEvent($("#b"), "keyup")
+    .map(getValue);
+
+var c$ = O
+    .combineLatest(a$, b$, computeC);
+
+c$.subscribe(render);
+```
+
+---
+class: center
+# Reactive Programming
+
+![reactive diagram](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/reactive.png)
+
+---
+class: center
+# Reactive Programming
+
+![reactive diagram](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/reactive-splitted.png)
+---
+class: middle, center
+## Reactive Inc.
+### « The t-shirt factory »
+
+---
+class: reactive-inc, center
+# Reactive Inc.
+
+![worker](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/worker.svg)
+![worker](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/worker.svg)
+![worker](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/worker.svg)
+
+![phone](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/phone.svg)
+![document](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/document.svg)
+![tshirt](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/tshirt.svg)
+![truck](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/truck.svg)
+
+---
+class: middle
+
+# Enough with this spreadsheet!!
+## This is not even an MVP
+
+---
+class: center
+# Spreadsheet MVP
+
+<div id="spreadsheet-mvp" data-key-eater>
+    <label>a: </label>
+    <input id="mvp-a" class="mvp-input"><br>
+    <label>b: </label>
+    <input id="mvp-b" class="mvp-input"><br>
+    <label>c: </label>
+    <input id="mvp-c" class="mvp-input"><br>
+    <br>
+    <label>formula: </label>
+    <input id="mvp-formula" value="#a + #b + #c">
+    <br>
+    <div id="mvp-destination"></div>
+</div>
+
+???
+
+Attention, vous pourriez être déçu par la prochaine slide
+
+---
+# Spreadsheet MVP
+
+```javascipt
+const formula = document.getElementById("formula");
+const inputs = document.querySelectorAll("input.values");
+
+const formula$ = O
+    .fromEvent(formula, "blur")
+    .map(event => event.target.value);
+
+const values$ = O
+    .fromEvent(inputs, "keyup")
+    .map(e => ({ [e.target.id]: e.target.value }))
+    .scan(groupValues, {})
+
+const value$ = O
+    .combineLatest(formula$, params$, evalFormula)
+
+value$.subscribe(val => destination.innerHTML = val);
+```
+
+---
+# Spreadsheet MVP
+## With some "trivial" logic
+
+```javascript
+function groupValues(accumulator, value) {
+    return Object.assign({}, accumulator, value);
+}
+
+function evalFormula(formula, values) {
+    const expression = formula.replace(/#(\w)/g, "values.$1");
+    return eval(expression); //fear the evil eval
+}
+```
+
+---
+class: center
+# Spreadsheet MVP
+
+<video src="https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/cycledevtools.webm" autoplay loop></video>
+
+???
+
+La big picture directement dans le debugger
+
+---
+class: middle, center
+
+# Reactive systems you (might) already know
+
+---
+class: center
+# Airports
+
+![airport](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/airport.svg)
+
+---
+class: center
+# Digestive System
+
+![broken](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/brokenimg.gif)
+
+---
+class: center
+# Hellfest Entrance
+
+![hellfest](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/hellfest.svg)
+
+---
+class: middle, huge-code
+# Shell
+
+```bash
+curl blog.thomasbelin.fr
+    | sed "s/Thomas/Felix/gi"
+    | vim -
+```
+
+---
+class: middle, huge-code
+# CSS
+
+```css
+#hello {
+    width: calc(100% - 2em);
+}
+
+#hello > p {
+    width: 50%;
+}
+```
+
+---
+class: middle, huge-code
+# Parts of Angular 1.*
+
+```javascript
+$scope
+  .$watch("prop", reaction);
+```
+
+```html
+<div ng-bind="prop | lower | replace:'o':'♥'">
+</div>
+```
+
+---
+# A word about React
+
+- `React.js` is not fully reactive ...
+- ... but its `virtual-dom` as helped a lot bringing FRP to the browser
+
+---
+# A word about React
+
+```javavscript
+function Component(props) {
+    return (<div>Hello { props.name }</div>);
+}
+```
+
+This is completely reactive !
+
+---
+# A word about React
+
+A classical react component
+
+```javascript
+var Component = React.createComponent({
+    getInitialState: function () {
+        return {
+            clicked: false
+        };
+    },
+
+    onclick: function (e) {
+        this.setState({ clicked: true });
+    },
+
+    render: function (props) {
+        return (<div>
+            Hello { props.name } { this.state.clicked ? "" : "you clicked on your name" }
+        </div>);
+    }
+});
+```
+
+---
+# A word about React
+
+`render` is reactive (reacts to `props` changing over time)
+
+```javascript
+var Component = React.createComponent({
+    getInitialState: function () {
+        return {
+            clicked: false
+        };
+    },
+
+    onclick: function (e) {
+        this.setState({ clicked: true });
+    },
+
+*   render: function (props) {
+*       return (<div>
+*           Hello { props.name } { this.state.clicked ? "" : "you clicked on your name" }
+*       </div>);
+*   }
+});
+```
+
+---
+# A word about React
+
+`setState` is not (it is mutating a state triggering "hidden" updates)
+
+```javascript
+var Component = React.createComponent({
+    getInitialState: function () {
+        return {
+            clicked: false
+        };
+    },
+
+*   onclick: function (e) {
+*       this.setState({ clicked: true });
+*   },
+
+    render: function (props) {
+        return (<div>
+            Hello { props.name } { this.state.clicked ? "" : "you clicked on your name" }
+        </div>);
+    }
+});
+```
+
+---
+class: middle, center
+
+# Reactive Programming in real life
+
+---
+class: middle, center
+layout: true
+# Reactive Programming
+
+---
+
+### ... is yet another paradigm to learn
+
+---
+
+### ... has a steep learning curve (cold VS hot, event VS property)
+
+---
+
+### ... has so many operators
+
+RxJS: 132 operators
+
+create defer generate generateWithAbsoluteTime generateWithRelativeTime range using from fromArray fromCallback fromNodeCallback fromEvent fromEventPattern fromPromise of toArray toMap toPromise toSet amb prototype.amb combineLatest proto.combineLatest concat prototype.concat startWith merge prototype.merge mergeAll repeat prototype.repeat withLatestFrom zip prototype.zip let publish publishLast publishValue replay share shareLast shareReplay shareValue aggregate average count max maxBy min minBy reduce sum debounce debounceWithSelector delay interval sample timeInterval timer timeout timeoutWithSelector timestamp catch prototype.catch finally onErrorResumenext prototype.onErrorResumeNext retry concatMap concatMapObserver elementAt elementAtOrDefault filter flatMap flatMapLatest flatMapObserver find findIndex first firstOrDefault includes last lastOrDefault map pluck select selectConcat selectMany selectManyObserver selectSwitch single singleOrDefault skip skipLast skipLastWithTime skipUntil skipWhile take takeLast takeLastBuffer takeLastBufferWithTime takeLastWithTime takeWhile where buffer bufferWithCount bufferWithTimeOrCount groupBy groupByUntil groupJoin join window windowWithCount windowWithTime windowWithTimeOrCount case do doOnNext doOnError doOnCompleted doWhile for if tap tapOnNext tapOnError tapOnCompleted while empty never return throw
+
+---
+layout: true
+class: middle, center
+
+# But
+
+---
+
+---
+
+### testing is easy
+
+---
+### concerns are perfectly separated
+
+---
+### you can easily understand the big picture
+<video src="https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/cycledevtools.webm" autoplay loop></video>
+
+---
+![marble](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/marble.jpg)
+
+--
+
+.animate-from-bottom[
+.middled.cyclejs[
+![cyclejs](//cycle.js.org/img/cyclejs_logo.svg) Cycle.js
+]]
+
+---
+class: middle
+layout: false
+# Time to experiment
+
+---
+# Interactive end
+
+```javascript
+//speaker.js
+function talk(participants) {
+    doTalk();
+    participants.forEach(function (participant) {
+        participant.applause();
+    });
+}
+```
+
+---
+# Reactive end
+
+```javascript
+//main.js
+var endOfTalk$ = O
+    .fromEvent(speaker, "talkended");
+
+//participant1.js
+endOfTalk$.subscribe(function () {
+    applause();
+});
+
+//participant2.js
+endOfTalk$.subscribe(function () {
+    politelyAskQuestion("What was that hair cut?");
+});
+```
+
+---
+class: middle, center
+name: bye
+background-image: url(https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/reactive-programming/journey.svg)
+
+# Thanks
+[@atomrc](https://twitter.com/atomrc)
+
+</textarea><script src="https://remarkjs.com/downloads/remark-latest.min.js"></script><script>//init remarkjs
+            var slideshow = remark.create({
+                highlightStyle: 'monokai',
+                highlightLines: true,
+                ratio: "16:9"
+            });
+            slideshow.on("afterShowSlide", function (slide) {
+                var enteredSlide = document.querySelector(".remark-slide-container.entered");
+                if (enteredSlide) {
+                    enteredSlide.classList.remove("entered");
+                }
+                window.setTimeout(function () {
+                    document.querySelector(".remark-visible").classList.add("entered");
+                }, 100);
+            });</script><script>var keyEaters = document.querySelectorAll("[data-key-eater]");
+            function kill(ev) {
+                ev.stopPropagation();
+                return false;
+            }
+
+            keyEaters.forEach(eater => {
+                eater.addEventListener("keydown", kill)
+                eater.addEventListener("keypress", kill)
+                eater.addEventListener("keyup", kill)
+            });</script><script src="https://unpkg.com/@reactivex/rxjs@5.0.0-beta.7/dist/global/Rx.umd.js"></script><script>var O = Rx.Observable;
+            var aInput = document.querySelector("#a1");
+            var bInput = document.querySelector("#b1");
+            var cInput = document.querySelector("#c1");
+
+            var a$ = O
+                .fromEvent(aInput, "keyup")
+                .map(e => e.target.value);
+
+            var b$ = O
+                .fromEvent(bInput, "keyup")
+                .map(e => e.target.value);
+
+            var c$ = O
+                .combineLatest(
+                    a$.startWith(''),
+                    b$.startWith(''),
+                    (a, b) => a + b
+                )
+
+            c$.subscribe(function (c) {
+                cInput.value = c;
+            })</script><script>var O = Rx.Observable;
+            var inputs = document.querySelectorAll(".mvp-input");
+            var dest = document.getElementById("mvp-destination");
+            var formula = document.getElementById("mvp-formula");
+
+            function evalFormula(formula, values) {
+                var expression = formula.replace(/#(\w)/g, "(values.$1 || \"\")");
+                var res;
+                try {
+                    res = eval(expression);
+                } catch (e) {
+                    console.error(e);
+                    res = "#ERROR";
+                }
+                return res;
+            }
+
+            var formula$ = O
+                .fromEvent(formula, "blur")
+                .map(event => event.target.value)
+                .startWith("#a + #b + #c")
+
+            var values$ = O
+                .fromEvent(inputs, "keyup")
+                .map(e => ({ [e.target.id.replace("mvp-", "")]: e.target.value }))
+                .scan((acc, val) => Object.assign({}, acc, val), {})
+
+            var value$ = O
+                .combineLatest(
+                    formula$,
+                    values$,
+                    evalFormula
+                )
+
+            value$.subscribe(val => dest.innerHTML = val);</script><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-34218773-1', { siteSpeedSampleRate: 100 });
+            ga('send', 'pageview');</script><style>#spreadsheet {
+                margin: auto;
+                font-size: 2em;
+            }
+            #spreadsheet input {
+                font-size: inherit;
+                width: 90%;
+            }
+
+            #spreadsheet-mvp input {
+                font-size: 1.5em;
+            }
+            #spreadsheet-mvp #mvp-destination {
+                display: inline-block;
+                padding: 1em;
+                font-size: 5em;
+            }
+
+            .obs-steroid img {
+                height: 410px;
+                margin: 0 5em;
+            }
+            .obs-steroid .obs {
+                margin: 0 200px;
+            }
+            .trioimg .obs {
+                margin: 0 75px;
+            }
+            .trioimg img {
+                margin: 0 2em;
+            }
+
+            .overinteractive-inc img,
+            .reactive-inc img,
+            .eventdriven-inc img {
+                height: 7em;
+                margin: 0 2em;
+            }
+            img[alt=machine] {
+                height: 10em;
+            }
+            img[alt=worker] {
+                height: 15em !important;
+            }
+
+            .eventdriven-inc img[alt=worker],
+            .reactive-inc img[alt=worker]
+            {
+                margin: 0 5em;
+            }
+
+            .reactive-inc img:not([alt=worker]) {
+                position: absolute;
+                top: 35%;
+                right: 100%;
+            }
+
+            .reactive-inc img[alt=phone] {
+                animation: 20s infinite linear moveright, 20s infinite appear1;
+            }
+            .reactive-inc img[alt=document] {
+                animation: 20s infinite linear moveright, 20s infinite appear2;
+            }
+            .reactive-inc img[alt=tshirt] {
+                animation: 20s infinite linear moveright, 20s infinite appear3;
+            }
+            .reactive-inc img[alt=truck] {
+                animation: 20s infinite linear moveright, 20s infinite appear4;
+            }
+
+            .overinteractive-inc.animated img[alt=phone] {
+                animation: 10s infinite linear vibrate;
+            }
+            .overinteractive-inc.animated img[alt=truck] {
+                animation: 10s infinite linear startengine;
+            }
+            .overinteractive-inc.animated img[alt=worker] {
+                position: absolute;
+                animation: .5s infinite linear upanddown, 10s infinite linear walkright;
+            }
+
+            .overinteractive-inc.animated img[alt=tshirt] {
+                position: absolute;
+                height: 15em !important;
+                animation:
+                    .5s infinite linear upanddown,
+                    10s infinite linear walkright,
+                    10s infinite linear appearhalf;
+            }
+
+            #slide-me {
+                font-size: 2em;
+            }
+
+            #slide-eventdriven-inc-1 img[alt=phone] {
+                animation: 2s infinite linear vibrate;
+            }
+            #slide-eventdriven-inc-2 .bubble {
+                top: 10%;
+                left: 15%;
+            }
+
+            #slide-eventdriven-inc-3 .bubble {
+                top: 10%;
+                left: 29%;
+            }
+
+            .entered #slide-eventdriven-inc-4 img[alt="truck"] {
+                transition: transform 2s .5s;
+                transform: translateX(500px);
+            }
+
+            .huge-code code {
+                font-size: 2em;
+            }
+
+            .bubble img {
+                margin: 0;
+            }
+
+            .eventdriven-inc img[alt=order],
+            .eventdriven-inc img[alt=tshirt] {
+                height: 2em;
+            }
+
+            #slide-bye h1 {
+                color: white;
+                font-size: 10em;
+                text-shadow: 1px 1px 10px black;
+                font-weight: bold;
+            }
+            #slide-bye a {
+                color: white;
+                font-size: 2em;
+                position: absolute;
+                display: block;
+                width: 100%;
+                left: 0;
+            }
+
+            @keyframes appearhalf {
+                0% { max-width: 0; }
+                50% { max-width: 0; }
+                55% { max-width: 50%; }
+            }
+
+            @keyframes upanddown {
+                0% { transform: translateY(0) }
+                50% { transform: translateY(10px) }
+                100% { transform: translateY() }
+            }
+
+            @keyframes moveright {
+                0% {  transform: translateX(0); }
+
+                20% { transform: translateX(350px); }
+                30% { transform: translateX(350px); }
+
+                45% { transform: translateX(750px); }
+                55% { transform: translateX(750px); }
+
+                70% { transform: translateX(1150px); }
+                80% { transform: translateX(1150px); }
+
+                100% { transform: translateX(2000px); }
+            }
+
+            @keyframes appear1 {
+                0% { opacity: 1; }
+                19% { opacity: 1; }
+                20% { opacity: 0; }
+                100% { opacity: 0; }
+            }
+            @keyframes appear2 {
+                0% { opacity: 0; }
+                29% { opacity: 0; }
+                30% { opacity: 1; }
+                44% { opacity: 1; }
+                45% { opacity: 0; }
+                100% { opacity: 0; }
+            }
+            @keyframes appear3 {
+                0% { opacity: 0; }
+                54% { opacity: 0; }
+                55% { opacity: 1; }
+                69% { opacity: 1; }
+                70% { opacity: 0; }
+                100% { opacity: 0; }
+            }
+            @keyframes appear4 {
+                0% { opacity: 0; }
+                79% { opacity: 0; }
+                80% { opacity: 1; }
+                100% { opacity: 1; }
+            }
+
+            @keyframes walkright {
+                0% { right: 100%; }
+
+                20% { right: 70% }
+                30% { right: 70% }
+
+                45% { right: 40% }
+                55% { right: 40% }
+
+                70% { right: 10% }
+                80% { right: 10%; opacity: 1; }
+
+                85% { opacity: 0; }
+                100% { opacity: 0; }
+            }
+
+            @keyframes startengine {
+                80% { transform: translateX(0); }
+                100% { transform: translateX(500px); }
+            }
+
+            @keyframes vibrate {
+                0% { transform: rotate(0deg); }
+                1% { transform: rotate(10deg); }
+                2% { transform: rotate(0deg); }
+                3% { transform: rotate(-10deg); }
+                4% { transform: rotate(0deg); }
+                5% { transform: rotate(10deg); }
+                6% { transform: rotate(0deg); }
+                7% { transform: rotate(-10deg); }
+                8% { transform: rotate(0deg); }
+                100% { transform: rotate(0deg); }
+            }
+
+            .bubble {
+                border-radius: 1em;
+                background-color: #72a6fc;
+                color: white;
+                padding: 1em;
+                font-size: 2em;
+                position: absolute;
+                top: 1em;
+                left: 1em;
+            }
+            .bubble::after {
+                content: " ";
+                position: absolute;
+                top: 100%;
+                left: 1em;
+                width: 0;
+                height: 0;
+                border-left: 1em solid transparent;
+                border-right: 1em solid transparent;
+
+                border-top: 1em solid #72a6fc;
+            }
+            .bubble.center::after {
+                left: 50%;
+            }
+
+            #slide-introma img {
+                position: absolute;
+            }
+            #slide-introma img[alt=Karim] {
+                left: 75%;
+                animation: 6s infinite grow;
+            }
+            #slide-introma img[alt=Jeremy] {
+                bottom: 100%;
+                left: 25%;
+                animation: 7s infinite linear appearTop;
+            }
+            #slide-introma img[alt=Gilles] {
+                left: 10%;
+                animation: 4s infinite linear blink;
+            }
+
+            img[alt="cyclejs"] {
+                width: 200px;
+                vertical-align: middle
+            }
+
+            .cyclejs p {
+                padding-top: 2em;
+                font-size: 4em;
+                font-weight: bold;
+                color: white;
+                text-shadow: 6px 4px 10px black;
+            }
+
+            @keyframes grow {
+                0% { transform: scale(0); }
+                40% { transform: scale(0); }
+                50% { transform: scale(1); }
+                55% { transform: scale(0); }
+                100% { transform: scale(0); }
+            }
+
+            @keyframes blink {
+                0%  { opacity: 0; }
+                9%  { opacity: 0; }
+                10% { opacity: 1; }
+                11% { opacity: 1; }
+                12% { opacity: 0; }
+                13% { opacity: 1; }
+                14% { opacity: 0; }
+                15% { opacity: 1; }
+                16% { opacity: 0; }
+                17% { opacity: 1; }
+                18% { opacity: 0; }
+                19% { opacity: 1; }
+                20% { opacity: 0; }
+                100% {opacity: 0; }
+            }
+
+            @keyframes appearTop {
+                0% { transform: translateY(0); opacity: 0; }
+                30% { transform: translateY(0); }
+                40% {  transform: translateY(100%); opacity: 1; }
+                50% {  transform: translateY(100%); opacity: 1; }
+                60% {  transform: translateY(0); opacity: 0; }
+                100% { transform: translateY(0); }
+            }</style></body></html>

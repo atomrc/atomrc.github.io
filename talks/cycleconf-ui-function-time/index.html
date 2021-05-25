@@ -1,0 +1,1685 @@
+<!doctype html><html lang="en"><head><title>UI as Pure Functions of Time</title><meta name="robots" content="noindex"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">@import url(https://fonts.googleapis.com/css?family=Open+Sans:400);
+      @import url(https://fonts.googleapis.com/css?family=Montserrat:400);
+
+      body {
+        font-family: Open Sans, Arial, sans serif;
+        color: #fff;
+      }
+
+      .remark-slide-content:not(.naked)::after {
+          content: "@atomrc | CycleConf 2017";
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          padding: 1em;
+          font-size: 1em;
+      }
+
+      img {
+        max-width: 90%;
+        max-height: 90%;
+      }
+
+      .remark-slide-content {
+        /*background: white;*/
+        background-color: #057FFA;
+        padding: 0 3em;
+      }
+      .remark-container {
+        background-color: #EEE;
+      }
+      .remark-code {
+        padding: 0 10em;
+      }
+      .remark-slide-scaler {
+        box-shadow: none;
+      }
+
+      .center {
+        text-align: center;
+      }
+      .left-align h2 {
+        text-align: left;
+      }
+      .shadow {
+        text-shadow: 1px 1px 10px black, -1px -1px 10px black;
+      }
+
+      h1, h2, h3 {
+        margin: 1em;
+        margin-bottom: 1em;
+        text-align: center;
+        font-weight: lighter;
+        font-family: Montserrat;
+      }
+
+      .semi-condensed h1 {
+          margin: 0.5em;
+      }
+      .condensed h1 {
+          margin: 0.3em;
+      }
+
+      a { color: inherit; }
+
+      svg {
+        max-width: 90%;
+        max-height: 520px;
+      }
+
+      li {
+        padding: 0.5em;
+      }
+
+      .naked .foot, .naked .remark-slide-number {
+        display: none;
+      }
+
+      .foot {
+        position: absolute;
+        bottom: 1em;
+        left: 1em;
+      }
+
+      .remark-inline-code {
+        background-color: #03002E;
+        color: white;
+        padding: 2px;
+        border-radius: 0.2em;
+      }
+      .centered-code pre{
+        flex: 1;
+        margin: auto;
+      }
+      .centered-code code.hljs {
+        padding: 3em;
+      }
+
+      .box {
+        margin: auto;
+        color: white;
+        background-color: #3e3e3e;
+        border-radius: 5px;
+        padding: 0.5em;
+      }
+
+      .animate-from-bottom {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        transform: translateY(100%);
+        transition: transform 1s;
+      }
+      .entered .animate-from-bottom:not(.toggleable),
+      .toggled .animate-from-bottom.toggleable {
+        transform: translateY(0);
+      }
+      .sub-toggleable {
+        opacity: 0;
+      }
+      .toggled.sub-toggled .sub-toggleable {
+        opacity: 1;
+      }
+      .middled {
+        margin: auto;
+      }
+      .banner {
+        font-size: 2.5em;
+        border-radius: 5px;
+        background-color: #EEE;
+        color: #555;
+        font-weight: bold;
+        padding: 1em;
+        box-shadow: 5px 5px 10px #666;
+      }
+
+      img[alt="thomas belin"] {
+        border-radius: 100px;
+        border: solid 5px white;
+      }
+      blockquote {
+        text-align: center;
+        background: white;
+        color: #444;
+        border-radius: 5px;
+        padding: 0.5em 1em;
+        font-size: 2em;
+        position: relative;
+        border: 1px solid #CCC;
+      }
+      blockquote::before, blockquote::after {
+        position: absolute;
+        content: "✶";
+      }
+      blockquote::before {
+        top: 0.25em;
+        left: 0.25em;
+      }
+      blockquote::after {
+        bottom: 0.25em;
+        right: 0.25em;
+      }
+
+      .hljs-github .hljs-comment {
+          color: #0040f8;
+      }
+      .highlighted .remark-code-line:not(.remark-code-line-highlighted) {
+        opacity: 0.4;
+      }
+      .remark-code-line-highlighted {
+        background-color: inherit;
+        font-weight: bold;
+      }
+
+      .huge h2 {
+        font-size: 4em;
+      }
+      .huge h1 {
+        font-size: 5em;
+      }
+      .big-code .remark-code {
+        font-size: 1.5em;
+      }
+      .huge-code .remark-code {
+        font-size: 2em;
+      }
+      .check {
+        font-size: 3em;
+        color: lime;
+      }
+
+      #slide-intro svg {
+        height: 200px;
+      }
+
+      #slide-cycle-intro svg {
+        height: 200px;
+      }
+
+      #slide-intro svg .stream {
+        stroke-width: 5 !important;
+        stroke-linecap: round !important;
+        stroke-dasharray: 0px, 15 !important;
+      }
+
+      svg .hidden {
+        opacity: 0;
+      }
+      svg .appland {
+        fill: none;
+        stroke: #edaf1f;
+        stroke-width: 5;
+      }
+      svg .stream {
+        stroke-width: 10 !important;
+        stroke-linecap: round !important;
+        stroke-dasharray: 0px, 20 !important;
+      }
+
+      svg .stream.lf {
+        stroke-dasharray: 0px, 40 !important;
+      }
+
+      svg .stream.vlf {
+        stroke-dasharray: 0px, 80 !important;
+      }
+
+      svg .stream.teststream {
+        stroke-dasharray: 0px, 500 !important;
+        stroke-dashoffset: 10px;
+      }
+
+      .toggled svg .stream {
+        /*display: none;*/
+      }
+
+      #slide-cyclearchext .testenv {
+        opacity: 0;
+      }
+      #slide-cyclearchext .testenv,
+      #slide-cyclearchext .prodenv {
+        transition: opacity 1s, transform 1s;
+      }
+      .toggled #slide-cyclearchext .testenv,
+      .toggled #slide-cyclearchext .prodenv {
+        opacity: 1;
+        transform: translateY(180px);
+      }
+      .toggled #slide-cyclearchext .prodenv {
+        opacity: 0;
+      }
+      .toggled #slide-cyclearchext .testenv {
+        opacity: 1;
+      }
+
+      #slide-cyclearchext {
+        transition: background-color 1s;
+      }
+      .toggled #slide-cyclearchext {
+        /*background-color: #469e30; green*/
+        background-color: #06455a;
+      }
+
+      .toggled #slide-cyclearchext .testenv {
+        opacity: 1;
+      }
+
+      .hidden {
+        opacity: 0;
+      }
+
+      #slide-test1 svg .stream {
+        stroke-dasharray: 0px, 200 !important;
+      }
+
+      #slide-pausev3 svg .dom-stream {
+        stroke-dasharray: 0px, 50px !important;
+      }
+
+      #slide-me {
+          font-size: 2em;
+      }
+
+      #mozilla svg {
+        height: 15em;
+      }
+
+      #poketom svg {
+        height: 12em;
+      }
+
+      #slide-medev #mozilla {
+        display: none;
+      }
+
+      #slide-medev #poketom {
+        transform: translateX(1500px);
+        transition: all 2s;
+      }
+      .entered #slide-medev #poketom {
+        transform: translateX(0);
+      }
+
+      #slide-medev-moz #mozilla {
+        transform: translateX(-1500px);
+        transition: all 2s;
+      }
+      .entered #slide-medev-moz #mozilla {
+        transform: translateX(0);
+      }
+
+      #mozescape svg {
+        height: 5em;
+        overflow: visible;
+      }</style></head><body class="dark"><textarea id="source">
+class: middle center naked
+name: intro
+# UI as Pure Functions of Time
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2500" height="500" viewBox="0 0 661.45833 132.29168" id="svg8"><defs id="defs2"><linearGradient id="linearGradient5473"><stop offset="0" id="stop5469" stop-color="#655488"/><stop offset="1" id="stop5471" stop-color="#655488" stop-opacity="0"/></linearGradient><linearGradient id="linearGradient5465"><stop offset="0" id="stop5461" stop-color="#72c0d7"/><stop offset="1" id="stop5463" stop-color="#72c0d7" stop-opacity="0"/></linearGradient><linearGradient id="linearGradient5457"><stop offset="0" id="stop5453" stop-color="#83c730"/><stop offset="1" id="stop5455" stop-color="#83c730" stop-opacity="0"/></linearGradient><linearGradient id="linearGradient5449"><stop offset="0" id="stop5445" stop-color="#fdfb24"/><stop offset="1" id="stop5447" stop-color="#fdfb24" stop-opacity="0"/></linearGradient><linearGradient id="linearGradient5441"><stop offset="0" id="stop5437" stop-color="#e88717"/><stop offset="1" id="stop5439" stop-color="#e88717" stop-opacity="0"/></linearGradient><linearGradient id="linearGradient5433"><stop offset="0" id="stop5429" stop-color="#cb1328"/><stop offset="1" id="stop5431" stop-color="#cb1328" stop-opacity="0"/></linearGradient><linearGradient id="linearGradient5425"><stop offset="0" id="stop5421" stop-color="#fff" stop-opacity="0"/><stop offset="1" id="stop5423" stop-color="#fff"/></linearGradient><linearGradient xlink:href="#linearGradient5425" id="linearGradient5427" x1="39.65" y1="167.11" x2="232.815" y2="167.11" gradientUnits="userSpaceOnUse" gradientTransform="translate(110.393 -10.956)"/><linearGradient xlink:href="#linearGradient5433" id="linearGradient5435" x1="266.576" y1="147.761" x2="459.742" y2="147.761" gradientUnits="userSpaceOnUse" gradientTransform="translate(110.393 -10.956)"/><linearGradient xlink:href="#linearGradient5441" id="linearGradient5443" x1="270.318" y1="154.603" x2="463.484" y2="154.603" gradientUnits="userSpaceOnUse" gradientTransform="translate(110.393 -10.956)"/><linearGradient xlink:href="#linearGradient5449" id="linearGradient5451" x1="275.129" y1="161.445" x2="468.295" y2="161.445" gradientUnits="userSpaceOnUse" gradientTransform="translate(110.393 -10.956)"/><linearGradient xlink:href="#linearGradient5457" id="linearGradient5459" x1="278.336" y1="168.286" x2="471.502" y2="168.286" gradientUnits="userSpaceOnUse" gradientTransform="translate(110.393 -10.956)"/><linearGradient xlink:href="#linearGradient5465" id="linearGradient5467" x1="282.078" y1="175.128" x2="475.244" y2="175.128" gradientUnits="userSpaceOnUse" gradientTransform="translate(110.393 -10.956)"/><linearGradient xlink:href="#linearGradient5473" id="linearGradient5475" x1="287.156" y1="181.97" x2="480.322" y2="181.97" gradientUnits="userSpaceOnUse" gradientTransform="translate(110.393 -10.956)"/><linearGradient xlink:href="#final-3" id="linearGradient4697" gradientUnits="userSpaceOnUse" x1="186.763" y1="637.383" x2="553.446" y2="2.269"/><linearGradient y2="2.269" x2="553.446" y1="637.383" x1="186.763" gradientUnits="userSpaceOnUse" id="final-3"><stop id="stop4643" offset=".415" stop-color="#51d3d9"/><stop id="stop4645" offset="1" stop-color="#c8ff8c"/></linearGradient><linearGradient xlink:href="#final-4-6" id="linearGradient4699" gradientUnits="userSpaceOnUse" x1="534.386" y1="527.969" x2="631.412" y2="359.915"/><linearGradient y2="359.915" x2="631.412" y1="527.969" x1="534.386" gradientUnits="userSpaceOnUse" id="final-4-6"><stop id="stop4650" offset=".415" stop-color="#51d3d9"/><stop id="stop4652" offset="1" stop-color="#5a919b"/></linearGradient></defs><g id="layer1" transform="translate(-39.65 -77.024)"><path d="M150.077 182.025l193.097-51.74" id="path4511" class="stream" fill="none" fill-rule="evenodd" stroke="url(#linearGradient5427)" stroke-width=".265"/><path id="path4513" d="M388.763 131.46l193.098 51.741" class="stream" fill="none" fill-rule="evenodd" stroke="url(#linearGradient5459)" stroke-width=".265"/><path class="stream" d="M385.556 124.619l193.097 51.74" id="path4556" fill="none" fill-rule="evenodd" stroke="url(#linearGradient5451)" stroke-width=".265"/><path class="stream" d="M392.505 138.303l193.097 51.74" id="path4558" fill="none" fill-rule="evenodd" stroke="url(#linearGradient5467)" stroke-width=".265"/><path id="path4560" d="M397.583 145.144l193.098 51.74" class="stream" fill="none" fill-rule="evenodd" stroke="url(#linearGradient5475)" stroke-width=".265"/><path id="path4562" d="M380.745 117.777l193.098 51.74" class="stream" fill="none" fill-rule="evenodd" stroke="url(#linearGradient5443)" stroke-width=".265"/><path class="stream" d="M377.004 110.935l193.097 51.74" id="path4564" fill="none" fill-rule="evenodd" stroke="url(#linearGradient5435)" stroke-width=".265"/><path id="path4493" d="M427.358 197.698H301.429l31.482-54.529 31.482-54.528 31.482 54.528z" fill="#0a0a0a" stroke="#fff" stroke-width="2.646" stroke-linecap="round" paint-order="stroke fill markers"/><g id="g4657" transform="translate(241.525 118.584) scale(.04113)"><linearGradient y2="2.269" x2="553.446" y1="637.383" x1="186.763" gradientUnits="userSpaceOnUse" id="linearGradient5212"><stop id="stop5208" offset=".415" stop-color="#51d3d9"/><stop id="stop5210" offset="1" stop-color="#c8ff8c"/></linearGradient><path id="path4648" d="M639.9 495.8c-.3 6.5-2.1 12.9-5.4 18.7l-60.6 105c-7.3 12.7-20.8 20.5-35.4 20.5H202.2c-14.6 0-28.1-7.8-35.4-20.4L5.5 340.5C1.8 334.1 0 327.1 0 320s1.4-14.5 5.7-21.7L166.9 20.4C174.2 7.8 187.7 0 202.2 0h336.3c14.6 0 28.1 7.8 35.4 20.4 0 0 58.3 95.5 62.5 102.3 4.2 6.8 3.5 15.4 3.5 22.4 0 6-1.7 14.2-3.3 20.7-1.6 6.5-50.4 204.3-50.4 204.3L479.7 143.6H261.4L159.2 320l102.2 176.4h218.2z" fill="url(#linearGradient4697)"/><linearGradient y2="359.915" x2="631.412" y1="527.969" x1="534.386" gradientUnits="userSpaceOnUse" id="linearGradient5219"><stop id="stop5215" offset=".415" stop-color="#51d3d9"/><stop id="stop5217" offset="1" stop-color="#5a919b"/></linearGradient><path id="path4655" d="M562.1 319.9l74 156.9c5.7 12.1 5.1 26.2-1.6 37.8l-154.8-18.1z" fill="url(#linearGradient4699)"/></g><path class="time-min" d="M256.467 132.198l6.692-7.427" id="path4501" fill="none" stroke="#fff" stroke-width="2.549" stroke-linecap="round"/><path class="time-hour" d="M256.467 132.198l-5.1-4.396" id="path4503" fill="none" stroke="#fff" stroke-width="2.549" stroke-linecap="round"/></g></svg>
+
+#### CycleConf 2017 | @atomrc
+
+???
+Do you remember the first time you said to yourself :
+- I want to learn JavaScript
+- I want to know how to code for the browser
+- I wanna be a frontend developer
+?
+
+---
+class: middle naked
+## « I wanna be a frontend developer! »
+.right[— you, some time ago]
+
+???
+I do remember it! Very well actually.
+
+At that time, we are in 2011,
+
+---
+layout: true
+class: middle naked
+## « I wanna be a frontend developer! »
+.right[— @atomrc, 2011]
+<div id="poketom" class="poke" style="position: absolute; bottom: 1em; left: 1em">
+<svg xmlns="http://www.w3.org/2000/svg" id="Calque_1" width="324.264" height="365.207" viewBox="0 0 324.26427 365.20662"><g id="g4637" transform="translate(-60.267 -27.107)"><path stroke-miterlimit="10" d="M163.826 298.3l15.838 44.689 72.406 39.551s27.152 16.359 40.729 0c13.577-16.359 21.301-44.554 21.301-44.554s-24.158-10.917-45.637-12.769c19.323-.108 40.649 3.477 45.719 8.658l6.334-21.152 11.879-.848 9.758-12.303s-10.182-18.244-11.666-36.275c-1.484-18.029 9.324-23.458 9.324-23.458s17.475-95.402-26.082-133.302c-43.559-37.9-121.055-53.74-181.014-2.264-59.963 51.477-17.537 152.73-4.529 161.215 13.013 8.486 35.64 32.812 35.64 32.812z" id="path4609" fill="#f5dcb2" stroke="#000" stroke-width="5" stroke-linejoin="round"/><g id="g4621"><path d="M166.512 231.267s-20.789-23.594-32.455-22.321c-11.668 1.272-21.637 24.96-.637 50.96 21 25.998 14.424 35.273 30.547 35.139 8.273-.07 7.637-11.17 7.637-11.17" id="path4617" fill="#f5dcb2"/><path d="M166.512 231.267c-5.164-4.547-10.392-8.977-15.941-12.806-2.755-1.919-5.59-3.717-8.516-5.053-1.462-.658-2.929-1.231-4.354-1.567-1.439-.334-2.747-.414-3.877-.11-2.384.592-4.533 2.54-6.056 4.953-1.521 2.442-2.486 5.344-2.91 8.346-.866 6.036.27 12.406 2.641 18.285 1.172 2.957 2.659 5.818 4.382 8.556a62.697 62.697 0 0 0 2.725 4.036c.485.662.97 1.297 1.489 1.959a91.488 91.488 0 0 1 1.594 2.08c4.199 5.602 8.005 11.589 11.038 17.912 1.537 3.131 2.922 6.354 4.335 9.268.718 1.443 1.481 2.76 2.426 3.732.932.981 2.125 1.633 3.583 2.063 1.446.443 3.077.654 4.729.769 1.506.141 2.895-.16 4.083-1.032 1.188-.868 2.057-2.294 2.633-3.836.601-1.548.937-3.234 1.088-4.946.254 1.709.223 3.468-.066 5.227-.328 1.738-.982 3.544-2.352 4.993-1.339 1.485-3.47 2.231-5.373 2.307-1.769.124-3.582.166-5.486-.124-1.884-.285-3.922-1.085-5.525-2.429-1.61-1.33-2.738-2.93-3.722-4.446-.99-1.526-1.81-3.056-2.646-4.548a184.618 184.618 0 0 0-2.517-4.407 136.997 136.997 0 0 0-11.467-16.422l-1.598-1.946a81.005 81.005 0 0 1-1.671-2.092 69.168 69.168 0 0 1-3.132-4.403c-1.957-3.038-3.674-6.267-5.047-9.671-1.347-3.412-2.359-6.997-2.866-10.698-.481-3.698-.505-7.511.188-11.267.694-3.742 2.03-7.463 4.349-10.713 1.159-1.616 2.547-3.13 4.245-4.351 1.69-1.214 3.696-2.149 5.882-2.498.229-.037.652-.093.815-.102.29-.027.567-.032.851-.046a12.79 12.79 0 0 1 1.631.09c1.055.128 2.043.369 2.979.67 1.871.604 3.554 1.429 5.116 2.374 3.127 1.883 5.892 4.084 8.506 6.411 5.146 4.733 9.779 9.883 13.814 15.482z" id="path4619"/></g><path stroke-miterlimit="10" d="M221.521 29.607s-19.373 12.02-12.584 26.021c0 0 50.486-29.274 86.547 7.212 0 0-16.67-5.091-31.518 6.364 0 0 49.061 44.971 79.744 12.728 0 0 .85 19.515-13.082 30.97 0 0 30.615-6.787 51.404 5.516 0 0-22.658 4.555-30.971 24.183 0 0 4.408 4.559 12.727-8.061 0 0-3.393 33.516-47.516 12.727 0 0 8.484 24.183-1.697 42.426 0 0-19.092-57.698-100.549-68.729 0 0-25.381 11.71-63.637 10.606 0 0-53.314 19.092-37.477 147.499 0 0-20.764-18.931-14.398-62.487 0 0-15.016 27.981 7.611 77.761 0 0-41.861-40.73-21.496-109.74 0 0-7.918 2.221-14.141 46.08 0 0-29.416-82.848 26.586-119.617 0 0-11.314-.566-22.061 9.051 0 0 8.906-31.22 52.041-35.071.003-.003 27.719-53.741 94.467-55.439z" id="path4623" fill="#4f3314" stroke="#000" stroke-width="5" stroke-linejoin="round"/><g id="g4627"><path d="M238.635 105.689c-3.341 3.799-7.412 6.914-11.569 9.803-4.233 2.831-8.526 5.414-13.201 7.674-4.688 2.178-9.505 3.813-14.401 5.237-4.895 1.408-9.87 2.512-14.884 3.371-10.031 1.694-20.235 2.343-30.369 1.884a192.17 192.17 0 0 1-3.796-.211c-.555-.022-.794-.101-1.157-.159l-.986-.213a24.347 24.347 0 0 1-1.913-.538 35.815 35.815 0 0 1-7.147-3.184c-4.46-2.658-8.298-6.311-10.882-10.651 3.468 3.656 7.534 6.569 12.002 8.467a33.954 33.954 0 0 0 6.862 2.199c.584.121 1.17.215 1.749.31l.864.117c.256.024.636.074.708.045a184.69 184.69 0 0 0 3.722-.084c9.913-.335 19.772-1.261 29.51-2.909 9.712-1.663 19.406-3.943 28.606-7.261 2.225-.849 4.518-1.925 6.767-2.933a141.62 141.62 0 0 0 6.698-3.26c4.429-2.258 8.745-4.737 12.817-7.704z" id="path4625"/></g><g id="g4635"><path d="M329.673 226.733c.108 6.262.403 12.511 1.032 18.708.276 3.1.625 6.188 1.05 9.257.392 3.071.862 6.126 1.425 9.152.555 3.027 1.331 6.007 2.178 8.936.832 2.934 1.582 5.85 2.258 8.786a256.893 256.893 0 0 0 2.189 8.802c.777 2.953 1.684 5.878 2.634 8.998l-.572.402c-2.643-2.015-4.766-4.606-6.568-7.36-1.787-2.77-3.229-5.741-4.377-8.797-1.155-3.056-1.915-6.227-2.351-9.43-.42-3.207-.667-6.413-.941-9.596a167.938 167.938 0 0 1-.516-9.541c-.048-3.179-.014-6.351.093-9.514.138-3.165.348-6.32.628-9.465.271-3.146.631-6.277 1.142-9.397z" id="path4633"/></g><path d="M265.451 258.994s21.618 12.068 37.593 4.6" id="path4646" fill="none" fill-rule="evenodd" stroke="#000" stroke-width="5"/><path d="M259.063 225.485l48.025 8.293-43.29-15.057z" id="path4648" fill-rule="evenodd" stroke="#000"/></g></svg>
+</div>
+<div id="mozilla" class="poke" style="position: absolute; top: 1em; right: 1em">
+<svg xmlns="http://www.w3.org/2000/svg" width="224.204" height="171.653" viewBox="0 0 168.153 128.74014" id="svg5436"><g id="surface1" transform="translate(-46.937 -.115)"><path d="M87.473 10.504C75.926 18.164 57.82 34.016 49.168 43.25c2.133.297 4.39-1.371 6.797-1.691l16.64-4.575c-6.91 5.95-21.457 16.438-25.668 24.7 5.196-1.875 16.098-8.168 21.516-8.684-4.734 4.355-14.61 12.613-17.703 17.871.375.176.113.637.172.957 4.07-2.34 13.96-8.469 18.45-8.883-4.618 4.993-13.114 14.61-14.974 21.051 4.008-2.742 14.098-8.3 18.512-9.988-1.004 2.543-3.234 4.43-4.683 6.972-2.004 3.516-6.739 7.516-6.915 11.696 3.516-3.406 7.88-6.414 12.258-8.813-1.953 4.223-5.547 7.715-6.523 12.742 2.871-2.894 8.312-4.402 12.012-5.738l-.446.445c-.316.274-4.484 3.344-7.324 6.774 2.523-.164.645-.48 3.871.258l-.058.16c-.223 19.34 36.472 26.41 58.957 25.43 4.742-9.2 2.183-24.059 14.43-30.45 8.241-4.394 9.175-6.796 18.69-5.004 5.141.97 16.391 4.864 21.778 3.633 5.023-2.914 7.469-4.195 11.918-7.695 4.305-6.555-34.309-27.8-3.098-.246 7.489 1.605 9.422 1.367 11.641-1.973.992-2.695 3.36-9.855 5.523-14.523l.149-2.52c-2.094-6.328-1.586-17.148-2.649-18.707-6.921-9.62-31.949-11.129-43.27-23.785 1.93-6.285-2.12-11.46-6.245-15.39-6.2-4.567-14.75-2.47-21.348-.57-7.516-1.575-14.469-4.278-21.785-6.423-16.277-1.699-32.32 10.223-32.32 10.223zm0 0" id="path5377"/><path d="M135.176 15.855l-5.395 2.063c-.648-1.293.969-2.52 1.61-3.723.46-.883 1.785-1.379 2.097-2.445-6.976-1.125-13.57-4.555-21.008-3.371-7.957 1.258-12.59 4.305-17.168 7.937-2.312 1.27-3.43 3.07-5.675 4.586-2.746 2.48-3.942 7.418-4.625 8.36 3.984-1.727 7.992-1.469 10.695-2.383-10.176 6.375-11.953 18.824-9.137 29.207l-.168.23c-3.418-2.05-4.41-5.828-5.355-9.132-.672 2.171-.77 4.93-1.227 7.355-1.093-1.023-1.695-2.484-2.304-3.789-1.145 10.988 4.203 19.938 10.754 28.613 4.39 5.817-4.18 9.664-2.16 16.965l10.304-.578c1.328-.496.914-.32.914-.32-2.582 5.18-16.254 9.101-18.879 12.062.735.61 12.754-3.101 17.153-3.847l-12.938 7.324c1.285.398-.043 4.746 2.781 4.336 17.89 5.32 38.043 12.703 41.18 4.996 2.621-4.899 6.496-13.2 5.898-17.899l2.778-4.226c-3.707.922-7.438 2.422-10.301 5.48-.86-1.8.488-3.96 1.156-5.664 1.922-3.453 5.758-5.281 8.797-7.246l-6.383-2.832c-3.218-5.535-9.332-10.098-9.496-16.605l1.512.515c5.82 6.625 14.094 11.996 22.379 12.383-5.64-.484 23.558-3.934 21.84-6.41 3.105 4.473 12.484 6.351 19.34 8.703 3.148-1.137 4.523-.813 6.886-2.95-1.008-1.093-2.566-1.991-4.066-2.558-9.004-2.492-30.266-6.875-34.848-15.746-.863 3.777 2.625 6.895 6.531 10.117l-8.402-1.183c-14.773-6.852-12.988-18.606-9.742-29.778l1.121 9.325 2.898 5.086c5.504-9.985 2.625-8.743-8.437-22.208l8.344 3.192c3.808 3.07 10.07 8.379 15.617 12.066 14.95 9.809 22.348 16.309 41.32 17.64l5.852 1.302c4.144-10.875-3.887-20.918-1.461-5.715-3.094-3.774-6.125-7.262-5.492-9.23-1.086-1.645 4.492-5.75 4.02-7.622-5.481-5.582-29.165-8.578-42.024-21.367-.375 2.14 5.949 7.676 7.043 9.578-12.758.13-20.274-3.797-21.637-7.941-.281-.688.066-3.758 1.43-4.746 1.84-.965 3.632-2.426 5.75-2.621-3.317-2.711-7.512.918-10.446 2.558-2.28 3.926 1.27 8.297 1.72 11.485-3.11-.786-7.31-6.274-7.825-9.72-4.727.52-9.067-.093-12.7-2.827 3.208-.707 6.52-1.907 9.876-2.516 8.789-1.922 18.015-10.973 26.89-3.898l-4.129-5.262c-8.285-.875-15.484 2.98-23.058 4.894zm0 0" id="path5379" fill="#fa0c0a"/><path d="M106.195 19.84c-2.36 2.758-4.722 5.515-5.273 9.226l.527.622c1.578-1.903 3.938-3.493 6.113-4.598.005 3.906 2.52 7.738 5.88 9.62l.566.04c-.711-4.125-.238-9.168 1.37-12.895 2.567-2.16 5.938-3.02 8.11-5.289-5.433-1.273-10.601-.195-15.246 1.575zm0 0" id="path5381"/><path d="M160.723 31.32c-2.23-3.09-5.403-5.57-9.43-5.218.043 3.816 5.23 6.039 9.43 5.218zm0 0" id="path5383" fill="#fff"/><path d="M128.508 31.813c-3.496.269-6.774.894-10.07 1.753 1.453 1.344 3.292 1.797 4.671 3.055-4.316 1.629-8.832 2.668-12.605 6l.781.465c6.977-1.457 15.223-1.332 22.5.227l.422-.305-4.215-7.68 6.48-1.406c-3.437-3.223-7.374-6.395-11.902-7.774.692 1.88 2.598 3.75 3.938 5.668zm0 0" id="path5385"/><path d="M153.836 39.516c3.441.636 7.246.722 10.523.105-5.414-2.77-12.332-2.223-16.644-7.086.812 2.55 2.578 6.664 6.12 6.98zm0 0" id="path5387"/><path d="M102.355 59.063c1.348 4.332-3.195 9.609.442 13.593 3.098 3.614 6.879 6.61 10.52 9.262l-.32-1.352c-3.243-3.793-6.224-7.98-7.72-12.492 3.797 1.332 7.813 3.176 12.153 3.793-4.887-7.312-13.844-14.308-10.47-24.32.185-1.652 2.368-2.926 1.817-4.461-5.105 3.91-7.242 9.68-6.422 15.976zm0 0" id="path5389"/><path d="M169.352 64.71c-.477.845-.305 2.08-.454 3.118 1.059-.543 1.809-1.719 2.864-2.176-.305-.629-1.664-.629-2.41-.941zm0 0" id="path5391" fill="#fff"/><path d="M175.54 71.18l2.17-2.13c-.483-.382-1.124-.945-1.995-.741zm0 0" id="path5393" fill="#fff"/><path d="M180.656 73.48c.512.036 1.68-2.355 2.192-2.32l-1.723-1.02c-.594-.038-.27 2.915-.469 3.34zm0 0" id="path5395" fill="#fff"/><path d="M185.941 74.563l-.55 1.359c1.199-.094 1.808-2.41 2.527-3.063-1.988-.398-2.063-.949-1.977 1.704zm0 0" id="path5397" fill="#fff"/><path d="M191.613 77.703l2.14-3.683-1.991-.457zm0 0" id="path5399" fill="#fff"/><path d="M197.082 77.066l2.453-1.879c-2.469-.972-2.61-1.335-2.453 1.88zm0 0" id="path5401" fill="#fff"/><path d="M203 75.574c.36 1.07.027 2.36-.047 3.492.578-1.097 1.906-1.882 2.07-3.183-.566-.477-1.343-.262-2.023-.309zm0 0" id="path5403" fill="#fff"/><path d="M129.29 116.664c.78 1.477.815 3.274 1.597 4.754 1.855-4.004 1.644-8.813-.762-12.414-4.18-1.844-8.219-3.762-11.82-6.691 1.496 5.117 6.394 10.757 10.984 14.351zm0 0" id="path5405"/><path d="M155.016 31.758c-1.368-.356-2.164-1.887-1.79-3.43.38-1.547 1.79-2.508 3.157-2.152 1.363.351 2.16 1.887 1.789 3.43-.383 1.539-1.797 2.503-3.156 2.152zm0 0" id="path5407"/><path d="M127.797 126.898l4.055-3.312c-3.946-2.566-10.622-7.172-14.235-10.586 2.836 5.91 2.926 12.453 10.18 13.898zm0 0" id="path5409"/><path d="M69.875 100.469c16.52 21.75 38.992 30.37 66.379 28.008l-2.328-5.079c-24.36.907-44.64-5.144-58.461-25.203zm0 0" id="path5411" fill-rule="evenodd"/></g></svg>
+</div>
+
+---
+name: medev
+???
+I am in second year of engineering school and I have a dream.  
+I want to work for
+
+---
+name: medev-moz
+
+???
+Mozilla  
+I want to make the Web a better place for everyone,  
+I want to contribute to Open Source,  
+
+To achieve that dream, I have a very precise plan ... In 2 steps: 
+- first step is to get an intership at Mozilla
+- second step is being so awesome at my intership that they have no choice but to hire me!
+
+This plan requires 2 things:
+- a nice resume (of course)
+- some pretty solid skills in a tech that they use at Mozilla.
+
+For the tech, you've guessed it, I chose JavaScript and for the resume and the skills, I decided to merge both requirements in a single project ... And I made this.
+
+
+---
+layout: false
+class: center
+![html5 resume](https://cloud.githubusercontent.com/assets/1090716/21966622/0273c282-db77-11e6-886a-1ddee2ec3187.gif)
+
+???
+It worth what it worth, but that was the first project I actually released and I was really excited about this. I felt like a JavaScript God and I though all the doors would be opened for me, including the doors of Mozilla !
+
+---
+name: mozescape
+class: naked center middle
+
+<div id="mozescape">
+<svg xmlns="http://www.w3.org/2000/svg" id="Layer_2" width="800" height="800" viewBox="0 0 800 800"><g id="g6562" class="moz" stroke-width="1.333"><path d="M341.946 328.025c-15.396 10.214-39.537 31.35-51.073 43.662 2.844.396 5.853-1.828 9.063-2.255l22.186-6.1c-9.213 7.933-28.609 21.917-34.223 32.933 6.927-2.5 21.463-10.89 28.687-11.579-6.312 5.807-19.48 16.818-23.604 23.828.5.235.151.85.23 1.276 5.426-3.12 18.613-11.292 24.6-11.844-6.158 6.658-17.486 19.48-19.966 28.068 5.344-3.656 18.798-11.066 24.683-13.317-1.339 3.39-4.312 5.907-6.244 9.296-2.672 4.688-8.985 10.021-9.22 15.595 4.688-4.542 10.507-8.552 16.344-11.751-2.604 5.63-7.396 10.287-8.697 16.99 3.828-3.86 11.082-5.87 16.016-7.651l-.595.593c-.421.365-5.979 4.459-9.765 9.032 3.364-.219.86-.64 5.161.344l-.077.213c-.298 25.787 48.629 35.214 78.609 33.907 6.323-12.267 2.91-32.079 19.24-40.6 10.988-5.859 12.233-9.061 24.92-6.672 6.854 1.293 21.854 6.485 29.037 4.844 6.697-3.885 9.959-5.593 15.89-10.26 5.74-8.74-45.745-37.067-4.13-.328 9.985 2.14 12.563 1.823 15.521-2.63 1.323-3.594 4.48-13.14 7.364-19.365l.199-3.36c-2.792-8.437-2.115-22.863-3.532-24.942-9.228-12.827-42.599-14.839-57.693-31.713 2.573-8.38-2.827-15.28-8.327-20.52-8.266-6.09-19.666-3.294-28.464-.76-10.021-2.1-19.292-5.704-29.046-8.564-21.703-2.266-43.094 13.63-43.094 13.63zm0 0" id="path5377"/><path d="M405.55 335.16l-7.193 2.75c-.864-1.723 1.292-3.36 2.147-4.963.613-1.178 2.38-1.839 2.796-3.26-9.302-1.5-18.094-6.074-28.011-4.495-10.61 1.677-16.787 5.74-22.89 10.583-3.083 1.693-4.574 4.093-7.567 6.114-3.662 3.307-5.256 9.89-6.167 11.147 5.312-2.303 10.656-1.959 14.26-3.177-13.568 8.5-15.937 25.098-12.183 38.942l-.224.307c-4.557-2.734-5.88-7.77-7.14-12.176-.896 2.894-1.026 6.573-1.636 9.806-1.457-1.364-2.26-3.312-3.072-5.052-1.526 14.651 5.604 26.584 14.339 38.151 5.853 7.756-5.573 12.885-2.88 22.62l13.739-.77c1.77-.662 1.218-.427 1.218-.427-3.442 6.906-21.672 12.134-25.172 16.082.98.814 17.006-4.134 22.871-5.129l-17.25 9.765c1.713.531-.058 6.328 3.707 5.782 23.854 7.093 50.724 16.937 54.907 6.66 3.495-6.531 8.661-17.599 7.864-23.864l3.704-5.635c-4.943 1.23-9.917 3.23-13.735 7.307-1.146-2.4.65-5.28 1.542-7.552 2.562-4.604 7.677-7.042 11.729-9.662l-8.51-3.776c-4.291-7.38-12.443-13.464-12.662-22.14l2.016.687c7.76 8.833 18.792 15.995 29.839 16.51-7.52-.645 31.41-5.245 29.12-8.546 4.14 5.964 16.645 8.468 25.786 11.604 4.197-1.516 6.03-1.084 9.181-3.933-1.344-1.458-3.421-2.655-5.421-3.41-12.005-3.324-40.355-9.168-46.464-20.996-1.15 5.036 3.5 9.194 8.708 13.49l-11.202-1.578c-19.698-9.136-17.318-24.808-12.99-39.703l1.495 12.433 3.864 6.781c7.339-13.313 3.5-11.657-11.25-29.61l11.126 4.256c5.077 4.093 13.426 11.172 20.822 16.087 19.934 13.08 29.798 21.746 55.094 23.52l7.802 1.736c5.526-14.5-5.182-27.89-1.948-7.62-4.125-5.032-8.166-9.682-7.322-12.306-1.448-2.194 5.989-7.667 5.36-10.163-7.308-7.442-38.887-11.437-56.032-28.49-.5 2.854 7.932 10.236 9.39 12.772-17.01.173-27.031-5.063-28.849-10.588-.374-.918.088-5.011 1.907-6.328 2.453-1.287 4.842-3.235 7.666-3.495-4.422-3.615-10.015 1.224-13.927 3.41-3.04 5.235 1.693 11.063 2.293 15.314-4.147-1.048-9.747-8.365-10.433-12.96-6.303.693-12.09-.124-16.934-3.77 4.278-.942 8.694-2.542 13.168-3.354 11.719-2.563 24.02-14.63 35.853-5.197l-5.505-7.016c-11.046-1.167-20.645 3.973-30.744 6.525zm0 0" id="path5379" fill="#fa0c0a"/><path d="M366.909 340.473c-3.147 3.678-6.296 7.354-7.03 12.302l.702.829c2.104-2.537 5.25-4.657 8.15-6.13.008 5.207 3.36 10.317 7.84 12.826l.755.053c-.948-5.5-.317-12.224 1.827-17.193 3.423-2.88 7.917-4.027 10.813-7.052-7.244-1.697-14.134-.26-20.328 2.1zm0 0" id="path5381"/><path d="M439.613 355.78c-2.974-4.12-7.204-7.427-12.574-6.957.058 5.088 6.974 8.052 12.574 6.957zm0 0" id="path5383" fill="#fff"/><path d="M396.66 356.437c-4.662.359-9.032 1.192-13.427 2.338 1.937 1.792 4.39 2.396 6.228 4.073-5.755 2.172-11.776 3.557-16.807 8l1.042.62c9.302-1.943 20.297-1.776 30 .303l.562-.407-5.62-10.24 8.64-1.875c-4.582-4.297-9.832-8.526-15.87-10.365.924 2.507 3.465 5 5.252 7.557zm0 0" id="path5385"/><path d="M430.43 366.708c4.588.848 9.661.963 14.03.14-7.218-3.693-16.442-2.964-22.191-9.448 1.083 3.4 3.437 8.885 8.16 9.307zm0 0" id="path5387"/><path d="M361.789 392.77c1.797 5.776-4.26 12.812.59 18.124 4.13 4.82 9.171 8.814 14.026 12.35l-.427-1.803c-4.324-5.057-8.298-10.64-10.293-16.656 5.063 1.776 10.417 4.235 16.204 5.057-6.516-9.749-18.459-19.077-13.96-32.426.247-2.203 3.157-3.901 2.423-5.948-6.807 5.213-9.656 12.906-8.563 21.301zm0 0" id="path5389"/><path d="M451.118 400.3c-.636 1.126-.407 2.773-.605 4.157 1.412-.724 2.412-2.292 3.818-2.901-.406-.839-2.218-.839-3.213-1.255zm0 0" id="path5391" fill="#fff"/><path d="M459.369 408.926l2.893-2.84c-.644-.509-1.499-1.26-2.66-.988zm0 0" id="path5393" fill="#fff"/><path d="M466.19 411.993c.683.048 2.24-3.14 2.923-3.093l-2.298-1.36c-.792-.05-.36 3.886-.625 4.453zm0 0" id="path5395" fill="#fff"/><path d="M473.237 413.437l-.734 1.812c1.599-.125 2.411-3.213 3.37-4.084-2.651-.53-2.751-1.265-2.636 2.272zm0 0" id="path5397" fill="#fff"/><path d="M480.8 417.624l2.853-4.91-2.655-.61zm0 0" id="path5399" fill="#fff"/><path d="M488.091 416.774l3.271-2.505c-3.292-1.296-3.48-1.78-3.27 2.507zm0 0" id="path5401" fill="#fff"/><path d="M495.982 414.785c.48 1.427.036 3.147-.063 4.656.771-1.463 2.542-2.51 2.76-4.244-.754-.636-1.79-.35-2.697-.412zm0 0" id="path5403" fill="#fff"/><path d="M397.702 469.572c1.04 1.969 1.087 4.365 2.13 6.338 2.473-5.338 2.192-11.75-1.016-16.552-5.574-2.458-10.96-5.016-15.76-8.921 1.994 6.823 8.525 14.343 14.645 19.135zm0 0" id="path5405"/><path d="M432.003 356.364c-1.824-.475-2.885-2.516-2.386-4.573.506-2.063 2.386-3.344 4.21-2.87 1.816.468 2.88 2.516 2.384 4.574-.51 2.052-2.396 3.337-4.208 2.869zm0 0" id="path5407"/><path d="M395.712 483.217l5.406-4.416c-5.261-3.421-14.162-9.563-18.98-14.115 3.782 7.88 3.902 16.604 13.574 18.53zm0 0" id="path5409"/><path d="M318.482 447.978c22.027 29 51.99 40.494 88.506 37.344l-3.104-6.772c-32.48 1.21-59.52-6.858-77.948-33.604zm0 0" id="path5411" fill-rule="evenodd"/></g><g id="g5191" class="pokeball" transform="translate(51.997 51.997)" clip-rule="evenodd" fill-rule="evenodd"><circle id="circle5169" r="348.003" cy="348.003" cx="348.003"/><g transform="translate(-99.175 -99.636)" id="g5175" fill="#fff"><path id="path5171" d="M573.713 473.543c-11.995 58.904-64.089 103.231-126.535 103.231-62.447 0-114.54-44.327-126.535-103.231H141.169c13.155 157.485 145.125 281.202 306.008 281.202 160.884 0 292.855-123.717 306.011-281.202z"/><path id="path5173" d="M447.178 357.277c-49.904 0-90.36 40.456-90.36 90.362 0 49.904 40.456 90.361 90.36 90.361 49.906 0 90.361-40.457 90.361-90.361 0-49.906-40.455-90.362-90.361-90.362zm.001 134.941c-24.621 0-44.579-19.958-44.579-44.578 0-24.621 19.958-44.579 44.579-44.579 24.62 0 44.578 19.958 44.578 44.579 0 24.62-19.958 44.578-44.578 44.578z"/></g><path id="path5177" d="M348.003 218.868c62.446 0 114.54 44.327 126.535 103.232h179.475C640.858 164.615 508.886 40.897 348.002 40.897 187.12 40.897 55.15 164.615 41.994 322.1h179.474c11.995-58.905 64.087-103.232 126.535-103.232z" fill="#ed1c24"/></g></svg>
+</div>
+
+???
+Aaaaannd guess what .... It didn't work. I didn't get the intership nor the job.
+
+But I am not here to talk about my past carrer dreams, so back to our subject.
+
+---
+class: naked center middle
+![focused](https://media.giphy.com/media/MIY4jpusckRmU/giphy.gif)
+
+???
+Now consider this scenario: you are at work, highly focused on your current task and, in fact, you are so focused that, somehow, you've landed on my resume.
+
+---
+class: center
+![html5 resume](https://cloud.githubusercontent.com/assets/1090716/21966622/0273c282-db77-11e6-886a-1ddee2ec3187.gif)
+
+???
+Now you are getting curious, "How did he made it?, How did he manage to have such poor performance with such a simple animation?" you say. So you scroll down the page and notice a github link to the project. You click on it and land on the source code.  
+
+So my question to you is: "How would you read that code?", "where would you start?"
+
+
+---
+class: middle
+# Anatomy of a `main.js`
+
+???
+If you are like me, you would probably start by reading the "main.js" or "application.js" or "index.js" or whatever file is the entry point of the application.
+
+And that's what you would have found if you did this on my resume
+
+---
+class: middle
+
+```javascript
+function main() {
+
+  function run() {
+    cvController.step();
+    requestAnimationFrame(run);
+  }
+
+  requestAnimationFrame(run);
+}
+```
+
+???
+So, this is a pretty basic code, nothing really fancy about it. You can easily understand what is happening before your eyes. I have simplified a bit the code of the main, but the idea stays exactly the same.
+
+We have our main function that declares a run function that seems to be computing a single frame of the animation.
+There is also this CvController that seems to handle all the state of the application and seems also to be responsible for updating the DOM according to that state. Finally there is this requestAnimationFrame that calls the run function at the right time.
+---
+class: middle
+
+.highlighted[
+```javascript
+function main() {
+
+  function run() {
+*   cvController.step(); // ◀ 3 statements, 3 side effects
+*   requestAnimationFrame(run);
+  }
+
+* requestAnimationFrame(run);
+}
+```
+
+]
+.animate-from-bottom.toggleable[
+.center.middle[
+![side effects](//www.impawards.com/2013/posters/side_effects_ver9.jpg)
+]
+]
+
+---
+class: middle
+
+.highlighted[
+```javascript
+function main() {
+
+  function run() {
+    cvController.step();
+*   requestAnimationFrame(run); // ◀ Time is a dependency of our app
+  }
+
+* requestAnimationFrame(run);
+}
+```
+]
+
+---
+class: middle
+
+.highlighted[
+```javascript
+*function main() { // ◀ could it be injected?
+
+  function run() {
+    cvController.step();
+    requestAnimationFrame(run);
+  }
+
+  requestAnimationFrame(run);
+}
+```
+]
+
+---
+layout: false
+# What's that?
+
+.hidden[
+```javascript
+var paused = false;
+```
+]
+
+.hidden[
+```javascript
+document.addEventListener("keyup", function (ev) {
+  if (ev.keyCode === 32) {
+    paused = !paused;
+  }
+})
+```
+]
+
+```javascript
+function run() {
+  if (!paused) {
+    cvController.step();
+  }
+  requestAnimationFrame(run);
+}
+```
+
+---
+# What's that?
+
+```javascript
+var paused = false;
+```
+
+.hidden[
+```javascript
+document.addEventListener("keyup", function (ev) {
+  if (ev.keyCode === 32) {
+    paused = !paused;
+  }
+})
+```
+]
+
+```javascript
+function run() {
+  if (!paused) {
+    cvController.step();
+  }
+  requestAnimationFrame(run);
+}
+```
+
+---
+# What's that?
+
+```javascript
+var paused = false;
+```
+
+```javascript
+document.addEventListener("keyup", function (ev) {
+  if (ev.keyCode === 32) {
+    paused = !paused;
+  }
+})
+```
+
+```javascript
+function run() {
+  if (!paused) {
+    cvController.step();
+  }
+  requestAnimationFrame(run);
+}
+```
+
+---
+# What's that?
+
+```javascript
+*var paused = false; // 'global' variable
+```
+
+.highlighted[
+```javascript
+document.addEventListener("keyup", function (ev) {
+  if (ev.keyCode === 32) {
+*   paused = !paused; // side effect
+  }
+})
+```
+]
+
+.highlighted[
+```javascript
+function run() {
+* if (!paused) { // out of scope variable
+    cvController.step();
+  }
+  requestAnimationFrame(run);
+}
+```
+]
+
+---
+class: middle
+# Is VanillaJS the problem?
+
+---
+# `main.ng.js`
+
+```javascript
+function main() {
+  const app = angular.module("cv", ["cvModule"])
+
+  app.run(function ($scope, cvController) {
+    function update() {
+      $scope.$apply(cvController.step.bind(cvController));
+      raf(update)
+    }
+    raf(update)
+  })
+
+  angular.bootstrap(AppContainer, [app.name])
+}
+```
+
+---
+# `main.ng.js`
+
+.highlighted[
+```javascript
+function main() {
+  const app = angular.module("cv", ["cvModule"])
+
+  app.run(function ($scope, cvController) {
+    function update() {
+      $scope.$apply(cvController.step.bind(cvController));
+*     raf(update)
+    }
+*   raf(update)
+  })
+
+  angular.bootstrap(AppContainer, [app.name])
+}
+```
+]
+
+---
+# `main.react.js`
+
+```javascript
+function main() {
+  function run() {
+    state = update(state)
+    ReactDOM.render(
+      <cv data="{state}/">,
+      AppContainer
+    )
+    raf(run)
+  }
+
+  raf(run)
+}
+```
+
+---
+# `main.react.js`
+
+.highlighted[
+```javascript
+function main() {
+  function run() {
+    state = update(state)
+    ReactDOM.render(
+      <cv data="{state}/">,
+      AppContainer
+    )
+*   raf(run)
+  }
+
+* raf(run)
+}
+```
+]
+
+
+---
+# `main.vue.js`
+
+```javascript
+function main() {
+  const cv = new Vue({
+    el: "#main",
+    data: { state }
+  })
+
+  function run() {
+    update(state)
+    raf(run)
+  }
+  raf(run)
+}
+```
+
+---
+# `main.vue.js`
+
+.highlighted[
+```javascript
+function main() {
+  const cv = new Vue({
+    el: "#main",
+    data: { state }
+  })
+
+  function run() {
+    update(state)
+*   raf(run)
+  }
+* raf(run)
+}
+```
+]
+
+---
+class: center
+name: beforecycle
+# Embed Time
+
+<div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1000" viewBox="0 0 449.79166 264.58334" id="svg4521"><g transform="translate(0 -32.417)" id="g4519"><rect class="appland" width="250.61" height="175.357" x="99.591" y="54.477" ry="1.323" id="rect4499" fill="none" stroke="#edaf1f" stroke-width="5.292"/><text style="line-height:6.61458302px" x="214.809" y="69.08" font-weight="400" font-size="10.583" letter-spacing="0" word-spacing="0" id="text4503" font-family="sans-serif" stroke-width=".265"><tspan x="214.809" y="69.08" id="tspan4501" fill="#fff">App</tspan></text><path d="M172.507 142.155h76.285" class="stream" id="path4513" fill="url(#c)" fill-rule="evenodd" stroke="#fff" stroke-width="5.292" stroke-linecap="round" stroke-dasharray="5.29166669,10.58333339"/></g><g transform="translate(-49.921 -88.004) scale(1.41199)" id="g4505" stroke="#fff" stroke-width="3.969" stroke-linecap="round"><circle cy="140.045" cx="138.416" id="circle4499" r="14.159" fill="none" stroke-width="2.59" paint-order="stroke fill markers"/><path class="time-min" d="M138.416 140.045l6.8-7.547" id="path4501" fill="none" stroke-width="2.59"/><path class="time-hour" d="M138.634 140.045l-5.183-4.467" id="path4503" fill="none" stroke-width="2.59"/></g></svg>
+</div>
+
+---
+name: cycle-intro
+class: middle center
+# And there is Cycle.js
+
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="186.763" y1="637.383" x2="553.446" y2="2.269"><stop offset=".415" stop-color="#51d3d9"/><stop offset="1" stop-color="#c8ff8c"/></linearGradient><path fill="url(#SVGID_1_)" d="M639.9 495.8c-.3 6.5-2.1 12.9-5.4 18.7l-60.6 105c-7.3 12.7-20.8 20.5-35.4 20.5H202.2c-14.6 0-28.1-7.8-35.4-20.4L5.5 340.5C1.8 334.1 0 327.1 0 320s1.4-14.5 5.7-21.7L166.9 20.4C174.2 7.8 187.7 0 202.2 0h336.3c14.6 0 28.1 7.8 35.4 20.4 0 0 58.3 95.5 62.5 102.3s3.5 15.4 3.5 22.4c0 6-1.7 14.2-3.3 20.7-1.6 6.5-50.4 204.3-50.4 204.3L479.7 143.6H261.4L159.2 320l102.2 176.4h218.2l160.3-.6z"/><linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="534.386" y1="527.969" x2="631.412" y2="359.915"><stop offset=".415" stop-color="#51d3d9"/><stop offset="1" stop-color="#5a919b"/></linearGradient><path fill="url(#SVGID_2_)" d="M562.1 319.9l74 156.9c5.7 12.1 5.1 26.2-1.6 37.8l-154.8-18.1 82.4-176.6z"/></svg>
+
+---
+# `main.cycle.js`
+
+```javascript
+function main({ time }) {
+
+  const vtree$ = time
+    .animationFrames()
+    .fold(update, initialState)
+    .map(render)
+
+  return { DOM: vtree$ }
+}
+```
+
+---
+# `main.cycle.js`
+
+.highlighted[
+```javascript
+*function main({ time }) { // ◀ hello you
+
+  const vtree$ = time
+    .animationFrames()
+    .fold(update, initialState)
+    .map(render)
+
+  return { DOM: vtree$ }
+}
+```
+]
+
+---
+# `main.cycle.js`
+
+.highlighted[
+```javascript
+function main({ time }) {
+
+  const vtree$ = time
+    .animationFrames()
+    .fold(update, initialState)
+    .map(render)
+
+* return { DOM: vtree$ } // ◀ hello you
+}
+```
+]
+
+---
+class: center
+name: aftercycle
+# Injected Time
+
+<div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1000" viewBox="0 0 449.79166 264.58334" id="svg4515"><g transform="translate(0 -32.417)" id="g4513"><path d="M61.25 142.155h39.137" class="stream" id="path4511" fill="none" stroke="#fff" stroke-width="5.292" stroke-linecap="round" stroke-dasharray="5.29166669,10.58333339000000173"/><path d="M82.268 167.767l17.323-10.002v70.746c0 .733.59 1.323 1.323 1.323h247.964a1.32 1.32 0 0 0 1.323-1.323V55.801a1.32 1.32 0 0 0-1.323-1.324H100.914a1.32 1.32 0 0 0-1.323 1.323v73.465l-17.323-10.001" id="rect4493" fill="none" stroke="#edaf1f" stroke-width="5.292"/><text style="line-height:6.61458302px" x="206.809" y="69.08" font-weight="400" font-size="10.583" letter-spacing="0" word-spacing="0" id="text4497" font-family="sans-serif" stroke-width=".265"><tspan x="206.809" y="69.08" id="tspan4495" fill="#fff">App</tspan></text><g transform="translate(-160.545 -54.558) scale(1.41199)" stroke="#fff" stroke-width="3.969" stroke-linecap="round" id="g4505"><circle cy="140.045" cx="138.416" id="circle4499" r="14.159" fill="none" stroke-width="2.59" paint-order="stroke fill markers"/><path class="time-min" d="M138.416 140.045l6.8-7.547" id="path4501" fill="none" stroke-width="2.59"/><path class="time-hour" d="M138.634 140.045l-5.183-4.467" id="path4503" fill="none" stroke-width="2.59"/></g></g></svg>
+</div>
+
+---
+class: middle
+# We are functions of Time
+
+---
+class: middle
+# What about our applications?
+
+---
+class: middle
+# app = function (time) ?
+
+???
+At this point of the talk, you might be thinking : "Well Thomas, for an app that renders at 60 frames per seconds , its pretty obvious that it is a function of time. Even the description says it : an app that renders at 60 frames per second. But what about the kind of apps I develop with clicks, keyups and so on?
+
+---
+class: middle
+# What is a UI?
+
+---
+class: middle
+> A function of the events it listens to
+
+---
+class: middle
+# What is an event?
+
+---
+class: middle
+> Something that happens at a very specific point in time
+
+---
+class: middle
+> A function of Time
+
+```javascript
+function raf(timestamp) {
+  return timestamp % 16 === 0;
+}
+```
+
+.center.big-code[
+```
+raf ----x----x----x----x---->
+```
+]
+
+
+---
+class: left-align middle
+
+## app = function (events)
+
+--
+## app = function (function (time))
+
+--
+## app = function (time)
+
+### Thanks transitivity 👍 
+
+---
+class: middle
+
+# We are used to getting rid of Time
+
+---
+class: middle
+```javascript
+input.addEventListener("keyup", function (event) {
+  if (event.key === "Enter") {
+    var name = event.target.value;
+    user.name = name;
+  }
+})
+```
+
+---
+class: middle
+.highlighted[
+```javascript
+*input.addEventListener("keyup", function (event) { // Time-dependent
+  if (event.key === "Enter") {
+    var name = event.target.value;
+    user.name = name;
+  }
+*})
+```
+]
+
+
+---
+class: middle
+.highlighted[
+```javascript
+input.addEventListener("keyup", function (event) {
+* if (event.key === "Enter") { // Space-dependent
+*   var name = event.target.value;
+*   user.name = name;
+* }
+})
+```
+]
+
+.animate-from-bottom.toggleable[
+.center.middle[
+![french](//1.bp.blogspot.com/-HRNnnaiwmVA/Th4zwBegCXI/AAAAAAAAAGc/MNI90LKWWt8/w1200-h630-p-k-no-nu/french-stereotype+copy.jpg)
+###`s/special/spacial`
+]
+]
+
+---
+class: middle
+
+# Instead of getting rid of Time ...
+
+---
+class: middle
+
+# ... Let's make everything:
+
+---
+class: middle
+
+# Time-dependent
+
+```javascript
+const user$ = DOM.select(".username")
+
+  .events("keyup")
+
+  .filter(event => event.key === "Enter")
+
+  .map(event => event.target.value)
+
+  .fold((user, name) => ({ ...user, name }), {})
+```
+
+---
+class: middle
+# Observable
+
+```javascript
+const user$ = DOM.select(".username")
+
+  .events("keyup")                               // observable
+
+  .filter(event => event.key === "Enter")        // observable
+
+  .map(event => event.target.value)              // observable
+
+  .fold((user, name) => ({ ...user, name }), {}) // observable
+```
+
+---
+class: middle
+# Declarative
+
+```javascript
+const user$ = DOM.select(".username")
+
+  .events("keyup")
+
+  .filter(isEnterKey)
+
+  .map(getValue)
+
+  .fold(userReducer, {})
+```
+
+---
+class: middle
+
+# Exportable
+
+```javascript
+const keyup$ = DOM.select(".username").events("keyup")
+
+const enter$ = keyup$.filter(isEnterKey)
+
+const name$ = enter$.map(getValue)
+
+const user$ = name$.fold(userReducer, {})
+```
+
+---
+class: middle
+
+# Reactive Programming
+
+---
+class: middle
+# DataFlow vs. Statements
+
+---
+class: middle
+# Pause
+
+---
+class: middle
+name: pausev1
+
+<div style="float: right">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="412.901" height="871.727" viewBox="0 0 109.24666 230.64434" id="svg4511"><defs id="defs4493"><linearGradient id="linearGradient4521"><stop offset="0" id="stop4517" stop-color="#e83d08"/><stop offset="1" id="stop4519" stop-color="#fff"/></linearGradient><linearGradient xlink:href="#linearGradient4521" id="linearGradient4523" x1="233.703" y1="92.108" x2="232.732" y2="229.222" gradientUnits="userSpaceOnUse"/></defs><g transform="translate(-170.273 -44.13)" id="g4509"><path style="line-height:normal;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;text-orientation:mixed;shape-padding:0;isolation:auto;mix-blend-mode:normal" d="M218.28 98.547v124.219h13.231V98.546z" font-weight="400" overflow="visible" id="path4501" color="#000" font-family="sans-serif" white-space="normal" fill="#a3caff" fill-rule="evenodd" stroke-width="13.229"/><path d="M207.767 86.112l7.137 12.362h-43.696a.933.933 0 0 0-.935.935V221.49c0 .518.417.935.935.935h43.973l-7.414 12.842m34.259 0l-7.414-12.842h43.973a.933.933 0 0 0 .935-.935V99.41a.933.933 0 0 0-.935-.935H234.89l7.137-12.362" id="rect4495" fill="none" stroke="#edaf1f" stroke-width="5.292"/><text style="line-height:6.61458302px" x="214.561" y="51.845" font-weight="400" font-size="10.583" font-family="sans-serif" letter-spacing="0" word-spacing="0" stroke-width=".265" id="text4499"><tspan x="214.561" y="51.845" id="tspan4497">RAF</tspan></text><path d="M225.085 56.002l-.378 206.98" class="stream raf-stream" stroke-miterlimit="10" id="path4503" fill="none" fill-rule="evenodd" stroke="url(#linearGradient4523)" stroke-width="2.646" stroke-linecap="round" stroke-dasharray="2.64583204,5.29166407000000039"/><text y="274.624" x="212.09" style="line-height:6.61458302px" font-weight="400" font-size="10.583" font-family="sans-serif" letter-spacing="0" word-spacing="0" stroke-width=".265" id="text4507"><tspan y="274.624" x="212.09" id="tspan4505">DOM</tspan></text></g></svg>
+</div>
+
+```javascript
+function main({ time }) {
+
+  const vtree$ = time.animationFrames()
+    .fold(update, initialState)
+    .map(render)
+
+  return { DOM: vtree$ }
+}
+```
+
+---
+name: pausev2
+class: middle
+
+<div style="float: right">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="412.901" height="866.254" viewBox="0 0 109.24666 229.19635" id="svg4766"><defs id="defs4738"><linearGradient id="gradpause1"><stop offset="0" stop-color="#ef3b00" id="stop4730"/><stop offset=".034" stop-color="#e83d08" id="stop4732"/><stop offset="1" stop-color="#fff" id="stop4734"/></linearGradient><linearGradient xlink:href="#gradpause1" id="gpause1" x1="213.302" y1="98.318" x2="212.616" y2="231.089" gradientUnits="userSpaceOnUse"/></defs><g transform="translate(-170.273 -50.64)" id="g4764"><text y="58.494" x="188.102" style="line-height:6.61458349px" font-weight="400" font-size="10.583" font-family="sans-serif" letter-spacing="0" word-spacing="0" stroke-width=".265" id="text4744"><tspan y="58.494" x="188.102" id="tspan4742">RAF</tspan></text><text style="line-height:6.61458349px" x="212.09" y="279.686" font-weight="400" font-size="10.583" font-family="sans-serif" letter-spacing="0" word-spacing="0" stroke-width=".265" id="text4748"><tspan x="212.09" y="279.686" id="tspan4746">DOM</tspan></text><path d="M255.996 65.826l-.068 33.036" class="stream lf dom-stream" fill="none" fill-rule="evenodd" stroke="#ef3b00" stroke-width=".265" stroke-linecap="round" stroke-miterlimit="10" id="path4752"/><path d="M198.249 105.477v54.503l26.193 26.194v38.63" id="path4754" fill="none" fill-rule="evenodd" stroke="#a3caff" stroke-width="10.583"/><path d="M198.317 65.826l-.068 37.534v57.15l26.647 26.724-.19 80.81" class="stream raf-stream" fill="none" fill-rule="evenodd" stroke="url(#gpause1)" stroke-width=".265" stroke-linecap="round" stroke-miterlimit="10" id="path4758"/><text style="line-height:6.61458349px" x="243.157" y="58.494" font-weight="400" font-size="10.583" font-family="sans-serif" letter-spacing="0" word-spacing="0" stroke-width=".265" id="text4762"><tspan x="243.157" y="58.494" id="tspan4760">DOM</tspan></text><path id="path4507" d="M256.746 105.49v54.504" fill="none" fill-rule="evenodd" stroke="#a3caff" stroke-width="10.583"/></g><path id="path11347" d="M76.54 52.797l-7.076-11.084m-57.37-.285l6.079 11.304H.935a.933.933 0 0 0-.935.934V175.75c0 .518.417.935.935.935H43.85l-6.885 11.254m33.73.53l-6.356-11.784h43.973a.933.933 0 0 0 .935-.935V53.666a.933.933 0 0 0-.935-.934l-12.011-.392 5.613-10.627m-32.45 0l7.076 11.084-38.383-.065 6.079-11.304" fill="none" stroke="#edaf1f" stroke-width="5.5" paint-order="stroke fill markers"/></svg>
+</div>
+
+
+```javascript
+function main({ time, DOM }) {
+
+  const paused$ = DOM.select("document")
+    .events("keyup")
+    .filter(ev => ev.keyCode === 32)
+    .fold(acc => !acc, false)
+
+  const vtree$ = time.animationFrames()
+    .fold(update, initialState)
+    .map(render)
+
+  return { DOM: vtree$ }
+}
+```
+
+.animate-from-bottom.toggleable[
+.center.middle.shadow[
+<br>
+<br>
+<br>
+<br>
+.sub-toggleable[
+![straw simulator](//i.imgur.com/xrX4VV0.gif)
+]
+# Straw Simulator 2017
+]
+]
+
+---
+name: pausev3
+class: middle
+
+<div style="float: right">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="412.901" height="866.254" viewBox="0 0 109.24666 229.19635" id="svg5439"><defs id="defs5407"><linearGradient id="linearGradient6004"><stop id="stop6000" stop-color="#ef3b00" offset="0"/><stop id="stop6002" stop-color="#fff" offset="1"/></linearGradient><linearGradient id="linearGradient5998"><stop id="stop5994" stop-color="#ef3b00" offset="0"/><stop id="stop5996" stop-color="#f6f6f6" offset="1"/></linearGradient><linearGradient id="gradpause3a"><stop offset="0" stop-color="#ef3b00" id="stop5399"/><stop offset="1" stop-color="#f1f1f1" id="stop5401"/></linearGradient><linearGradient xlink:href="#linearGradient5998" id="gradpause3c" gradientUnits="userSpaceOnUse" x1="209.659" y1="98.766" x2="210.307" y2="230.155"/><linearGradient xlink:href="#linearGradient6004" id="gradpause3b" x1="217.322" y1="98.834" x2="218.827" y2="231.302" gradientUnits="userSpaceOnUse"/><linearGradient xlink:href="#gradpause3a" id="gradpause3d" x1="242.674" y1="99.008" x2="241.224" y2="231.996" gradientUnits="userSpaceOnUse"/></defs><g transform="translate(-170.273 -50.64)" id="g5437"><path d="M241.014 93.818l5.611 9.718h-38.943l5.51-9.546m-30.22 0l5.512 9.546h-17.276a.933.933 0 0 0-.935.935v122.082c0 .518.417.935.935.935h43.484l-5.968 10.337m31.28 0l-5.969-10.337h44.55a.933.933 0 0 0 .935-.935V104.471a.933.933 0 0 0-.935-.935h-12.961l5.61-9.718" id="rect5409" fill="none" stroke="#edaf1f" stroke-width="5.292"/><text y="58.494" x="188.102" style="line-height:6.61458349px" font-weight="400" font-size="10.583" font-family="sans-serif" letter-spacing="0" word-spacing="0" stroke-width=".265" id="text5413"><tspan y="58.494" x="188.102" id="tspan5411">RAF</tspan></text><text style="line-height:6.61458349px" x="212.09" y="279.686" font-weight="400" font-size="10.583" font-family="sans-serif" letter-spacing="0" word-spacing="0" stroke-width=".265" id="text5417"><tspan x="212.09" y="279.686" id="tspan5415">DOM</tspan></text><path d="M198.249 106.006v53.974l26.193 26.194v38.63" id="path5421" fill="none" fill-rule="evenodd" stroke="#a3caff" stroke-width="10.583" stroke-linejoin="round"/><text style="line-height:6.61458349px" x="243.157" y="58.494" font-weight="400" font-size="10.583" font-family="sans-serif" letter-spacing="0" word-spacing="0" stroke-width=".265" id="text5427"><tspan x="243.157" y="58.494" id="tspan5425">DOM</tspan></text><path d="M256.192 106.006v53.974l-31.296 27.254" id="path5429" fill="none" fill-rule="evenodd" stroke="#a3caff" stroke-width="10.583" stroke-linejoin="round"/><path class="stream out-stream" d="M224.896 187.234l-.522 75.632" stroke-miterlimit="10" fill="none" fill-rule="evenodd" stroke="url(#gradpause3b)" stroke-width="3.969" stroke-linecap="round" stroke-dasharray="3.969,7.93799999999999972" id="path5431"/><path d="M198.317 65.826l-.068 94.154 26.647 27.254" class="stream raf-stream" stroke-miterlimit="10" fill="none" fill-rule="evenodd" stroke="url(#gradpause3c)" stroke-width="3.969" stroke-linecap="round" stroke-dasharray="3.969,7.93799999999999883" id="path5433"/><path d="M255.996 65.826l.196 94.154-31.296 27.254" class="stream lf dom-stream" stroke-miterlimit="10" fill="none" fill-rule="evenodd" stroke="url(#gradpause3d)" stroke-width="3.969" stroke-linecap="round" stroke-dasharray="0,50.00000105" stroke-dashoffset="13.892" id="path5435"/></g></svg>
+</div>
+
+```javascript
+function main({ time, DOM }) {
+
+  const paused$ = DOM.select("document")
+    .events("keyup")
+    .filter(ev => ev.keyCode === 32)
+    .fold(acc => !acc, false)
+
+  const vtree$ = time.animationFrames()
+    .combine(sampleCombine(pause$))
+    .filter(([_, paused]) => !paused)
+    .fold(update, initialState)
+    .map(render)
+
+  return { DOM: vtree$ }
+}
+```
+
+---
+class: middle
+
+# App Architectures
+
+---
+name:resumearch
+class: center
+# My resume
+
+<div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 508 285.75001" id="svg10026"><g id="layer1" transform="translate(0 -11.25)"><rect class="appland" ry="1.298" id="rect4666" width="185.208" height="171.979" x="161.396" y="45.646"/><text style="line-height:6.61458349px" x="241.895" y="61.014" id="text4915" font-weight="400" font-size="10.583" letter-spacing="0" word-spacing="0" font-family="sans-serif" stroke-width=".265"><tspan id="tspan4913" x="241.895" y="61.014" font-size="12.7" fill="#fff">App</tspan></text><g transform="matrix(.513 0 0 .513 123.105 58.133)" id="g4505" stroke="#fff" stroke-width="3.969" stroke-linecap="round"><circle r="21.694" cy="139.316" cx="139.935" id="circle4499" fill="none" paint-order="stroke fill markers"/><path class="time-min" d="M139.935 139.316l10.419-11.564" id="path4501" fill="none"/><path class="time-hour" d="M140.269 139.316l-7.941-6.844" id="path4503" fill="none"/></g><path d="M209.875 129.602h57.76" id="path6350" class="stream" fill="none" fill-rule="evenodd" stroke="#fff" stroke-width=".265"/><path id="path10610" d="M287.203 133.62l-6.962-.405-4.282 5.505-1.765-6.747-6.559-2.37 5.871-3.765.228-6.97 5.394 4.42 6.7-1.936-2.538 6.496z" class="sideeffect-1 hidden" fill="#fff" stroke="#f7f9fc" stroke-width=".036" stroke-linecap="round" stroke-linejoin="round" paint-order="stroke fill markers"/><path class="sideeffect-2 hidden" d="M287.203 133.62l-6.962-.405-4.282 5.505-1.765-6.747-6.559-2.37 5.871-3.765.228-6.97 5.394 4.42 6.7-1.936-2.538 6.496z" id="path10612" fill="#fff" stroke="#f7f9fc" stroke-width=".036" stroke-linecap="round" stroke-linejoin="round" paint-order="stroke fill markers"/><path id="path10614" d="M287.203 133.62l-6.962-.405-4.282 5.505-1.765-6.747-6.559-2.37 5.871-3.765.228-6.97 5.394 4.42 6.7-1.936-2.538 6.496z" class="sideeffect-3 hidden" fill="#fff" stroke="#f7f9fc" stroke-width=".036" stroke-linecap="round" stroke-linejoin="round" paint-order="stroke fill markers"/></g></svg>
+</div>
+
+--
+.animate-from-bottom[.middled.banner[`main()`]]
+
+---
+name:reactarch
+class: center
+# React
+
+<div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 508.00001 285.74999" id="svg8"><defs id="defs15462"><marker orient="auto" id="marker11503" overflow="visible"><path id="path11501" d="M-5.231-2.42L1.324-.01-5.23 2.401c1.047-1.423 1.041-3.37 0-4.821z" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width=".375" stroke-linejoin="round"/></marker><marker id="marker17553" orient="auto" overflow="visible"><path d="M-5.231-2.42L1.324-.01-5.23 2.401c1.047-1.423 1.041-3.37 0-4.821z" id="path17551" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width=".375" stroke-linejoin="round"/></marker><marker id="marker17553-3" orient="auto" overflow="visible"><path d="M-5.231-2.42L1.324-.01-5.23 2.401c1.047-1.423 1.041-3.37 0-4.821z" id="path17551-6" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width=".375" stroke-linejoin="round"/></marker></defs><g transform="translate(0 -11.25)" id="layer1"><path d="M351.458 107.384l-16.021 9.25v-69.69c0-.72-.58-1.298-1.298-1.298H151.527c-.719 0-1.298.579-1.298 1.298v169.383c0 .719.58 1.298 1.298 1.298H334.14c.719 0 1.298-.579 1.298-1.298v-69.69l16.021 9.25" id="rect4666" fill="none" stroke="#edaf1f" stroke-width="5.292" stroke-linejoin="bevel" stroke-linecap="round"/><text style="line-height:6.61458302px" x="230.728" y="58.019" id="text4915" font-weight="400" font-size="10.583" letter-spacing="0" word-spacing="0" font-family="sans-serif" stroke-width=".265"><tspan id="tspan4913" x="230.728" y="58.019" font-size="12.7" fill="#fff">App</tspan></text><g transform="matrix(.513 0 0 .513 111.938 58.843)" id="g4505" stroke="#fff" stroke-width="3.969" stroke-linecap="round"><circle r="21.694" cy="139.316" cx="139.935" id="circle4499" fill="none" paint-order="stroke fill markers"/><path class="time-min" d="M139.935 139.316l10.419-11.564" id="path4501" fill="none"/><path class="time-hour" d="M140.269 139.316l-7.941-6.844" id="path4503" fill="none"/></g><path d="M183.403 145.048l.281 6.932 40.346.426v.32" id="path6348" class="stream" fill="none" fill-rule="evenodd" stroke="#fff" stroke-width=".265"/><path d="M184.043 114.338v-9.645h77.415" id="path6350" class="stream" fill="none" fill-rule="evenodd" stroke="#fff" stroke-width=".265"/><g transform="translate(-8.27 -10.257)" id="g6320"><rect ry="1.325" y="150.792" x="216.259" height="23.382" width="53.111" id="rect6314" fill="#a3caff" stroke="#287df2" stroke-width=".256" stroke-linecap="round" stroke-linejoin="round" paint-order="stroke fill markers"/><text id="text6318" y="164.367" x="222.211" style="line-height:6.61458302px" font-weight="400" font-size="7.056" letter-spacing="0" word-spacing="0" font-family="sans-serif" stroke-width=".265"><tspan y="164.367" x="222.211" id="tspan6316" fill="#1a1a1a">Component</tspan></text></g><g id="g6328" transform="translate(55.39 -10.257)"><rect id="rect6322" width="53.111" height="23.382" x="216.259" y="150.792" ry="1.325" fill="#a3caff" stroke="#287df2" stroke-width=".256" stroke-linecap="round" stroke-linejoin="round" paint-order="stroke fill markers"/><text style="line-height:6.61458302px" x="222.211" y="164.367" id="text6326" font-weight="400" font-size="7.056" letter-spacing="0" word-spacing="0" font-family="sans-serif" stroke-width=".265"><tspan id="tspan6324" x="222.211" y="164.367" fill="#1a1a1a">Component</tspan></text></g><g id="g6304" transform="translate(24.619 -57.258)"><rect id="rect6298" width="53.111" height="23.382" x="216.259" y="150.792" ry="1.325" fill="#a3caff" stroke="#287df2" stroke-width=".256" stroke-linecap="round" stroke-linejoin="round" paint-order="stroke fill markers"/><text style="line-height:6.61458302px" x="222.211" y="164.367" id="text6302" font-weight="400" font-size="7.056" letter-spacing="0" word-spacing="0" font-family="sans-serif" stroke-width=".265"><tspan id="tspan6300" x="222.211" y="164.367" fill="#1a1a1a">Component</tspan></text></g><path d="M264.924 115.937l-27.192 25.912" id="path6431" fill="none" fill-rule="evenodd" stroke="#a3caff" stroke-width="1.323"/><path d="M270.362 114.977l24.312 29.431" id="path6433" fill="none" fill-rule="evenodd" stroke="#a3caff" stroke-width="1.323"/><rect y="105.275" x="388.474" height="52.917" width="84.667" id="rect5875" ry=".399" class="appland" stroke-width=".375"/><text word-spacing="0" letter-spacing="0" font-size="10.583" font-weight="400" id="text5879" y="136.468" x="395.327" style="line-height:6.61458302px" font-family="sans-serif" stroke-width=".265"><tspan font-size="12.7" y="136.468" x="395.327" id="tspan5877" fill="#fff">React Land</tspan></text><g id="g8073" class="hidden output" transform="translate(1.058)"><rect ry="1.02" y="123.135" x="292.608" height="18.006" width="43.211" id="rect6752" fill="#a3caff" stroke="#287df2" stroke-width=".203" stroke-linecap="round" stroke-linejoin="round" paint-order="stroke fill markers"/><text word-spacing="0" letter-spacing="0" font-size="5.585" font-weight="400" id="text6756" y="139.479" x="290.552" style="line-height:5.23580313px" transform="scale(1.02786 .9729)" font-family="sans-serif" stroke-width=".21"><tspan y="139.479" x="290.552" id="tspan6754" font-size="10.053" fill="#1a1a1a">VDOM</tspan></text></g></g><style id="style4585"/></svg>
+</div>
+
+--
+.animate-from-bottom[.middled.banner[`const vdom = main()`]]
+
+---
+name:reduxarch
+class: center
+# React + Redux
+
+<div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 508.00001 285.74999" id="svg8"><defs id="defs21263"><marker id="marker17553-3" orient="auto" overflow="visible"><path d="M-5.231-2.42L1.324-.01-5.23 2.401c1.047-1.423 1.041-3.37 0-4.821z" id="path17551-6" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width=".375" stroke-linejoin="round"/></marker><marker id="marker17553-3-7" orient="auto" overflow="visible"><path d="M-5.231-2.42L1.324-.01-5.23 2.401c1.047-1.423 1.041-3.37 0-4.821z" id="path17551-6-5" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width=".375" stroke-linejoin="round"/></marker><marker id="marker17553-3-7-3" orient="auto" overflow="visible"><path d="M-5.231-2.42L1.324-.01-5.23 2.401c1.047-1.423 1.041-3.37 0-4.821z" id="path17551-6-5-5" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width=".375" stroke-linejoin="round"/></marker></defs><path d="M366.705 95.797l-19.669 11.356v-71.46c0-.718-.579-1.297-1.298-1.297H163.126c-.72 0-1.298.579-1.298 1.298v71.588l-19.894-11.485m0 49.177l19.894-11.485v71.588c0 .719.579 1.298 1.298 1.298h182.612c.72 0 1.298-.579 1.298-1.298v-71.459l19.67 11.356" id="rect4666" fill="none" stroke="#edaf1f" stroke-width="5.292"/><text style="line-height:6.61458349px" x="242.328" y="47.117" id="text4915" font-weight="400" font-size="10.583" letter-spacing="0" word-spacing="0" font-family="sans-serif" stroke-width=".265"><tspan id="tspan4913" x="242.328" y="47.117" font-size="12.7" fill="#fff">App</tspan></text><circle id="circle4499" cx="257.633" cy="180.918" r="11.129" fill="none" stroke="#fff" stroke-width="2.036" stroke-linecap="round" paint-order="stroke fill markers"/><path id="path4501" d="M257.633 180.92l5.344-5.933" class="time-min" fill="none" stroke="#fff" stroke-width="2.036" stroke-linecap="round"/><path id="path4503" d="M257.804 180.92l-4.074-3.512" class="time-hour" fill="none" stroke="#fff" stroke-width="2.036" stroke-linecap="round"/><g transform="translate(-16.219 -28.056)" id="g6320"><rect ry="1.325" y="150.792" x="216.259" height="23.382" width="53.111" id="rect6314" fill="#a3caff" stroke="#287df2" stroke-width=".256" stroke-linecap="round" stroke-linejoin="round" paint-order="stroke fill markers"/><text id="text6318" y="164.367" x="222.211" style="line-height:6.61458302px" font-weight="400" font-size="7.056" letter-spacing="0" word-spacing="0" font-family="sans-serif" stroke-width=".265"><tspan y="164.367" x="222.211" id="tspan6316" fill="#1a1a1a">Component</tspan></text></g><g id="g6328" transform="translate(47.441 -28.056)"><rect id="rect6322" width="53.111" height="23.382" x="216.259" y="150.792" ry="1.325" fill="#a3caff" stroke="#287df2" stroke-width=".256" stroke-linecap="round" stroke-linejoin="round" paint-order="stroke fill markers"/><text style="line-height:6.61458302px" x="222.211" y="164.367" id="text6326" font-weight="400" font-size="7.056" letter-spacing="0" word-spacing="0" font-family="sans-serif" stroke-width=".265"><tspan id="tspan6324" x="222.211" y="164.367" fill="#1a1a1a">Component</tspan></text></g><g id="g6304" transform="translate(15.611 -75.058)"><rect id="rect6298" width="53.111" height="23.382" x="216.259" y="150.792" ry="1.325" fill="#a3caff" stroke="#287df2" stroke-width=".256" stroke-linecap="round" stroke-linejoin="round" paint-order="stroke fill markers"/><text style="line-height:6.61458302px" x="222.211" y="164.367" id="text6302" font-weight="400" font-size="7.056" letter-spacing="0" word-spacing="0" font-family="sans-serif" stroke-width=".265"><tspan id="tspan6300" x="222.211" y="164.367" fill="#1a1a1a">Component</tspan></text></g><path d="M256.975 98.138l-27.192 25.912" id="path6431" fill="none" fill-rule="evenodd" stroke="#a3caff" stroke-width="1.323"/><path d="M262.413 97.178l24.313 29.43" id="path6433" fill="none" fill-rule="evenodd" stroke="#a3caff" stroke-width="1.323"/><rect y="93.081" x="392.196" height="52.917" width="84.667" id="rect5875" ry=".399" class="appland" stroke-width=".375"/><text word-spacing="0" letter-spacing="0" font-size="10.583" font-weight="400" id="text5879" y="124.803" x="399.05" style="line-height:6.61458349px" font-family="sans-serif" stroke-width=".265"><tspan font-size="12.7" y="124.803" x="399.05" id="tspan5877" fill="#fff">React Land</tspan></text><rect class="appland" ry=".399" id="rect8096" width="84.667" height="52.917" x="29.711" y="89.861" stroke-width=".375"/><text style="line-height:6.61458349px" x="34.976" y="121.054" id="text8100" font-weight="400" font-size="10.583" letter-spacing="0" word-spacing="0" font-family="sans-serif" stroke-width=".265"><tspan id="tspan8098" x="34.976" y="121.054" font-size="12.7" fill="#fff">Redux Land</tspan></text><path id="path8136" d="M163.887 181.035H94.14v-40.6" fill="none" fill-rule="evenodd" stroke="#edaf1f" stroke-width="13.229"/><path d="M237.97 181.035H94.14v-51.184" id="path7095" class="stream" fill="none" fill-rule="evenodd" stroke="#ffe9e9" stroke-width=".265"/><g id="g8144" class="hidden state" transform="translate(-2.117)"><rect ry=".661" id="rect7097" width="37.273" height="13.961" x="75.937" y="113.405" class="component" fill="#a3caff" stroke="#001e47" stroke-width="1.5" stroke-dasharray="7,7"/><text style="line-height:2.29455948px" x="90.89" y="117.021" id="text7101" transform="scale(.9531 1.0492)" font-weight="400" font-size="3.671" letter-spacing="0" word-spacing="0" font-family="sans-serif" fill="#1a1a1a" stroke-width=".201"><tspan x="90.89" y="117.021" id="tspan7099" font-size="6.268">State</tspan></text></g><g id="g8134" class="hidden output" transform="translate(-2.117)"><rect class="component" y="113.405" x="308.642" height="13.961" width="37.273" id="rect7460" ry=".661" fill="#a3caff" stroke="#001e47" stroke-width="1.5" stroke-dasharray="7,7"/><text word-spacing="0" letter-spacing="0" font-size="3.671" font-weight="400" transform="scale(.9531 1.0492)" id="text7464" y="117.021" x="335.047" style="line-height:2.29455948px" font-family="sans-serif" fill="#1a1a1a" stroke-width=".201"><tspan font-size="6.268" id="tspan7462" y="117.021" x="335.047">VDOM</tspan></text></g></svg>
+</div>
+
+--
+.animate-from-bottom[.middled.banner[`const vdom = main(state)`]]
+
+---
+name:cyclearch
+class: center
+# Cycle.js
+
+<div>
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="svg8" viewBox="0 0 508.00001 285.74999" height="1080" width="1920"><defs id="defs6984"><linearGradient id="stream-5"><stop offset="0" id="stop7557" stop-color="#f60"/><stop stop-color="#ff954f" id="stop8730" offset=".312"/><stop offset=".32" id="stop8732" stop-color="#ffb98a"/><stop stop-color="#ffb686" id="stop8734" offset=".528"/><stop offset=".536" id="stop8736" stop-color="#ffd6ba"/><stop stop-color="#ffd7bc" id="stop8738" offset=".742"/><stop offset=".747" id="stop8740" stop-color="#fff"/><stop offset="1" id="stop7559" stop-color="#fff"/></linearGradient><linearGradient xlink:href="#stream-5" id="linearGradient7563" x1="69.364" y1="119.063" x2="420.541" y2="119.063" gradientUnits="userSpaceOnUse" gradientTransform="translate(0 -33.91)"/><linearGradient xlink:href="#hey-7" id="linearGradient5912" gradientUnits="userSpaceOnUse" x1="186.763" y1="637.383" x2="553.446" y2="2.269"/><linearGradient xlink:href="#linearGradient5829" id="linearGradient5914" gradientUnits="userSpaceOnUse" x1="534.386" y1="527.969" x2="631.412" y2="359.915"/></defs><path d="M116.19 107.001l12.505-7.22v38.33c0 .45.361.81.81.81h248.99c.448 0 .81-.36.81-.81v-38.107l12.119 6.997m0-43.212l-12.119 6.997V32.195c0-.45-.362-.81-.81-.81h-248.99c-.449 0-.81.36-.81.81V71.01l-12.506-7.22" id="rect5021" stroke-width="5.292" stroke="#edaf1f" fill="none"/><text style="line-height:6.61458302px" x="229.61" y="109.572" id="text4853" font-weight="400" font-size="10.583" letter-spacing="0" word-spacing="0" font-family="sans-serif" fill="#fff" stroke-width=".265"><tspan id="tspan4851" x="229.61" y="109.572">DataFlow</tspan></text><text style="line-height:6.61458302px" x="241.895" y="47.765" id="text5025" font-weight="400" font-size="10.583" letter-spacing="0" word-spacing="0" font-family="sans-serif" fill="#fff" stroke-width=".265"><tspan id="tspan5023" x="241.895" y="47.765" font-size="12.7">App</tspan></text><path d="M187.908 64.431h-.59c-.482 0-.887-.416-.887-.91a.85.85 0 0 1 .292-.64l.38-.374a.955.955 0 0 0 0-1.356l-.866-.86a.974.974 0 0 0-.68-.27.981.981 0 0 0-.68.271l-.366.365a.878.878 0 0 1-.66.3c-.498 0-.914-.405-.914-.883v-.595c0-.524-.423-.975-.952-.975h-1.181c-.529 0-.949.447-.949.975v.591c0 .478-.416.882-.913.882a.869.869 0 0 1-.645-.287l-.377-.373a.958.958 0 0 0-.68-.272.981.981 0 0 0-.68.272l-.875.855a.957.957 0 0 0 0 1.352l.365.366a.88.88 0 0 1 .303.657c0 .497-.404.91-.886.91h-.59c-.533 0-.98.415-.98.943v1.181c0 .526.447.945.98.945h.59c.482 0 .886.416.886.91a.88.88 0 0 1-.303.657l-.365.361a.957.957 0 0 0 0 1.353l.867.862a.958.958 0 0 0 .68.273.981.981 0 0 0 .68-.273l.377-.373a.863.863 0 0 1 .645-.287c.498 0 .913.404.913.882v.59c0 .525.42.976.953.976h1.181c.529 0 .949-.447.949-.975v-.59c0-.479.415-.883.913-.883.249 0 .482.11.66.3l.366.364a.981.981 0 0 0 .68.272.981.981 0 0 0 .68-.272l.867-.862a.962.962 0 0 0 0-1.357l-.381-.373a.857.857 0 0 1-.291-.64c0-.499.404-.91.886-.91h.59c.529 0 .906-.417.906-.945v-1.185c.008-.53-.37-.945-.898-.945zm-3.408 1.535a3.11 3.11 0 1 1-6.219 0 3.11 3.11 0 1 1 6.219 0z" class="function" id="path6074" fill="#fff" stroke="#d9d20d" stroke-width=".129"/><path d="M262.26 64.431h-.59c-.482 0-.886-.416-.886-.91a.85.85 0 0 1 .292-.64l.38-.374a.955.955 0 0 0 0-1.356l-.866-.86a.974.974 0 0 0-.68-.27.981.981 0 0 0-.68.271l-.366.365a.878.878 0 0 1-.66.3c-.498 0-.914-.405-.914-.883v-.595c0-.524-.424-.975-.952-.975h-1.182c-.528 0-.948.447-.948.975v.591c0 .478-.416.882-.913.882a.869.869 0 0 1-.646-.287l-.377-.373a.958.958 0 0 0-.68-.272.981.981 0 0 0-.68.272l-.874.855a.957.957 0 0 0 0 1.352l.365.366a.88.88 0 0 1 .303.657c0 .497-.404.91-.886.91h-.59c-.533 0-.98.415-.98.943v1.181c0 .526.447.945.98.945h.59c.482 0 .886.416.886.91a.88.88 0 0 1-.303.657l-.365.361a.957.957 0 0 0 0 1.353l.866.862a.958.958 0 0 0 .68.273.981.981 0 0 0 .68-.273l.378-.373a.863.863 0 0 1 .645-.287c.497 0 .913.404.913.882v.59c0 .525.42.976.952.976h1.182c.529 0 .948-.447.948-.975v-.59c0-.479.416-.883.914-.883.248 0 .482.11.66.3l.366.364a.981.981 0 0 0 .68.272.981.981 0 0 0 .68-.272l.867-.862a.962.962 0 0 0 0-1.357l-.381-.373a.857.857 0 0 1-.292-.64c0-.499.404-.91.886-.91h.591c.529 0 .906-.417.906-.945v-1.185c.008-.53-.37-.945-.898-.945zm-3.408 1.535a3.109 3.109 0 1 1-6.218 0 3.109 3.109 0 1 1 6.218 0z" class="function" id="path6076" fill="#fff" stroke="#d9d20d" stroke-width=".129"/><path id="path5035" class="function" d="M336.614 64.431h-.591c-.482 0-.886-.416-.886-.91a.85.85 0 0 1 .291-.64l.381-.374a.955.955 0 0 0 0-1.356l-.867-.86a.974.974 0 0 0-.68-.27.981.981 0 0 0-.68.271l-.365.365a.878.878 0 0 1-.66.3c-.498 0-.914-.405-.914-.883v-.595c0-.524-.424-.975-.952-.975h-1.182c-.529 0-.948.447-.948.975v.591c0 .478-.416.882-.914.882a.869.869 0 0 1-.645-.287l-.377-.373a.958.958 0 0 0-.68-.272.981.981 0 0 0-.68.272l-.875.855a.957.957 0 0 0 0 1.352l.366.366a.88.88 0 0 1 .303.657c0 .497-.404.91-.886.91h-.591c-.532 0-.98.415-.98.943v1.181c0 .526.448.945.98.945h.59c.483 0 .887.416.887.91a.88.88 0 0 1-.303.657l-.366.361a.957.957 0 0 0 0 1.353l.867.862a.958.958 0 0 0 .68.273.981.981 0 0 0 .68-.273l.377-.373a.863.863 0 0 1 .646-.287c.497 0 .913.404.913.882v.59c0 .525.42.976.952.976h1.182c.528 0 .948-.447.948-.975v-.59c0-.479.416-.883.913-.883.25 0 .482.11.661.3l.365.364a.981.981 0 0 0 .68.272.981.981 0 0 0 .68-.272l.867-.862a.962.962 0 0 0 0-1.357l-.38-.373a.857.857 0 0 1-.292-.64c0-.499.404-.91.886-.91h.59c.53 0 .906-.417.906-.945v-1.185c.008-.53-.369-.945-.897-.945zm-3.409 1.535a3.109 3.109 0 1 1-6.218 0 3.109 3.109 0 1 1 6.218 0z" fill="#fff" stroke="#d9d20d" stroke-width=".129"/><path d="M131.698 94.865h244.897l.001-19.424H131.698z" id="rect7706" fill="#a3caff" stroke-width="1.323" stroke-linecap="round" stroke-linejoin="round" paint-order="stroke fill markers"/><path d="M234.378 191.68H67.82V85.153l263.917.235 91.81.082v106.21H274.722" id="path7555" class="stream" fill="none" fill-rule="evenodd" stroke="url(#linearGradient7563)" stroke-width="2.646"/><g id="g4657" transform="translate(235.117 173.193) scale(.05901)"><linearGradient y2="2.269" x2="553.446" y1="637.383" x1="186.763" gradientUnits="userSpaceOnUse" id="hey-7"><stop id="stop5818" offset=".415" stop-color="#51d3d9"/><stop id="stop5820" offset="1" stop-color="#c8ff8c"/></linearGradient><path id="path4648" d="M639.9 495.8c-.3 6.5-2.1 12.9-5.4 18.7l-60.6 105c-7.3 12.7-20.8 20.5-35.4 20.5H202.2c-14.6 0-28.1-7.8-35.4-20.4L5.5 340.5C1.8 334.1 0 327.1 0 320s1.4-14.5 5.7-21.7L166.9 20.4C174.2 7.8 187.7 0 202.2 0h336.3c14.6 0 28.1 7.8 35.4 20.4 0 0 58.3 95.5 62.5 102.3 4.2 6.8 3.5 15.4 3.5 22.4 0 6-1.7 14.2-3.3 20.7-1.6 6.5-50.4 204.3-50.4 204.3L479.7 143.6H261.4L159.2 320l102.2 176.4h218.2z" fill="url(#linearGradient5912)"/><linearGradient y2="359.915" x2="631.412" y1="527.969" x1="534.386" gradientUnits="userSpaceOnUse" id="linearGradient5829"><stop id="stop5825" offset=".415" stop-color="#51d3d9"/><stop id="stop5827" offset="1" stop-color="#5a919b"/></linearGradient><path id="path4655" d="M562.1 319.9l74 156.9c5.7 12.1 5.1 26.2-1.6 37.8l-154.8-18.1z" fill="url(#linearGradient5914)"/></g><path class="time-min" d="M256.556 192.727l9.602-10.656" id="path4501-3" fill="none" stroke="#fff" stroke-width="3.657" stroke-linecap="round"/><path class="time-hour" d="M256.556 192.727l-7.318-6.307" id="path4503-6" fill="none" stroke="#fff" stroke-width="3.657" stroke-linecap="round"/></svg>
+</div>
+
+---
+name:cyclearchext
+class: center
+# Cycle.js (fixed)
+
+<div>
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 508.00001 285.74999" id="svg8"><defs id="defs4523"><linearGradient id="linearGradient4781"><stop offset="0" id="stop4777" stop-color="#f7f9fc" stop-opacity="0"/><stop offset="1" id="stop4779" stop-color="#fff"/></linearGradient><linearGradient id="linearGradient4757"><stop offset="0" id="stop4753" stop-color="#ff7f2a"/><stop offset="1" id="stop4755" stop-color="#ff7f2a" stop-opacity="0"/></linearGradient><linearGradient xlink:href="#thelast-7-5" id="lgcycle" gradientUnits="userSpaceOnUse" x1="186.763" y1="637.383" x2="553.446" y2="2.269"/><linearGradient xlink:href="#felix-3" id="lgcycleblack" gradientUnits="userSpaceOnUse" x1="534.386" y1="527.969" x2="631.412" y2="359.915"/><linearGradient xlink:href="#linearGradient4757" id="linearGradient4759" x1="174.195" y1="89.822" x2="189.003" y2="89.456" gradientUnits="userSpaceOnUse"/><linearGradient xlink:href="#linearGradient4757" id="linearGradient4767" x1="175.293" y1="127.295" x2="188.82" y2="128.027" gradientUnits="userSpaceOnUse"/><linearGradient xlink:href="#linearGradient4757" id="linearGradient4775" x1="174.744" y1="160.922" x2="189.003" y2="160.555" gradientUnits="userSpaceOnUse"/><linearGradient xlink:href="#linearGradient4781" id="linearGradient4785" gradientUnits="userSpaceOnUse" x1="319.008" y1="98.837" x2="333.03" y2="98.654"/><linearGradient xlink:href="#linearGradient4781" id="linearGradient4793" x1="318.715" y1="140.776" x2="333.052" y2="141.142" gradientUnits="userSpaceOnUse"/><linearGradient xlink:href="#thelast-7-5" id="linearGradient5289" gradientUnits="userSpaceOnUse" x1="186.763" y1="637.383" x2="553.446" y2="2.269" gradientTransform="translate(421.095 104.72) scale(.05901)"/><linearGradient xlink:href="#felix-3" id="linearGradient5291" gradientUnits="userSpaceOnUse" x1="534.386" y1="527.969" x2="631.412" y2="359.915" gradientTransform="translate(421.095 104.72) scale(.05901)"/><linearGradient xlink:href="#linearGradient4757" id="linearGradient4632" gradientUnits="userSpaceOnUse" x1="174.195" y1="89.822" x2="189.003" y2="89.456" gradientTransform="translate(0 -178.858)"/><linearGradient xlink:href="#linearGradient4757" id="linearGradient4634" gradientUnits="userSpaceOnUse" x1="175.293" y1="127.295" x2="188.82" y2="128.027" gradientTransform="translate(3.704 -178.858)"/><linearGradient xlink:href="#linearGradient4757" id="linearGradient4636" gradientUnits="userSpaceOnUse" x1="174.744" y1="160.922" x2="189.003" y2="160.555" gradientTransform="translate(0 -178.858)"/><linearGradient xlink:href="#linearGradient4781" id="linearGradient4642" gradientUnits="userSpaceOnUse" x1="319.008" y1="98.837" x2="333.03" y2="98.654" gradientTransform="translate(0 -177.27)"/><linearGradient xlink:href="#linearGradient4781" id="linearGradient4644" gradientUnits="userSpaceOnUse" x1="318.715" y1="140.776" x2="333.052" y2="141.142" gradientTransform="translate(0 -177.27)"/></defs><path d="M176.346 93.067l10.207-5.894v28.637l-10.207-5.893m0 29.187l10.207-5.893v29.695l-10.207-5.893m0 29.187l10.207-5.893v12.307a.84.84 0 0 0 .842.841h132.976a.84.84 0 0 0 .84-.841v-33.265l10.763 6.214m0-29.187l-10.762 6.213v-42.507l10.762 6.214m0-29.187l-10.762 6.214V54.592a.84.84 0 0 0-.841-.841H187.395a.84.84 0 0 0-.842.841v15.181l-10.207-5.893" id="rect6128" fill="none" stroke="#edaf1f" stroke-width="5.292"/><text style="line-height:6.61458302px" x="241.778" y="68.932" id="text6132" font-weight="400" font-size="10.583" letter-spacing="0" word-spacing="0" font-family="sans-serif" fill="#fff" stroke-width=".265"><tspan id="tspan6130" x="241.778" y="68.932" font-size="12.7">App</tspan></text><style id="style4585"/><path class="prodenv stream" id="path8268" d="M66.63 104.895V78.382l136.107.1" fill="none" fill-rule="evenodd" stroke="url(#linearGradient4759)" stroke-width=".265"/><path class="prodenv stream" id="path8270" d="M83.363 124.712l119.374.038" fill="none" fill-rule="evenodd" stroke="url(#linearGradient4767)" stroke-width=".265"/><path class="prodenv stream" id="path8274" d="M297.582 91.516h145.743v17.457" fill="none" fill-rule="evenodd" stroke="url(#linearGradient4785)" stroke-width=".265"/><path class="prodenv stream" id="path8276" d="M290.33 150.544h153.298v-12.557" fill="none" fill-rule="evenodd" stroke="url(#linearGradient4793)" stroke-width=".265"/><text style="line-height:6.61458302px" x="133.687" y="71.756" id="text8228" font-weight="400" font-size="10.583" letter-spacing="0" word-spacing="0" font-family="sans-serif" fill="#fff" stroke-width=".265"><tspan id="tspan8226" x="133.687" y="71.756">DOM</tspan></text><text style="line-height:6.61458302px" x="133.091" y="118.18" id="text8236" font-weight="400" font-size="10.583" letter-spacing="0" word-spacing="0" font-family="sans-serif" fill="#fff" stroke-width=".265"><tspan id="tspan8234" x="133.091" y="118.18">HTTP</tspan></text><text id="text8240" y="165.895" x="137.559" style="line-height:6.61458302px" font-weight="400" font-size="10.583" letter-spacing="0" word-spacing="0" font-family="sans-serif" fill="#fff" stroke-width=".265"><tspan y="165.895" x="137.559" id="tspan8238">RAF</tspan></text><text id="text8246" y="85.74" x="344.311" style="line-height:6.61458302px" font-weight="400" font-size="10.583" letter-spacing="0" word-spacing="0" font-family="sans-serif" fill="#fff" stroke-width=".265"><tspan y="85.74" x="344.311" id="tspan8244">DOM</tspan></text><text id="text8254" y="144.266" x="343.856" style="line-height:6.61458302px" font-weight="400" font-size="10.583" letter-spacing="0" word-spacing="0" font-family="sans-serif" fill="#fff" stroke-width=".265"><tspan y="144.266" x="343.856" id="tspan8252">HTTP</tspan></text><path d="M66.372 141.977v29.103l136.365.266" id="path4723" class="prodenv stream" fill="none" fill-rule="evenodd" stroke="url(#linearGradient4775)" stroke-width=".265"/><g id="g4570" class="prodenv"><g transform="translate(45.387 104.72) scale(.05901)" id="g4657"><linearGradient id="thelast-7-5" gradientUnits="userSpaceOnUse" x1="186.763" y1="637.383" x2="553.446" y2="2.269"><stop stop-color="#51d3d9" offset=".415" id="stop4643"/><stop stop-color="#c8ff8c" offset="1" id="stop4645"/></linearGradient><path d="M639.9 495.8c-.3 6.5-2.1 12.9-5.4 18.7l-60.6 105c-7.3 12.7-20.8 20.5-35.4 20.5H202.2c-14.6 0-28.1-7.8-35.4-20.4L5.5 340.5C1.8 334.1 0 327.1 0 320s1.4-14.5 5.7-21.7L166.9 20.4C174.2 7.8 187.7 0 202.2 0h336.3c14.6 0 28.1 7.8 35.4 20.4 0 0 58.3 95.5 62.5 102.3 4.2 6.8 3.5 15.4 3.5 22.4 0 6-1.7 14.2-3.3 20.7-1.6 6.5-50.4 204.3-50.4 204.3L479.7 143.6H261.4L159.2 320l102.2 176.4h218.2z" id="path4648" fill="url(#lgcycle)"/><linearGradient id="felix-3" gradientUnits="userSpaceOnUse" x1="534.386" y1="527.969" x2="631.412" y2="359.915"><stop stop-color="#51d3d9" offset=".415" id="stop4650"/><stop stop-color="#5a919b" offset="1" id="stop4652"/></linearGradient><path d="M562.1 319.9l74 156.9c5.7 12.1 5.1 26.2-1.6 37.8l-154.8-18.1z" id="path4655" fill="url(#lgcycleblack)"/></g><path id="path4501" d="M66.826 124.254l9.602-10.656" class="time-min" fill="none" stroke="#fff" stroke-width="3.657" stroke-linecap="round"/><path id="path4503" d="M66.826 124.254l-7.318-6.307" class="time-hour" fill="none" stroke="#fff" stroke-width="3.657" stroke-linecap="round"/></g><g id="g4576" class="prodenv" stroke-width=".059"><path d="M458.856 133.977a2.456 2.456 0 0 1-.32 1.104l-3.575 6.196a2.41 2.41 0 0 1-2.09 1.21h-19.844c-.862 0-1.658-.46-2.09-1.204l-9.517-16.47a2.401 2.401 0 0 1-.325-1.21c0-.419.083-.855.336-1.28l9.513-16.4a2.414 2.414 0 0 1 2.083-1.203h19.845c.861 0 1.658.46 2.089 1.204 0 0 3.44 5.635 3.688 6.037.248.4.207.908.207 1.321 0 .354-.1.838-.195 1.222l-2.974 12.056-6.285-13.366H436.52l-6.03 10.41 6.03 10.409h12.876z" id="path5277" fill="url(#linearGradient5289)"/><path d="M454.265 123.597l4.366 9.259a2.406 2.406 0 0 1-.094 2.23l-9.135-1.068z" id="path5285" fill="url(#linearGradient5291)"/></g><g id="g4713" class="testenv" fill="#fff" stroke-width=".007"><path id="path4" d="M17.807-43.51h2.189v-4.577h6.667v11.245h4.577v-6.668l14.54.01c13.932 0 14.539-.01 14.787-.358.438-.577 1.135-2.746 1.523-4.647l.338-1.772h2.329c1.273 0 2.359-.05 2.408-.1.06-.059.1-.815.1-1.691v-1.592h10.151l1.074-1.075c.587-.587 1.035-1.094.995-1.134-.05-.05-2.805-.08-6.15-.08h-6.07v-3.383H62.45l-.299-1.473c-.378-1.931-.667-2.956-1.204-4.25l-.428-1.045H31.241v-3.283c0-1.811-.04-3.324-.1-3.384-.059-.06-1.074-.1-2.248-.1l-2.15.002.01 5.622-.01 5.622h-6.747v-4.477h-2.189c-1.194 0-2.229.04-2.288.1-.13.128-.13 22.26 0 22.39.059.059 1.094.098 2.288.098zm2.19-11.344v-2.19h6.667l-.01 2.24.01 2.238H23.38c-1.81 0-3.304-.02-3.334-.05-.03-.029-.05-1.044-.05-2.238zm11.244 0v-6.668H58.21v5.573h4.577l-.01 1.144.01 1.145H58.21v5.573H44.775c-7.384 0-13.454-.02-13.484-.05-.03-.03-.05-3.055-.05-6.717z"/><path id="path6" d="M49.253-50.327h6.767l-.01-4.528.01-4.527H42.486v9.056z"/></g><path d="M66.63-76.08v-24.396l136.107.1" id="path4626" class="testenv teststream in1 stream vlf in3" fill="none" fill-rule="evenodd" stroke="url(#linearGradient4632)" stroke-width=".265"/><path d="M87.067-54.146l119.374.038" id="path4628" class="testenv teststream stream vlf in2" fill="none" fill-rule="evenodd" stroke="url(#linearGradient4634)" stroke-width=".265"/><path class="testenv teststream stream vlf in2 in3" id="path4630" d="M66.372-31.59v23.812l136.365.266" fill="none" fill-rule="evenodd" stroke="url(#linearGradient4636)" stroke-width=".265"/><path d="M307.636-85.755h135.689v17.457" id="path4638" class="testenv teststream out1 out2 stream vlf out3" fill="none" fill-rule="evenodd" stroke="url(#linearGradient4642)" stroke-width=".265"/><path d="M307.636-26.727h135.992v-12.557" id="path4640" class="testenv teststream stream vlf out2" fill="none" fill-rule="evenodd" stroke="url(#linearGradient4644)" stroke-width=".265"/><g id="g4696" class="testenv"><text style="line-height:6.61458302px" x="433.872" y="-45.408" id="text4668" class="ok" font-weight="400" font-size="35.278" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="#16e51c" stroke-width=".265"><tspan id="tspan4666" x="433.872" y="-45.408">✔</tspan></text><circle id="path4680" cx="442.975" cy="-56.686" r="22.959" fill="#020202" stroke-width="1.429" stroke-linecap="round" paint-order="stroke fill markers"/><g id="g4707" class="testrescache" transform="translate(27.428 -51.685) scale(.93583)"><circle id="circle4698" cx="446.421" cy="-9.849" r="11.939" fill="#fff" stroke-width="1.672" stroke-linecap="round" paint-order="stroke fill markers"/><text id="text4702" y="-2.688" x="440.303" style="line-height:6.61458302px" font-weight="400" font-size="19.756" font-family="sans-serif" letter-spacing="0" word-spacing="0" stroke-width=".265"><tspan y="-2.688" x="440.303" id="tspan4700">8</tspan></text></g></g><text style="line-height:6.61458302px" x="219.228" y="-149.993" id="text5469" class="testenv" font-weight="400" font-size="14.111" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="#fff" stroke-width=".265"><tspan id="tspan5467" x="219.228" y="-149.993">(Test env)</tspan></text></svg>
+</div>
+
+--
+.animate-from-bottom[.middled.banner[`const sideEffects = main(signals)`]]
+
+---
+layout: true
+class: center middle huge-code
+# Cycle.js
+
+---
+```javascript
+const sideEffects = application(signals)
+```
+
+---
+```javascript
+const writes = application(reads)
+```
+
+---
+```javascript
+const sinks = application(sources)
+```
+
+---
+```javascript
+const sinks = application(time)
+```
+
+---
+layout: false
+class: middle
+# Cycle.js
+
+```javascript
+function main({ DOM, HTTP, Websocket, /*...*/ }) {
+            // ↑ input signals
+
+  return {
+    DOM: vtree$, // DOM's side effects I want to execute
+    HTTP: request$, // HTTP requests I want to execute
+    Canvas: draw$, // Things I want to draw on a canvas
+    // ...
+  }
+}
+```
+
+---
+class: center, middle
+
+![state as integration of time](https://s3-eu-west-1.amazonaws.com/blog.thomasbelin.fr/talks/cycleconf-function-time/staltz.png)
+
+---
+class: center, middle
+
+## « 2016, the year we realised Time was a side effect. »
+.right[— Nick, 20/04/2017]
+
+---
+name: me
+class: center, middle, naked
+![thomas belin](//www.gravatar.com/avatar/56f2389bd912f388cc79874ce65fc0dc?s=150)  
+Thomas Belin  
+Front-end developer @ <s>Mozilla</s> doyoubuzz  
+<i class="ion-social-twitter"></i>
+[@atomrc](https://twitter.com/atomrc) | [thomasbelin.fr](//blog.thomasbelin.fr)
+
+---
+<iframe src="//www.thomas-belin.com/" height="630" width="100%"></iframe>
+---
+class: middle naked huge
+# Thanks :)
+## 🚲 🤘
+
+    </cv></cv></textarea><script src="https://remarkjs.com/downloads/remark-latest.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TimelineMax.min.js"></script><script>function once(initFn) {
+  var output = null;
+  return function init(slide) {
+    if (output) {
+      return output;
+    }
+    output = initFn(slide);
+    return output;
+  };
+
+}
+
+function functionAnimation(elm) {
+  var timeline = new TimelineMax();
+
+  timeline
+    .to(elm, 1, { rotation: "-=360", transformOrigin: "center center"})
+
+    return timeline;
+}
+
+function vibrate(elm) {
+  var timeline = new TimelineMax();
+
+  timeline
+    .to(elm, .1, { rotation: "+=20", transformOrigin: "center center" })
+    .to(elm, .1, { rotation: "-=40", transformOrigin: "center center" })
+    .to(elm, .1, { rotation: "+=40", transformOrigin: "center center" })
+    .to(elm, .1, { rotation: "-=40", transformOrigin: "center center" })
+    .to(elm, .1, { rotation: "+=40", transformOrigin: "center center" })
+    .to(elm, .1, { rotation: "-=20", transformOrigin: "center center" })
+
+    return timeline;
+}
+
+var streamConf = {
+  nf: 20,
+  lf: 40,
+  vlf: 160
+};
+
+var animations = {
+  intro: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var minTimeline = new TimelineMax();
+    var hourTimeline = new TimelineMax();
+    var eventTimeline = new TimelineMax();
+
+    var min = slide.querySelectorAll(".time-min");
+    var hour = slide.querySelectorAll(".time-hour");
+    var streams = slide.querySelectorAll(".stream");
+
+    minTimeline
+      .to(min, 2, { rotation: 360, transformOrigin: "left bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    hourTimeline
+      .to(hour, 20, { rotation: 360, transformOrigin: "right bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    eventTimeline
+      .to(streams, .75, { strokeDashoffset:-15, ease: Power0.easeNone })
+      .repeat(-1)
+
+    timeline
+      .add(minTimeline, "0")
+      .add(hourTimeline, "0")
+      .add(eventTimeline, "0")
+
+    return timeline;
+  }),
+
+  mozescape: once(function (slide) {
+    var timeline = new TimelineMax();
+    var ball = document.querySelector(".pokeball")
+    var moz = document.querySelector(".moz")
+
+    timeline
+      .to(ball, .25, { rotation: 20, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .to(ball, .25, { rotation: -10, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .to(ball, .25, { rotation: 5, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .to(ball, .25, { rotation: 0, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .to(ball, .25, { rotation: 20, transformOrigin: "center bottom", ease: Power0.easeNone }, "+=.5")
+      .to(ball, .25, { rotation: -10, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .to(ball, .25, { rotation: 5, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .to(ball, .25, { rotation: 0, transformOrigin: "center bottom", ease: Power0.easeNone })
+      .add("escape")
+      .to(ball, .5, { scale: 5, opacity: 0 }, "escape")
+      .to(moz, .5, { scale: 8, transformOrigin: "center center" }, "escape")
+      .to(moz, 2, { x: -1000, opacity: 0 }, "+=.5")
+      .repeat(-1)
+    return timeline;
+  }),
+
+  beforecycle: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var minTimeline = new TimelineMax();
+    var hourTimeline = new TimelineMax();
+    var eventTimeline = new TimelineMax();
+
+    var min = slide.querySelectorAll(".time-min");
+    var hour = slide.querySelectorAll(".time-hour");
+    var ev = slide.querySelectorAll(".stream");
+
+    minTimeline
+      .to(min, 1, { rotation: 360, transformOrigin: "left bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    hourTimeline
+      .to(hour, 10, { rotation: 360, transformOrigin: "right bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    eventTimeline
+      .to(ev, .5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1)
+
+    timeline
+      .add(minTimeline, "0")
+      .add(hourTimeline, "0")
+      .add(eventTimeline, "0")
+
+    return timeline;
+  }),
+
+  aftercycle: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var minTimeline = new TimelineMax();
+    var hourTimeline = new TimelineMax();
+    var eventTimeline = new TimelineMax();
+
+    var min = slide.querySelectorAll(".time-min");
+    var hour = slide.querySelectorAll(".time-hour");
+    var ev = slide.querySelectorAll(".stream");
+
+    minTimeline
+      .to(min, 1, { rotation: 360, transformOrigin: "left bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    hourTimeline
+      .to(hour, 10, { rotation: 360, transformOrigin: "right bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    eventTimeline
+      .to(ev, .5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1)
+
+    timeline
+      .add(minTimeline, "0")
+      .add(hourTimeline, "0")
+      .add(eventTimeline, "0")
+
+      return timeline;
+  }),
+
+  pausev1: once(function init(slide) {
+    var timeline = new TimelineMax();
+
+    var raf = slide.querySelectorAll(".raf-stream");
+
+    timeline
+      .to(raf, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1)
+
+    return timeline;
+  }),
+
+  pausev2: once(function init(slide) {
+    var timeline = new TimelineMax();
+
+    var raf = slide.querySelectorAll(".raf-stream");
+    var dom = slide.querySelectorAll(".dom-stream");
+
+    var rafTl = new TimelineMax();
+
+    domTl = new TimelineMax();
+
+    domTl
+      .to(dom, 1, { strokeDashoffset:-streamConf.lf, ease: Power0.easeNone })
+      .repeat(-1)
+
+    rafTl
+      .to(raf, .5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1)
+
+    timeline
+      .add(domTl, "0")
+      .add(rafTl, "0")
+
+    return timeline;
+  }),
+
+  pausev3: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var rafTl = new TimelineMax();
+    var domTl = new TimelineMax();
+    var outTl = new TimelineMax();
+
+    var raf = slide.querySelectorAll(".raf-stream");
+    var dom = slide.querySelectorAll(".dom-stream");
+    var out = slide.querySelectorAll(".out-stream");
+
+    domTl
+      .to(dom, 1.5, { strokeDashoffset:-36, ease: Power0.easeNone })
+      .repeat(-1)
+
+    outTl
+      .to(out, 1.5, { strokeDashoffset:-50, ease: Power0.easeNone })
+      .to(out, 0, { opacity: 0 })
+      .repeatDelay(1.5)
+      .repeat(-1)
+
+    rafTl
+      .to(raf, 5, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .repeat(-1)
+
+    timeline
+      .add(domTl, "0")
+      .add(rafTl, "0")
+      .add(outTl, "0")
+
+    return timeline;
+  }),
+
+  test1: once(function init(slide) {
+    var timeline = new TimelineMax();
+
+    var ev = slide.querySelectorAll(".stream");
+    var check = slide.querySelectorAll(".check");
+
+    timeline
+      .to(ev, 2, { strokeDashoffset:-170, ease: Power0.easeNone })
+      .to(check, 1, { opacity: 1 })
+      .repeat(-1)
+
+      return timeline;
+  }),
+
+  test2: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var rafTl = new TimelineMax();
+    var domTl = new TimelineMax();
+
+    var raf = slide.querySelectorAll(".raf-stream");
+    var dom = slide.querySelectorAll(".dom-stream");
+    var check = slide.querySelectorAll(".check");
+
+    timeline
+      .to(dom, 1, { strokeDashoffset:-120, ease: Power0.easeNone })
+      .to(raf, 1, { strokeDashoffset:-120, ease: Power0.easeNone })
+      .to(check, 1, { opacity: 1 })
+      .repeat(-1)
+
+      return timeline;
+  }),
+
+  resumearch: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var outTl = new TimelineMax();
+    var timeTl = new TimelineMax();
+
+    var stream = slide.querySelectorAll(".stream");
+    var out1 = slide.querySelectorAll(".sideeffect-1");
+    var out2 = slide.querySelectorAll(".sideeffect-2");
+    var out3 = slide.querySelectorAll(".sideeffect-3");
+
+    timeTl
+      .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1);
+
+    outTl
+      .to(out1, 0.75, { scale: 1.2, x: 40, opacity: 1, rotation: 360, transformOrigin: "center center" })
+      .to(out1, 0, { opacity: 0})
+      .to(out2, 0.75, { scale: 1.2, y: -20, x: 20, opacity: 1, rotation: 360, transformOrigin: "center center" }, 0.5)
+      .to(out2, 0, { opacity: 0})
+      .to(out3, 0.75, { scale: 1.2, y: 20, x: 20, opacity: 1, rotation: 360, transformOrigin: "center center" }, 1)
+      .to(out3, 0, { opacity: 0})
+      .repeat(-1)
+
+    timeline
+      .add(timeTl, "0")
+      .add(outTl, "0")
+
+    return timeline;
+  }),
+
+  reactarch: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var outTl = new TimelineMax();
+    var timeTl = new TimelineMax();
+
+    var stream = slide.querySelectorAll(".stream");
+    var out = slide.querySelectorAll(".output");
+
+    timeTl
+      .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1);
+
+    outTl
+      .to(out, 3, { x: 100, opacity: 1 })
+      .repeat(-1)
+
+    timeline
+      .add(timeTl, "0")
+      .add(outTl, "0")
+
+    return timeline;
+  }),
+
+  reduxarch: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var outTl = new TimelineMax();
+    var timeTl = new TimelineMax();
+
+    var stream = slide.querySelectorAll(".stream");
+    var state = slide.querySelectorAll(".state");
+    var out = slide.querySelectorAll(".output");
+
+    timeTl
+      .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1);
+
+    outTl
+      .to(state, 2, { x: 90, opacity: 1 })
+      .to(out, 2, { x: 90, opacity: 1 })
+      .repeat(-1)
+
+    timeline
+      .add(timeTl, "0")
+      .add(outTl, "0")
+
+    return timeline;
+  }),
+
+  cyclearch: once(function init(slide) {
+    var timeline = new TimelineMax();
+    var functionTl = new TimelineMax();
+    var timeTl = new TimelineMax();
+
+    var stream = slide.querySelectorAll(".stream");
+    var func = slide.querySelectorAll(".function");
+
+    functionTl
+      .add(functionAnimation(func))
+      .repeat(-1)
+
+    timeTl
+      .to(stream, 0.5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1);
+
+    timeline
+      .add(timeTl, "0")
+      .add(functionTl, "0")
+
+    return timeline;
+  }),
+
+  cyclearchext: once(function init(slide) {
+    var timeline = new TimelineMax();
+
+    var hourTimeline = new TimelineMax();
+    var minTimeline = new TimelineMax();
+    var timeTl = new TimelineMax();
+    var testTl = new TimelineMax();
+
+    var min = slide.querySelectorAll(".time-min");
+    var hour = slide.querySelectorAll(".time-hour");
+
+    var stream = slide.querySelectorAll(".stream:not(.teststream)");
+    var tstream = slide.querySelectorAll(".stream.teststream");
+    var ok = slide.querySelectorAll(".ok");
+
+    minTimeline
+      .to(min, 2, { rotation: 360, transformOrigin: "left bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    hourTimeline
+      .to(hour, 20, { rotation: 360, transformOrigin: "right bottom", ease: Power0.easeNone })
+      .repeat(-1)
+
+    timeTl
+      .to(stream, .5, { strokeDashoffset:-streamConf.nf, ease: Power0.easeNone })
+      .repeat(-1);
+
+    testTl
+      .to(tstream.filter(e => e.classList.contains("in1")), 2, { strokeDashoffset:-150, ease: Power0.easeNone })
+      .to(tstream.filter(e => e.classList.contains("out1")), 2, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .to(ok, .7, { x: 50 })
+      .to(ok, .7, { opacity: 0 })
+      .to(ok, 0, { x: 0, opacity: 1 })
+      .to(tstream, 0, { strokeDashoffset:10, ease: Power0.easeNone })
+      .to(tstream.filter(e => e.classList.contains("in2")), 2, { strokeDashoffset:-150, ease: Power0.easeNone })
+      .to(tstream.filter(e => e.classList.contains("out2")), 2, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .to(ok, .7, { x: 50 })
+      .to(ok, .7, { opacity: 0 })
+      .to(ok, 0, { x: 0, opacity: 1 })
+      .to(tstream, 0, { strokeDashoffset:10, ease: Power0.easeNone })
+      .to(tstream.filter(e => e.classList.contains("in3")), 2, { strokeDashoffset:-150, ease: Power0.easeNone })
+      .to(tstream.filter(e => e.classList.contains("out3")), 2, { strokeDashoffset:-200, ease: Power0.easeNone })
+      .to(ok, .7, { x: 50 })
+      .to(ok, .7, { opacity: 0 })
+      .to(ok, 0, { x: 0, opacity: 1 })
+      .repeat(-1);
+
+    timeline
+      .add(hourTimeline, "0")
+      .add(minTimeline, "0")
+      .add(timeTl, "0")
+
+    return timeline;
+  })
+};</script><script>//init remarkjs
+      var timeout = window.setTimeout;
+      var slideshow = remark.create({
+        highlightStyle: 'github',
+        highlightLines: true,
+        ratio: "16:9"
+      });
+
+      slideshow.on("beforeHideSlide", function (slide) {
+        var currentSlide = document.querySelector(".remark-slide-container.entered");
+        var animation = animations[slide.properties.name] ? animations[slide.properties.name](currentSlide) : null;
+        if (animation) {
+          animation.pause();
+        }
+        if (!currentSlide) { return; }
+        currentSlide.classList.remove("entered");
+      });
+
+      slideshow.on("afterShowSlide", function (slide) {
+        timeout(launchAnimations, 50, slide);
+      });
+
+      timeout(
+        launchAnimations,
+        50,
+        slideshow.getSlides()[slideshow.getCurrentSlideIndex()]
+      );
+
+      function launchAnimations(slide) {
+          var element = document.querySelector(".remark-visible");
+          element.classList.add("entered");
+          var animation = animations[slide.properties.name] ? animations[slide.properties.name](element) : null;
+          if (animation) {
+            animation.play();
+          }
+          return animation
+      }
+
+      document.addEventListener("keyup", function (ev) {
+        switch(ev.keyCode) {
+          case 84:
+            var currentSlide = document.querySelector(".remark-slide-container.entered");
+            currentSlide.classList.toggle("toggled");
+            break;
+
+          case 82:
+            var currentSlide = document.querySelector(".remark-slide-container.entered");
+            currentSlide.classList.toggle("sub-toggled");
+            break;
+        }
+      });</script><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-34218773-1', { siteSpeedSampleRate: 100 });
+ga('send', 'pageview');</script></body></html>
