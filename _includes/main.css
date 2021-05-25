@@ -49,11 +49,13 @@ ul {
 }
 
 #footer {
-  background-color: #5986d1;
-  color: white;
   text-align: center;
-  padding: 1em;
+  padding: 2em;
+}
+.love {
+  color: red;
 }
 #footer a {
-  color: #010733;
+  color: inherit;
+  text-decoration: underline;
 }
