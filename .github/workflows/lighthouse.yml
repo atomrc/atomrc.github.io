@@ -26,12 +26,11 @@ jobs:
             ${{ runner.os }}-node-
 
       - run: npm install && npm run build
-        # Update the urls to test based on the sitemap.xml
-      - run: node scripts/setupLighthouseConfig.js
+      - run: node scripts/generateLighthouseConfig.js
 
-      - name: Run Lighthouse against a static dist dir
+      - name: Lighthouse report
         uses: treosh/lighthouse-ci-action@v7
         with:
           # no urls needed, since it uses local folder to scan .html files
-          configPath: "./.lighthouserc.json"
+          configPath: "./lighthouse.config.json"
           temporaryPublicStorage: true
