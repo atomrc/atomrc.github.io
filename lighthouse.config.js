@@ -24,7 +24,6 @@ const config = {
       preset: "lighthouse:no-pwa",
       assertions: {
         canonical: "off",
-        "link-name": "off",
         "max-potential-fid": "off",
         "uses-long-cache-ttl": "off",
         "color-contrast ": "warn",
