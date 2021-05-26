@@ -33,5 +33,5 @@ const config = {
   },
 };
 
-fs.writeFileSync("./lighthouse.config.json", JSON.stringify(config));
 console.log("generated config", JSON.stringify(config, null, 4));
+module.exports = config;

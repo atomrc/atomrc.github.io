@@ -7,7 +7,7 @@ on:
     branches:
       - master
 jobs:
-  static-dist-dir:
+  lighthouse-analysis:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -26,11 +26,10 @@ jobs:
             ${{ runner.os }}-node-
 
       - run: npm install && npm run build
-      - run: node scripts/generateLighthouseConfig.js
 
       - name: Lighthouse report
         uses: treosh/lighthouse-ci-action@v7
         with:
           # no urls needed, since it uses local folder to scan .html files
-          configPath: "./lighthouse.config.json"
+          configPath: "./lighthouse.config.js"
           temporaryPublicStorage: true
