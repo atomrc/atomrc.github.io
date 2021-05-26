@@ -3,7 +3,7 @@
     var anchor = doc.createElement("a");
     anchor.href = "#" + element.id;
     anchor.classList.add("anchor");
-    element.appendChild(anchor);
+    element.prepend(anchor);
   });
 
   doc.addEventListener("DOMContentLoaded", () => {
