@@ -1,19 +1,17 @@
-article h2 .anchor, article h3 .anchor {
+.anchor {
   color: #666;
   transition: opacity 0.3s;
-  position: absolute;
-  right: 100%;
   opacity: 0;
   visibility: hidden;
 }
-article h2 .anchor:after, article h3 .anchor:after {
+.anchor:after {
   content: "#";
 }
-article h2 code, article h3 code {
+h2 code, h3 code {
   font-size: inherit;
   padding: 0.1em;
 }
-article h2:hover .anchor, article h3:hover .anchor {
+h2:hover .anchor, h3:hover .anchor {
   opacity: 1;
   visibility: visible;
 }
@@ -25,16 +23,12 @@ article .notice {
   border: solid 1px #664815;
   color: #664815;
 }
-article ul {
-  list-style-type: disc;
-  padding: 0 2em;
-}
-pre, code {
-  font-size: 11pt;
+code {
   background-color: #F6F6F6;
   border-radius: 3px;
   border: solid 1px #DDD;
-  padding: 0.3em;
+  padding: .1em;
+  font-size: 11pt;
 }
 pre {
   padding: 1em;
