@@ -22,14 +22,9 @@ To summarize my discoveries:
 - At component mount time, all react Hooks must be called that that they are registered against the hooks system;
 - The order at which React Hooks are called must be stable through time and renders;
 
-## Our working example
+## What happens when you call a hook function
 
-Through this article we are going to take a quite representative example composed of two components that call multiple hooks.
+Hook functions (`useState`, `useEffect`, `...`) are rather interesting functions in that they are very stateful. I say _very_ for two reasons:
 
-```js
-function Component() {
-  const [state, setState] = useState(0);
-  useEffect(() => console.log("update from Component"));
-  return /*...*/;
-}
-```
+- They store a value somewhere (that is a side effect);
+- Depending in which context they are called (`mount`, `update`, ...), they do not access the same environments.
