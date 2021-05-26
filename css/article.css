@@ -4,6 +4,7 @@ article h2 .anchor, article h3 .anchor {
   position: absolute;
   right: 100%;
   opacity: 0;
+  visibility: hidden;
 }
 article h2 .anchor:after, article h3 .anchor:after {
   content: "#";
@@ -14,6 +15,7 @@ article h2 code, article h3 code {
 }
 article h2:hover .anchor, article h3:hover .anchor {
   opacity: 1;
+  visibility: visible;
 }
 article .notice {
   background-color: #f2bf86;
