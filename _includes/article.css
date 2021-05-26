@@ -3,6 +3,7 @@ article {
   margin: auto;
   padding: 0 1em;
   position: relative;
+  line-height: 1.5em;
 }
 article h1 {
   font-size: 2em;
@@ -25,9 +26,6 @@ article h3 {
 article ul {
   list-style-type: disc;
   padding: 0 2em;
-}
-article p {
-  line-height: 1.6em;
 }
 article img {
   border: solid 1px grey;
