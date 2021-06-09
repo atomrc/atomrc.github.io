@@ -1,12 +1,6 @@
 ---
 layout: layouts/default
 title: Welcome
-pagination:
-  data: collections.posts 
-  size: 10
-  alias: posts
-  reverse: true
-permalink: "/{% if pagination.pageNumber > 0 %}archive/{{ pagination.pageNumber}}/{% endif %}"
 ---
 <link href="/css/list.css" type="text/css" rel="stylesheet" />
 <div class="list-container">
@@ -16,19 +10,12 @@ permalink: "/{% if pagination.pageNumber > 0 %}archive/{{ pagination.pageNumber}
   </p>
   <h2 class="list-container__title">Articles</h2>
   <ul class="list-container__list list-container__content">
-    {% for post in posts %}
+    {% assign posts = collections.posts | reverse %}
+    {% for post in posts limit: 8 %}
     {% include post-list-element.html, element:post, type: "posts" %}
     {% endfor %}
   </ul>
   <nav>
-      {% if pagination.previous %}
-        <a href="{{pagination.href.previous}}">&lt;&lt; Newer articles </a>
-      {% endif %}
-      {% if pagination.previous and pagination.next %}
-      --
-      {% endif %}
-      {% if pagination.href.next %}
-        <a href="{{pagination.href.next}}">Older articles &gt;&gt;</a>
-      {% endif %}
+      <a href="/posts/">... All posts</a>
   </nav>
 </div>
