@@ -35,3 +35,7 @@
   display: inline-block;
   text-align: left;
 }
+
+nav ol li {
+  display: inline;
+}
