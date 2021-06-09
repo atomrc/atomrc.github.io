@@ -10,8 +10,12 @@ title: Welcome
   </p>
   <h2 class="list-container__title">Articles</h2>
   <ul class="list-container__list list-container__content">
-    {% for post in collections.posts reversed %}
+    {% assign posts = collections.posts | reverse %}
+    {% for post in posts limit: 8 %}
     {% include post-list-element.html, element:post, type: "posts" %}
     {% endfor %}
   </ul>
+  <nav>
+      <a href="/posts/">... All posts</a>
+  </nav>
 </div>
