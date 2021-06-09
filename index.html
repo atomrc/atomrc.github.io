@@ -8,7 +8,7 @@ title: Welcome
   <p class="list-container__headline list-container__content">
     {% include signature.html %}
   </p>
-  <h2 class="list-container__title">Articles</h2>
+  <h2 class="list-container__title">Posts</h2>
   <ul class="list-container__list list-container__content">
     {% assign posts = collections.posts | reverse %}
     {% for post in posts limit: 8 %}
