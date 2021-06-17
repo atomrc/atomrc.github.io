@@ -4,9 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <link rel="alternate" type="application/rss+xml" title="Thomas Belin's Blog" href="{{ config.url }}/feed.xml">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    {% favicon './favicon.svg' %}
     {% seo %}
     <meta name="theme-color" content="#ffffff">
     {% capture css %} {% include main.css %} {% endcapture %}

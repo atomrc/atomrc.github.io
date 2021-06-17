@@ -9,6 +9,8 @@ const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
 const CleanCSS = require("clean-css");
 
+const favicon = require("eleventy-favicon");
+
 module.exports = function (eleventyConfig) {
   const markdownLib = markdownIt({ html: true }).use(markdownItAnchor);
   eleventyConfig.setLibrary("md", markdownLib);
@@ -19,6 +21,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(pluginSEO, require("./_data/seo"));
   eleventyConfig.addPlugin(schema);
   eleventyConfig.setDataDeepMerge(true);
+  eleventyConfig.addPlugin(favicon);
   eleventyConfig.addPlugin(pluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
   eleventyConfig.addPlugin(sitemap, {
@@ -32,9 +35,8 @@ module.exports = function (eleventyConfig) {
   });
 
   eleventyConfig.addFilter("sitemapCleanup", function (elements) {
-    return elements.filter(element => !element.data.nositemap);
+    return elements.filter((element) => !element.data.nositemap);
   });
-
 
   eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
     // Eleventy 1.0+: use this.inputPath and this.outputPath instead
