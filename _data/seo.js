@@ -7,5 +7,5 @@ module.exports = {
   image: `${config.avatar}?s=300`,
   url: config.url,
   description:
-    "Senior Front-End Architect @deezer in Paris. I leave code cleaner than I found it. Seriously into Functional and Reactive Programming.",
+    "Freelance Front-End Architect in Paris. I leave code cleaner than I found it. Seriously into Functional and Reactive Programming.",
 };
