@@ -6,11 +6,17 @@
     element.prepend(anchor);
   });
 
-  doc.addEventListener("DOMContentLoaded", () => {
-    //hack to force the browser to interpret the
-    //anchor hash when page is loaded
+  //hack to force the browser to interpret the
+  //anchor hash when page is loaded
+  function scrollToHash() {
     if (win.location.hash) {
       win.location.hash = win.location.hash;
     }
-  });
+  }
+
+  if (doc.readyState === "loading") {
+    doc.addEventListener("DOMContentLoaded", scrollToHash, { once: true });
+  } else {
+    scrollToHash();
+  }
 })(window, document);
