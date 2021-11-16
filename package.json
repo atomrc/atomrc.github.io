@@ -27,7 +27,7 @@
     "@quasibit/eleventy-plugin-schema": "^1.0.0",
     "@quasibit/eleventy-plugin-sitemap": "^2.1.4",
     "clean-css": "^5.2.2",
-    "eleventy-favicon": "^1.1.1",
+    "eleventy-favicon": "^1.1.2",
     "eleventy-plugin-seo": "^0.5.2",
     "fast-xml-parser": "^3.21.1",
     "html-minifier": "^4.0.0",
