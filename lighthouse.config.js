@@ -1,8 +1,8 @@
-const parser = require("fast-xml-parser");
+const {XMLParser} = require("fast-xml-parser");
 const fs = require("fs");
 
 const data = fs.readFileSync("./_site/sitemap.xml", "utf-8");
-const urls = parser.parse(data).urlset.url;
+const urls = new XMLParser().parse(data).urlset.url;
 
 const urlsToTest = urls
   .sort((a, b) => {
