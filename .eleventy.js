@@ -15,6 +15,7 @@ module.exports = function (eleventyConfig) {
   const markdownLib = markdownIt({ html: true }).use(markdownItAnchor);
   eleventyConfig.setLibrary("md", markdownLib);
 
+  eleventyConfig.setLiquidOptions({ dynamicPartials: false });
   eleventyConfig.addPassthroughCopy({ "_root/*": "/" });
   eleventyConfig.addPassthroughCopy("css/**/*.css");
   eleventyConfig.addPassthroughCopy("js/**/*.js");
@@ -30,6 +31,7 @@ module.exports = function (eleventyConfig) {
     },
   });
 
+  eleventyConfig.addFilter("markdownify", (text) => markdownIt(text));
   eleventyConfig.addFilter("cssmin", function (code) {
     return new CleanCSS({}).minify(code).styles;
   });
