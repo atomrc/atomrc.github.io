@@ -10,7 +10,7 @@ const urlsToTest = urls
     const dateB = new Date(b.lastmod);
     return dateA > dateB ? -1 : 1;
   })
-  .slice(0, 2)
+  .slice(0, 3)
   .map((url) => url.loc.replace("https://blog.atomrc.dev", ""));
 
 const config = {
