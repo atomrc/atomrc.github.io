@@ -1,5 +1,5 @@
 <li lang="{{element.data.lang}}">
-  <time datetime="{{element.date}}">
+  <time datetime="{{element.date.toISOString}}">
     {{ element.date | date: '%d&nbsp;%b&nbsp;%y' }}
   </time>
   &nbsp;

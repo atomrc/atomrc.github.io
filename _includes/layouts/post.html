@@ -9,7 +9,7 @@ layout: layouts/default
   <header>
     <h1 class="title">{{title}}</h1>
     <aside>
-      <time class="folded-paper" datetime="{{page.date}}" pubdate itemprop="datePublished" content="{{page.date}}">
+      <time class="folded-paper" datetime="{{page.date.toISOString}}" pubdate itemprop="datePublished" content="{{page.date.toISOString}}">
         {{ page.date | date: '%d <span class="month">%b</span> %Y' }}
       </time>
       <br>
@@ -30,8 +30,7 @@ layout: layouts/default
   </div>
 
   <br>
-  {% assign url = page.url | prepend: config.url | cgi_escape %}
-  {% assign title = title | cgi_escape %}
+  {% assign url = page.url | prepend: config.url %}
   <em>You enjoyed this article? Consider <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/intent/tweet?url={{url}}&text={{title}}&via=atomrc">tweeting it</a> :)</em>
 </article>
 <script src="/js/application.js" async></script>
