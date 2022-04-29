@@ -31,6 +31,6 @@
     "eleventy-plugin-seo": "^0.5.2",
     "fast-xml-parser": "^3.21.1",
     "html-minifier": "^4.0.0",
-    "markdown-it-anchor": "^8.4.1"
+    "markdown-it-anchor": "^8.6.2"
   }
 }
