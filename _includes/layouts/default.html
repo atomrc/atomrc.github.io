@@ -14,7 +14,7 @@
     <meta name="description" content="{{excerpt | default: seo.description}}" />
     <meta name="author" content="{{seo.author}}" />
     <link rel="canonical" href="{{ config.url }}{{ page.url }}" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="color-scheme" content="dark light">
     {% capture css %} {% include main.css %} {% endcapture %}
     <style>
       {{ css | cssmin }}

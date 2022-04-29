@@ -7,11 +7,13 @@
 .anchor:after {
   content: "#";
 }
-h2 code, h3 code {
+h2 code,
+h3 code {
   font-size: inherit;
   padding: 0.1em;
 }
-h2:hover .anchor, h3:hover .anchor {
+h2:hover .anchor,
+h3:hover .anchor {
   opacity: 1;
   visibility: visible;
 }
@@ -24,12 +26,16 @@ article .notice {
   color: #664815;
 }
 code {
-  background-color: #F6F6F6;
-  border-radius: 3px;
-  border: solid 1px #DDD;
-  padding: .1em;
+  background-color: var(--bg-code-color);
+  border-radius: 5px;
+  padding: 0.1em 0.3em;
   font-size: 11pt;
 }
+a code {
+  background-color: transparent;
+  padding: 0;
+}
+
 pre {
   padding: 1em;
   overflow-x: auto;
@@ -39,4 +45,11 @@ pre code {
   background-color: transparent;
   border: none;
   padding: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  code {
+    background-color: #444;
+    border: solid 1px #222;
+  }
 }
