@@ -26,6 +26,7 @@ const config = {
         canonical: "off",
         "max-potential-fid": "off",
         "uses-long-cache-ttl": "off",
+        "csp-xss": "off",
         "color-contrast ": "warn",
       },
     },
