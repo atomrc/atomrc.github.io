@@ -1,29 +1,46 @@
 <!DOCTYPE html>
-<html lang=en>
+<html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <link rel="alternate" type="application/rss+xml" title="Thomas Belin's Blog" href="{{ config.url }}/feed.xml">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Thomas Belin's Blog"
+      href="{{ config.url }}/feed.xml"
+    />
     {% favicon './favicon.svg' %}
-    {% seo %}
-    <meta name="theme-color" content="#ffffff">
+    <title>{{ title | append: " - Thomas Belin" }}</title>
+    <meta name="description" content="{{excerpt | default: seo.description}}" />
+    <meta name="author" content="{{seo.author}}" />
+    <link rel="canonical" href="{{ config.url }}{{ page.url }}" />
+    <meta name="theme-color" content="#ffffff" />
     {% capture css %} {% include main.css %} {% endcapture %}
-    <style>{{ css | cssmin }}</style>
-    <script async defer data-domain="atomrc.dev" src="https://plausible.io/js/plausible.js"></script>
+    <style>
+      {{ css | cssmin }}
+    </style>
+    <script
+      async
+      defer
+      data-domain="atomrc.dev"
+      src="https://plausible.io/js/plausible.js"
+    ></script>
   </head>
   <body>
     <div id="header">
       <div>
-        <a href="/"><img class="avatar" src="{{config.avatar}}?s=200" alt="Avatar"></a>
-        <br>
-        <a class="title" href="/"><span rel="author">Thomas Belin</span></a><br>
+        <a href="/"
+          ><img class="avatar" src="{{config.avatar}}?s=200" alt="Avatar"
+        /></a>
+        <br />
+        <a class="title" href="/"><span rel="author">Thomas Belin</span></a
+        ><br />
       </div>
     </div>
-    <section>
-      {{ content }}
-    </section>
+    <section>{{ content }}</section>
     <div id="footer">
-      Made with <span class="love">♥</span>️ by <a href="https://twitter.com/atomrc" rel="noopener noreferrer">@atomrc</a>
+      Made with <span class="love">♥</span>️ by
+      <a href="https://twitter.com/atomrc" rel="noopener noreferrer">@atomrc</a>
     </div>
   </body>
 </html>

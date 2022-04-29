@@ -1,4 +1,3 @@
-const pluginSEO = require("eleventy-plugin-seo");
 const schema = require("@quasibit/eleventy-plugin-schema");
 const sitemap = require("@quasibit/eleventy-plugin-sitemap");
 const config = require("./_data/config");
@@ -19,7 +18,6 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "_root/*": "/" });
   eleventyConfig.addPassthroughCopy("css/**/*.css");
   eleventyConfig.addPassthroughCopy("js/**/*.js");
-  eleventyConfig.addPlugin(pluginSEO, require("./_data/seo"));
   eleventyConfig.addPlugin(schema);
   eleventyConfig.setDataDeepMerge(true);
   eleventyConfig.addPlugin(favicon);
