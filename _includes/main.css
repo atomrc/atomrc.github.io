@@ -3,12 +3,6 @@ body {
     "Roboto", "Noto Sans", "Droid Sans", sans-serif;
   --ff-mono: ui-monospace, "Cascadia Mono", "Segoe UI Mono", "Ubuntu Mono",
     "Roboto Mono", Menlo, Monaco, Consolas, monospace;
-  --font-color: #333;
-  --font-secondary-color: #555;
-  --bg-color: #fff;
-  --title-color: #e7005d;
-  --link-color: #0e4db5;
-  --bg-code-color: #f6f6f6;
   padding: 0;
   margin: 0;
   color: var(--font-color);
@@ -17,14 +11,46 @@ body {
   font-size: 13pt;
 }
 
-@media (prefers-color-scheme: dark) {
-  body {
-    --font-color: #ddd;
-    --font-secondary-color: #aaa;
-    --bg-color: #1c1c21;
-    --title-color: var(--link-color);
-    --link-color: rgb(88, 166, 255);
-  }
+body,
+body.light-mode {
+  --font-color: #333;
+  --font-secondary-color: #555;
+  --bg-color: #fff;
+  --title-color: #e7005d;
+  --link-color: #0e4db5;
+  --bg-code-color: #f6f6f6;
+}
+body.dark-mode {
+  --font-color: #ddd;
+  --font-secondary-color: #aaa;
+  --bg-color: #1c1c21;
+  --title-color: var(--link-color);
+  --link-color: rgb(88, 166, 255);
+  --bg-code-color: #444;
+}
+
+#dark-mode-toggle {
+  border: none;
+  background-color: transparent;
+  position: fixed;
+  top: 1em;
+  right: 1em;
+  z-index: 1;
+  height: 24px;
+  width: 24px;
+  overflow: hidden;
+}
+#dark-mode-toggle svg {
+  stroke: var(--font-color);
+  fill: var(--font-color);
+  transition: opacity 300ms, fill 300ms, stroke 300ms;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.dark-mode #dark-mode-toggle .moon,
+.light-mode #dark-mode-toggle .sun {
+  opacity: 0;
 }
 
 a {
@@ -59,7 +85,7 @@ ul {
   padding: 1em;
 }
 #header .title {
-  color: inherit;
+  color: var(--font-color);
   font-weight: 200;
 }
 

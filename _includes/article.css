@@ -8,12 +8,14 @@ article {
 article h1 {
   font-size: 2em;
   font-weight: 300;
+  line-height: 1.2em;
 }
 article h2,
 article h3 {
   position: relative;
   padding-bottom: 0.3em;
   font-weight: 500;
+  line-height: 1.2em;
 }
 article h2 {
   font-size: 2em;

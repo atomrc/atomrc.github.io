@@ -14,7 +14,7 @@
     <meta name="description" content="{{excerpt | default: seo.description}}" />
     <meta name="author" content="{{seo.author}}" />
     <link rel="canonical" href="{{ config.url }}{{ page.url }}" />
-    <meta name="color-scheme" content="dark light">
+    <meta name="color-scheme" content="dark light" />
     {% capture css %} {% include main.css %} {% endcapture %}
     <style>
       {{ css | cssmin }}
@@ -27,6 +27,15 @@
     ></script>
   </head>
   <body>
+    <button
+      id="dark-mode-toggle"
+      aria-label="Toggle bewteen dark and light mode"
+    >
+      {% include images/sun.svg %}{% include images/moon.svg %}
+    </button>
+    <script>
+      {% include js/darkmode.js %}
+    </script>
     <div id="header">
       <div>
         <a href="/"
