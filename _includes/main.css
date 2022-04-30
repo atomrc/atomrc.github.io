@@ -36,21 +36,21 @@ body.dark-mode {
   top: 1em;
   right: 1em;
   z-index: 1;
+  height: 24px;
+  width: 24px;
+  overflow: hidden;
 }
-#dark-mode-toggle .moon {
-  stroke: #535353;
-  fill: #535353;
+#dark-mode-toggle svg {
+  stroke: var(--font-color);
+  fill: var(--font-color);
+  transition: opacity 300ms, fill 300ms, stroke 300ms;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
-#dark-mode-toggle .sun {
-  stroke: #eee;
-  fill: #eee;
-}
-.dark-mode #dark-mode-toggle .moon {
-  display: none;
-}
+.dark-mode #dark-mode-toggle .moon,
 .light-mode #dark-mode-toggle .sun {
-  display: none;
-  stroke: red;
+  opacity: 0;
 }
 
 a {
