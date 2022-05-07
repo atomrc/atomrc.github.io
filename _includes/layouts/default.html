@@ -14,6 +14,18 @@
     <meta name="description" content="{{excerpt | default: seo.description}}" />
     <meta name="author" content="{{seo.author}}" />
     <link rel="canonical" href="{{ config.url }}{{ page.url }}" />
+
+    <meta property="og:title" content="{{ title | append: " - Thomas Belin" }}" />
+    <meta property="og:description" content="{{excerpt | default: seo.description}}" />
+    <meta property="og:url" content="{{config.url}}{{page.url}}" />
+    <meta property="og:image" content="{{config.avatar}}" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@atomrc" />
+    <meta name="twitter:title" content="{{ title | append: ' - Thomas Belin' }}" />
+    <meta name="twitter:description" content="{{excerpt | default: seo.description}}" />
+    <meta name="twitter:image" content="{{config.avatar}}" />
+
     <meta name="color-scheme" content="dark light" />
     {% capture css %} {% include main.css %} {% endcapture %}
     <style>
