@@ -31,9 +31,13 @@ article ul {
   list-style-type: disc;
   padding: 0 2em;
 }
-article img {
+article picture {
   border: solid 1px grey;
   display: block;
-  max-width: 90%;
+  max-width: 100%;
   margin: auto;
+}
+picture img, video {
+  width: 100%;
+  height: auto;
 }
