@@ -19,6 +19,7 @@ body.light-mode {
   --title-color: #e7005d;
   --link-color: #0e4db5;
   --bg-code-color: #f6f6f6;
+  --secondary-color: #eee;
 }
 body.dark-mode {
   --font-color: #ddd;
@@ -27,6 +28,7 @@ body.dark-mode {
   --title-color: var(--link-color);
   --link-color: rgb(88, 166, 255);
   --bg-code-color: #444;
+  --secondary-color: #333;
 }
 
 #dark-mode-toggle {
