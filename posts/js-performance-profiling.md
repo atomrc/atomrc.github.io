@@ -1,18 +1,19 @@
 ---
-title: "Your browser's performance profiler is fantastic!"
+title: "Get to know your browser's performance profiler"
 tags: [performance, javascript, firefox, chrome, browser]
-excerpt: The performance profiler can feel a little overwhelming and scary. But once you understand its basic principles it becomes the most powerful tool
+excerpt: The performance profiler can feel a little overwhelming and scary. But once you understand its basic principles it becomes the most powerful performance debugging tool
 lang: en
 date: 2022-05-05
 ---
 
-You might have glanced over the `Performance` tab in the devtools of your favorite browser at some point in your career. You eventually tried to generate a profile but probably got quickly discouraged by it. It has a very high information density and feels unfamiliar and quite technical.  
+At some point in your career, you might have glanced over the `Performance` tab in the devtools of your favorite browser. You eventually tried to generate a profile but probably got quickly discouraged by it. The high density of information displayed makes it a little overwhelming and somewhat scary.
 I have been there, I feel you!
 
 Good news is: the learning curve is not actually that steep!!  
-Once you have grasped a few concepts it suddenly becomes the most powerful tool that there is to identify performance bottlenecks.
+Once you have grasped a few concepts it suddenly becomes your most valued tool to tackle performance bottlenecks.
 
-This article will give you a few keys to understand how the profiler works and how to make a good use of it.
+This article will give you a few keys to understand how the profiler works and how to make a good use of it.  
+Let's completely forget about `console.log` and `console.time`, today we are diving into the `Performance Profiler`!
 
 _Side note_: I won't go too deep into complex scenarios here but I will eventually do a follow up article about advanced techniques.
 
