@@ -1,5 +1,6 @@
 const schema = require("@quasibit/eleventy-plugin-schema");
 const sitemap = require("@quasibit/eleventy-plugin-sitemap");
+const Image = require("@11ty/eleventy-img");
 const config = require("./_data/config");
 const pluginRss = require("@11ty/eleventy-plugin-rss");
 const htmlmin = require("html-minifier");
@@ -10,11 +11,30 @@ const CleanCSS = require("clean-css");
 
 const favicon = require("eleventy-favicon");
 
+async function imageShortcode(src, alt) {
+  let metadata = await Image(src, {
+    widths: [300, 600, 900],
+    formats: ["avif", "jpeg"],
+    outputDir: "_site/img",
+  });
+
+  let imageAttributes = {
+    alt,
+    sizes: "(max-width:300px) 300px, (max-width:600px) 600px, 900px",
+    loading: "lazy",
+    decoding: "async",
+  };
+
+  // You bet we throw an error on missing alt in `imageAttributes` (alt="" works okay)
+  return Image.generateHTML(metadata, imageAttributes);
+}
+
 module.exports = function (eleventyConfig) {
   const markdownLib = markdownIt({ html: true }).use(markdownItAnchor);
   eleventyConfig.setLibrary("md", markdownLib);
 
   eleventyConfig.setLiquidOptions({ dynamicPartials: false });
+  eleventyConfig.addLiquidShortcode("image", imageShortcode);
   eleventyConfig.addPassthroughCopy({ "_root/*": "/" });
   eleventyConfig.addPassthroughCopy("css/**/*.css");
   eleventyConfig.addPassthroughCopy("js/**/*.js");

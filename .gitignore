@@ -1,6 +1,4 @@
 _site
 node_modules
 vendor
-.bundle
-.sass-cache
-.jekyll-metadata
+.cache
