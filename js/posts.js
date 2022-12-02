@@ -3,7 +3,7 @@
     var anchor = doc.createElement("a");
     anchor.href = "#" + element.id;
     anchor.classList.add("anchor");
-    element.prepend(anchor);
+    element.append(anchor);
   });
 
   //hack to force the browser to interpret the
