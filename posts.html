@@ -5,8 +5,9 @@ title: All Blog Posts
 <div class="list-container">
   <h2 class="list-container__title">All Posts</h2>
   <ul class="list-container__list list-container__content">
-    {% for post in collections.posts %}
-    {% include post-list-element.html, element:post, type: "posts" %}
+    {% assign posts = collections.posts | reverse %}
+    {% for post in posts %}
+      {% include post-list-element.html, element:post, type: "posts" %}
     {% endfor %}
   </ul>
   <nav>
