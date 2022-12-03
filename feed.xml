@@ -4,12 +4,98 @@
   <subtitle>Freelance Front-End Architect in Paris. I leave code cleaner than I found it. Seriously into Functional and Reactive Programming.</subtitle>
   <link href="https://blog.atomrc.dev/feed.xml" rel="self"/>
   <link href="https://blog.atomrc.dev"/>
-  <updated>2022-05-05T00:00:00Z</updated>
+  <updated>2022-12-04T00:00:00Z</updated>
   <id>https://blog.atomrc.dev</id>
   <author>
     <name>Thomas Belin</name>
     <uri>https://twitter.com/atomrc</uri>
   </author>
+  
+  <entry>
+    <title>Recovering lost commits with git reflog</title>
+    <link href="https://blog.atomrc.dev/p/git-reflog/"/>
+    <updated>2022-12-04T00:00:00Z</updated>
+    <published>2022-12-04T00:00:00Z</published>
+    <id>https://blog.atomrc.dev/p/git-reflog/</id>
+    <content type="html">&lt;p&gt;Once familiar with &lt;code&gt;git&lt;/code&gt;, editing code becomes a breeze. Refactorings and deletions feel as natural and safe as adding code. &lt;code&gt;git&lt;/code&gt; is always there to back us up if something goes awfully wrong!&lt;/p&gt;
+&lt;p&gt;But what about &lt;strong&gt;editing the git history itself?&lt;/strong&gt;&lt;br /&gt;
+Could someone also have our back when we run &lt;code&gt;rebase&lt;/code&gt; or &lt;code&gt;reset&lt;/code&gt;?&lt;/p&gt;
+&lt;p&gt;The answer is &amp;quot;yes&amp;quot;! &lt;code&gt;git&lt;/code&gt; has just the right for this job: the &lt;code&gt;reflog&lt;/code&gt;!&lt;/p&gt;
+&lt;p&gt;Once you have built your own mental model of &lt;code&gt;reflog&lt;/code&gt;, history-modifying commands become as natural and safe as editing code.&lt;/p&gt;
+&lt;p&gt;Before we actually dive in into what &lt;code&gt;reflog&lt;/code&gt; is, we need to understand a key concept in &lt;code&gt;git&lt;/code&gt;: the &lt;code&gt;HEAD&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;what-is-head%3F&quot; tabindex=&quot;-1&quot;&gt;What is &lt;code&gt;HEAD&lt;/code&gt;?&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;HEAD&lt;/code&gt; in &lt;code&gt;git&lt;/code&gt; is a simple pointer of the commit that is currently checked out in your local work tree.&lt;/p&gt;
+&lt;p&gt;When digging a little further into the core of git, you realize that &lt;strong&gt;pretty much anything is a reference to a commit in git&lt;/strong&gt;.
+&lt;code&gt;branches&lt;/code&gt;, &lt;code&gt;HEAD&lt;/code&gt;, &lt;code&gt;stash&lt;/code&gt; are all commit references.&lt;/p&gt;
+&lt;p&gt;A look into the &lt;code&gt;.git/refs&lt;/code&gt; folder will reveal all those references:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;.git/refs/heads/&amp;lt;branchname&amp;gt;&lt;/code&gt; → points to the latest commit of the branch &lt;code&gt;&amp;lt;branchname&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.git/refs/stash&lt;/code&gt; → points to the latest commit on the &lt;code&gt;stash&lt;/code&gt; (yes, the changes you stash are commits under the hood)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.git/refs/tags/&amp;lt;tagname&amp;gt;&lt;/code&gt; → points to the commit referenced by the tag &lt;code&gt;&amp;lt;tagname&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Along with it, you will find 2 more special commit references in the &lt;code&gt;.git/&lt;/code&gt; folder&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;.git/HEAD&lt;/code&gt; → the reference of the commit that is currently checked out in your local repository&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.git/ORIG_HEAD&lt;/code&gt; → the reference of the previous position of the HEAD (somewhat deprecated, &lt;code&gt;reflog&lt;/code&gt; achieves the same goal and much more)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;what-is-the-reflog%3F&quot; tabindex=&quot;-1&quot;&gt;What is the &lt;code&gt;reflog&lt;/code&gt;?&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;reflog&lt;/code&gt; is a quite simple concept, actually! It is a &lt;strong&gt;log of all the moves the git &lt;code&gt;HEAD&lt;/code&gt; has ever made&lt;/strong&gt; in your local repository.&lt;/p&gt;
+&lt;p&gt;As such, &lt;code&gt;reflog&lt;/code&gt; is a very personal log that will never be shared with the remote repository. You will share the same commit history with your coworkers (modulus the commits that are not pushed) but your &lt;code&gt;reflog&lt;/code&gt; is &lt;em&gt;yours only&lt;/em&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;which-commands-are-moving-the-head%3F&quot; tabindex=&quot;-1&quot;&gt;Which commands are moving the &lt;code&gt;HEAD&lt;/code&gt;?&lt;/h2&gt;
+&lt;p&gt;The rule of thumb is: if you move from one commit to another, then the &lt;code&gt;HEAD&lt;/code&gt; is changing and a new entry is appended to the &lt;code&gt;reflog&lt;/code&gt;.&lt;br /&gt;
+To be slightly more exhaustive, let&#39;s explain a few git commands with regard to what it does to the &lt;code&gt;HEAD&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;git commit&lt;/code&gt; → creates a new commit and moves the &lt;code&gt;HEAD&lt;/code&gt; to this commit&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git checkout &amp;lt;branch&amp;gt;&lt;/code&gt; → moves the &lt;code&gt;HEAD&lt;/code&gt; from its current commit to the commit referenced by &lt;code&gt;&amp;lt;branch&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git pull&lt;/code&gt; → pulls the missing commits from the remote and moves the &lt;code&gt;HEAD&lt;/code&gt; to the latest commit&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git merge&lt;/code&gt; → creates a merge commit and moves &lt;code&gt;HEAD&lt;/code&gt; to point to this merge commit&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git reset HEAD~1&lt;/code&gt; → moves the &lt;code&gt;HEAD&lt;/code&gt; to the previous commit&lt;/li&gt;
+&lt;li&gt;...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Every single of those moves will be inserted into the &lt;code&gt;reflog&lt;/code&gt;.&lt;/p&gt;
+&lt;figure&gt;
+  &lt;video controls=&quot;&quot; alt=&quot;git reflog in action&quot;&gt;
+    &lt;source src=&quot;https://i.imgur.com/sPAWe6v.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+  &lt;/video&gt;
+  &lt;figcaption&gt;On the left, you see some git commands being executed. On the right is the live &lt;code&gt;reflog&lt;/code&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Let&#39;s take a simple example in order to let the concept sink in.&lt;br /&gt;
+Imagine you are on branch &lt;code&gt;feature&lt;/code&gt; and this is the initial state of the history:&lt;/p&gt;
+&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;A initial commit &amp;lt; &lt;i&gt;(HEAD, feature)&lt;/i&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let&#39;s run a bunch of &lt;code&gt;git&lt;/code&gt; commands on top of it&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git commit -m &#39;second commit&#39;&lt;/code&gt;: moves &lt;code&gt;HEAD&lt;/code&gt; and &lt;code&gt;feature&lt;/code&gt; to the newly created commit&lt;/p&gt;
+&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;B second commit &amp;lt; &lt;i&gt;(HEAD, feature)&lt;/i&gt;&lt;br /&gt;|&lt;br /&gt;A initial commit&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;git checkout A&lt;/code&gt;: moves &lt;code&gt;HEAD&lt;/code&gt; to commit &lt;code&gt;A&lt;/code&gt; (but &lt;code&gt;feature&lt;/code&gt; is still pointing to &lt;code&gt;B&lt;/code&gt;)&lt;/p&gt;
+&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;B second commit &amp;lt; &lt;i&gt;(feature)&lt;/i&gt;&lt;br /&gt;|&lt;br /&gt;A initial commit &amp;lt; &lt;i&gt;(HEAD)&lt;/i&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;git checkout feature&lt;/code&gt;: moves &lt;code&gt;HEAD&lt;/code&gt; back to the commit referenced by &lt;code&gt;feature&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;B second commit &amp;lt; &lt;i&gt;(HEAD, feature)&lt;/i&gt;&lt;br /&gt;|&lt;br /&gt;A initial commit&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;git reset A&lt;/code&gt;: moves both &lt;code&gt;HEAD&lt;/code&gt; and &lt;code&gt;feature&lt;/code&gt; to commit &lt;code&gt;A&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;B second commit&lt;br /&gt;|&lt;br /&gt;A initial commit &amp;lt; &lt;i&gt;(HEAD, feature)&lt;/i&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Every single of those moves will be recorded in the &lt;code&gt;reflog&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;real-life-example%3A-recovering-from-a-reset&quot; tabindex=&quot;-1&quot;&gt;Real life example: recovering from a &lt;code&gt;reset&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;Let&#39;s say you ran the examples commands that we saw earlier. You are in that state&lt;/p&gt;
+&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;B&lt;br /&gt;|&lt;br /&gt;A &amp;lt; &lt;i&gt;(HEAD, feature)&lt;/i&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Both &lt;code&gt;HEAD&lt;/code&gt; and &lt;code&gt;feature&lt;/code&gt; are pointing to &lt;code&gt;A&lt;/code&gt; and you might feel that commit &lt;code&gt;B&lt;/code&gt; is lost forever.&lt;/p&gt;
+&lt;p&gt;Fear not, commit &lt;code&gt;B&lt;/code&gt; is all but lost. It has just become &lt;strong&gt;unreachable&lt;/strong&gt; from the branches you have... But it still exists in &lt;code&gt;git&lt;/code&gt;!&lt;/p&gt;
+&lt;p&gt;Unfortunately, commit hashes usually do not look like &lt;code&gt;A&lt;/code&gt; but more something like &lt;code&gt;f1fec78c3a05708d7cb55d9e213f1ac51292b52f&lt;/code&gt;.  
+This makes it impossible, for a human at least, to just recall that hash and run &lt;code&gt;git reset &amp;lt;commithash&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;That&#39;s where the &lt;code&gt;reflog&lt;/code&gt; comes into play.&lt;/p&gt;
+&lt;p&gt;As we said earlier, every single move you make between commits is recorded in the &lt;code&gt;reflog&lt;/code&gt;.  
+So, let&#39;s have a look at that &lt;code&gt;reflog&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;A HEAD@{0}: reset: moving to A&lt;br /&gt;B HEAD@{1}: checkout: moving from A to feature&lt;br /&gt;A HEAD@{2}: checkout: moving from feature to A&lt;br /&gt;B HEAD@{3}: commit: second commit&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The entire story of what happened in the previous example is just lying there. We can see everything we did in reverse chronology order (the most recent moves on the top). We can reconstruct the story just by reading this log from bottom to top.  
+Most importantly, we now have the commit hash that we are interested in recovering: &lt;code&gt;B&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;So we have a few options to recover our commit:&lt;/p&gt;
+&lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; reset B &lt;span class=&quot;token comment&quot;&gt;# reseting our current branch to the commit hash we want&lt;/span&gt;&lt;br /&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; reset HEAD@&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;# reset our current branch to the previous state of `HEAD`&lt;/span&gt;&lt;br /&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; cherry-pick B &lt;span class=&quot;token comment&quot;&gt;# create a new commit on top of `feature` with the content of commit `B`&lt;/span&gt;&lt;br /&gt;&lt;span class=&quot;token comment&quot;&gt;# last option is only if there is a single commit you want to recover&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Recovering from a failed &lt;code&gt;rebase&lt;/code&gt; is pretty much similar.&lt;br /&gt;
+It is just a matter of finding the previous top commit of the branch in the &lt;code&gt;reflog&lt;/code&gt; and running &lt;code&gt;git reset &amp;lt;previous-top-commit-hash&amp;gt;&lt;/code&gt;. You will find all the initial commits &lt;strong&gt;exactly as they were before the rebase was initiated&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;conclusion&quot; tabindex=&quot;-1&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;One thing you can keep in mind is: &lt;strong&gt;There are no lost commits in git, only harder-to-reach ones!&lt;/strong&gt;
+Once something is committed to &lt;code&gt;git&lt;/code&gt;, it is here to stay! A hard-to-reach commit is just a &lt;code&gt;git reflog&lt;/code&gt; away!&lt;/p&gt;
+&lt;p&gt;So, do not fear playing with &lt;code&gt;reset&lt;/code&gt; or &lt;code&gt;rebase&lt;/code&gt; in your feature branches and enjoy confident history rewritings* 🤓! &lt;strong&gt;Git is here to back you up!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;*But please in mind that rewriting history of branches shared with coworkers is never a good idea ;)&lt;/p&gt;
+</content>
+  </entry>
   
   <entry>
     <title>Get to know your browser&#39;s performance profiler</title>
