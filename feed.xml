@@ -12,7 +12,7 @@
   </author>
   
   <entry>
-    <title>flatMap as an alternative to filter + map?</title>
+    <title>flatMap: an alternative to filter + map?</title>
     <link href="https://blog.atomrc.dev/p/flatmap-a-better-filter-map/"/>
     <updated>2022-12-10T00:00:00Z</updated>
     <published>2022-12-10T00:00:00Z</published>
