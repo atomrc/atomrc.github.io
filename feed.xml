@@ -13,10 +13,10 @@
   
   <entry>
     <title>flatMap as an alternative to filter + map?</title>
-    <link href="https://blog.atomrc.dev/p/map-filter-flatmap-reduce/"/>
+    <link href="https://blog.atomrc.dev/p/flatmap-a-better-filter-map/"/>
     <updated>2022-12-10T00:00:00Z</updated>
     <published>2022-12-10T00:00:00Z</published>
-    <id>https://blog.atomrc.dev/p/map-filter-flatmap-reduce/</id>
+    <id>https://blog.atomrc.dev/p/flatmap-a-better-filter-map/</id>
     <content type="html">&lt;p&gt;Here is a quick recap of all the possible operations we usually do with arrays:&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;(where &lt;code&gt;a{n}&lt;/code&gt; specifies the signature of an array of size &lt;code&gt;n&lt;/code&gt; of elements of type &lt;code&gt;a&lt;/code&gt;)&lt;/em&gt;&lt;/p&gt;
 &lt;table&gt;
