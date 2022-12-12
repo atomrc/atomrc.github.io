@@ -12,61 +12,29 @@
   </author>
   
   <entry>
-    <title>flatMap: an alternative to filter + map?</title>
+    <title>flatMap: an alternative to filter + map</title>
     <link href="https://blog.atomrc.dev/p/flatmap-a-better-filter-map/"/>
     <updated>2022-12-10T00:00:00Z</updated>
     <published>2022-12-10T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/flatmap-a-better-filter-map/</id>
-    <content type="html">&lt;p&gt;Here is a quick recap of all the possible operations we usually do with arrays:&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;(where &lt;code&gt;a{n}&lt;/code&gt; specifies the signature of an array of size &lt;code&gt;n&lt;/code&gt; of elements of type &lt;code&gt;a&lt;/code&gt;)&lt;/em&gt;&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;operation&lt;/th&gt;
-&lt;th&gt;method&lt;/th&gt;
-&lt;th&gt;constraints&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;a{n} =&amp;gt; b{n}&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;map&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;∅&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;a{n} =&amp;gt; a{m}&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;filter&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;m &amp;lt;= n&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;a{n} =&amp;gt; a{m}&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;flatMap&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;∅&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;a{n} =&amp;gt; a&#39;{m}&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;filter&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;m &amp;lt;= n &amp;amp;&amp;amp; a&#39; subset of a&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;a{n} =&amp;gt; b{m}&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;flatMap&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;∅&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;a{n} =&amp;gt; b&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;reduce&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;∅&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;Today, I&#39;d like to discuss the &lt;code&gt;a{n} =&amp;gt; b{m}&lt;/code&gt; operation.&lt;/p&gt;
-&lt;h2 id=&quot;filtering-and-transforming-an-array-in-a-single-operation&quot; tabindex=&quot;-1&quot;&gt;Filtering and transforming an array in a single operation&lt;/h2&gt;
-&lt;p&gt;We usually tend to treat the &lt;code&gt;a{n} =&amp;gt; b{m}&lt;/code&gt; use case with a combination of &lt;code&gt;filter + map&lt;/code&gt;.&lt;br /&gt;
-Which is equivalent to doing this chain of operations &lt;code&gt;a{n} =&amp;gt; a&#39;{m} =&amp;gt; b{m}&lt;/code&gt; (where &lt;code&gt;a&#39;&lt;/code&gt; is a subset of &lt;code&gt;a&lt;/code&gt;, eg. &lt;code&gt;(User | undefined) =&amp;gt; User&lt;/code&gt;).&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap&quot;&gt;&lt;code&gt;flatMap&lt;/code&gt;&lt;/a&gt; can help us to avoid this intermediate step and go straight from &lt;code&gt;a{n}&lt;/code&gt; to our desired &lt;code&gt;b{m}&lt;/code&gt; array.&lt;/p&gt;
-&lt;p&gt;Let&#39;s consider the following example:&lt;/p&gt;
-&lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; elements &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;br /&gt;&lt;br /&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; strings &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; elements &lt;span class=&quot;token comment&quot;&gt;//               (null|number){5}&lt;/span&gt;&lt;br /&gt;  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;item&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;//            number{3}&lt;/span&gt;&lt;br /&gt;  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; item&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;16&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// string{3}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+    <content type="html">&lt;p&gt;Filtering out &lt;code&gt;falsy&lt;/code&gt; values or making sure we are dealing with the correct type before mapping are very common scenarios in webapps.&lt;br /&gt;
+We often tend to use &lt;code&gt;filter(...).map(...)&lt;/code&gt; to cover those use-cases.&lt;/p&gt;
+&lt;p&gt;But if we breakdown the type signature of a &lt;code&gt;filter + map&lt;/code&gt; operation, we come to realize that there is an operator that is tailored for this: &lt;code&gt;flatMap&lt;/code&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;I&#39;m going to use the notation &lt;code&gt;A[n]&lt;/code&gt; to specify the signature of an array of size &lt;code&gt;n&lt;/code&gt; of elements of type &lt;code&gt;A&lt;/code&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;the-filter-%2B-map&#39;s-signature&quot; tabindex=&quot;-1&quot;&gt;The &lt;code&gt;filter + map&lt;/code&gt;&#39;s signature&lt;/h2&gt;
+&lt;p&gt;When analyzing the resulting type of a &lt;code&gt;filter + map&lt;/code&gt; call, we find this:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;filter&lt;/code&gt;: &lt;code&gt;A[n] =&amp;gt; A&#39;[m]&lt;/code&gt; (where &lt;code&gt;A&#39;&lt;/code&gt; is a subset of &lt;code&gt;A&lt;/code&gt; and &lt;code&gt;m &amp;lt;= n&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;map&lt;/code&gt;: &lt;code&gt;A&#39;[m] =&amp;gt; B[m]&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So chained together, a &lt;code&gt;filter + map&lt;/code&gt; has this signature: &lt;code&gt;A[n] =&amp;gt; B[m]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;...Which is exactly what the &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap&quot;&gt;&lt;code&gt;flatMap&lt;/code&gt;&lt;/a&gt; operator is about: changing an array in both &lt;strong&gt;type and size&lt;/strong&gt;!&lt;/p&gt;
+&lt;h2 id=&quot;filter-mapping-an-array-in-a-single-operation&quot; tabindex=&quot;-1&quot;&gt;Filter-mapping an array in a single operation&lt;/h2&gt;
+&lt;p&gt;How about we try to avoid this intermediate step and go straight from &lt;code&gt;A[n]&lt;/code&gt; to our desired &lt;code&gt;B[m]&lt;/code&gt; array?&lt;/p&gt;
+&lt;p&gt;Consider the following example:&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; elements &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;br /&gt;&lt;br /&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; strings &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; elements &lt;span class=&quot;token comment&quot;&gt;//               (null|number)[5]&lt;/span&gt;&lt;br /&gt;  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;item&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;//            number[3]&lt;/span&gt;&lt;br /&gt;  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; item&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;16&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// string[3]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Ultimately, here, we want to transform an array of 5 &lt;code&gt;null|number&lt;/code&gt; into an array of 3 &lt;code&gt;string&lt;/code&gt;. We want to change both the number of items &lt;strong&gt;and&lt;/strong&gt; the types of the items.&lt;/p&gt;
 &lt;p&gt;With &lt;code&gt;flatMap&lt;/code&gt; we can achieve the same in a single run&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; strings &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; elements&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;flatMap&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt;&lt;br /&gt;  &lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;item &lt;span class=&quot;token operator&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;item&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;16&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;br /&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
@@ -82,8 +50,8 @@ For example, this is valid TypeScript 🙃:&lt;/p&gt;
 &lt;pre class=&quot;language-ts&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; numbers &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; array&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;flatMap&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;item&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt;&lt;br /&gt;  &lt;span class=&quot;token keyword&quot;&gt;typeof&lt;/span&gt; item &lt;span class=&quot;token operator&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;string&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;item&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;br /&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;br /&gt;&lt;span class=&quot;token comment&quot;&gt;//    ^ string[] ✅&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Here the TypeScript inference system kicks in and automatically detects the type of your resulting array.&lt;/p&gt;
 &lt;h2 id=&quot;conclusion&quot; tabindex=&quot;-1&quot;&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;Lately, I got used to replacing all my &lt;code&gt;filter + map&lt;/code&gt; with &lt;code&gt;flatMap&lt;/code&gt;. My code tend to be a bit &lt;strong&gt;more concise&lt;/strong&gt;, but the main takeaway for me is the &lt;strong&gt;automatic type inference&lt;/strong&gt;.
-There is a &lt;a href=&quot;https://www.measurethat.net/Benchmarks/Show/11827/0/flatmap-vs-filtermap&quot;&gt;minor performance boost with &lt;code&gt;flatMap&lt;/code&gt;&lt;/a&gt; but not significant enough to make it a solid argument, in my opinion.&lt;/p&gt;
+&lt;p&gt;Lately, I got used to replacing all my &lt;code&gt;filter + map&lt;/code&gt; with &lt;code&gt;flatMap&lt;/code&gt;. My code tend to be a bit &lt;strong&gt;more concise&lt;/strong&gt;, but the main takeaway is the &lt;strong&gt;automatic type inference&lt;/strong&gt;.
+There is a &lt;a href=&quot;https://www.measurethat.net/Benchmarks/Show/11827/0/flatmap-vs-filtermap&quot;&gt;minor performance boost with &lt;code&gt;flatMap&lt;/code&gt;&lt;/a&gt;, but not significant enough to make it a solid argument, in my opinion.&lt;/p&gt;
 &lt;p&gt;One could argue that &lt;code&gt;flatMap&lt;/code&gt; is harder to understand. I believe that it&#39;s just a matter of getting used to it.&lt;/p&gt;
 &lt;p&gt;In the end, choosing &lt;code&gt;flatMap&lt;/code&gt; over &lt;code&gt;filter + map&lt;/code&gt; boils down to personal preferences (and agreement with your team). As long as you maintain consistent convention, it is all fine!&lt;/p&gt;
 &lt;p&gt;So give a try to &lt;code&gt;flatMap&lt;/code&gt; and see for yourself how you feel about it 🙂&lt;/p&gt;
