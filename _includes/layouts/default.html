@@ -31,24 +31,16 @@
     <style>
       {{ css | cssmin }}
     </style>
-    <script
-      async
-      defer
-      data-domain="atomrc.dev"
-      src="https://plausible.io/js/plausible.js"
-    ></script>
+    <script async defer data-domain="atomrc.dev" src="https://plausible.io/js/plausible.js"></script>
   </head>
   <body>
-    <button
-      id="dark-mode-toggle"
-      aria-label="Toggle bewteen dark and light mode"
-    >
+    <button id="dark-mode-toggle" aria-label="Toggle bewteen dark and light mode">
       {% include images/sun.svg %}{% include images/moon.svg %}
     </button>
     <script>
       {% include js/darkmode.js %}
     </script>
-    <div id="header">
+    <section id="header">
       <div>
         <a href="/"
           ><img class="avatar" src="{{config.avatar}}?s=200" alt="Avatar"
@@ -60,11 +52,13 @@
       <nav>
         <a href="/about/">About Me</a>
       </nav>
-    </div>
+    </section>
     <section>{{ content }}</section>
-    <div id="footer">
+    <footer>
       Made with <span class="love">♥</span>️ by
       <a href="https://twitter.com/atomrc" rel="noopener noreferrer">@atomrc</a>
-    </div>
+      <br/>
+      <a href="/feed.xml">RSS feed</a>
+    </footer>
   </body>
 </html>

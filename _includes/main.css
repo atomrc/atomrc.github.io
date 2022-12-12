@@ -96,14 +96,14 @@ ul {
   font-weight: 200;
 }
 
-#footer {
+footer {
   text-align: center;
   padding: 2em;
 }
 .love {
   color: red;
 }
-#footer a {
+footer a {
   color: inherit;
   text-decoration: underline;
 }
