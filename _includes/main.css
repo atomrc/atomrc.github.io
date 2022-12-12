@@ -88,6 +88,7 @@ ul {
 }
 #header nav {
   text-align: center;
+  margin-top: .5em;
   font-size: .5em;
 }
 #header .title {
