@@ -32,8 +32,5 @@ In general, I'm very curious and eager to learn!
 Please feel welcome in this small piece of the internet that I own and that I like to call my blog 🤗
 
 You can find here:
-
-- [Twitter](https://twitter.com/atomrc)
-- [Github](https://github.com/atomrc/)
-- [This blog's RSS feed](https://blog.atomrc.dev/feed.xml)
+[Twitter](https://twitter.com/atomrc) | [Github](https://github.com/atomrc/) | [This blog's RSS feed](https://blog.atomrc.dev/feed.xml)
 
