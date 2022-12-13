@@ -74,11 +74,17 @@ ul {
 .title {
   color: var(--title-color);
 }
+.title a {
+  color: inherit;
+}
+.list-title {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: .1em;
+}
 
-.tag {
-  font-size: 10pt;
-  color: var(--font-secondary-color);
-  font-style: italic;
+aside {
+  font-size: .8em;
 }
 
 #header {
@@ -129,12 +135,7 @@ footer a {
 }
 
 .list-container__list li {
-  display: flex;
   padding-bottom: 0.5em;
-}
-.list-container__list time {
-  text-align: right;
-  min-width: 90px;
 }
 
 .list-container__headline {

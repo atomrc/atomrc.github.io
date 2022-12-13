@@ -1,6 +1,6 @@
 ---
 title: "flatMap: an alternative to filter + map"
-tags: [JavaScript, functional programming, array]
+tags: [javascript, functional programming, array]
 excerpt: Where I discuss the idea of replacing filter + map calls with a single flatMap call
 lang: en
 date: 2022-12-10

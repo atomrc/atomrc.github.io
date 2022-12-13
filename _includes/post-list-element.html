@@ -1,21 +1,22 @@
 <li lang="{{element.data.lang}}">
-  <time datetime="{{element.date.toISOString}}">
-    {{ element.date | date: '%d&nbsp;%b&nbsp;%y' }}
-  </time>
-  &nbsp;
-  <div>
-    {% include flag.html, lang: element.data.lang %}
-    <a class="title" title="{{element.data.excerpt}}" href="{{element.url}}">{{element.data.title}}</a>
-    {% if element.data.extra %}({{ element.data.extra }}){% endif %}
-    {% if element.data.video %}
-    <a href="{{ element.data.video }}" target="_blank">video</a>
-    {% endif %}
-    <aside>
-      {% for tag in element.data.tags %}
+  <h2 class="title list-title">
+    <a href="{{element.url}}">{{element.data.title}}</a>
+  </h2>
+  <aside>
+    🏷️
+    {% for tag in element.data.tags %}
       {% if tag != type %}
       <span class="tag">{{ tag }}</span>&nbsp;
       {% endif %}
-      {% endfor %}
-    </aside>
-  </div>
+    {% endfor %}
+    <br>
+    <time datetime="{{element.date.toISOString}}" pubdate itemprop="datePublished" content="{{element.date.toISOString}}">
+      📆 {{ element.date | date: '%d&nbsp;%b&nbsp;%y' }}
+    </time>
+  </aside>
+  <p>{{element.data.excerpt}}</p>
+  {% if element.data.extra %}({{ element.data.extra }}){% endif %} {% if
+  element.data.video %}
+  <a href="{{ element.data.video }}" target="_blank">video</a>
+  {% endif %}
 </li>
