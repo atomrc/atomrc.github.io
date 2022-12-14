@@ -9,16 +9,7 @@ layout: layouts/default
   <header>
     <h1 class="title">{{title}}</h1>
     <aside>
-      🏷️
-      {% for tag in tags %}
-        {% if tag != type %}
-        <span class="tag">{{ tag }}</span>&nbsp;
-        {% endif %}
-      {% endfor %}
-      <br>
-      <time datetime="{{page.date.toISOString}}" pubdate itemprop="datePublished" content="{{page.date.toISOString}}">
-        📆 {{ page.date | date: '%d&nbsp;%b&nbsp;%y' }}
-      </time>
+      {% include post-metadata.html, tags:tags, pubdate: date %}
     </aside>
   </header>
   <div class="article-body">
