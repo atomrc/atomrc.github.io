@@ -4,6 +4,7 @@ tags: [javascript, functional programming, array]
 excerpt: Where I discuss the idea of replacing filter + map calls with a single flatMap call
 lang: en
 date: 2022-12-10
+updated: 2022-12-14
 ---
 
 Filtering out `falsy` values or making sure we are dealing with the correct type before mapping are very common scenarios in webapps.  

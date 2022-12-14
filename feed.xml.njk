@@ -19,7 +19,11 @@
   <entry>
     <title>{{ post.data.title }}</title>
     <link href="{{ absolutePostUrl }}"/>
+    {% if post.data.updated %}
+    <updated>{{ post.data.updated | dateToRfc3339 }}</updated>
+    {% else %}
     <updated>{{ post.date | dateToRfc3339 }}</updated>
+    {% endif %}
     <published>{{ post.date | dateToRfc3339 }}</published>
     <id>{{ absolutePostUrl }}</id>
     <content type="html">{{ post.templateContent | htmlToAbsoluteUrls(absolutePostUrl) }}</content>
