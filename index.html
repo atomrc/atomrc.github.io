@@ -10,7 +10,7 @@ title: Welcome
   <h2 class="list-container__title">Posts</h2>
   <ul class="list-container__list list-container__content">
     {% assign posts = collections.posts | reverse %}
-    {% for post in posts limit: 9 %}
+    {% for post in posts limit: 7 %}
       {% include post-list-element.html, element:post, type: "posts" %}
     {% endfor %}
   </ul>

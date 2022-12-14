@@ -9,13 +9,16 @@ layout: layouts/default
   <header>
     <h1 class="title">{{title}}</h1>
     <aside>
-      <time class="folded-paper" datetime="{{page.date.toISOString}}" pubdate itemprop="datePublished" content="{{page.date.toISOString}}">
-        {{ page.date | date: '%d <span class="month">%b</span> %Y' }}
-      </time>
-      <br>
+      🏷️
       {% for tag in tags %}
-      <span class="tag">{{ tag }}</span>&nbsp;
+        {% if tag != type %}
+        <span class="tag">{{ tag }}</span>&nbsp;
+        {% endif %}
       {% endfor %}
+      <br>
+      <time datetime="{{page.date.toISOString}}" pubdate itemprop="datePublished" content="{{page.date.toISOString}}">
+        📆 {{ page.date | date: '%d&nbsp;%b&nbsp;%y' }}
+      </time>
     </aside>
   </header>
   <div class="article-body">
