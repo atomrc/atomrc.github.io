@@ -1,0 +1,10 @@
+🏷️
+{% for tag in tags %}
+  {% if tag != type %}
+  <span class="tag">{{ tag }}</span>&nbsp;
+  {% endif %}
+{% endfor %}
+<br>
+<time datetime="{{pubdate.toISOString}}" pubdate itemprop="datePublished" content="{{pubdate.toISOString}}">
+  📆 {{ pubdate | date: '%d&nbsp;%b&nbsp;%y' }}
+</time>
