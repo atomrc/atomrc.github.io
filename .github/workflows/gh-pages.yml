@@ -7,22 +7,15 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
 
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version: "18"
+          cache: "npm"
 
       - run: npm install
       - run: npm run build
