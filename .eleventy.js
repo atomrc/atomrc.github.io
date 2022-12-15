@@ -29,10 +29,10 @@ async function imageShortcode(src, alt) {
   return Image.generateHTML(metadata, imageAttributes);
 }
 
-module.exports = function (eleventyConfig) {
-  const markdownLib = markdownIt({ html: true }).use(markdownItAnchor);
-  eleventyConfig.setLibrary("md", markdownLib);
+const md = markdownIt({ html: true }).use(markdownItAnchor);
 
+module.exports = function (eleventyConfig) {
+  eleventyConfig.setLibrary("md", md);
   eleventyConfig.setLiquidOptions({ dynamicPartials: false });
   eleventyConfig.addLiquidShortcode("image", imageShortcode);
   eleventyConfig.addPassthroughCopy({ "_root/*": "/" });
@@ -49,7 +49,7 @@ module.exports = function (eleventyConfig) {
     },
   });
 
-  eleventyConfig.addFilter("markdownify", (text) => markdownIt(text));
+  eleventyConfig.addFilter("markdownify", (text) => md.render(text));
   eleventyConfig.addFilter("cssmin", function (code) {
     return new CleanCSS({}).minify(code).styles;
   });

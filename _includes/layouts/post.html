@@ -13,13 +13,6 @@ layout: layouts/default
     </aside>
   </header>
   <div class="article-body">
-    {% if page.notices %}
-    {% for notice in page.notices %}
-    <div class="notice">
-      {{ notice | markdownify }}
-    </div>
-    {% endfor %}
-    {% endif %}
     {{ content }}
   </div>
 

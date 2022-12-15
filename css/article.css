@@ -17,14 +17,6 @@ h3:hover .anchor {
   opacity: 1;
   visibility: visible;
 }
-article .notice {
-  background-color: #f2bf86;
-  border-radius: 5px;
-  padding: 5px;
-  margin: 5px;
-  border: solid 1px #664815;
-  color: #664815;
-}
 code {
   background-color: var(--bg-code-color);
   border-radius: 5px;
