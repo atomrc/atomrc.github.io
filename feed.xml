@@ -14,7 +14,9 @@
   <entry>
     <title>flatMap: an alternative to filter + map</title>
     <link href="https://blog.atomrc.dev/p/flatmap-a-better-filter-map/"/>
-    <updated>2022-12-10T00:00:00Z</updated>
+    
+    <updated>2022-12-14T00:00:00Z</updated>
+    
     <published>2022-12-10T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/flatmap-a-better-filter-map/</id>
     <content type="html">&lt;p&gt;Filtering out &lt;code&gt;falsy&lt;/code&gt; values or making sure we are dealing with the correct type before mapping are very common scenarios in webapps.&lt;br /&gt;
@@ -61,7 +63,9 @@ There is a &lt;a href=&quot;https://www.measurethat.net/Benchmarks/Show/11827/0/
   <entry>
     <title>Recovering lost commits with git reflog</title>
     <link href="https://blog.atomrc.dev/p/git-reflog/"/>
+    
     <updated>2022-12-04T00:00:00Z</updated>
+    
     <published>2022-12-04T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/git-reflog/</id>
     <content type="html">&lt;p&gt;Once familiar with &lt;code&gt;git&lt;/code&gt;, editing code becomes a breeze. Refactorings and deletions feel as natural and safe as adding code. &lt;code&gt;git&lt;/code&gt; is always there to back us up if something goes awfully wrong!&lt;/p&gt;
@@ -147,7 +151,9 @@ Once something is committed to &lt;code&gt;git&lt;/code&gt;, it is here to stay!
   <entry>
     <title>Get to know your browser&#39;s performance profiler</title>
     <link href="https://blog.atomrc.dev/p/js-performance-profiling/"/>
+    
     <updated>2022-05-05T00:00:00Z</updated>
+    
     <published>2022-05-05T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/js-performance-profiling/</id>
     <content type="html">&lt;p&gt;At some point in your career, you might have glanced over the &lt;code&gt;Performance&lt;/code&gt; tab in the devtools of your favorite browser. You eventually tried to generate a profile but probably got quickly discouraged by it. The high density of information displayed makes it a little overwhelming and somewhat scary.
@@ -278,7 +284,9 @@ function computeMultipleNumbers() {
   <entry>
     <title>Why React Hooks cannot be conditioned</title>
     <link href="https://blog.atomrc.dev/p/why-you-cannot-condition-react-hooks/"/>
+    
     <updated>2021-05-30T00:00:00Z</updated>
+    
     <published>2021-05-30T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/why-you-cannot-condition-react-hooks/</id>
     <content type="html">&lt;p&gt;If you&#39;ve used &lt;a href=&quot;https://reactjs.org/docs/hooks-intro.html&quot;&gt;React hooks&lt;/a&gt; along with the &lt;a href=&quot;https://github.com/facebook/react/tree/master/packages/eslint-plugin-react-hooks&quot;&gt;&lt;code&gt;eslint-plugin-react-hooks&lt;/code&gt;&lt;/a&gt;, you might have encountered the unexpected warning &lt;code&gt;React Hook &amp;quot;useState&amp;quot; is called conditionally.&lt;/code&gt;.&lt;br /&gt;
@@ -349,7 +357,9 @@ We will end up with that linked list:&lt;/p&gt;
   <entry>
     <title>Monitoring: A case study for EventTarget</title>
     <link href="https://blog.atomrc.dev/p/case-study-event-target/"/>
+    
     <updated>2021-05-05T00:00:00Z</updated>
+    
     <published>2021-05-05T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/case-study-event-target/</id>
     <content type="html">&lt;p&gt;If you work for a data-driven company chances are you had to implement a tracker at some point.&lt;br /&gt;
@@ -475,7 +485,9 @@ The &lt;code&gt;DOM&lt;/code&gt; itself is made to display things but it allows 
   <entry>
     <title>You might not need this</title>
     <link href="https://blog.atomrc.dev/p/you-dont-need-this/"/>
+    
     <updated>2017-05-30T00:00:00Z</updated>
+    
     <published>2017-05-30T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/you-dont-need-this/</id>
     <content type="html">&lt;p&gt;Consider the following beauty:&lt;/p&gt;
@@ -556,7 +568,9 @@ Sometime you don&#39;t really have the luxury of being able to choose to use it 
   <entry>
     <title>Cycle.js, RxJS and cold observables</title>
     <link href="https://blog.atomrc.dev/p/cyclejs-rx-newbie-trap/"/>
+    
     <updated>2016-05-05T00:00:00Z</updated>
+    
     <published>2016-05-05T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/cyclejs-rx-newbie-trap/</id>
     <content type="html">&lt;p&gt;Lately, I fell into a pretty tough &lt;a href=&quot;https://github.com/Reactive-Extensions/RxJS&quot;&gt;RxJS&lt;/a&gt; beginner trap while playing around with &lt;a href=&quot;http://cycle.js.org/&quot;&gt;Cycle.js&lt;/a&gt;.&lt;/p&gt;
@@ -626,7 +640,9 @@ Which means that now, we are only creating a single &lt;code&gt;UserContainer&lt
   <entry>
     <title>Quelques questions courantes avec Flux</title>
     <link href="https://blog.atomrc.dev/p/flux-questions/"/>
+    
     <updated>2015-11-08T00:00:00Z</updated>
+    
     <published>2015-11-08T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/flux-questions/</id>
     <content type="html">&lt;p&gt;Lors de ma découverte de Flux, je me suis posé un certain nombre de questions. Je voudrais vous les exposer ici, pas simplement parce que vous risquez de vous les poser mais surtout parce que les réponses mettent en valeur les principes de Flux.&lt;/p&gt;
@@ -653,7 +669,9 @@ N&#39;hésitez pas à partager les questions qui vont ont fait cogiter et à reb
   <entry>
     <title>Le guide que j&#39;aurais aimé avoir quand j&#39;ai commencé Flux</title>
     <link href="https://blog.atomrc.dev/p/react-flux/"/>
+    
     <updated>2015-10-19T00:00:00Z</updated>
+    
     <published>2015-10-19T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/react-flux/</id>
     <content type="html">&lt;p&gt;En commençant &lt;a href=&quot;https://facebook.github.io/flux/docs/overview.html#content&quot;&gt;Flux&lt;/a&gt;, j&#39;avoue avoir eu beaucoup de moments de confusion et questions inutiles qui me sont venus à l&#39;esprit. La majorité des questions que je me posais venaient de la confusion qu&#39;il est facile de faire entre la &lt;a href=&quot;https://facebook.github.io/flux/docs/overview.html#content&quot;&gt;présentation de Flux&lt;/a&gt; et le &lt;a href=&quot;https://github.com/facebook/flux&quot;&gt;Github de Flux&lt;/a&gt;.&lt;/p&gt;
@@ -801,7 +819,9 @@ Alors si je peux vous donner un conseil, c&#39;est trouvez vous une implémentat
   <entry>
     <title>Hackerbeach : Organiser mon temps</title>
     <link href="https://blog.atomrc.dev/p/hackerbeach-organisation/"/>
+    
     <updated>2015-01-18T00:00:00Z</updated>
+    
     <published>2015-01-18T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/hackerbeach-organisation/</id>
     <content type="html">&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/hhN5FuI.jpg&quot; alt=&quot;Hacking sur la plage&quot; /&gt;&lt;/p&gt;
@@ -842,7 +862,9 @@ Si l&#39;informatique permet ce genre d&#39;extravagance, je ne pense pas que be
   <entry>
     <title>Hackerbeach : Coder sur la plage ... en hiver</title>
     <link href="https://blog.atomrc.dev/p/hackerbeach-inspect-the-dom/"/>
+    
     <updated>2015-01-14T00:00:00Z</updated>
+    
     <published>2015-01-14T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/hackerbeach-inspect-the-dom/</id>
     <content type="html">&lt;p&gt;Nous sommes en Octobre, j&#39;avais déjà entendu parler de Hackerbeach par &lt;a href=&quot;https://twitter.com/XioNoXfr&quot;&gt;@XioNoXfr&lt;/a&gt; (qui avait déjà fait l&#39;édition 2014 et qui était motivé pour la 2015) et là je tombe sur ce tweet :&lt;/p&gt;
@@ -884,7 +906,9 @@ Notre hôte, par exemple, nous avait commandé des pizzas un peu avant qu&#39;on
   <entry>
     <title>Un micro compilateur de directives</title>
     <link href="https://blog.atomrc.dev/p/compilateur-de-directives/"/>
+    
     <updated>2014-12-09T00:00:00Z</updated>
+    
     <published>2014-12-09T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/compilateur-de-directives/</id>
     <content type="html">&lt;p&gt;Comme j&#39;aime bien l&#39;approche &lt;code&gt;directive&lt;/code&gt; d&#39;AngularJS mais que, bien souvent, je n&#39;ai pas besoin d&#39;une machine de guerre comme ça pour mes projets perso, je me suis construit un micro compilateur de directives maison.&lt;/p&gt;
@@ -903,7 +927,9 @@ L&#39;idée est surtout de bien séparer le code qui va initialiser vos directiv
   <entry>
     <title>Regex : tips and tricks</title>
     <link href="https://blog.atomrc.dev/p/regex/"/>
+    
     <updated>2014-09-05T00:00:00Z</updated>
+    
     <published>2014-09-05T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/regex/</id>
     <content type="html">&lt;p&gt;Allez comme je sais que vous adorez les Expressions Régulières, voila quelques tricks sympas :).&lt;br /&gt;
@@ -947,7 +973,9 @@ The stratosphere isn&#39;t far enough for Felix.
   <entry>
     <title>Penser comme Vim</title>
     <link href="https://blog.atomrc.dev/p/penser-comme-vim/"/>
+    
     <updated>2014-08-05T00:00:00Z</updated>
+    
     <published>2014-08-05T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/penser-comme-vim/</id>
     <content type="html">&lt;p&gt;Ca fait maintenant 3 ans que je n&#39;utilise plus que Vim comme éditeur de textes. Ca fait aussi longtemps que je pensais écrire un article dessus et, allez, aujourd&#39;hui, je me lance :)&lt;/p&gt;
@@ -1022,7 +1050,9 @@ The stratosphere isn&#39;t far enough for Felix.
   <entry>
     <title>Utiliser un repo SSH avec Atlassian Elastic Bamboo</title>
     <link href="https://blog.atomrc.dev/p/utiliser-un-repo-en-ssh-avec-elastic-bamboo/"/>
+    
     <updated>2014-04-22T00:00:00Z</updated>
+    
     <published>2014-04-22T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/utiliser-un-repo-en-ssh-avec-elastic-bamboo/</id>
     <content type="html">&lt;p&gt;Quand vous faites de l&#39;intégration continue avec un repository, vous avez plusieurs possibilités :&lt;/p&gt;
@@ -1077,7 +1107,9 @@ On commence par supprimer un éventuel précédent répertoire &lt;code&gt;.ssh&
   <entry>
     <title>Bamboo et les tests Atoum</title>
     <link href="https://blog.atomrc.dev/p/lancer-des-tests-atoum-dans-bamboo/"/>
+    
     <updated>2014-04-16T00:00:00Z</updated>
+    
     <published>2014-04-16T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/lancer-des-tests-atoum-dans-bamboo/</id>
     <content type="html">&lt;p&gt;Chez &lt;a href=&quot;http://www.doyoubuzz.com/&quot;&gt;DoYouBuzz&lt;/a&gt; nous utilisons &lt;a href=&quot;http://docs.atoum.org/fr/&quot;&gt;Atoum&lt;/a&gt; pour tous nos tests unitaires PHP. Je pense qu&#39;il n&#39;est pas nécessaire de vous rappeler l&#39;interêts des tests unitaires.&lt;/p&gt;
@@ -1113,7 +1145,9 @@ On commence par supprimer un éventuel précédent répertoire &lt;code&gt;.ssh&
   <entry>
     <title>Configuration d&#39;une instance Amazon EC2 pour Elastic Bamboo</title>
     <link href="https://blog.atomrc.dev/p/configuration-amazon-aws-ec2-elastic-bamboo/"/>
+    
     <updated>2014-04-11T00:00:00Z</updated>
+    
     <published>2014-04-11T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/configuration-amazon-aws-ec2-elastic-bamboo/</id>
     <content type="html">&lt;p&gt;Lors de la mise en place de Bamboo comme serveur d&#39;&lt;a href=&quot;https://blog.atomrc.dev/p/integration-continue-avec-bamboo/&quot;&gt;intégration continue à DoYouBuzz&lt;/a&gt;, la phase qui m&#39;a semblé la plus obscure a été la phase de configuration de mon instance AWS EC2. La &lt;a href=&quot;https://confluence.atlassian.com/display/BAMBOO/Configuring+Elastic+Bamboo&quot;&gt;documentation d&#39;Altassian sur Elastic Bamboo&lt;/a&gt; est vraiment très fournie et même surement un peu trop, la rendant parfois confuse. Voici donc un petit tutoriel qui devrait vous permettre d&#39;avoir un petit serveur d&#39;intégration continue rapidement.&lt;/p&gt;
@@ -1189,7 +1223,9 @@ La réponse est simple : &lt;strong&gt;on ne voit ces images si, et seulement si
   <entry>
     <title>La notion de classe en Javascript</title>
     <link href="https://blog.atomrc.dev/p/javascript-et-la-poo/"/>
+    
     <updated>2014-01-29T00:00:00Z</updated>
+    
     <published>2014-01-29T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/javascript-et-la-poo/</id>
     <content type="html">&lt;p&gt;La plupart des langages orientés objet dispose d&#39;un mécanisme simple pour définir les propriétés et méthodes d&#39;un objet : les classes. Seulement JavaScript ne propose pas cette solution pour faire de l&#39;objet mais propose à la place les prototypes.&lt;/p&gt;
@@ -1214,7 +1250,9 @@ La réponse est simple : &lt;strong&gt;on ne voit ces images si, et seulement si
   <entry>
     <title>Faire la part belle au code</title>
     <link href="https://blog.atomrc.dev/p/faire-la-part-belle-au-code/"/>
+    
     <updated>2013-10-08T00:00:00Z</updated>
+    
     <published>2013-10-08T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/faire-la-part-belle-au-code/</id>
     <content type="html">&lt;p&gt;Mon expérience de développeur est relativement jeune (cela fait maintenant 1 an que j&#39;ai commencé mon premier job chez &lt;a href=&quot;http://doyoubuzz.com/&quot;&gt;DoYouBuzz&lt;/a&gt;), mais s&#39;il y a bien quelque chose que j&#39;ai compris sur le code c&#39;est qu&#39;il est, avant tout, personnel.
@@ -1240,7 +1278,9 @@ J&#39;ai souvent entendu dire que lorsqu&#39;on créé un bout de code, il ne fa
   <entry>
     <title>Soigner son code Javascript</title>
     <link href="https://blog.atomrc.dev/p/optimiser-son-code-javascript/"/>
+    
     <updated>2013-08-24T00:00:00Z</updated>
+    
     <published>2013-08-24T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/optimiser-son-code-javascript/</id>
     <content type="html">&lt;p&gt;Javascript avait initialement été prévu pour être très facile d&#39;accès. Seulement sa permissivité entraine également une réduction des performances globales et surtout la possibilité de faire du code très difficile à maintenir. Voila donc quelques conseils simples pour augmenter la lisibilité et la fiabilité de votre code et gagner un peu en performances.&lt;/p&gt;
@@ -1300,7 +1340,9 @@ Il est donc préférable de placer le &lt;code&gt;&amp;quot;use strict&amp;quot;
   <entry>
     <title>Javascript : Single-threaded et asynchrone</title>
     <link href="https://blog.atomrc.dev/p/javascript-single-threaded-et-asynchrone/"/>
+    
     <updated>2013-06-01T00:00:00Z</updated>
+    
     <published>2013-06-01T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/javascript-single-threaded-et-asynchrone/</id>
     <content type="html">&lt;p&gt;Javascript est single-threaded, c&#39;est quelque chose qui est rentré dans la tête de la plupart des développeurs front-end. Cependant ce à quoi on ne réfléchit pas assez c&#39;est : comment est-il possible d&#39;être à la fois single-threaded et de gérer du code asynchrone.&lt;/p&gt;
@@ -1360,7 +1402,9 @@ Le paramètre de temps prend alors une signification un peu différente de celle
   <entry>
     <title>Passer des urls hashbang (#!) au HTML5 pushState</title>
     <link href="https://blog.atomrc.dev/p/passer-des-urls-hashbang-au-html5-pushstate/"/>
+    
     <updated>2013-05-30T00:00:00Z</updated>
+    
     <published>2013-05-30T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/passer-des-urls-hashbang-au-html5-pushstate/</id>
     <content type="html">&lt;p&gt;Mon dernier article sur le &lt;a href=&quot;https://blog.atomrc.dev/p/le-referencement-d-une-application-ajax/&quot;&gt;référencement d&#39;une application Ajax&lt;/a&gt; s&#39;appuyait entièrement sur les recommandations de Google pour l&#39;indexation d&#39;une application Javascript et notamment le hack du hashbang. Seulement, peu de temps après avoir écrit cet article, je me suis rendu compte que le hasbang n&#39;était pas optimal du tout et entraînait bon nombre de complications (boutons de réseaux sociaux, référencement, lisibilité du code serveur ...). Je vais donc vous présenter ici les raisons pour lesquelles j&#39;ai décidé de revoir complétement mes urls et surtout tout ce que cela implique.&lt;/p&gt;
@@ -1403,7 +1447,9 @@ Mon seul regret dans cette histoire est de ne pas avoir compris pourquoi mes bou
   <entry>
     <title>RequireJS n&#39;est pas idéal pour AngularJS</title>
     <link href="https://blog.atomrc.dev/p/requirejs-n-est-pas-ideal-pour-angularjs/"/>
+    
     <updated>2013-04-14T00:00:00Z</updated>
+    
     <published>2013-04-14T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/requirejs-n-est-pas-ideal-pour-angularjs/</id>
     <content type="html">&lt;p&gt;Il n&#39;y a pas longtemps, je publiais un article sur la combinaison d&#39;&lt;a href=&quot;https://blog.atomrc.dev/p/combiner-angularjs-et-requirejs/&quot;&gt;AngularJS avec RequireJS&lt;/a&gt;. Depuis, mon blog a connu un certain nombre d&#39;évolutions et tout particulièrement une qui m&#39;a fait revenir sur l&#39;utilisation de RequireJS avec Angular. C&#39;est le passage à des urls HTML5 et la façon dont je chargeais les pages qui m&#39;ont fait voir le problème.&lt;/p&gt;
@@ -1427,7 +1473,9 @@ J&#39;avais eu l&#39;occassion de discuter avec &lt;a href=&quot;https://twitter
   <entry>
     <title>Le référencement d&#39;une application Ajax</title>
     <link href="https://blog.atomrc.dev/p/le-referencement-d-une-application-ajax/"/>
+    
     <updated>2013-03-15T00:00:00Z</updated>
+    
     <published>2013-03-15T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/le-referencement-d-une-application-ajax/</id>
     <content type="html">&lt;p&gt;Quand vous faites un blog, ce que vous allez vouloir garder en tête c&#39;est : comment être bien référencé sur les moteurs de recherche. En temps normal, votre premier travail consisterait à faire : du contenu de qualité, ajouter de la &lt;a href=&quot;http://googlewebmastercentral.blogspot.fr/2012/07/on-web-semantics.html&quot;&gt;sémantique&lt;/a&gt; à vos articles pour être &amp;quot;compris&amp;quot; des moteurs, optimiser les performances, mettre des liens vers votre sites sur tout le web ...&lt;/p&gt;
@@ -1486,7 +1534,9 @@ Côté serveur, il me suffit de sauvegarder le fichier HTML correspondant avec u
   <entry>
     <title>Chargement asynchrone d&#39;AngularJS avec RequireJS</title>
     <link href="https://blog.atomrc.dev/p/combiner-angularjs-et-requirejs/"/>
+    
     <updated>2013-03-10T00:00:00Z</updated>
+    
     <published>2013-03-10T00:00:00Z</published>
     <id>https://blog.atomrc.dev/p/combiner-angularjs-et-requirejs/</id>
     <content type="html">&lt;p&gt;Lorsque j&#39;ai commencé à utilisé &lt;a href=&quot;http://angularjs.org/&quot;&gt;AngularJS&lt;/a&gt; pour faire le blog que vous lisez actuellement, j&#39;étais plus que convaincu par les avantages de &lt;a href=&quot;http://requirejs.org/&quot;&gt;RequireJS&lt;/a&gt;. Maintenant je ne peux plus m&#39;en passer et mon premier réflexe quand je commence un projet Javascript est d&#39;importer RequireJS. Seulement, AngularJS n&#39;étant pas défini comme un module et disposant d&#39;un système propre pour définir des modules, j&#39;avais peur de me trouver face à des conflits entre les deux systèmes ou de ne carrément pas réussir à charger AngularJS via RequireJS.
