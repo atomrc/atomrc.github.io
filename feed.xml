@@ -12,7 +12,7 @@
   </author>
   
   <entry>
-    <title>Inspiring from React&#39;s useEffect to improve our own APIs: the cleanup function pattern</title>
+    <title>Inspiring from React&#39;s useEffect to design effective APIs: the cleanup function pattern</title>
     <link href="https://blog.atomrc.dev/p/cleanup-function-pattern/"/>
     
     <updated>2022-12-24T00:00:00Z</updated>
