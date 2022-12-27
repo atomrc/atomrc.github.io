@@ -4,6 +4,7 @@ tags: [javascript, reactive programming, rxjs, react, useEffect]
 excerpt: "Let's inspire from React's useEffect pattern to design easy-to-use and encapsulated effectful APIs"
 lang: en
 date: 2022-12-24
+updated: 2022-12-27
 ---
 
 React's `useEffect` forces you to implement a quite powerful pattern: the **cleanup function pattern** (or teardown function pattern).
@@ -61,11 +62,23 @@ button.addEventListener("click", sendPayload);
 button.removeEventListener("click", sendPayload);
 ```
 
+How about we try to implement our own `addListener` function that implements the cleanup function pattern?
+
+```js
+function addListener(element, event, callback) {
+  element.addEventListener(event, callback);
+  return () => {
+    element.removeEventListener(event, callback);
+  };
+}
+```
+
 ### Perfect encapsulation
 
-One of the problems of the previous code sample is that you **need to keep track** of the DOM element (`button`), the event (`click`) and the callback (`sendPayload`) in order to be able to remove this listener. Lose one of those ingredients, and your `click` listener is here to stay!
+One of the problems of the `button.addEventListener` is that you **need to keep track** of the DOM element (`button`), the event name (`click`) and the callback (`sendPayload`) in order to be able to remove this listener.  
+Lose one of those ingredients, and your `click` listener is here to stay!
 
-Thanks to the cleanup function, we only need to keep a **single reference** in order to remove the listener:
+Thanks to our custom `addListener` function that we implemented earlier, a **single reference** is needed in order to remove the listener:
 
 ```js
 const sendPayload = () => {
@@ -73,17 +86,17 @@ const sendPayload = () => {
 };
 const button = document.getElementById("the-button");
 
-const removeListener = addEventListener(button, "click", sendPayload);
+const removeListener = addListener(button, "click", sendPayload);
 //    ^ removeListener is the only reference we need to keep
 removeListener();
 ```
 
-Now, the references to the button, the action and the callback are **encapsulated in the cleanup function**. The only thing we need to keep track of is the `removeListener` function.
+Now, the references to the button, the event name and the callback are **encapsulated in the cleanup function**. The only thing we need to keep track of is the `removeListener` function.
 
 So we could even inline everything
 
 ```js
-const removeListener = addEventListener(
+const removeListener = addListener(
   document.getElementById("the-button"),
   "click",
   () => {}
