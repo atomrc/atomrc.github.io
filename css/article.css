@@ -28,6 +28,10 @@ a code {
   padding: 0;
 }
 
+table th, table td {
+  padding: .1em .5em;
+}
+
 pre {
   padding: 1em;
   overflow-x: auto;
