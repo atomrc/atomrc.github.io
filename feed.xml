@@ -4,12 +4,175 @@
   <subtitle>Freelance Front-End Architect in Paris. I leave code cleaner than I found it. Seriously into Functional and Reactive Programming.</subtitle>
   <link href="https://blog.atomrc.dev/feed.xml" rel="self"/>
   <link href="https://blog.atomrc.dev"/>
-  <updated>2022-12-24T00:00:00Z</updated>
+  <updated>2023-01-21T00:00:00Z</updated>
   <id>https://blog.atomrc.dev</id>
   <author>
     <name>Thomas Belin</name>
     <uri>https://twitter.com/atomrc</uri>
   </author>
+  
+  <entry>
+    <title>Compiling your TypeScript library (2023 edition)</title>
+    <link href="https://blog.atomrc.dev/p/typescript-library-compilation-2023/"/>
+    
+    <updated>2023-01-21T00:00:00Z</updated>
+    
+    <published>2023-01-21T00:00:00Z</published>
+    <id>https://blog.atomrc.dev/p/typescript-library-compilation-2023/</id>
+    <content type="html">&lt;p&gt;When we talk about compling TypeScript projects there are usually two different contexts that are often mixed together: compiling a library vs compiling an application.&lt;/p&gt;
+&lt;p&gt;Those two contexts have slightly different constraints and need to be considered separately.&lt;/p&gt;
+&lt;p&gt;Today I&#39;m going to focus on &lt;strong&gt;compiling a TypeScript library into a JavaScript package&lt;/strong&gt; :)&lt;/p&gt;
+&lt;h2 id=&quot;the-wishlist&quot; tabindex=&quot;-1&quot;&gt;The wishlist&lt;/h2&gt;
+&lt;p&gt;In order to build a nice library that is suited for most projects, we want our package to be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;type-checked when consumed in a TypeScript project;&lt;/li&gt;
+&lt;li&gt;consumable in both &lt;code&gt;commonjs&lt;/code&gt; and &lt;code&gt;esmmodule&lt;/code&gt; projects.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;According to those wishes, we need to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;generate and package the declaration files (&lt;code&gt;.d.ts&lt;/code&gt;);&lt;/li&gt;
+&lt;li&gt;be able to compile for different module targets.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;considered-solutions&quot; tabindex=&quot;-1&quot;&gt;Considered solutions&lt;/h2&gt;
+&lt;p&gt;Today, we are going to benchmark the following solutions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.typescriptlang.org/docs/handbook/compiler-options.html&quot;&gt;tsc&lt;/a&gt; - the native TypeScript compiler&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://esbuild.github.io/&quot;&gt;esbuild&lt;/a&gt; - a full-fledged bundler and superfast compiler written in &lt;code&gt;go&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://swc.rs/&quot;&gt;swc&lt;/a&gt; - a full-fledged bundler and superfast compiler written in &lt;code&gt;rust&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://blog.atomrc.dev/p/typescript-library-compilation-2023/tsup.egoist.dev/&quot;&gt;tsup&lt;/a&gt; - a TypeScript library builder based on &lt;code&gt;esbuild&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Side note: I have excluded tools that are only bundlers (&lt;code&gt;webpack&lt;/code&gt;, &lt;code&gt;rollup&lt;/code&gt;, ...) and &lt;code&gt;babel&lt;/code&gt; which was superseded by &lt;code&gt;swc&lt;/code&gt; and &lt;code&gt;esbuild&lt;/code&gt;.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;compiler&lt;/th&gt;
+&lt;th&gt;&lt;code&gt;d.ts&lt;/code&gt; generation&lt;/th&gt;
+&lt;th&gt;multiple module targets&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;esbuild&lt;/td&gt;
+&lt;td&gt;❌&lt;/td&gt;
+&lt;td&gt;❌&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;swc&lt;/td&gt;
+&lt;td&gt;❌&lt;/td&gt;
+&lt;td&gt;❌&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;tsc&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;td&gt;❌&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;tsup&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;By comparing features, there is already something that stands out: &lt;strong&gt;only &lt;code&gt;tsup&lt;/code&gt; can generate declarations files (&lt;code&gt;.d.ts&lt;/code&gt;) and target multiple package type out of the box&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;This is not a showstopper, though!&lt;br /&gt;
+Nothing is preventing us from running the compilation twice for different module targets.&lt;br /&gt;
+And for the &lt;code&gt;d.ts&lt;/code&gt; generation, we could rely on &lt;code&gt;tsc --emitDeclarationOnly&lt;/code&gt; to generate them for us.
+(Both are actually what &lt;code&gt;tsup&lt;/code&gt; is doing under the hood).&lt;br /&gt;
+It&#39;s worth noting that those processes do not step on each other&#39;s toes, so we could run both compilation in parallel :)&lt;/p&gt;
+&lt;p&gt;Here would be the equivalent commands for all the tools we are going to evaluate:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;esbuild&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;esbuild src/*.ts &lt;span class=&quot;token parameter variable&quot;&gt;--format&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;esm &lt;span class=&quot;token parameter variable&quot;&gt;--outdir&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;./lib/esm &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&lt;/span&gt;&lt;br /&gt;esbuild src/*.ts &lt;span class=&quot;token parameter variable&quot;&gt;--format&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;cjs &lt;span class=&quot;token parameter variable&quot;&gt;--outdir&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;./lib/cjs &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&lt;/span&gt;&lt;br /&gt;tsc &lt;span class=&quot;token parameter variable&quot;&gt;--emitDeclarationOnly&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;--outDir&lt;/span&gt; ./lib/types&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;tsup&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;tsup src/*.ts &lt;span class=&quot;token parameter variable&quot;&gt;--format&lt;/span&gt; esm,cjs &lt;span class=&quot;token parameter variable&quot;&gt;--dts&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-d&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;./lib&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;swc&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;swc &lt;span class=&quot;token parameter variable&quot;&gt;-d&lt;/span&gt; ./lib/esm &lt;span class=&quot;token parameter variable&quot;&gt;-C&lt;/span&gt; &lt;span class=&quot;token assign-left variable&quot;&gt;module.type&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;es6 src/*.ts &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&lt;/span&gt;&lt;br /&gt;swc &lt;span class=&quot;token parameter variable&quot;&gt;-d&lt;/span&gt; ./lib/cjs &lt;span class=&quot;token parameter variable&quot;&gt;-C&lt;/span&gt; &lt;span class=&quot;token assign-left variable&quot;&gt;module.type&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;commonjs src/*.ts &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&lt;/span&gt;&lt;br /&gt;tsc &lt;span class=&quot;token parameter variable&quot;&gt;--emitDeclarationOnly&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;--outDir&lt;/span&gt; ./lib/types&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;tsc&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;tsc &lt;span class=&quot;token parameter variable&quot;&gt;--module&lt;/span&gt; esnext &lt;span class=&quot;token parameter variable&quot;&gt;--outDir&lt;/span&gt; ./lib/esm &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&lt;/span&gt;&lt;br /&gt;tsc &lt;span class=&quot;token parameter variable&quot;&gt;--module&lt;/span&gt; commonjs &lt;span class=&quot;token parameter variable&quot;&gt;--outDir&lt;/span&gt; ./lib/cjs&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;benchmark&quot; tabindex=&quot;-1&quot;&gt;Benchmark&lt;/h2&gt;
+&lt;p&gt;This benchmark will be all but scientific. I just tested compiling a library that has a single TypeScript file on the shittiest computer I have at home (a MacBook Air from 2013 with 4GB of RAM and a 1,3 GHz Dual-Core Intel Core i5). Every compiler is run 10 times (so very little samples).
+This is just to give us a rough idea of how they could perform.&lt;br /&gt;
+Please take this benchmark with a grain of salt!&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;compiler&lt;/th&gt;
+&lt;th&gt;min&lt;/th&gt;
+&lt;th&gt;mean&lt;/th&gt;
+&lt;th&gt;max&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;esbuild&lt;/td&gt;
+&lt;td&gt;3585ms&lt;/td&gt;
+&lt;td&gt;4083ms&lt;/td&gt;
+&lt;td&gt;6273ms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;swc&lt;/td&gt;
+&lt;td&gt;3784ms&lt;/td&gt;
+&lt;td&gt;4080ms&lt;/td&gt;
+&lt;td&gt;4876ms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;tsup&lt;/td&gt;
+&lt;td&gt;3727ms&lt;/td&gt;
+&lt;td&gt;4254ms&lt;/td&gt;
+&lt;td&gt;6506ms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;tsc&lt;/td&gt;
+&lt;td&gt;4590ms&lt;/td&gt;
+&lt;td&gt;5655ms&lt;/td&gt;
+&lt;td&gt;9331ms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Just to highlight how generating &lt;code&gt;d.ts&lt;/code&gt; with &lt;code&gt;tsc&lt;/code&gt; is costy, here is the same benchmark in which we skip generating declaration files:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;compiler (no &lt;code&gt;d.ts&lt;/code&gt;)&lt;/th&gt;
+&lt;th&gt;min&lt;/th&gt;
+&lt;th&gt;mean&lt;/th&gt;
+&lt;th&gt;max&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;esbuild&lt;/td&gt;
+&lt;td&gt;1262ms&lt;/td&gt;
+&lt;td&gt;1648ms&lt;/td&gt;
+&lt;td&gt;2324ms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;swc&lt;/td&gt;
+&lt;td&gt;1736ms&lt;/td&gt;
+&lt;td&gt;2547ms&lt;/td&gt;
+&lt;td&gt;3537ms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;tsup&lt;/td&gt;
+&lt;td&gt;1102ms&lt;/td&gt;
+&lt;td&gt;1371ms&lt;/td&gt;
+&lt;td&gt;2003ms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;tsc&lt;/td&gt;
+&lt;td&gt;4611ms&lt;/td&gt;
+&lt;td&gt;5276ms&lt;/td&gt;
+&lt;td&gt;6288ms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;This is an order of magnitude different, but we can note that &lt;code&gt;tsc&lt;/code&gt; is performing pretty much the same when not asked to generate types.&lt;/p&gt;
+&lt;h2 id=&quot;conclusion&quot; tabindex=&quot;-1&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;One sad realization that I had while putting up together this benchmark is that &lt;strong&gt;no matter how fast the compiler is, it&#39;s always going to be at least as slow as &lt;code&gt;tsc --emitDeclarationOnly&lt;/code&gt;)&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;My personnal benchark isn&#39;t really significant when it comes to performances comparisons... But we can clearly identify that &lt;code&gt;tsc&lt;/code&gt; is the looser!&lt;/p&gt;
+&lt;p&gt;Now, with its built-in support for declaration files generation and multiple targets in my opinion &lt;strong&gt;&lt;code&gt;tsup&lt;/code&gt; is the winner! It is tailored for building libraries!&lt;/strong&gt;&lt;br /&gt;
+Having only a single command to write to compile our libraries means it easier for maintenance and if, in the future, &lt;code&gt;tsup&lt;/code&gt; figure out a way to generate &lt;code&gt;d.ts&lt;/code&gt; files faster we will benefit from it by upgrading our local version.&lt;/p&gt;
+</content>
+  </entry>
   
   <entry>
     <title>Inspiring from React&#39;s useEffect to design effective APIs: the cleanup function pattern</title>
