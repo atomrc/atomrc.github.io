@@ -26,7 +26,7 @@
 &lt;p&gt;In order to build a nice library that is suited for most projects, we want our package to be:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;type-checked when consumed in a TypeScript project;&lt;/li&gt;
-&lt;li&gt;consumable in both &lt;code&gt;commonjs&lt;/code&gt; and &lt;code&gt;esmmodule&lt;/code&gt; projects.&lt;/li&gt;
+&lt;li&gt;consumable in both &lt;code&gt;commonjs&lt;/code&gt; and &lt;code&gt;esmodule&lt;/code&gt; projects.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;According to those wishes, we need to:&lt;/p&gt;
 &lt;ul&gt;
@@ -167,7 +167,7 @@ Please take this benchmark with a grain of salt!&lt;/p&gt;
 &lt;/table&gt;
 &lt;p&gt;This is an order of magnitude different, but we can note that &lt;code&gt;tsc&lt;/code&gt; is performing pretty much the same when not asked to generate types.&lt;/p&gt;
 &lt;h2 id=&quot;conclusion&quot; tabindex=&quot;-1&quot;&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;One sad realization that I had while putting up together this benchmark is that &lt;strong&gt;no matter how fast the compiler is, it&#39;s always going to be at least as slow as &lt;code&gt;tsc --emitDeclarationOnly&lt;/code&gt;)&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;One sad realization that I had while putting up together this benchmark is that &lt;strong&gt;no matter how fast the compiler is, it&#39;s always going to be at least as slow as &lt;code&gt;tsc --emitDeclarationOnly&lt;/code&gt;&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;My personnal benchark isn&#39;t really significant when it comes to performances comparisons... But we can clearly identify that &lt;code&gt;tsc&lt;/code&gt; is the looser!&lt;/p&gt;
 &lt;p&gt;Now, with its built-in support for declaration files generation and multiple targets in my opinion &lt;strong&gt;&lt;code&gt;tsup&lt;/code&gt; is the winner! It is tailored for building libraries!&lt;/strong&gt;&lt;br /&gt;
 Having only a single command to write to compile our libraries means it easier for maintenance and if, in the future, &lt;code&gt;tsup&lt;/code&gt; figure out a way to generate &lt;code&gt;d.ts&lt;/code&gt; files faster we will benefit from it by upgrading our local version.&lt;/p&gt;
