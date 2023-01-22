@@ -171,7 +171,7 @@ Please take this benchmark with a grain of salt!&lt;/p&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;This is an order of magnitude different, but we can note that &lt;code&gt;tsc&lt;/code&gt; is performing pretty much the same when not asked to generate types.&lt;/p&gt;
+&lt;p&gt;This is an order of magnitude different expect for &lt;code&gt;tsc&lt;/code&gt; that seems to yield the same results whether it generates declaration files or not.&lt;/p&gt;
 &lt;p&gt;There is no obvious winner between &lt;code&gt;swc&lt;/code&gt;, &lt;code&gt;esbuild&lt;/code&gt; and &lt;code&gt;tsup&lt;/code&gt;, but we can see that &lt;code&gt;tsc&lt;/code&gt; is constantly outperformed.&lt;/p&gt;
 &lt;h2 id=&quot;conclusion&quot; tabindex=&quot;-1&quot;&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;One sad realization that I had while putting up together this benchmark is that &lt;strong&gt;no matter how fast the compiler is, it&#39;s always going to be at least as slow as &lt;code&gt;tsc --emitDeclarationOnly&lt;/code&gt;&lt;/strong&gt;.&lt;/p&gt;
