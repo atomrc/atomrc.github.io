@@ -36,7 +36,7 @@ Today, we are going to benchmark the following solutions:
 - [tsc](https://www.typescriptlang.org/docs/handbook/compiler-options.html) - the native TypeScript compiler
 - [esbuild](https://esbuild.github.io/) - a full-fledged bundler and superfast compiler written in `go`
 - [swc](https://swc.rs/) - a full-fledged bundler and superfast compiler written in `rust`
-- [tsup](tsup.egoist.dev/) - a TypeScript library builder based on `esbuild`
+- [tsup](https://tsup.egoist.dev/) - a TypeScript library builder based on `esbuild`
 
 Side note: I have excluded tools that are only bundlers (`webpack`, `rollup`, ...) and `babel` which was superseded by `swc` and `esbuild`.
 
