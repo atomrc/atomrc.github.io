@@ -11,7 +11,7 @@ date: 2023-01-21
     .loser {color: red;}
 </style>
 
-When we talk about compling TypeScript projects there are usually two different contexts that are often mixed together: compiling a library vs compiling an application.
+When we talk about compiling TypeScript projects there are usually two different contexts that are often mixed together: compiling a library vs compiling an application.
 
 Those two contexts have slightly different constraints and need to be considered separately.
 
@@ -89,7 +89,7 @@ tsc --module commonjs --outDir ./lib/cjs
 ## Benchmark
 
 This benchmark will be all but scientific!  
-I just tested compiling a library that has a single TypeScript file on Github CI. Every compiler is run 30 times, which mean we have very little samples.  
+I just tested compiling a library that has a single TypeScript file on GitHub CI. Every compiler is run 30 times, which mean we have very little samples.  
 This is just to give us a rough idea of how they could perform.  
 Please take this benchmark with a grain of salt!
 
@@ -119,7 +119,7 @@ There is no obvious winner between `swc`, `esbuild` and `tsup`, but we can see t
 
 One sad realization that I had while putting up together this benchmark is that **no matter how fast the compiler is, it's always going to be at least as slow as `tsc --emitDeclarationOnly`**.
 
-My personnal benchark isn't really significant when it comes to performances comparisons... But we can clearly identify that `tsc` is the looser!
+My personal benchmark isn't really significant when it comes to performances comparisons... But we can clearly identify that `tsc` is the loser!
 
 Now, with its built-in support for declaration files generation and multiple targets in my opinion **`tsup` is the winner! It is tailored for building libraries!**  
 Having only a single command to write to compile our libraries means it easier for maintenance and if, in the future, `tsup` figure out a way to generate `d.ts` files faster we will benefit from it by upgrading our local version.
