@@ -43,7 +43,7 @@
 &lt;li&gt;&lt;a href=&quot;https://www.typescriptlang.org/docs/handbook/compiler-options.html&quot;&gt;tsc&lt;/a&gt; - the native TypeScript compiler&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://esbuild.github.io/&quot;&gt;esbuild&lt;/a&gt; - a full-fledged bundler and superfast compiler written in &lt;code&gt;go&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://swc.rs/&quot;&gt;swc&lt;/a&gt; - a full-fledged bundler and superfast compiler written in &lt;code&gt;rust&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://blog.atomrc.dev/p/typescript-library-compilation-2023/tsup.egoist.dev/&quot;&gt;tsup&lt;/a&gt; - a TypeScript library builder based on &lt;code&gt;esbuild&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://tsup.egoist.dev/&quot;&gt;tsup&lt;/a&gt; - a TypeScript library builder based on &lt;code&gt;esbuild&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Side note: I have excluded tools that are only bundlers (&lt;code&gt;webpack&lt;/code&gt;, &lt;code&gt;rollup&lt;/code&gt;, ...) and &lt;code&gt;babel&lt;/code&gt; which was superseded by &lt;code&gt;swc&lt;/code&gt; and &lt;code&gt;esbuild&lt;/code&gt;.&lt;/p&gt;
 &lt;table&gt;
