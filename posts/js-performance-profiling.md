@@ -183,7 +183,7 @@ function computeNumber() {
 
 This is what we will get in our profiler report:
 
-{% image "https://i.imgur.com/cbuctXp.png" "Screenshot of the Firefox's profiler report" %}
+{% image "https://s3.eu-west-1.amazonaws.com/blog.thomasbelin.fr/1.png" "Screenshot of the Firefox's profiler report" %}
 
 - _[1]_ Since the profiler is actually profiling all the Firefox's processes, we want to make sure we are just inspecting the current web app we are working on
 - _[2]_ We are web developer here, no need for the browser's internal stack traces, let's only keep JS stack traces
@@ -230,7 +230,7 @@ The particularity of this function is that it generates named functions with ran
 
 Let's see what the profile looks like
 
-{% image "https://i.imgur.com/jz4mxUL.png" "Firefox's profile screenshot for a function that calls multiple sub-functions" %}
+{% image "https://s3.eu-west-1.amazonaws.com/blog.thomasbelin.fr/3.png" "Firefox's profile screenshot for a function that calls multiple sub-functions" %}
 
 Here we can see that there are many functions called, but they all have an empty `self` time. Which means this is not the function where we actually spent time, they were waiting for something else to finish.
 
