@@ -16,7 +16,6 @@ async function imageShortcode(src, alt) {
     widths: [300, 600, 900],
     formats: ["avif", "jpeg"],
     outputDir: "_site/img",
-    concurrency: 0,
   });
 
   let imageAttributes = {
